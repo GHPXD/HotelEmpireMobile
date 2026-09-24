@@ -136,3 +136,9 @@ Experimento de tarifas: `tools/test.ps1 -Tariffs` adiciona 18 cenários de 30 di
 aprovada em 24/09/2026, com 90 checkpoints e conservação de estado/dinheiro.
 Dados e interpretação em `docs/TARIFF_BALANCE.md`. A aprovação comprova integridade
 da simulação; não significa que as opções de preço estejam bem balanceadas.
+
+Matriz de preços mistos: `tariff_scenarios.gd -- --tariff-mixed`, 54 casos e
+270 checkpoints aprovados. Expansão no sexto dia comprada com caixa e objetivos
+da partida. As nove combinações sobrepostas reproduzem exatamente a linha de
+base. Evidência em `docs/benchmarks/tariffs/mixed.json`; interpretação em
+`docs/TARIFF_MIXED.md`. Não incluída por padrão na bateria rápida.

@@ -1,0 +1,8 @@
+{
+  "sourceRevision": "61b04a19934b869532ba704c0f95f8429242cacb",
+  "scenarioScriptSha256": "7fe40e5e03a95c1e54af709676a7524a4eda7f5bcad4d638d276236885fdef36",
+  "gameRulesChanged": false,
+  "command": "Godot --headless --script res://tests/tariff_scenarios.gd -- --tariff-mixed",
+  "expectedScenarios": 54,
+  "expectedSaveCheckpoints": 270
+}

@@ -48,6 +48,8 @@ Uma caixa só é marcada após execução e validação. Publicação será deci
 Evolução de gestão: tarifas por sala de 75%, 100% e 125%, com migração de saves
 v1–v4 para v5 e contratos em curso preservados. Detalhes em `docs/TARIFFS.md`.
 - [x] Comparação de tarifas: 18 cenários de 30 dias e 90 checkpoints de save.
+- [x] Separação hospedagem/serviços e expansão: 54 cenários, 270 checkpoints;
+  premium de hospedagem sem contrapartida em 18/18 pares (`docs/TARIFF_MIXED.md`).
 - [ ] Refinar a contrapartida de premium: quatro dos seis pares medidos renderam
   mais lucro sem mudar atendimento/reputação. Evidência em `docs/TARIFF_BALANCE.md`.
 M10 permanece aberto para resultados de compatibilidade em outro computador.
