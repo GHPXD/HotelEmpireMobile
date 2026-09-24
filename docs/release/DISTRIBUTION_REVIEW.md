@@ -4,7 +4,7 @@ Resultado: pacote do protótipo preparado e verificado para testes externos.
 Isso não conclui M10 nem autoriza publicação comercial.
 
 Artefato revisado: `builds/HotelEmpire-windows-x86_64.zip`, revisão de código
-`92379391996078d826a54fb0d6ecad3a7415608d`. O manifesto registra árvore limpa
+`8fbfdb59393766accc408a8b58a055fbc6928fae`. O manifesto registra árvore limpa
 no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 `local-distribution-audit.json`. O comando falha se qualquer verificação divergir.
 
@@ -14,7 +14,7 @@ no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 | Identidade do executável | SHA-256 e tamanho conferem com o manifesto |
 | Guia e avisos | Bytes empacotados iguais aos arquivos fonte; guia explica instalação, controles, save, recuperação e limites |
 | Arte | Todos os 28 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos |
-| Funcionamento exportado | `tariffs-waiting-matrix.json`: seis combinações locais; boot, operação, upgrades, save/load, recuperação, ajuda e métricas |
+| Funcionamento exportado | `lodging-value-matrix.json`: seis combinações locais; boot, operação, upgrades, save/load, recuperação, ajuda e métricas |
 | Teste sem repositório | `external-kit-local-matrix.json`: kit extraído, Windows PowerShell 5.1, relatório compactado; falha por pacote ausente também tratada |
 | Dados do jogador | Testes usam APPDATA isolado; o guia informa ausência de autosave e localização do save manual |
 | Distribuição pública | Não publicada, não assinada; sem instalador, atualização automática ou requisito mínimo certificado |

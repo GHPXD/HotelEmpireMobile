@@ -65,3 +65,8 @@ na UI. Continuar a calibração usando satisfação dos hóspedes efetivamente
 hospedados, separada das saídas por desistência, além da reputação agregada.
 Não aumentar o coeficiente apenas para fazer seis seeds produzirem o mesmo
 sinal. Ainda faltam playtest humano e políticas de preço adaptativas.
+
+Disponível no ZIP Windows da revisão 8fbfdb5. Seis combinações locais de
+janela/texto aprovadas em release/lodging-value-matrix.json, incluindo prévia
+de valor e tarifa de quarto preservada após carregar. Os onze casos específicos
+incluem saturação em 0 e 100. Compatibilidade externa permanece pendente.

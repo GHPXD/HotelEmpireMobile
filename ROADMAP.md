@@ -52,6 +52,9 @@ v1–v4 para v5 e contratos em curso preservados. Detalhes em `docs/TARIFFS.md`.
   premium de hospedagem sem contrapartida em 18/18 pares (`docs/TARIFF_MIXED.md`).
 - [ ] Refinar a contrapartida de premium: quatro dos seis pares medidos renderam
   mais lucro sem mudar atendimento/reputação. Evidência em `docs/TARIFF_BALANCE.md`.
+  - [x] Primeiro efeito de valor no check-in, com prévia por perfil e padrão
+    neutro: 18 cenários e 90 checkpoints em `docs/LODGING_VALUE.md`.
+  - [ ] Calibrar satisfação por coorte e avaliar a escolha em playtest humano.
 M10 permanece aberto para resultados de compatibilidade em outro computador.
 M6 não conclui suporte integral a teclado/controller, leitores de tela ou touch.
 M8 mede render isolado, transporte e sobrecarga até 1000; operação integrada

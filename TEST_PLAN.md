@@ -148,3 +148,7 @@ limites de satisfação e continuidade. Bateria com -Visual -Stress: 26 suítes
 aprovadas; limites adicionais conferidos em execução isolada. `--lodging-value`
 executa 18 cenários opcionais de 30 dias: 90 checkpoints aprovados e seis casos
 padrão exatamente iguais à referência. Dados em `docs/benchmarks/tariffs/`.
+
+Pacote 8fbfdb5: seis casos de janela/texto aprovados, incluindo prévia de valor
+no inspetor e tarifa de hospedagem persistida. Matriz arquivada em
+docs/release/lodging-value-matrix.json.
