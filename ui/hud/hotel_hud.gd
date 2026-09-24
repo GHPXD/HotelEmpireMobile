@@ -33,6 +33,7 @@ var upgrade_button: Button
 var upgrade_preview: Label
 var tariff_choice: OptionButton
 var tariff_label: Label
+var tariff_effect: Label
 const TARIFFS: Array[int] = [75, 100, 125]
 var objectives_button: Button
 var build_buttons: Dictionary = {}
@@ -178,6 +179,9 @@ func _ready() -> void:
 	tariff_choice.tooltip_text = "Quartos: cobrança no check-in. Serviços: preço combinado ao iniciar. Atendimentos em curso mantêm o preço."
 	tariff_choice.item_selected.connect(func(index: int) -> void: tariff_requested.emit(TARIFFS[index]))
 	tools.add_child(tariff_choice)
+	tariff_effect = Label.new()
+	tariff_effect.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	tools.add_child(tariff_effect)
 	upgrade_preview = Label.new()
 	upgrade_preview.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	tools.add_child(upgrade_preview)
@@ -195,6 +199,18 @@ func _ready() -> void:
 func refresh(hotel: HotelModel, selected: RoomState) -> void:
 	tariff_choice.visible = selected != null and selected.definition().category in [&"lodging", &"service"]
 	tariff_label.visible = tariff_choice.visible
+	tariff_effect.visible = selected != null and selected.definition().category == &"lodging"
+	if tariff_effect.visible:
+		tariff_effect.text = "SATISFAÇÃO NO CHECK-IN\nConforme o perfil do hóspede:"
+		for index in TARIFFS.size():
+			var low: float = INF
+			var high: float = -INF
+			for profile: GuestArchetype in HotelCatalog.GUESTS:
+				var delta := selected.lodging_value_delta(profile, TARIFFS[index])
+				low = minf(low, delta)
+				high = maxf(high, delta)
+			tariff_effect.text += "\n%d%%: %+.1f a %+.1f pontos" % [TARIFFS[index], low, high]
+		tariff_effect.text += "\nLimite: 0–100. Uma vez por estadia; sem efeito retroativo."
 	if tariff_choice.visible:
 		tariff_choice.select(TARIFFS.find(selected.price_percent))
 	upgrade_button.visible = selected != null

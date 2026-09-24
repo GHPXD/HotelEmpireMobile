@@ -142,3 +142,9 @@ Matriz de preços mistos: `tariff_scenarios.gd -- --tariff-mixed`, 54 casos e
 da partida. As nove combinações sobrepostas reproduzem exatamente a linha de
 base. Evidência em `docs/benchmarks/tariffs/mixed.json`; interpretação em
 `docs/TARIFF_MIXED.md`. Não incluída por padrão na bateria rápida.
+
+Percepção de valor: `lodging_value_test` acrescenta 11 casos de check-in,
+limites de satisfação e continuidade. Bateria com -Visual -Stress: 26 suítes
+aprovadas; limites adicionais conferidos em execução isolada. `--lodging-value`
+executa 18 cenários opcionais de 30 dias: 90 checkpoints aprovados e seis casos
+padrão exatamente iguais à referência. Dados em `docs/benchmarks/tariffs/`.

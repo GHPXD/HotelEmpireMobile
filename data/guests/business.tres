@@ -7,6 +7,7 @@ display_name = "Negócios"
 description = "Prefere atendimento rápido; estadia e paciência menores."
 budget = 420
 price_weight = 0.1
+lodging_value_weight = 0.2
 duration_weight = 0.8
 patience_multiplier = 0.9
 stay_multiplier = 0.85

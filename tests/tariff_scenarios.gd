@@ -5,19 +5,21 @@ var failures: int = 0
 
 func _initialize() -> void:
 	var reports: Array[Dictionary] = []
-	var mixed := OS.get_cmdline_user_args().has("--tariff-mixed")
+	var value_study := OS.get_cmdline_user_args().has("--lodging-value")
+	var mixed := value_study or OS.get_cmdline_user_args().has("--tariff-mixed")
 	if mixed:
 		for expanded in [false, true]:
 			for seed_value in [1, 17, 123]:
 				for lodging_percent in [75, 100, 125]:
-					for service_percent in [75, 100, 125]:
+					for service_percent in ([100] if value_study else [75, 100, 125]):
 						reports.append(run_case(seed_value, 8, lodging_percent, service_percent, expanded))
 	else:
 		for bedrooms in [2, 8]:
 			for seed_value in [1, 17, 123]:
 				for percent in [75, 100, 125]:
 					reports.append(run_case(seed_value, bedrooms, percent))
-	var file := FileAccess.open("res://.runtime/tariff-mixed.json" if mixed else "res://.runtime/tariff-scenarios.json", FileAccess.WRITE)
+	var output := "res://.runtime/lodging-value.json" if value_study else ("res://.runtime/tariff-mixed.json" if mixed else "res://.runtime/tariff-scenarios.json")
+	var file := FileAccess.open(output, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"days": 30, "reports": reports, "failures": failures}, "\t"))
 	file.close()
 	print(JSON.stringify({"suite": "tariff_scenarios", "failures": failures, "scenarios": reports.size()}))

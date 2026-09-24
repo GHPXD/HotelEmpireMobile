@@ -29,6 +29,11 @@ func price() -> int:
 func scaled_price(base: int) -> int:
 	return maxi(1, roundi(base * price_percent / 100.0)) if base > 0 else 0
 
+func lodging_value_delta(profile: GuestArchetype, percent: int = -1) -> float:
+	if definition().category != &"lodging":
+		return 0.0
+	return (100 - (price_percent if percent < 0 else percent)) * profile.lodging_value_weight
+
 func maintenance() -> int:
 	return definition().maintenance + (upgrade().maintenance_bonus if upgrade() != null else 0)
 

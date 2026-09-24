@@ -44,6 +44,13 @@ func run() -> void:
 	check(restaurant.price_percent == 125, "keyboard applies premium tariff")
 	check(session.speed == 0, "tariff keyboard activation preserves pause")
 	check(game.hud.inspector.text.contains("Tarifa: $ 35"), "inspector displays effective tariff")
+	check(not game.hud.tariff_effect.visible, "lodging consequence not advertised for services")
+	for candidate: RoomState in session.hotel.rooms:
+		if candidate.definition_id == &"bedroom":
+			game.selection = candidate.id
+			break
+	game._refresh()
+	check(game.hud.tariff_effect.visible and game.hud.tariff_effect.text.contains("125%: -7.5 a -5.0"), "lodging preview shows profile range before purchase")
 	for button: Node in game.hud.find_children("*", "Button", true, false):
 		if button.text == "Equipe":
 			await click(root, button.get_global_rect().get_center())

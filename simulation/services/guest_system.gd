@@ -95,6 +95,7 @@ func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transpo
 		room.occupant = actor.id
 		actor.bedroom = room.id
 		actor.checked_in = true
+		actor.happiness = clampf(actor.happiness + room.lodging_value_delta(actor.archetype()), 0, 100)
 		actor.money -= room.price()
 		room.income += room.price()
 		hotel.economy.transact(room.price(), "Hospedagem", time)

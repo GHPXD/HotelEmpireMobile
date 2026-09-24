@@ -41,7 +41,7 @@ func run(game: Node) -> void:
 	check(HotelArt.cabin(lift_room.level) == HotelArt.CABIN_FINAL_UPGRADE, "final cabin painting selected")
 	check(HotelArt.CABIN_FINAL_UPGRADE.get_width() > 0, "final cabin packaged")
 	var path := "user://release-smoke-save.json"
-	var priced_room: RoomState = session.hotel.rooms[1]
+	var priced_room: RoomState = session.hotel.rooms[3]
 	check(session.set_room_tariff(priced_room.id, 125).is_empty(), "packaged tariff accepted")
 	check(SaveStore.save_session(session, path).is_empty(), "save from executable")
 	var restored := SaveStore.load_session(path)
@@ -81,6 +81,7 @@ func run(game: Node) -> void:
 	game._inspect_room(priced_room.id)
 	check(game.session.hotel.by_id(priced_room.id).price_percent == 125, "packaged tariff restored")
 	check(game.hud.tariff_choice.visible and game.hud.tariff_choice.selected == 2, "packaged tariff control reflects save")
+	check(game.hud.tariff_effect.visible and game.hud.tariff_effect.text.contains("125%: -7.5 a -5.0"), "packaged lodging value preview")
 	for frame in 3:
 		await tree.process_frame
 	game.hud.sidebar_scroll.ensure_control_visible(game.hud.tariff_choice)
