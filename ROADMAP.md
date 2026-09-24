@@ -47,6 +47,9 @@ Uma caixa só é marcada após execução e validação. Publicação será deci
 
 Evolução de gestão: tarifas por sala de 75%, 100% e 125%, com migração de saves
 v1–v4 para v5 e contratos em curso preservados. Detalhes em `docs/TARIFFS.md`.
+- [x] Comparação de tarifas: 18 cenários de 30 dias e 90 checkpoints de save.
+- [ ] Refinar a contrapartida de premium: quatro dos seis pares medidos renderam
+  mais lucro sem mudar atendimento/reputação. Evidência em `docs/TARIFF_BALANCE.md`.
 M10 permanece aberto para resultados de compatibilidade em outro computador.
 M6 não conclui suporte integral a teclado/controller, leitores de tela ou touch.
 M8 mede render isolado, transporte e sobrecarga até 1000; operação integrada

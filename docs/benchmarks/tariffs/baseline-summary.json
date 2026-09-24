@@ -1,0 +1,310 @@
+{
+  "scenario_count": 18,
+  "save_checkpoints": 90,
+  "groups": [
+    {
+      "bedrooms": 2,
+      "percent": 75,
+      "metrics": {
+        "profit": {
+          "mean": 10739,
+          "min": 10431,
+          "max": 11145
+        },
+        "ending_cash": {
+          "mean": 17459,
+          "min": 17151,
+          "max": 17865
+        },
+        "bookings": {
+          "mean": 116.33333333333333,
+          "min": 114,
+          "max": 119
+        },
+        "meals": {
+          "mean": 114,
+          "min": 111,
+          "max": 120
+        },
+        "reputation": {
+          "mean": 46.369707493462066,
+          "min": 45.1930461033571,
+          "max": 47.5735121870398
+        },
+        "occupancy": {
+          "mean": 0.797425925925926,
+          "min": 0.795916666666667,
+          "max": 0.799444444444444
+        }
+      }
+    },
+    {
+      "bedrooms": 2,
+      "percent": 100,
+      "metrics": {
+        "profit": {
+          "mean": 15776.666666666666,
+          "min": 15478,
+          "max": 16150
+        },
+        "ending_cash": {
+          "mean": 22496.666666666668,
+          "min": 22198,
+          "max": 22870
+        },
+        "bookings": {
+          "mean": 117.33333333333333,
+          "min": 116,
+          "max": 119
+        },
+        "meals": {
+          "mean": 115,
+          "min": 111,
+          "max": 120
+        },
+        "reputation": {
+          "mean": 45.887825445577164,
+          "min": 44.8969180463346,
+          "max": 47.5735121870398
+        },
+        "occupancy": {
+          "mean": 0.7973148148148147,
+          "min": 0.795916666666667,
+          "max": 0.799444444444444
+        }
+      }
+    },
+    {
+      "bedrooms": 2,
+      "percent": 125,
+      "metrics": {
+        "profit": {
+          "mean": 20781.666666666668,
+          "min": 20595,
+          "max": 21155
+        },
+        "ending_cash": {
+          "mean": 27501.666666666668,
+          "min": 27315,
+          "max": 27875
+        },
+        "bookings": {
+          "mean": 117.66666666666667,
+          "min": 117,
+          "max": 119
+        },
+        "meals": {
+          "mean": 116,
+          "min": 114,
+          "max": 120
+        },
+        "reputation": {
+          "mean": 44.931859480873435,
+          "min": 44.7056142929286,
+          "max": 45.1930461033571
+        },
+        "occupancy": {
+          "mean": 0.7957824074074074,
+          "min": 0.794847222222222,
+          "max": 0.796583333333333
+        }
+      }
+    },
+    {
+      "bedrooms": 8,
+      "percent": 75,
+      "metrics": {
+        "profit": {
+          "mean": 22998,
+          "min": 22809,
+          "max": 23166
+        },
+        "ending_cash": {
+          "mean": 25368,
+          "min": 25179,
+          "max": 25536
+        },
+        "bookings": {
+          "mean": 226,
+          "min": 225,
+          "max": 227
+        },
+        "meals": {
+          "mean": 218,
+          "min": 214,
+          "max": 221
+        },
+        "reputation": {
+          "mean": 51.28434049354914,
+          "min": 48.416603715858,
+          "max": 55.3252332106019
+        },
+        "occupancy": {
+          "mean": 0.40982754629629603,
+          "min": 0.405520833333333,
+          "max": 0.415302083333333
+        }
+      }
+    },
+    {
+      "bedrooms": 8,
+      "percent": 100,
+      "metrics": {
+        "profit": {
+          "mean": 32583.333333333332,
+          "min": 32462,
+          "max": 32742
+        },
+        "ending_cash": {
+          "mean": 34953.333333333336,
+          "min": 34832,
+          "max": 35112
+        },
+        "bookings": {
+          "mean": 227,
+          "min": 226,
+          "max": 228
+        },
+        "meals": {
+          "mean": 218.33333333333334,
+          "min": 217,
+          "max": 219
+        },
+        "reputation": {
+          "mean": 50.47907709871987,
+          "min": 48.416603715858,
+          "max": 53.2234524263008
+        },
+        "occupancy": {
+          "mean": 0.40737037037037,
+          "min": 0.398458333333333,
+          "max": 0.415302083333333
+        }
+      }
+    },
+    {
+      "bedrooms": 8,
+      "percent": 125,
+      "metrics": {
+        "profit": {
+          "mean": 41905,
+          "min": 41450,
+          "max": 42255
+        },
+        "ending_cash": {
+          "mean": 44275,
+          "min": 43820,
+          "max": 44625
+        },
+        "bookings": {
+          "mean": 226.33333333333334,
+          "min": 224,
+          "max": 228
+        },
+        "meals": {
+          "mean": 217.33333333333334,
+          "min": 216,
+          "max": 219
+        },
+        "reputation": {
+          "mean": 51.502437573221464,
+          "min": 49.7971751540008,
+          "max": 53.2234524263008
+        },
+        "occupancy": {
+          "mean": 0.4057951388888887,
+          "min": 0.398458333333333,
+          "max": 0.410576388888889
+        }
+      }
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "bedrooms": 2,
+      "seed": 1,
+      "premium_minus_standard": {
+        "profit": 4893,
+        "ending_cash": 4893,
+        "bookings": 0,
+        "meals": 0,
+        "reputation": 0.0,
+        "occupancy": 0.0
+      },
+      "same_service_and_reputation": true
+    },
+    {
+      "bedrooms": 2,
+      "seed": 17,
+      "premium_minus_standard": {
+        "profit": 5117,
+        "ending_cash": 5117,
+        "bookings": 1,
+        "meals": 3,
+        "reputation": -2.867897894111202,
+        "occupancy": -0.0045972222222219195
+      },
+      "same_service_and_reputation": false
+    },
+    {
+      "bedrooms": 2,
+      "seed": 123,
+      "premium_minus_standard": {
+        "profit": 5005,
+        "ending_cash": 5005,
+        "bookings": 0,
+        "meals": 0,
+        "reputation": 0.0,
+        "occupancy": 0.0
+      },
+      "same_service_and_reputation": true
+    },
+    {
+      "bedrooms": 8,
+      "seed": 1,
+      "premium_minus_standard": {
+        "profit": 8988,
+        "ending_cash": 8988,
+        "bookings": -2,
+        "meals": -3,
+        "reputation": 3.0700814235047957,
+        "occupancy": -0.00472569444444404
+      },
+      "same_service_and_reputation": false
+    },
+    {
+      "bedrooms": 8,
+      "seed": 17,
+      "premium_minus_standard": {
+        "profit": 9464,
+        "ending_cash": 9464,
+        "bookings": 0,
+        "meals": 0,
+        "reputation": 0.0,
+        "occupancy": 0.0
+      },
+      "same_service_and_reputation": true
+    },
+    {
+      "bedrooms": 8,
+      "seed": 123,
+      "premium_minus_standard": {
+        "profit": 9513,
+        "ending_cash": 9513,
+        "bookings": 0,
+        "meals": 0,
+        "reputation": 0.0,
+        "occupancy": 0.0
+      },
+      "same_service_and_reputation": true
+    }
+  ],
+  "premium_more_profit_cases": 6,
+  "premium_unchanged_service_cases": 4,
+  "reference_eight_room_solvent": true,
+  "limitations": [
+    "Three seeds, fixed hotel and policy",
+    "No human playtest",
+    "No causal isolation of room versus service tariffs"
+  ]
+}

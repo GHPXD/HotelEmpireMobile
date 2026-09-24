@@ -130,3 +130,9 @@ cobrança retroativa; ui_management repetido após correção do Espaço preserv
 pausa ao operar o seletor. Executável 9237939 passou nas seis combinações de
 janela/texto, com persistência da tarifa e controle visível após Carregar.
 Evidência: docs/release/tariffs-waiting-matrix.json. Soak não repetido neste lote.
+
+Experimento de tarifas: `tools/test.ps1 -Tariffs` adiciona 18 cenários de 30 dias
+à bateria base, sem alterar os switches anteriores. Execução direta do cenário
+aprovada em 24/09/2026, com 90 checkpoints e conservação de estado/dinheiro.
+Dados e interpretação em `docs/TARIFF_BALANCE.md`. A aprovação comprova integridade
+da simulação; não significa que as opções de preço estejam bem balanceadas.

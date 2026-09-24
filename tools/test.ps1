@@ -2,7 +2,8 @@ param(
     [string]$GodotPath = 'C:\Program Files (x86)\Godot\Godot_v4.7.2-stable_win64.exe',
     [switch]$Visual,
     [switch]$Stress,
-    [switch]$Soak
+    [switch]$Soak,
+    [switch]$Tariffs
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
@@ -17,6 +18,7 @@ try {
     $suites = @('foundation_test', 'construction_test', 'simulation_test', 'save_test', 'management_test', 'progression_test', 'content_test', 'analytics_test', 'checkin_diagnostics_test')
     if ($Stress) { $suites += @('save_multiseed_test', 'stress_test', 'admission_equivalence_test') }
     if ($Soak) { $suites += @('long_run_test') }
+    if ($Tariffs) { $suites += @('tariff_scenarios') }
     if ($Visual) { $suites += @('ui_smoke', 'ui_resume', 'ui_management', 'ui_progression', 'ui_content', 'ui_operations', 'ui_art', 'ui_culling', 'ui_new_game', 'ui_exit', 'ui_help', 'ui_recovery', 'ui_checkin_diagnostics') }
     foreach ($suite in $suites) {
         $testLog = Join-Path $runtimeRoot ($suite + '.log')
