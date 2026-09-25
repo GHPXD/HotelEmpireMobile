@@ -55,7 +55,9 @@ v1–v4 para v5 e contratos em curso preservados. Detalhes em `docs/TARIFFS.md`.
   mais lucro sem mudar atendimento/reputação. Evidência em `docs/TARIFF_BALANCE.md`.
   - [x] Primeiro efeito de valor no check-in, com prévia por perfil e padrão
     neutro: 18 cenários e 90 checkpoints em `docs/LODGING_VALUE.md`.
-  - [ ] Calibrar satisfação por coorte e avaliar a escolha em playtest humano.
+  - [x] Validar satisfação de saída por coorte: 18 cenários e observador neutro;
+    contrapartida de premium confirmada entre hóspedes atendidos.
+  - [ ] Calibrar com upgrades/políticas adaptativas e avaliar em playtest humano.
 M10 permanece aberto para resultados de compatibilidade em outro computador.
 M6 não conclui suporte integral a teclado/controller, leitores de tela ou touch.
 M8 mede render isolado, transporte e sobrecarga até 1000; operação integrada

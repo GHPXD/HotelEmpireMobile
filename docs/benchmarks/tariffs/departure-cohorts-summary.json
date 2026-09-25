@@ -1,0 +1,144 @@
+{
+  "scenarios": 18,
+  "reference_outcomes_unchanged": 18,
+  "groups": [
+    {
+      "expanded": false,
+      "percent": 75,
+      "cohorts": {
+        "stayed": {
+          "count": 669,
+          "pooled_mean": 78.95377130044425,
+          "seed_mean_range": [
+            78.9360672645697,
+            78.9804932735384
+          ]
+        },
+        "no_stay": {
+          "count": 762,
+          "pooled_mean": 34.23720472440942,
+          "seed_mean_range": [
+            34.2351185770751,
+            34.2390748031496
+          ]
+        }
+      },
+      "profit_mean": 24619.666666666668
+    },
+    {
+      "expanded": false,
+      "percent": 100,
+      "cohorts": {
+        "stayed": {
+          "count": 671,
+          "pooled_mean": 71.69776751117303,
+          "seed_mean_range": [
+            71.5778565022379,
+            71.7681111111068
+          ]
+        },
+        "no_stay": {
+          "count": 719,
+          "pooled_mean": 34.28383866481221,
+          "seed_mean_range": [
+            34.2419456066946,
+            34.3254356846473
+          ]
+        }
+      },
+      "profit_mean": 32583.333333333332
+    },
+    {
+      "expanded": false,
+      "percent": 125,
+      "cohorts": {
+        "stayed": {
+          "count": 673,
+          "pooled_mean": 64.52164487369585,
+          "seed_mean_range": [
+            64.2871181818142,
+            64.8125511111072
+          ]
+        },
+        "no_stay": {
+          "count": 675,
+          "pooled_mean": 34.366118518518505,
+          "seed_mean_range": [
+            34.2942699115044,
+            34.4204054054054
+          ]
+        }
+      },
+      "profit_mean": 40645
+    },
+    {
+      "expanded": true,
+      "percent": 75,
+      "cohorts": {
+        "stayed": {
+          "count": 680,
+          "pooled_mean": 79.65739264705485,
+          "seed_mean_range": [
+            79.5266255506567,
+            79.8135947136524
+          ]
+        },
+        "no_stay": {
+          "count": 761,
+          "pooled_mean": 34.19792378449406,
+          "seed_mean_range": [
+            34.1200787401574,
+            34.2742885375494
+          ]
+        }
+      },
+      "profit_mean": 25992.666666666668
+    },
+    {
+      "expanded": true,
+      "percent": 100,
+      "cohorts": {
+        "stayed": {
+          "count": 681,
+          "pooled_mean": 72.5521512481605,
+          "seed_mean_range": [
+            72.4517876106154,
+            72.640744493388
+          ]
+        },
+        "no_stay": {
+          "count": 718,
+          "pooled_mean": 34.31004874651807,
+          "seed_mean_range": [
+            34.2814075630252,
+            34.326625
+          ]
+        }
+      },
+      "profit_mean": 34324
+    },
+    {
+      "expanded": true,
+      "percent": 125,
+      "cohorts": {
+        "stayed": {
+          "count": 680,
+          "pooled_mean": 65.50915735293721,
+          "seed_mean_range": [
+            65.3431422222184,
+            65.6174203539785
+          ]
+        },
+        "no_stay": {
+          "count": 675,
+          "pooled_mean": 34.32347407407408,
+          "seed_mean_range": [
+            34.1588616071428,
+            34.4251333333333
+          ]
+        }
+      },
+      "profit_mean": 42095.333333333336
+    }
+  ]
+}

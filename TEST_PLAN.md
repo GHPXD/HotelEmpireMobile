@@ -158,3 +158,9 @@ contagens/médias reconciliadas, equipe excluída, ausência de observações,
 visitantes saindo, atualização ao vivo, ausência de mutação e rolagem com foco
 visível. A mudança é uma projeção dos presentes, sem novo schema de save.
 Pacote f22e841 aprovado nos seis casos locais: docs/release/satisfaction-groups-matrix.json.
+
+Coortes de saída (25/09/2026): departure_observer_test aprovado; 18 cenários
+com --departure-cohorts, zero falhas e 90 checkpoints. Contagens e somas
+reconciliadas, sem duplicação e com satisfação do último tick. Os 18 relatórios
+anteriores foram reproduzidos exatamente; observador não interfere na simulação.
+Evidência em docs/DEPARTURE_COHORTS.md. Executável permanece f22e841.

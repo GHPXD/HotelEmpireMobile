@@ -1,0 +1,8 @@
+{
+  "sourceRevision": "8f9a416eea05fdc5ded04a77f3075f0c66a61fb6",
+  "scenarioScriptSha256": "60b8d10e31ea0a0cec760ec32f59014e3f7e4894e3006567ea217628cfc28498",
+  "observerSha256": "3bda5207f53917d31c801d55c33b2f2f2e5737d3eaac82e5aa4e97d25b46a9d6",
+  "gameRulesChanged": false,
+  "command": "Godot --headless --script res://tests/tariff_scenarios.gd -- --departure-cohorts",
+  "reference": "docs/benchmarks/tariffs/lodging-value.json"
+}

@@ -2,10 +2,12 @@ extends SceneTree
 ## Controlled comparison, not an assertion that each policy should win equally.
 
 var failures: int = 0
+var observe_departures: bool = false
 
 func _initialize() -> void:
 	var reports: Array[Dictionary] = []
-	var value_study := OS.get_cmdline_user_args().has("--lodging-value")
+	observe_departures = OS.get_cmdline_user_args().has("--departure-cohorts")
+	var value_study := observe_departures or OS.get_cmdline_user_args().has("--lodging-value")
 	var mixed := value_study or OS.get_cmdline_user_args().has("--tariff-mixed")
 	if mixed:
 		for expanded in [false, true]:
@@ -19,6 +21,8 @@ func _initialize() -> void:
 				for percent in [75, 100, 125]:
 					reports.append(run_case(seed_value, bedrooms, percent))
 	var output := "res://.runtime/lodging-value.json" if value_study else ("res://.runtime/tariff-mixed.json" if mixed else "res://.runtime/tariff-scenarios.json")
+	if observe_departures:
+		output = "res://.runtime/departure-cohorts.json"
 	var file := FileAccess.open(output, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"days": 30, "reports": reports, "failures": failures}, "\t"))
 	file.close()
@@ -48,6 +52,7 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 	var occupied_ticks: int = 0
 	var shadow: HotelSession
 	var checkpoints: int = 0
+	var observer := preload("res://tests/departure_observer.gd").new()
 	session.opened = true
 	for tick in range(1, 36001):
 		if expanded and tick == 6001:
@@ -62,7 +67,11 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 					var mirrored := shadow.hotel.build(definition, spec[1], 0)
 					if mirrored != null:
 						shadow.set_room_tariff(mirrored.id, service_percent)
+		if observe_departures:
+			observer.before_step(session)
 		session.tick(session.rules.tick)
+		if observe_departures:
+			observer.after_step(session)
 		if shadow != null:
 			shadow.tick(shadow.rules.tick)
 			if tick % 6000 == 120:
@@ -93,6 +102,11 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 	for room: RoomState in session.hotel.rooms:
 		income[room.definition_id] = int(income.get(room.definition_id, 0)) + room.income
 	report["income_by_type"] = income
+	if observe_departures:
+		var cohorts := observer.report()
+		check(cohorts.stayed.count + cohorts.no_stay.count == session.guests.completed, "historical cohort counts reconcile")
+		check(is_equal_approx(cohorts.stayed.score_total + cohorts.no_stay.score_total, session.guests.score_total), "historical cohort scores reconcile")
+		report["departure_cohorts"] = cohorts
 	return report
 
 func check(condition: bool, message: String) -> void:

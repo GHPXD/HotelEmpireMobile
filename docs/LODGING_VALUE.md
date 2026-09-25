@@ -66,6 +66,11 @@ hospedados, separada das saídas por desistência, além da reputação agregada
 Não aumentar o coeficiente apenas para fazer seis seeds produzirem o mesmo
 sinal. Ainda faltam playtest humano e políticas de preço adaptativas.
 
+Diagnóstico posterior: `DEPARTURE_COHORTS.md` confirmou que a satisfação média
+de quem se hospeda cai com premium e sobe com desconto nos dois contextos. A
+mistura com saídas sem estadia explica por que a reputação agregada é insuficiente
+como único indicador. Os coeficientes foram conservados após essa medição.
+
 Disponível no ZIP Windows da revisão 8fbfdb5. Seis combinações locais de
 janela/texto aprovadas em release/lodging-value-matrix.json, incluindo prévia
 de valor e tarifa de quarto preservada após carregar. Os onze casos específicos
