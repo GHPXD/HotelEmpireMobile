@@ -35,7 +35,13 @@ func _ready() -> void:
 	summary_scroll.custom_minimum_size.y = 190
 	summary_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	summary_scroll.focus_mode = Control.FOCUS_ALL
-	summary_scroll.add_theme_stylebox_override("focus", get_theme_stylebox("focus", "Button"))
+	var summary_focus := StyleBoxFlat.new()
+	summary_focus.draw_center = false
+	summary_focus.set_border_width_all(2)
+	summary_focus.border_color = Color.TRANSPARENT
+	summary_scroll.add_theme_stylebox_override("panel", summary_focus)
+	summary_scroll.focus_entered.connect(func() -> void: summary_focus.border_color = Color("f5c66b"))
+	summary_scroll.focus_exited.connect(func() -> void: summary_focus.border_color = Color.TRANSPARENT)
 	summary_scroll.tooltip_text = "Resumo rolável • setas, Page Up/Down, Home/End. Tab muda o foco."
 	summary_scroll.gui_input.connect(_scroll_summary.bind(summary_scroll))
 	column.add_child(summary_scroll)
