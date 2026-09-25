@@ -152,3 +152,9 @@ padrão exatamente iguais à referência. Dados em `docs/benchmarks/tariffs/`.
 Pacote 8fbfdb5: seis casos de janela/texto aprovados, incluindo prévia de valor
 no inspetor e tarifa de hospedagem persistida. Matriz arquivada em
 docs/release/lodging-value-matrix.json.
+
+Satisfação por grupo (25/09/2026): analytics e ui_operations aprovados para
+contagens/médias reconciliadas, equipe excluída, ausência de observações,
+visitantes saindo, atualização ao vivo, ausência de mutação e rolagem com foco
+visível. A mudança é uma projeção dos presentes, sem novo schema de save.
+Pacote f22e841 aprovado nos seis casos locais: docs/release/satisfaction-groups-matrix.json.

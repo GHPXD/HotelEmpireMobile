@@ -25,3 +25,7 @@ Validação: analytics cobre vazio, exclusão da equipe, médias/contagens,
 reconciliação dos grupos, saída com e sem check-in e ausência de mutação.
 ui_operations verifica valores vazios/preenchidos, texto ampliado, rolagem por
 teclado, filtros e fechamento. Captura: `.runtime/satisfaction-groups.png`.
+
+Distribuição: pacote Windows f22e841 aprovado nas seis configurações locais de
+janela/texto. Evidência em release/satisfaction-groups-matrix.json. Kit externo
+atualizado; teste em outra máquina continua pendente.

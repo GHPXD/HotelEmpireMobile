@@ -17,6 +17,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
 - [x] M6 UI/UX Polish: filtros, analytics e melhorias de leitura/foco no desktop.
   - [x] Causa atual da fila de check-in e ação sugerida no inspetor e em Operação.
   - [x] Métricas por elevador em Operação: cabine, fila, espera atual e histórico de embarques.
+  - [x] Satisfação dos presentes separada por check-in, com contagens, médias e resumo rolável por teclado.
 - [x] M7 Art & Animation: 28 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
   - [x] Pinturas dedicadas para quartos, recepções e restaurante nos níveis 2 e 3.
   - [x] Cabine de elevador N2 com pintura dedicada.
