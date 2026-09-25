@@ -38,6 +38,7 @@ func run() -> void:
 	var panel: OperationsPanel = game.operations_panel
 	check(panel.visible and panel.category_choice.has_focus(), "F2 opens with useful initial focus")
 	check(panel.summary_label.text.contains("0/12") and panel.rows.size() == 17, "live summary and initial room list")
+	check(panel.summary_label.text.contains("Presentes com check-in: 0 • —") and panel.summary_label.text.contains("Presentes sem check-in: 0 • —"), "empty cohorts display no observation rather than zero satisfaction")
 	panel.status_choice.grab_focus()
 	await key(panel, KEY_SPACE)
 	await key(panel.status_choice.get_popup(), KEY_DOWN)
@@ -101,6 +102,32 @@ func run() -> void:
 	root.get_texture().get_image().save_png("res://.runtime/m6-large-hud.png")
 	dirty.dirty = true
 	check(SessionSnapshot.capture(session) == snapshot, "filters focus and text size do not mutate gameplay")
+	var admitted := session.spawn_guest()
+	admitted.checked_in = true
+	admitted.happiness = 80
+	var arriving := session.spawn_guest()
+	arriving.happiness = 40
+	game._show_operations()
+	check(panel.summary_label.text.contains("Presentes com check-in: 1 • 80.0/100"), "nonempty admitted cohort displayed")
+	check(panel.summary_label.text.contains("Presentes sem check-in: 1 • 40.0/100"), "nonempty arrival cohort displayed")
+	var summary_scroll: ScrollContainer = panel.summary_label.get_parent()
+	for frame in 3:
+		await process_frame
+	summary_scroll.grab_focus()
+	await key(panel, KEY_DOWN)
+	await key(panel, KEY_DOWN)
+	for frame in 3:
+		await process_frame
+	check(summary_scroll.scroll_vertical > 0 or panel.summary_label.size.y <= summary_scroll.size.y, "summary can be read with keyboard at large text")
+	var scroll_position := summary_scroll.scroll_vertical
+	arriving.happiness = 45
+	panel.refresh(session)
+	for frame in 3:
+		await process_frame
+	check(panel.summary_label.text.contains("Presentes sem check-in: 1 • 45.0/100") and summary_scroll.scroll_vertical == scroll_position, "live value update preserves reading position")
+	await RenderingServer.frame_post_draw
+	panel.get_texture().get_image().save_png("res://.runtime/satisfaction-groups.png")
+	await key(panel, KEY_ESCAPE)
 	game._replace_session(HotelSession.new())
 	game.session.speed = 0
 	check(game.hud.build_search.text.is_empty() and panel.status_choice.selected == 0 and game.large_text, "new session resets filters but keeps device preference")

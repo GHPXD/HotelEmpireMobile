@@ -114,6 +114,9 @@ func run(game: Node) -> void:
 		if game.operations_panel.rows[index].id == lift_room.id:
 			game.operations_panel.room_list.select(index)
 	game.operations_panel.refresh(game.session)
+	var groups := HotelAnalytics.satisfaction_groups(game.session)
+	check(game.operations_panel.summary_label.text.contains("Presentes com check-in: %d" % groups.checked_in.count), "packaged admitted cohort")
+	check(game.operations_panel.summary_label.text.contains("Presentes sem check-in: %d" % groups.not_checked_in.count), "packaged arrival cohort")
 	check(game.operations_panel.selected_details.text.contains(UILabels.elevator(elevator_metrics)), "operations shows actual elevator history")
 	for frame in 3:
 		await tree.process_frame

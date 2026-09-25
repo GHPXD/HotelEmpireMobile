@@ -25,7 +25,20 @@ static func summary(session: HotelSession) -> Dictionary:
 	result.happiness = result.happiness / result.guests if result.guests > 0 else 0.0
 	result.occupancy = 100.0 * result.occupied / result.beds if result.beds > 0 else 0.0
 	result.costs = session.recurring_costs()
+	result.satisfaction_groups = satisfaction_groups(session)
 	return result
+
+static func satisfaction_groups(session: HotelSession) -> Dictionary:
+	var groups := {"checked_in": {"count": 0, "average": 0.0}, "not_checked_in": {"count": 0, "average": 0.0}}
+	for actor: ActorState in session.actors.values():
+		if actor.role != &"guest":
+			continue
+		var group: Dictionary = groups["checked_in" if actor.checked_in else "not_checked_in"]
+		group.count += 1
+		group.average += actor.happiness
+	for group: Dictionary in groups.values():
+		group.average = group.average / group.count if group.count > 0 else 0.0
+	return groups
 
 static func rooms(session: HotelSession, category: StringName = &"", floor_index: int = -1, status: int = 0) -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []

@@ -6,6 +6,7 @@ func _initialize() -> void:
 	var session := HotelSession.new()
 	var empty := HotelAnalytics.summary(session)
 	check(empty.beds == 0 and empty.occupancy == 0 and empty.happiness == 0, "empty hotel has finite zero metrics")
+	check(empty.satisfaction_groups.checked_in.count == 0 and empty.satisfaction_groups.not_checked_in.count == 0, "empty cohorts have no observations")
 	var reception := session.hotel.build(HotelCatalog.room(&"reception"), 0, 0)
 	session.hotel.add_floor()
 	var bed_a := session.hotel.build(HotelCatalog.room(&"bedroom"), 0, 1)
@@ -20,6 +21,7 @@ func _initialize() -> void:
 	reception.queue.join(guest.id)
 	var other := session.spawn_guest()
 	other.happiness = 80
+	other.checked_in = true
 	other.state = &"using"
 	other.bedroom = bed_b.id
 	other.target_room = bed_b.id
@@ -36,6 +38,14 @@ func _initialize() -> void:
 	var metrics := HotelAnalytics.summary(session)
 	check(metrics.beds == 2 and metrics.occupied == 1 and metrics.dirty == 1 and metrics.occupancy == 50, "occupancy and cleaning derived correctly")
 	check(metrics.guests == 3 and metrics.staff == 1 and metrics.happiness == 70, "present guests average excludes staff")
+	check(metrics.satisfaction_groups.checked_in.count == 1 and metrics.satisfaction_groups.checked_in.average == 80, "paid stay cohort")
+	check(metrics.satisfaction_groups.not_checked_in.count == 2 and metrics.satisfaction_groups.not_checked_in.average == 65, "pre-check-in cohort includes arrivals and waiting")
+	var grouped_sum: float = 0
+	var grouped_count: int = 0
+	for group: Dictionary in metrics.satisfaction_groups.values():
+		grouped_sum += group.average * group.count
+		grouped_count += group.count
+	check(grouped_count == metrics.guests and is_equal_approx(grouped_sum / grouped_count, metrics.happiness), "cohorts reconcile to whole hotel")
 	check(metrics.room_queue == 1 and metrics.lift_queue == 1 and metrics.longest_wait == 12.5, "current waits split by service and transport")
 	check(metrics.costs.total == session.recurring_costs().total, "fixed-cost projection reconciles")
 	check(HotelAnalytics.rooms(session, &"lodging", 1, 2)[0].id == bed_a.id, "category floor and cleaning intersection")
@@ -46,6 +56,14 @@ func _initialize() -> void:
 	var ordered := HotelAnalytics.rooms(session)
 	check(ordered[0].id == reception.id and ordered[1].id == shaft.id, "queues first with stable ID tiebreak")
 	check(SessionSnapshot.capture(session) == before, "analytics never mutates simulation")
+	other.bedroom = -1
+	other.travel_to(-0.8, 0, &"exit")
+	check(HotelAnalytics.satisfaction_groups(session).checked_in.count == 1, "paid departing visitor retains cohort until leaving")
+	other.bedroom = bed_b.id
+	other.state = &"using"
+	session.actors.erase(guest.id)
+	check(HotelAnalytics.satisfaction_groups(session).not_checked_in.count == 1, "departed visitor leaves current cohort")
+	session.actors[guest.id] = guest
 	var elevator_metrics: Dictionary = HotelAnalytics.rooms(session, &"transport")[0].lift_metrics
 	check(elevator_metrics.current_max == 8 and elevator_metrics.boarded == 0, "current unserved wait is separate from boarding history")
 	check(UILabels.elevator(elevator_metrics).contains("Sem embarques"), "no history does not imply zero wait")

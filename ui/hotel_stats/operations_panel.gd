@@ -30,7 +30,16 @@ func _ready() -> void:
 	margin.add_child(column)
 	summary_label = Label.new()
 	summary_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	column.add_child(summary_label)
+	summary_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var summary_scroll := ScrollContainer.new()
+	summary_scroll.custom_minimum_size.y = 190
+	summary_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	summary_scroll.focus_mode = Control.FOCUS_ALL
+	summary_scroll.add_theme_stylebox_override("focus", get_theme_stylebox("focus", "Button"))
+	summary_scroll.tooltip_text = "Resumo rolável • setas, Page Up/Down, Home/End. Tab muda o foco."
+	summary_scroll.gui_input.connect(_scroll_summary.bind(summary_scroll))
+	column.add_child(summary_scroll)
+	summary_scroll.add_child(summary_label)
 	var filters := HFlowContainer.new()
 	column.add_child(filters)
 	category_choice = _choice(filters, "Tipo de sala", ["Todas as salas", "Quartos", "Recepções", "Serviços", "Elevadores"])
@@ -49,7 +58,7 @@ func _ready() -> void:
 	selected_details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	selected_details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var details_scroll := ScrollContainer.new()
-	details_scroll.custom_minimum_size.y = 145
+	details_scroll.custom_minimum_size.y = 110
 	details_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	details_scroll.focus_mode = Control.FOCUS_ALL
 	column.add_child(details_scroll)
@@ -64,6 +73,22 @@ func _ready() -> void:
 	close.custom_minimum_size.y = 42
 	close.pressed.connect(hide)
 	column.add_child(close)
+
+func _satisfaction_group(label: String, group: Dictionary) -> String:
+	return "%s: %d • %s" % [label, group.count, "—" if group.count == 0 else "%.1f/100" % group.average]
+
+func _scroll_summary(event: InputEvent, scroll: ScrollContainer) -> void:
+	if not event is InputEventKey or not event.pressed:
+		return
+	match event.keycode:
+		KEY_DOWN: scroll.scroll_vertical += 32
+		KEY_UP: scroll.scroll_vertical -= 32
+		KEY_PAGEDOWN: scroll.scroll_vertical += int(scroll.size.y)
+		KEY_PAGEUP: scroll.scroll_vertical -= int(scroll.size.y)
+		KEY_HOME: scroll.scroll_vertical = 0
+		KEY_END: scroll.scroll_vertical = int(scroll.get_v_scroll_bar().max_value)
+		_: return
+	scroll.accept_event()
 
 func _choice(parent: Control, label_text: String, items: Array) -> OptionButton:
 	var group := VBoxContainer.new()
@@ -93,7 +118,12 @@ func reset_filters() -> void:
 
 func refresh(session: HotelSession) -> void:
 	var metrics := HotelAnalytics.summary(session)
-	summary_label.text = "HOTEL INTEIRO • AGORA\nOcupação: %d/%d quartos (%.0f%%) • Limpeza pendente: %d\nFilas: %d nas salas, %d nos elevadores • Maior espera atual: %.1fs\nHóspedes: %d • Equipe: %d • Satisfação dos presentes: %s\nCusto fixo: $ %d/dia • Lucro acumulado: $ %d" % [metrics.occupied, metrics.beds, metrics.occupancy, metrics.dirty, metrics.room_queue, metrics.lift_queue, metrics.longest_wait, metrics.guests, metrics.staff, "—" if metrics.guests == 0 else "%.0f/100" % metrics.happiness, metrics.costs.total, session.economy.profit()]
+	var summary_text := "HOTEL INTEIRO • AGORA\nOcupação: %d/%d quartos (%.0f%%) • Limpeza pendente: %d\nFilas: %d nas salas, %d nos elevadores • Maior espera atual: %.1fs\nHóspedes: %d • Equipe: %d • Satisfação dos presentes: %s\nCusto fixo: $ %d/dia • Lucro acumulado: $ %d" % [metrics.occupied, metrics.beds, metrics.occupancy, metrics.dirty, metrics.room_queue, metrics.lift_queue, metrics.longest_wait, metrics.guests, metrics.staff, "—" if metrics.guests == 0 else "%.0f/100" % metrics.happiness, metrics.costs.total, session.economy.profit()]
+	summary_text += "\n" + _satisfaction_group("Presentes com check-in", metrics.satisfaction_groups.checked_in)
+	summary_text += "\n" + _satisfaction_group("Presentes sem check-in", metrics.satisfaction_groups.not_checked_in)
+	if summary_label.text != summary_text:
+		summary_label.text = summary_text
+	summary_label.tooltip_text = "Somente visitantes ainda no hotel, incluindo quem está saindo. Sem check-in inclui chegadas, espera e desistências ainda presentes. Funcionários excluídos. Não é histórico de avaliações nem reputação."
 	if floor_choice.item_count != session.hotel.floors + 1:
 		var previous: int = floor_choice.selected
 		floor_choice.clear()
