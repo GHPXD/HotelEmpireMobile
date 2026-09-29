@@ -162,9 +162,11 @@ func _draw_simulation() -> void:
 		# Include the entire sprite, waiting badge and antialiased edge at every zoom.
 		if not _in_view(Rect2(point - Vector2(36, 60) * zoom_factor, Vector2(72, 88) * zoom_factor).grow(16)):
 			continue
-		var texture := HotelArt.character(actor)
-		var region := HotelArt.character_region(actor, session.tick_count)
-		var sprite_size := region.size * HotelArt.character_scale(actor) * zoom_factor
+		var service_room := hotel.by_id(actor.target_room) if actor.state == &"using" else null
+		var service_id: StringName = service_room.definition_id if service_room != null else &""
+		var texture := HotelArt.character(actor, service_id)
+		var region := HotelArt.character_region(actor, session.tick_count, service_id)
+		var sprite_size := region.size * HotelArt.character_scale(actor, service_id) * zoom_factor
 		var destination := Rect2(point + Vector2(-sprite_size.x / 2.0, 17 * zoom_factor - sprite_size.y), sprite_size)
 		if actor.target_x < actor.x and actor.state == &"walking":
 			destination.position.x += destination.size.x

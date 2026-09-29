@@ -250,5 +250,32 @@
     "bytes": 968442,
     "sha256": "05e79025bdf513747c365aa952acbf1a321396ffa551bfa68cfb8d7303f11380",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/balanced-cafe.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGBA",
+    "bytes": 1739644,
+    "sha256": "3ef5d5a9f36681e56daacc983f12c75f70c50476943650e06557a02b69693fd9",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/business-cafe.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGBA",
+    "bytes": 1438713,
+    "sha256": "cf8234eb049cff2f4cfcc1f049c18299113f0f11c24e174dde52c2bdde95eff9",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/leisure-cafe.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGBA",
+    "bytes": 1545819,
+    "sha256": "c83533f4742bed561210fe28ff3afb0b2a0968f6959c772408db3a500e008ddf",
+    "generator": "built-in image_gen"
   }
 ]

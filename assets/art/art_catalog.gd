@@ -42,6 +42,9 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 	return ROOMS.get(id)
 
 const CHARACTERS: Dictionary = {
+	&"balanced-cafe": preload("res://assets/art/characters/balanced-cafe.png"),
+	&"business-cafe": preload("res://assets/art/characters/business-cafe.png"),
+	&"leisure-cafe": preload("res://assets/art/characters/leisure-cafe.png"),
 	&"balanced-waiting": preload("res://assets/art/characters/balanced-waiting.png"),
 	&"business-waiting": preload("res://assets/art/characters/business-waiting.png"),
 	&"leisure-waiting": preload("res://assets/art/characters/leisure-waiting.png"),
@@ -58,10 +61,13 @@ const REGIONS: Dictionary = {"balanced": [[50, 67, 425, 746], [531, 66, 226, 747
 static func character_id(actor: ActorState) -> StringName:
 	return actor.archetype_id if actor.role == &"guest" else actor.role
 
-static func character(actor: ActorState) -> Texture2D:
-	return CHARACTERS[animation_id(actor)]
+static func character(actor: ActorState, service_id: StringName = &"") -> Texture2D:
+	return CHARACTERS[animation_id(actor, service_id)]
 
 const ACTION_REGIONS: Dictionary = {
+	&"balanced-cafe": [[219, 10, 606, 1463]],
+	&"business-cafe": [[243, 38, 507, 1445]],
+	&"leisure-cafe": [[273, 53, 499, 1432]],
 	&"balanced-waiting": [[116, 55, 275, 778], [517, 55, 286, 778], [982, 55, 273, 778], [1404, 55, 270, 778]],
 	&"business-waiting": [[114, 35, 272, 808], [550, 35, 245, 808], [964, 35, 273, 808], [1392, 35, 251, 808]],
 	&"leisure-waiting": [[100, 43, 249, 795], [507, 43, 256, 795], [988, 43, 273, 795], [1428, 43, 245, 795]],
@@ -69,7 +75,9 @@ const ACTION_REGIONS: Dictionary = {
 	&"receptionist-working": [[121, 44, 271, 796], [531, 60, 297, 780], [955, 43, 275, 797], [1353, 41, 390, 799]],
 }
 
-static func animation_id(actor: ActorState) -> StringName:
+static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
+	if actor.role == &"guest" and actor.state == &"using" and service_id == &"cafe":
+		return StringName("%s-cafe" % actor.archetype_id)
 	if actor.role == &"guest" and actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
 		return StringName("%s-waiting" % actor.archetype_id)
 	if actor.role == &"cleaner" and actor.state == &"cleaning":
@@ -78,21 +86,22 @@ static func animation_id(actor: ActorState) -> StringName:
 		return &"receptionist-working"
 	return character_id(actor)
 
-static func character_regions(actor: ActorState) -> Array:
-	var id := animation_id(actor)
+static func character_regions(actor: ActorState, service_id: StringName = &"") -> Array:
+	var id := animation_id(actor, service_id)
 	return ACTION_REGIONS[id] if ACTION_REGIONS.has(id) else REGIONS[id]
 
-static func character_region(actor: ActorState, tick: int) -> Rect2:
+static func character_region(actor: ActorState, tick: int, service_id: StringName = &"") -> Rect2:
+	var regions := character_regions(actor, service_id)
 	var index: int = (tick + actor.id * 2) % 4 if actor.state == &"walking" else 1
 	if ACTION_REGIONS.has(animation_id(actor)):
 		# Waiting uses slower gestures; all animations freeze with the simulation.
 		var frame_ticks := 12.0 if actor.role == &"guest" else 4.0
 		index = (floori(tick / frame_ticks) + actor.id) % 4
-	var box: Array = character_regions(actor)[index]
+	var box: Array = regions[index % regions.size()]
 	return Rect2(box[0], box[1], box[2], box[3])
 
-static func character_scale(actor: ActorState) -> float:
+static func character_scale(actor: ActorState, service_id: StringName = &"") -> float:
 	var height: float = 0.0
-	for box: Array in character_regions(actor):
+	for box: Array in character_regions(actor, service_id):
 		height = maxf(height, box[3])
 	return 46.0 / height

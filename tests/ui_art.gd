@@ -74,6 +74,19 @@ func run() -> void:
 		actor.state = &"idle"
 		check(HotelArt.character(actor) == walk_texture, "idle restores base texture")
 		actor.state = &"cleaning" if actor.role == &"cleaner" else &"working"
+	# Static service poses are contextual: cups must never appear in other rooms.
+	for profile: StringName in [&"balanced", &"business", &"leisure"]:
+		var guest := session.spawn_guest()
+		guest.archetype_id = profile
+		guest.state = &"using"
+		var pose := HotelArt.character(guest, &"cafe")
+		check(pose != HotelArt.character(guest, &"bedroom"), "cafe pose is service specific")
+		check(pose.get_image().detect_alpha() != Image.ALPHA_NONE, "cafe pose has alpha")
+		check(HotelArt.character_region(guest, 0, &"cafe") == HotelArt.character_region(guest, 200, &"cafe"), "single service pose stays stable")
+		for room: RoomState in session.hotel.rooms:
+			if room.definition_id == &"cafe":
+				guest.target_room = room.id
+			guest.x = 5.8 + [&"balanced", &"business", &"leisure"].find(profile) * 0.6
 	session.speed = 0
 	for room: RoomState in session.hotel.rooms:
 		if room.definition().category == &"lodging" and room.column == 8:
