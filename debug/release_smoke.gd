@@ -25,6 +25,7 @@ func run(game: Node) -> void:
 		session.tick(session.rules.tick)
 	check(session.guests.bookings >= 10 and session.guests.meals_served >= 5 and session.employees.cleaned >= 5, "productive packaged game")
 	check(session.economy.cash > 0, "solvent packaged game")
+	check(session.guests.reviews.size() == GuestSystem.REVIEW_LIMIT, "packaged gameplay fills bounded review history")
 	var upgraded_levels: Dictionary = {}
 	for index: int in [0, 1, 3]:
 		var room: RoomState = session.hotel.rooms[index]
@@ -74,7 +75,7 @@ func run(game: Node) -> void:
 		game._toggle_text_size()
 		for frame in 3:
 			await tree.process_frame
-	for button: Control in [game.hud.open_button, game.hud.session_buttons["Salvar"], game.hud.session_buttons["Carregar"], game.hud.operations_button]:
+	for button: Control in [game.hud.open_button, game.hud.session_buttons["Salvar"], game.hud.session_buttons["Carregar"], game.hud.operations_button, game.hud.session_buttons["Avaliações"]]:
 		check(root.get_visible_rect().encloses(button.get_global_rect()), "essential toolbar control fits viewport")
 	await click(tree, game.hud.session_buttons["Carregar"].get_global_rect().get_center())
 	check(equivalent(expected, SessionSnapshot.capture(game.session)), "toolbar restores packaged session")
@@ -124,6 +125,17 @@ func run(game: Node) -> void:
 	game.operations_panel.get_texture().get_image().save_png("user://release-elevator-metrics.png")
 	await close_popup(tree, game.operations_panel)
 	check(equivalent(expected, SessionSnapshot.capture(game.session)), "elevator metrics preserve session")
+	await click(tree, game.hud.session_buttons["Avaliações"].get_global_rect().get_center())
+	check(game.reviews_panel.visible, "packaged reviews open after save restore")
+	check(game.reviews_panel.details.text.contains(GuestReviewsPanel.describe(game.session.guests.reviews.back(), game.session.rules.day_seconds)), "packaged review matches saved visitor facts")
+	check(root.get_visible_rect().encloses(Rect2(Vector2(game.reviews_panel.position), Vector2(game.reviews_panel.size))), "packaged reviews fit viewport")
+	game.session.speed = 1
+	var reading := SessionSnapshot.capture(game.session)
+	game._process(1.0)
+	check(equivalent(reading, SessionSnapshot.capture(game.session)), "packaged reviews pause running simulation")
+	game.session.speed = 0
+	await close_popup(tree, game.reviews_panel)
+	check(not game.reviews_panel.visible and game.hud.session_buttons["Avaliações"].has_focus(), "packaged reviews close and restore focus")
 	await click(tree, game.hud.help_button.get_global_rect().get_center())
 	check(game.help_panel.visible, "packaged help opens")
 	game._process(1.0)
