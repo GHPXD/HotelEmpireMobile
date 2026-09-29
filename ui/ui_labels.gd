@@ -10,6 +10,41 @@ static func state(value: StringName) -> String:
 static func role(value: StringName) -> String:
 	return ROLES.get(value, "Equipe")
 
+static func room_reference(hotel: HotelModel, id: int) -> String:
+	var room := hotel.by_id(id)
+	if room == null:
+		return "Sem sala definida"
+	return "%s #%d • %s" % [room.definition().display_name, room.id, "térreo" if room.floor_index == 0 else "andar %d" % room.floor_index]
+
+static func actor_goal(actor: ActorState, hotel: HotelModel) -> String:
+	var destination: StringName = actor.destination_state if actor.in_transit() else actor.state
+	match destination:
+		&"exit":
+			return "Sair do hotel • saída no térreo"
+		&"arriving", &"checkin":
+			return "Fazer check-in • " + room_reference(hotel, actor.target_room)
+		&"service_queue", &"using":
+			var room := hotel.by_id(actor.target_room)
+			var activity := "Descansar" if room != null and room.definition().category == &"lodging" else "Usar serviço"
+			return activity + " • " + room_reference(hotel, actor.target_room)
+		&"cleaning":
+			return "Limpar • " + room_reference(hotel, actor.assignment)
+		&"working":
+			return "Atender • " + room_reference(hotel, actor.assignment)
+		&"deciding":
+			return "Escolher a próxima atividade"
+	return "Aguardar tarefa"
+
+static func actor_wait(actor: ActorState) -> String:
+	match actor.state:
+		&"checkin":
+			return "Tempo nesta recepção: %.1fs" % actor.waiting
+		&"service_queue":
+			return "Espera nesta fila de serviço: %.1fs" % actor.waiting
+		&"lift_queue":
+			return "Espera nesta fila de elevador: %.1fs" % actor.waiting
+	return ""
+
 const CHECKIN: Dictionary = {
 	"empty": "Sem fila de check-in.",
 	"head_travelling": "O primeiro hóspede está chegando à recepção.\nAguarde sua chegada para iniciar o atendimento.",

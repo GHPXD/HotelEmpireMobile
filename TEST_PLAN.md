@@ -183,3 +183,9 @@ leitura pausa velocidade 1x, Escape devolve foco e janela cabe no viewport.
 Auditoria de inventário e hashes aprovou 31 PNGs. Evidência em
 docs/release/reviews-cafe-matrix.json. Kit externo atualizado; validação em outro
 computador continua pendente.
+
+Inspetor de personagens (29/09/2026): ui_content e ui_management aprovados.
+Seleção pela cena, destino durante deslocamento, espera por etapa, embarque,
+saída e decisão sem alvo antigo, projeção sem mutação e save/load conferidos.
+Captura inspecionada em .runtime/m5-content.png; detalhes em
+docs/ACTOR_INSPECTION.md. Não exige mudança de schema. Não incluído ainda no ZIP.

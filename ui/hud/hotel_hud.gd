@@ -288,7 +288,10 @@ func refresh_simulation(session: HotelSession, actor_id: int) -> void:
 		debug_label.text = "FPS %d | Agentes %d | Elevador: fila %d, bordo %d | Rotas %d | Tick %d" % [Engine.get_frames_per_second(), session.actors.size(), waiting, riding, session.transport.path_requests, session.tick_count]
 	var actor: ActorState = session.actors.get(actor_id)
 	if actor != null:
-		inspector.text = "%s\n%s • %s\n\nSatisfação: %.0f\nFome: %.0f\nCansaço: %.0f\nDinheiro: $ %d\nQuarto: %s\nTempo: %.0fs\nEspera: %.1fs\nDestino: andar %d" % [actor.display_name, UILabels.role(actor.role), UILabels.state(actor.state), actor.happiness, actor.needs.hunger, actor.needs.energy, actor.money, "Sem reserva" if actor.bedroom < 0 else str(actor.bedroom), actor.age, actor.waiting, actor.target_floor]
+		inspector.text = "%s\n%s • %s\n\nObjetivo: %s\n\nSatisfação: %.0f\nFome: %.0f\nCansaço: %.0f\nDinheiro: $ %d\nQuarto: %s\nTempo no hotel: %.0fs" % [actor.display_name, UILabels.role(actor.role), UILabels.state(actor.state), UILabels.actor_goal(actor, session.hotel), actor.happiness, actor.needs.hunger, actor.needs.energy, actor.money, "Sem reserva" if actor.bedroom < 0 else UILabels.room_reference(session.hotel, actor.bedroom), actor.age]
+		var wait_text := UILabels.actor_wait(actor)
+		if not wait_text.is_empty():
+			inspector.text += "\n" + wait_text
 		if actor.role == &"guest":
 			inspector.text += "\n\nPerfil: %s\n%s\nLazer: %.0f\nServiços usados: %d" % [actor.archetype().display_name, actor.archetype().description, actor.needs.entertainment, actor.service_uses]
 		if debug_label.visible:

@@ -19,6 +19,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Causa atual da fila de check-in e ação sugerida no inspetor e em Operação.
   - [x] Métricas por elevador em Operação: cabine, fila, espera atual e histórico de embarques.
   - [x] Satisfação dos presentes separada por check-in, com contagens, médias e resumo rolável por teclado.
+  - [x] Inspetor identifica objetivo, sala e andar do personagem, sem destinos ou esperas antigos em etapas posteriores.
 - [x] M7 Art & Animation: 31 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
   - [x] Pinturas dedicadas para quartos, recepções e restaurante nos níveis 2 e 3.
   - [x] Cabine de elevador N2 com pintura dedicada.

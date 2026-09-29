@@ -49,6 +49,27 @@ func run() -> void:
 	check(session.tick_count == 3600, "pause freezes event calendar")
 	await click(root, game.view.actor_screen_position(actor) + game.view.global_position)
 	check(game.selected_actor == actor.id and game.hud.inspector.text.contains("Perfil: Lazer"), "profile visible through actor picking")
+	actor.target_room = session.hotel.room_at(13, 1).id
+	actor.travel_to(13.5, 1, &"service_queue")
+	var inspection_before := SessionSnapshot.capture(session)
+	game._refresh()
+	check(game.hud.inspector.text.contains("Objetivo: Usar serviço • Café Brisa #"), "walking guest names actual destination service")
+	check(SessionSnapshot.capture(session) == inspection_before, "inspection does not mutate simulation")
+	actor.state = &"lift_queue"
+	actor.waiting = 12.5
+	game._refresh()
+	check(game.hud.inspector.text.contains("Espera nesta fila de elevador: 12.5s"), "queue duration identifies the current stage")
+	actor.state = &"riding"
+	game._refresh()
+	check(not game.hud.inspector.text.contains("Espera nesta fila"), "boarding hides stale queue duration")
+	actor.travel_to(-0.8, 0, &"exit")
+	game._refresh()
+	check(game.hud.inspector.text.contains("Sair do hotel") and not game.hud.inspector.text.contains("Café Brisa #"), "exit ignores stale service target")
+	actor.state = &"deciding"
+	game._refresh()
+	check(game.hud.inspector.text.contains("Escolher a próxima atividade"), "decision has no stale destination")
+	actor.travel_to(13.5, 1, &"service_queue")
+	game._refresh()
 	var scroll: ScrollContainer = game.hud.inspector.get_parent().get_parent()
 	scroll.ensure_control_visible(game.hud.inspector)
 	for frame in 3:
