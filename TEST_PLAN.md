@@ -175,3 +175,11 @@ incluindo três poses estáticas de café, com capturas em três escalas.
 Soak e experimentos longos de tarifas não foram repetidos neste lote.
 O pacote Windows anterior ainda não inclui estas alterações; reexport e matriz
 do novo pacote permanecem pendentes.
+
+Atualização de pacote (29/09/2026): revisão 45d2eb6 exportada de árvore limpa,
+smoke com 6120 ticks e seis combinações de janela/texto aprovados. Histórico
+preenchido por saídas reais, restaurado via barra e exibido com fatos conferidos;
+leitura pausa velocidade 1x, Escape devolve foco e janela cabe no viewport.
+Auditoria de inventário e hashes aprovou 31 PNGs. Evidência em
+docs/release/reviews-cafe-matrix.json. Kit externo atualizado; validação em outro
+computador continua pendente.

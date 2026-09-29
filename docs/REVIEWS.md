@@ -34,3 +34,8 @@ rejeição de campos inválidos, duplicações e excesso de registros.
 `ui_reviews.gd` cobre abertura pela barra, vazio e visitas reais, foco, pausa,
 Escape, novo hotel e cancelamento da saída enquanto o histórico está aberto.
 Essas suítes fazem parte de `tools/test.ps1 -Visual -Stress`.
+
+O pacote Windows da revisão 45d2eb6 também passou nas seis combinações locais
+de janela/texto: restauração pela barra, fatos do último registro, janela dentro
+do viewport, pausa em 1x e fechamento com foco restaurado. Evidência em
+`docs/release/reviews-cafe-matrix.json`.
