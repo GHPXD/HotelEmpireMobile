@@ -22,6 +22,7 @@ var exit_focus: Control
 var help_panel: HotelHelpPanel
 var recovery_dialog: ConfirmationDialog
 var recovery_session: HotelSession
+var reviews_panel: GuestReviewsPanel
 
 func _ready() -> void:
 	if OS.get_cmdline_user_args().has("--simulate"):
@@ -87,6 +88,11 @@ func _ready() -> void:
 	add_child(help_panel)
 	hud.help_requested.connect(help_panel.open_guide)
 	_bind_popup(help_panel, hud.help_button)
+	reviews_panel = GuestReviewsPanel.new()
+	reviews_panel.theme = hud.theme
+	add_child(reviews_panel)
+	hud.reviews_requested.connect(func() -> void: reviews_panel.open_for(session))
+	_bind_popup(reviews_panel, hud.session_buttons["Avaliações"])
 	recovery_dialog = ConfirmationDialog.new()
 	recovery_dialog.theme = hud.theme
 	recovery_dialog.title = "Recuperar backup"
@@ -135,7 +141,7 @@ func _run_release_smoke() -> void:
 	await preload("res://debug/release_smoke.gd").new().run(self)
 
 func _process(delta: float) -> void:
-	if hud == null or (exit_dialog != null and exit_dialog.visible) or (help_panel != null and help_panel.visible) or (recovery_dialog != null and recovery_dialog.visible):
+	if hud == null or (reviews_panel != null and reviews_panel.visible) or (exit_dialog != null and exit_dialog.visible) or (help_panel != null and help_panel.visible) or (recovery_dialog != null and recovery_dialog.visible):
 		return
 	accumulator += minf(delta, 0.25) * session.speed
 	var previous_objectives: int = session.progression.completed.size()
@@ -161,7 +167,7 @@ func _request_exit() -> void:
 		return
 	if exit_dialog.visible:
 		return
-	for panel: Window in [new_dialog, finances_dialog, staff_panel, progression_panel, operations_panel, help_panel, recovery_dialog]:
+	for panel: Window in [new_dialog, finances_dialog, staff_panel, progression_panel, operations_panel, help_panel, reviews_panel, recovery_dialog]:
 		panel.hide()
 	recovery_session = null
 	exit_focus = get_viewport().gui_get_focus_owner()
@@ -267,6 +273,7 @@ func _select_actor(id: int) -> void:
 	_refresh()
 
 func _replace_session(value: HotelSession) -> void:
+	reviews_panel.hide()
 	recovery_dialog.hide()
 	recovery_session = null
 	help_panel.hide()

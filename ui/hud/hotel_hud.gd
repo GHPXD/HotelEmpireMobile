@@ -21,6 +21,7 @@ signal operations_requested
 signal text_size_requested
 signal audio_requested
 signal help_requested
+signal reviews_requested
 
 var stats: Label
 var message: Label
@@ -98,6 +99,7 @@ func _ready() -> void:
 	_button(session_bar, "Debug • F3", func() -> void: debug_requested.emit())
 	audio_button = _button(session_bar, "Som: ligado", func() -> void: audio_requested.emit())
 	help_button = _button(session_bar, "Ajuda • F1", func() -> void: help_requested.emit())
+	_button(session_bar, "Avaliações", func() -> void: reviews_requested.emit())
 	debug_label = Label.new()
 	debug_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	debug_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL

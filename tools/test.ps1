@@ -15,11 +15,11 @@ try {
     $importLog = Join-Path $runtimeRoot 'import.log'
     $run = Start-Process -FilePath $GodotPath -ArgumentList @('--headless', '--editor', '--path', $projectRoot, '--log-file', $importLog, '--quit') -WindowStyle Hidden -PassThru -Wait
     if ($run.ExitCode -ne 0 -or (Select-String -LiteralPath $importLog -Pattern 'SCRIPT ERROR:|^ERROR:' -Quiet)) { throw 'Godot import failed; inspect .runtime/import.log' }
-    $suites = @('foundation_test', 'construction_test', 'simulation_test', 'save_test', 'management_test', 'lodging_value_test', 'progression_test', 'content_test', 'analytics_test', 'checkin_diagnostics_test')
+    $suites = @('foundation_test', 'construction_test', 'simulation_test', 'save_test', 'management_test', 'lodging_value_test', 'reviews_test', 'progression_test', 'content_test', 'analytics_test', 'checkin_diagnostics_test')
     if ($Stress) { $suites += @('save_multiseed_test', 'stress_test', 'admission_equivalence_test') }
     if ($Soak) { $suites += @('long_run_test') }
     if ($Tariffs) { $suites += @('departure_observer_test', 'tariff_scenarios') }
-    if ($Visual) { $suites += @('ui_smoke', 'ui_resume', 'ui_management', 'ui_progression', 'ui_content', 'ui_operations', 'ui_art', 'ui_culling', 'ui_new_game', 'ui_exit', 'ui_help', 'ui_recovery', 'ui_checkin_diagnostics') }
+    if ($Visual) { $suites += @('ui_smoke', 'ui_resume', 'ui_management', 'ui_progression', 'ui_content', 'ui_operations', 'ui_reviews', 'ui_art', 'ui_culling', 'ui_new_game', 'ui_exit', 'ui_help', 'ui_recovery', 'ui_checkin_diagnostics') }
     foreach ($suite in $suites) {
         $testLog = Join-Path $runtimeRoot ($suite + '.log')
         $arguments = @('--path', $projectRoot, '--script', ('res://tests/' + $suite + '.gd'), '--log-file', $testLog)

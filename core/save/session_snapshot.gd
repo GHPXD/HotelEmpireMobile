@@ -1,8 +1,8 @@
 class_name SessionSnapshot
 extends RefCounted
-## Schema v5 adds per-room tariff policies; older rooms retain standard prices.
+## Schema v6 adds factual departure reviews. Legacy history is not reconstructed.
 
-const VERSION: int = 5
+const VERSION: int = 6
 const ROOM_FIELDS: Array[String] = ["id", "definition_id", "column", "floor_index", "occupant", "dirty", "cleaning_by", "income", "level", "price_percent"]
 const ACTOR_FIELDS: Array[String] = ["id", "role", "display_name", "state", "x", "floor_index", "target_x", "target_floor", "target_room", "destination_state", "elevator_id", "timer", "age", "waiting", "happiness", "money", "bedroom", "checked_in", "meals", "sleeps", "speed", "skill", "assignment", "workload", "agreed_price", "preferred_room", "preferred_floor", "archetype_id", "service_uses"]
 const LIFT_FIELDS: Array[String] = ["room_id", "column", "capacity", "floor_position", "target_floor", "door_timer", "boarded", "delivered", "wait_total", "wait_max", "busy_seconds"]
@@ -30,7 +30,7 @@ static func capture(session: HotelSession) -> Dictionary:
 		item["queue"] = lift.queue.members.duplicate()
 		item["passengers"] = lift.passengers.duplicate()
 		lifts.append(item)
-	return {"version": VERSION, "progression": session.progression.snapshot(), "session": _read(session, SESSION_FIELDS), "economy": _read(session.economy, ECONOMY_FIELDS), "ledger": session.economy.ledger.duplicate(true), "floors": session.hotel.floors, "next_room_id": session.hotel.next_room_id, "rooms": rooms, "actors": actors, "lifts": lifts, "guests": _read(session.guests, GUEST_FIELDS), "cleaned": session.employees.cleaned, "path_requests": session.transport.path_requests, "rng_seed": str(session.rng.seed), "rng_state": str(session.rng.state)}
+	return {"version": VERSION, "reviews": session.guests.reviews.duplicate(true), "progression": session.progression.snapshot(), "session": _read(session, SESSION_FIELDS), "economy": _read(session.economy, ECONOMY_FIELDS), "ledger": session.economy.ledger.duplicate(true), "floors": session.hotel.floors, "next_room_id": session.hotel.next_room_id, "rooms": rooms, "actors": actors, "lifts": lifts, "guests": _read(session.guests, GUEST_FIELDS), "cleaned": session.employees.cleaned, "path_requests": session.transport.path_requests, "rng_seed": str(session.rng.seed), "rng_state": str(session.rng.state)}
 
 static func restore(data: Variant) -> Dictionary:
 	if data is Dictionary and data.get("version") == 1:
@@ -50,6 +50,10 @@ static func restore(data: Variant) -> Dictionary:
 			if not room_data is Dictionary:
 				return _error("Sala inválida.")
 			room_data["price_percent"] = 100
+		data.version = 5
+	if data is Dictionary and data.get("version") == 5:
+		data = data.duplicate(true)
+		data["reviews"] = []
 		data.version = VERSION
 	if not data is Dictionary or data.get("version") != VERSION:
 		return _error("Versão de save desconhecida ou formato inválido.")
@@ -147,6 +151,8 @@ static func restore(data: Variant) -> Dictionary:
 	var relation_error := _validate_relations(session)
 	if not relation_error.is_empty():
 		return _error(relation_error)
+	if not _restore_reviews(session, data.get("reviews")):
+		return _error("Histórico de avaliações inválido.")
 	for item: Variant in data.ledger:
 		if not item is Dictionary or not _integer(item.get("amount"), -1000000000, 1000000000) or not item.get("reason") is String or not _number(item.get("time")):
 			return _error("Extrato inválido.")
@@ -167,6 +173,32 @@ static func restore(data: Variant) -> Dictionary:
 			if not session.progression.upgrade_error(previous).is_empty():
 				return _error("Nível de sala sem desbloqueio.")
 	return {"session": session, "error": ""}
+
+static func _restore_reviews(session: HotelSession, entries: Variant) -> bool:
+	if not entries is Array or entries.size() > GuestSystem.REVIEW_LIMIT or entries.size() > session.guests.completed:
+		return false
+	var seen: Dictionary = {}
+	var previous_time: float = -1
+	for entry: Variant in entries:
+		if not entry is Dictionary or entry.size() != 8:
+			return false
+		if not _integer(entry.get("guest_id"), 1, session.next_actor_id - 1) or seen.has(int(entry.guest_id)) or session.actors.has(int(entry.guest_id)):
+			return false
+		if not entry.get("profile") is String or HotelCatalog.guest(StringName(entry.profile)) == null or not entry.get("checked_in") is bool:
+			return false
+		if not _number(entry.get("time")) or entry.time < 0 or entry.time < previous_time or entry.time > session.time + SimulationRules.TIME_EPSILON:
+			return false
+		if not _number(entry.get("score")) or entry.score < 0 or entry.score > 100:
+			return false
+		for key: String in ["meals", "services", "sleeps"]:
+			if not _integer(entry.get(key), 0, 100000000):
+				return false
+		if entry.services < entry.meals:
+			return false
+		seen[int(entry.guest_id)] = true
+		previous_time = float(entry.time)
+		session.guests.reviews.append({"guest_id": int(entry.guest_id), "profile": entry.profile, "time": float(entry.time), "score": float(entry.score), "checked_in": entry.checked_in, "meals": int(entry.meals), "services": int(entry.services), "sleeps": int(entry.sleeps)})
+	return true
 
 static func _validate_relations(session: HotelSession) -> String:
 	for room in session.hotel.rooms:

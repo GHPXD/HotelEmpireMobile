@@ -17,6 +17,11 @@ Muita espera no elevador pede revisão do transporte. Selecione uma instalação
 Use Operação (F2), Equipe e Finanças para investigar. Objetivos mostra o que libera novos serviços. Salários e manutenção continuam mesmo com as chegadas fechadas.
 Em Operação, selecione uma recepção para ver a causa atual da espera e uma orientação. A inspeção da recepção também mostra esse diagnóstico; ele se refere ao primeiro hóspede da fila.
 
+[b]TARIFAS E AVALIAÇÕES[/b]
+Selecione um quarto ou serviço para escolher uma tarifa de 75%, 100% ou 125%. A prévia mostra o preço; nos quartos, também mostra o efeito de valor na satisfação por perfil. Contratos já iniciados mantêm o preço combinado.
+Avaliações mostra as últimas 20 saídas, com satisfação individual e fatos da visita. Essa nota não é a reputação do hotel. Saves antigos começam sem histórico; novas saídas geram relatos.
+Ler as avaliações pausa o hotel. Esc fecha a janela e mantém a velocidade anterior.
+
 [b]CÂMERA E CONSTRUÇÃO[/b]
 Roda do mouse: zoom. Botão do meio: arrastar câmera.
 Clique esquerdo: construir ou selecionar. Botão direito/Esc: cancelar a construção.

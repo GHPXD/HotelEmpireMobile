@@ -164,3 +164,14 @@ com --departure-cohorts, zero falhas e 90 checkpoints. Contagens e somas
 reconciliadas, sem duplicação e com satisfação do último tick. Os 18 relatórios
 anteriores foram reproduzidos exatamente; observador não interfere na simulação.
 Evidência em docs/DEPARTURE_COHORTS.md. Executável permanece f22e841.
+
+Avaliações e poses de café (29/09/2026): 28 suítes da seleção -Visual -Stress
+aprovadas. Após uma falha do helper de teclado de ui_reviews ao operar uma
+ConfirmationDialog nativa, o helper foi corrigido e a suíte mais as sete visuais
+restantes foram executadas novamente. Persistência v6, limite de 20 registros,
+migração, continuidade, pausa, foco, rolagem, texto ampliado e saída com o
+histórico aberto estão cobertos. ui_art confirma 13 texturas de personagens,
+incluindo três poses estáticas de café, com capturas em três escalas.
+Soak e experimentos longos de tarifas não foram repetidos neste lote.
+O pacote Windows anterior ainda não inclui estas alterações; reexport e matriz
+do novo pacote permanecem pendentes.

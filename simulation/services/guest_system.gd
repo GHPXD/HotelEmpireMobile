@@ -8,6 +8,8 @@ var bookings: int = 0
 var score_total: float = 0.0
 var reputation: float = 65.0
 var rules: SimulationRules
+const REVIEW_LIMIT: int = 20
+var reviews: Array[Dictionary] = []
 
 func _init(config: SimulationRules) -> void:
 	rules = config
@@ -42,6 +44,9 @@ func step(actors: Dictionary, hotel: HotelModel, transport: TransportSystem, del
 				completed += 1
 				score_total += actor.happiness
 				reputation = clampf(lerpf(reputation, actor.happiness, 0.12), 0, 100)
+				reviews.append({"guest_id": actor.id, "profile": String(actor.archetype_id), "time": time, "score": actor.happiness, "checked_in": actor.checked_in, "meals": actor.meals, "services": actor.service_uses, "sleeps": actor.sleeps})
+				if reviews.size() > REVIEW_LIMIT:
+					reviews.pop_front()
 				departures.append(actor.id)
 	for id in departures:
 		actors.erase(id)
