@@ -68,6 +68,12 @@ recortes dentro das texturas, avanço/loop da caminhada, render em zoom 0,35/0,9
 sem mutação da sessão e botão Som com persistência. WAVs devem carregar com duração
 válida. Capturas são inspecionadas no jogo. Bateria completa: 17 suítes com Stress/Visual.
 
+Refinamento de café: `ui_art` verifica os três ciclos com quatro poses, avanço a
+cada oito ticks, loop em 32 ticks, âncoras dentro dos recortes e pés com baseline
+compartilhada. Captura quatro fases com a sessão pausada e confirma ausência de
+mutação da simulação. `ui_art`, `ui_culling` (nove câmeras) e `ui_content` passaram
+com zero falhas após a integração. Total de arte: 34 PNGs, 16 texturas de personagens.
+
 M8a: `ui_culling.gd` compara pixel a pixel nove câmeras com/sem descarte de desenho
 e confirma snapshot inalterado. Bateria atual: 18 suítes com Stress/Visual;
 benchmark de desempenho separado em debug/performance_profile.gd.

@@ -166,8 +166,10 @@ func _draw_simulation() -> void:
 		var service_id: StringName = service_room.definition_id if service_room != null else &""
 		var texture := HotelArt.character(actor, service_id)
 		var region := HotelArt.character_region(actor, session.tick_count, service_id)
-		var sprite_size := region.size * HotelArt.character_scale(actor, service_id) * zoom_factor
-		var destination := Rect2(point + Vector2(-sprite_size.x / 2.0, 17 * zoom_factor - sprite_size.y), sprite_size)
+		var sprite_scale := HotelArt.character_scale(actor, service_id) * zoom_factor
+		var sprite_size := region.size * sprite_scale
+		var anchor := HotelArt.character_anchor(actor, session.tick_count, service_id)
+		var destination := Rect2(point + Vector2(0, 17 * zoom_factor) - anchor * sprite_scale, sprite_size)
 		if actor.target_x < actor.x and actor.state == &"walking":
 			destination.position.x += destination.size.x
 			destination.size.x = -destination.size.x

@@ -277,5 +277,32 @@
     "bytes": 1545819,
     "sha256": "c83533f4742bed561210fe28ff3afb0b2a0968f6959c772408db3a500e008ddf",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/balanced-drinking.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 1504165,
+    "sha256": "ef2700abd027defb3abeee95cd61e99b020fe209cfd74588c0c9de097ffd57e1",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/business-drinking.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 1177751,
+    "sha256": "89b09201d043e79e2cfda5c70d20235ba0107d7c3c691dd6bf2ef14c140adcfc",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/leisure-drinking.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 1293642,
+    "sha256": "d1eee5778dea22785617fe28c5566f278bd68ddfb598d6b31dd1ad38c3df840e",
+    "generator": "built-in image_gen"
   }
 ]

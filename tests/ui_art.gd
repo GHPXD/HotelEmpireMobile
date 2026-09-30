@@ -74,7 +74,7 @@ func run() -> void:
 		actor.state = &"idle"
 		check(HotelArt.character(actor) == walk_texture, "idle restores base texture")
 		actor.state = &"cleaning" if actor.role == &"cleaner" else &"working"
-	# Static service poses are contextual: cups must never appear in other rooms.
+	# Service cycles are contextual: cups must never appear in other rooms.
 	for profile: StringName in [&"balanced", &"business", &"leisure"]:
 		var guest := session.spawn_guest()
 		guest.archetype_id = profile
@@ -82,7 +82,18 @@ func run() -> void:
 		var pose := HotelArt.character(guest, &"cafe")
 		check(pose != HotelArt.character(guest, &"bedroom"), "cafe pose is service specific")
 		check(pose.get_image().detect_alpha() != Image.ALPHA_NONE, "cafe pose has alpha")
-		check(HotelArt.character_region(guest, 0, &"cafe") == HotelArt.character_region(guest, 200, &"cafe"), "single service pose stays stable")
+		check(HotelArt.character_regions(guest, &"cafe").size() == 4, "four cafe frames")
+		check(HotelArt.character_region(guest, 0, &"cafe") != HotelArt.character_region(guest, 8, &"cafe"), "cafe gesture advances")
+		check(HotelArt.character_region(guest, 0, &"cafe") == HotelArt.character_region(guest, 32, &"cafe"), "cafe gesture loops")
+		var foot_height := -1.0
+		for tick: int in [0, 8, 16, 24]:
+			var region := HotelArt.character_region(guest, tick, &"cafe")
+			var anchor := HotelArt.character_anchor(guest, tick, &"cafe")
+			check(Rect2(Vector2.ZERO, pose.get_size()).encloses(region), "cafe frame bounds")
+			check(Rect2(Vector2.ZERO, region.size).has_point(anchor), "cafe anchor inside frame")
+			var height := anchor.y * HotelArt.character_scale(guest, &"cafe")
+			check(foot_height < 0.0 or is_equal_approx(foot_height, height), "shared cafe foot baseline")
+			foot_height = height
 		for room: RoomState in session.hotel.rooms:
 			if room.definition_id == &"cafe":
 				guest.target_room = room.id
@@ -101,6 +112,19 @@ func run() -> void:
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png("res://.runtime/m7-art-%.2f.png" % zoom)
 	check(preload("res://tests/snapshot_comparison.gd").difference(before, SessionSnapshot.capture(session), "art").is_empty(), "rendering and animation do not mutate simulation")
+	# Seed each visual phase in the paused fixture, then verify the real renderer.
+	game.view.zoom_factor = 1.8
+	for tick: int in [0, 8, 16, 24]:
+		session.tick_count = tick
+		session.time = tick * session.rules.tick
+		var phase_before := SessionSnapshot.capture(session)
+		for frame in 4:
+			await process_frame
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("res://.runtime/m7-cafe-frame-%d.png" % (tick / 8))
+		check(preload("res://tests/snapshot_comparison.gd").difference(phase_before, SessionSnapshot.capture(session), "cafe").is_empty(), "paused cafe frame leaves simulation unchanged")
+	session.tick_count = before["session"]["tick_count"]
+	session.time = before["session"]["time"]
 	var old_audio: bool = game.audio.enabled
 	await click(root, game.hud.audio_button.get_global_rect().get_center())
 	check(game.audio.enabled != old_audio, "audio button toggles")

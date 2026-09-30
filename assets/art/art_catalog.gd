@@ -42,6 +42,9 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 	return ROOMS.get(id)
 
 const CHARACTERS: Dictionary = {
+	&"balanced-drinking": preload("res://assets/art/characters/balanced-drinking.png"),
+	&"business-drinking": preload("res://assets/art/characters/business-drinking.png"),
+	&"leisure-drinking": preload("res://assets/art/characters/leisure-drinking.png"),
 	&"balanced-cafe": preload("res://assets/art/characters/balanced-cafe.png"),
 	&"business-cafe": preload("res://assets/art/characters/business-cafe.png"),
 	&"leisure-cafe": preload("res://assets/art/characters/leisure-cafe.png"),
@@ -65,6 +68,9 @@ static func character(actor: ActorState, service_id: StringName = &"") -> Textur
 	return CHARACTERS[animation_id(actor, service_id)]
 
 const ACTION_REGIONS: Dictionary = {
+	&"balanced-drinking": [[68, 5, 382, 874], [468, 5, 380, 874], [876, 5, 379, 874], [1314, 5, 380, 874]],
+	&"business-drinking": [[94, 8, 319, 867], [515, 8, 311, 867], [939, 8, 306, 867], [1365, 8, 318, 867]],
+	&"leisure-drinking": [[84, 6, 313, 881], [528, 6, 313, 881], [959, 6, 324, 881], [1396, 6, 317, 881]],
 	&"balanced-cafe": [[219, 10, 606, 1463]],
 	&"business-cafe": [[243, 38, 507, 1445]],
 	&"leisure-cafe": [[273, 53, 499, 1432]],
@@ -75,9 +81,16 @@ const ACTION_REGIONS: Dictionary = {
 	&"receptionist-working": [[121, 44, 271, 796], [531, 60, 297, 780], [955, 43, 275, 797], [1353, 41, 390, 799]],
 }
 
+# Local foot centers measured from alpha. Cup movement never shifts the body.
+const ACTION_ANCHORS: Dictionary = {
+	&"balanced-drinking": [Vector2(234, 870), Vector2(232, 870), Vector2(231, 870), Vector2(232, 870)],
+	&"business-drinking": [Vector2(182, 863), Vector2(183, 863), Vector2(181, 863), Vector2(183, 863)],
+	&"leisure-drinking": [Vector2(188, 877), Vector2(189, 877), Vector2(190, 877), Vector2(192, 877)],
+}
+
 static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
 	if actor.role == &"guest" and actor.state == &"using" and service_id == &"cafe":
-		return StringName("%s-cafe" % actor.archetype_id)
+		return StringName("%s-drinking" % actor.archetype_id)
 	if actor.role == &"guest" and actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
 		return StringName("%s-waiting" % actor.archetype_id)
 	if actor.role == &"cleaner" and actor.state == &"cleaning":
@@ -90,15 +103,27 @@ static func character_regions(actor: ActorState, service_id: StringName = &"") -
 	var id := animation_id(actor, service_id)
 	return ACTION_REGIONS[id] if ACTION_REGIONS.has(id) else REGIONS[id]
 
-static func character_region(actor: ActorState, tick: int, service_id: StringName = &"") -> Rect2:
+static func character_frame(actor: ActorState, tick: int, service_id: StringName = &"") -> int:
 	var regions := character_regions(actor, service_id)
 	var index: int = (tick + actor.id * 2) % 4 if actor.state == &"walking" else 1
-	if ACTION_REGIONS.has(animation_id(actor)):
-		# Waiting uses slower gestures; all animations freeze with the simulation.
+	if ACTION_REGIONS.has(animation_id(actor, service_id)):
+		# All gestures freeze with simulation ticks; cafe cycles every 3.2 seconds.
 		var frame_ticks := 12.0 if actor.role == &"guest" else 4.0
+		if actor.role == &"guest" and actor.state == &"using" and service_id == &"cafe":
+			frame_ticks = 8.0
 		index = (floori(tick / frame_ticks) + actor.id) % 4
-	var box: Array = regions[index % regions.size()]
+	return index % regions.size()
+
+static func character_region(actor: ActorState, tick: int, service_id: StringName = &"") -> Rect2:
+	var box: Array = character_regions(actor, service_id)[character_frame(actor, tick, service_id)]
 	return Rect2(box[0], box[1], box[2], box[3])
+
+static func character_anchor(actor: ActorState, tick: int, service_id: StringName = &"") -> Vector2:
+	var id := animation_id(actor, service_id)
+	if ACTION_ANCHORS.has(id):
+		return ACTION_ANCHORS[id][character_frame(actor, tick, service_id)]
+	var region := character_region(actor, tick, service_id)
+	return Vector2(region.size.x / 2.0, region.size.y)
 
 static func character_scale(actor: ActorState, service_id: StringName = &"") -> float:
 	var height: float = 0.0
