@@ -1,0 +1,218 @@
+{
+  "archiveSha256": "d6f770a2edfd6a7c0f41503247e4d8d56031e380cbc08685da58a942b9b47e2c",
+  "executableSha256": "75bf9ef8a2c73834edc11cf0704b1ce23bae927cbc05fc765f1dedd0f7485ab2",
+  "sourceRevision": "a0fcec0b826adbe5d41022644a3d110429b7b09a",
+  "sourceDirty": false,
+  "cases": [
+    {
+      "case": "1024x640-normal",
+      "requestedResolution": "1024x640",
+      "report": {
+        "actor_presentation_verified": 3,
+        "bookings": 39,
+        "cash": 2021,
+        "cleaned": 31,
+        "executable": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/Hotel Empire extraido/HotelEmpire.exe",
+        "failures": 0,
+        "meals": 42,
+        "presentation": {
+          "adapter": "AMD Radeon(TM) Graphics",
+          "display": "Windows",
+          "large_text": false,
+          "os": "Windows",
+          "os_version": "10.0.26200",
+          "renderer": "gl_compatibility",
+          "viewport": [
+            1440.0,
+            900.0
+          ],
+          "window": [
+            1024,
+            640
+          ]
+        },
+        "service_art_verified": 12,
+        "staff_idle_art_verified": 4,
+        "suite": "release_smoke",
+        "ticks": 6120,
+        "user_data": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/1024x640-normal/user-data/Godot/app_userdata/Hotel Empire"
+      },
+      "capture": "C:\\Projects\\HotelEmpire\\.runtime\\package-matrix\\20260930-034544-db084ab0\\1024x640-normal\\user-data\\Godot\\app_userdata\\Hotel Empire\\release-smoke.png"
+    },
+    {
+      "case": "1024x640-large",
+      "requestedResolution": "1024x640",
+      "report": {
+        "actor_presentation_verified": 3,
+        "bookings": 39,
+        "cash": 2021,
+        "cleaned": 31,
+        "executable": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/Hotel Empire extraido/HotelEmpire.exe",
+        "failures": 0,
+        "meals": 42,
+        "presentation": {
+          "adapter": "AMD Radeon(TM) Graphics",
+          "display": "Windows",
+          "large_text": true,
+          "os": "Windows",
+          "os_version": "10.0.26200",
+          "renderer": "gl_compatibility",
+          "viewport": [
+            1440.0,
+            900.0
+          ],
+          "window": [
+            1024,
+            640
+          ]
+        },
+        "service_art_verified": 12,
+        "staff_idle_art_verified": 4,
+        "suite": "release_smoke",
+        "ticks": 6120,
+        "user_data": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/1024x640-large/user-data/Godot/app_userdata/Hotel Empire"
+      },
+      "capture": "C:\\Projects\\HotelEmpire\\.runtime\\package-matrix\\20260930-034544-db084ab0\\1024x640-large\\user-data\\Godot\\app_userdata\\Hotel Empire\\release-smoke.png"
+    },
+    {
+      "case": "1280x800-normal",
+      "requestedResolution": "1280x800",
+      "report": {
+        "actor_presentation_verified": 3,
+        "bookings": 39,
+        "cash": 2021,
+        "cleaned": 31,
+        "executable": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/Hotel Empire extraido/HotelEmpire.exe",
+        "failures": 0,
+        "meals": 42,
+        "presentation": {
+          "adapter": "AMD Radeon(TM) Graphics",
+          "display": "Windows",
+          "large_text": false,
+          "os": "Windows",
+          "os_version": "10.0.26200",
+          "renderer": "gl_compatibility",
+          "viewport": [
+            1440.0,
+            900.0
+          ],
+          "window": [
+            1280,
+            800
+          ]
+        },
+        "service_art_verified": 12,
+        "staff_idle_art_verified": 4,
+        "suite": "release_smoke",
+        "ticks": 6120,
+        "user_data": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/1280x800-normal/user-data/Godot/app_userdata/Hotel Empire"
+      },
+      "capture": "C:\\Projects\\HotelEmpire\\.runtime\\package-matrix\\20260930-034544-db084ab0\\1280x800-normal\\user-data\\Godot\\app_userdata\\Hotel Empire\\release-smoke.png"
+    },
+    {
+      "case": "1280x800-large",
+      "requestedResolution": "1280x800",
+      "report": {
+        "actor_presentation_verified": 3,
+        "bookings": 39,
+        "cash": 2021,
+        "cleaned": 31,
+        "executable": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/Hotel Empire extraido/HotelEmpire.exe",
+        "failures": 0,
+        "meals": 42,
+        "presentation": {
+          "adapter": "AMD Radeon(TM) Graphics",
+          "display": "Windows",
+          "large_text": true,
+          "os": "Windows",
+          "os_version": "10.0.26200",
+          "renderer": "gl_compatibility",
+          "viewport": [
+            1440.0,
+            900.0
+          ],
+          "window": [
+            1280,
+            800
+          ]
+        },
+        "service_art_verified": 12,
+        "staff_idle_art_verified": 4,
+        "suite": "release_smoke",
+        "ticks": 6120,
+        "user_data": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/1280x800-large/user-data/Godot/app_userdata/Hotel Empire"
+      },
+      "capture": "C:\\Projects\\HotelEmpire\\.runtime\\package-matrix\\20260930-034544-db084ab0\\1280x800-large\\user-data\\Godot\\app_userdata\\Hotel Empire\\release-smoke.png"
+    },
+    {
+      "case": "1600x900-normal",
+      "requestedResolution": "1600x900",
+      "report": {
+        "actor_presentation_verified": 3,
+        "bookings": 39,
+        "cash": 2021,
+        "cleaned": 31,
+        "executable": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/Hotel Empire extraido/HotelEmpire.exe",
+        "failures": 0,
+        "meals": 42,
+        "presentation": {
+          "adapter": "AMD Radeon(TM) Graphics",
+          "display": "Windows",
+          "large_text": false,
+          "os": "Windows",
+          "os_version": "10.0.26200",
+          "renderer": "gl_compatibility",
+          "viewport": [
+            1440.0,
+            900.0
+          ],
+          "window": [
+            1600,
+            900
+          ]
+        },
+        "service_art_verified": 12,
+        "staff_idle_art_verified": 4,
+        "suite": "release_smoke",
+        "ticks": 6120,
+        "user_data": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/1600x900-normal/user-data/Godot/app_userdata/Hotel Empire"
+      },
+      "capture": "C:\\Projects\\HotelEmpire\\.runtime\\package-matrix\\20260930-034544-db084ab0\\1600x900-normal\\user-data\\Godot\\app_userdata\\Hotel Empire\\release-smoke.png"
+    },
+    {
+      "case": "1600x900-large",
+      "requestedResolution": "1600x900",
+      "report": {
+        "actor_presentation_verified": 3,
+        "bookings": 39,
+        "cash": 2021,
+        "cleaned": 31,
+        "executable": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/Hotel Empire extraido/HotelEmpire.exe",
+        "failures": 0,
+        "meals": 42,
+        "presentation": {
+          "adapter": "AMD Radeon(TM) Graphics",
+          "display": "Windows",
+          "large_text": true,
+          "os": "Windows",
+          "os_version": "10.0.26200",
+          "renderer": "gl_compatibility",
+          "viewport": [
+            1440.0,
+            900.0
+          ],
+          "window": [
+            1600,
+            900
+          ]
+        },
+        "service_art_verified": 12,
+        "staff_idle_art_verified": 4,
+        "suite": "release_smoke",
+        "ticks": 6120,
+        "user_data": "C:/Projects/HotelEmpire/.runtime/package-matrix/20260930-034544-db084ab0/1600x900-large/user-data/Godot/app_userdata/Hotel Empire"
+      },
+      "capture": "C:\\Projects\\HotelEmpire\\.runtime\\package-matrix\\20260930-034544-db084ab0\\1600x900-large\\user-data\\Godot\\app_userdata\\Hotel Empire\\release-smoke.png"
+    }
+  ]
+}

@@ -313,3 +313,9 @@ durante pausa/desenho/seleção. `ui_culling` passou nas 11 câmeras;
 `ui_actor_presentation` e `ui_content` passaram. Quatro scripts válidos pelo gda.
 Catálogo: 48 PNGs e 27 texturas de personagens; poses estáticas preservadas como
 referências e novos arquivos ativos com os mesmos IDs. PNGs não foram editados.
+
+Pacote com ciclos de repouso (30/09/2026): revisão a0fcec0, árvore limpa, smoke de
+6120 ticks e seis combinações locais de janela/texto aprovados. Cada caso verificou
+os 12 sprites de uso com quatro quadros, quatro contextos da equipe e seleção em
+três zooms. ZIP, documentos e hashes dos 48 PNGs auditados; kit externo atualizado.
+Matriz: docs/release/bedroom-sleeping-loop-matrix.json. Compatibilidade externa pendente.

@@ -42,3 +42,10 @@ incluindo peseira N3 em primeiro plano. Seis camas completas no enquadramento
 mostraram mudanças de pixels durante o ciclo. Pausa, desenho e seleção conservaram
 os snapshots. `ui_culling` passou nas 11 câmeras; `ui_actor_presentation` e
 `ui_content` passaram. Sem erros de script ou recursos retidos ao sair.
+
+Pacote verificado em 30/09/2026, revisão a0fcec0 com árvore limpa. Smoke de 6120
+ticks e seis combinações de janela/texto aprovados. Cada caso verificou quatro
+quadros dos 12 sprites de uso, quatro contextos de repouso da equipe e seleção
+em três zooms. Matriz em `../release/bedroom-sleeping-loop-matrix.json`. ZIP,
+documentos e hashes dos 48 PNGs auditados; kit externo atualizado com o mesmo
+pacote. Compatibilidade em outro computador permanece pendente.
