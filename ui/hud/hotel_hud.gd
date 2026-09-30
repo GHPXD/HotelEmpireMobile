@@ -43,6 +43,7 @@ var objectives_button: Button
 var build_buttons: Dictionary = {}
 var hire_buttons: Dictionary = {}
 var action_buttons: Dictionary = {}
+var management_buttons: Dictionary = {}
 var event_label: Label
 var operations_button: Button
 var text_size_button: Button
@@ -92,9 +93,11 @@ func _ready() -> void:
 	_button(session_bar, "Novo hotel", func() -> void: new_requested.emit())
 	_button(session_bar, "Salvar", func() -> void: save_requested.emit())
 	_button(session_bar, "Carregar", func() -> void: load_requested.emit())
-	_button(session_bar, "Finanças", func() -> void: finances_requested.emit())
+	var finances_button := _button(session_bar, "Finanças", func() -> void: finances_requested.emit())
+	_set_management_icon(finances_button, &"finances")
 	_button(session_bar, "Equipe", func() -> void: staff_requested.emit())
 	operations_button = _button(session_bar, "Operação • F2", func() -> void: operations_requested.emit())
+	_set_management_icon(operations_button, &"operations")
 	text_size_button = _button(session_bar, "Texto + • F4", func() -> void: text_size_requested.emit())
 	objectives_button = Button.new()
 	objectives_button.text = "Objetivos 0/%d" % HotelProgression.OBJECTIVES.size()
@@ -104,7 +107,8 @@ func _ready() -> void:
 	_button(session_bar, "Debug • F3", func() -> void: debug_requested.emit())
 	audio_button = _button(session_bar, "Som: ligado", func() -> void: audio_requested.emit())
 	help_button = _button(session_bar, "Ajuda • F1", func() -> void: help_requested.emit())
-	_button(session_bar, "Avaliações", func() -> void: reviews_requested.emit())
+	var reviews_button := _button(session_bar, "Avaliações", func() -> void: reviews_requested.emit())
+	_set_management_icon(reviews_button, &"reviews")
 	debug_label = Label.new()
 	debug_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	debug_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -251,6 +255,14 @@ func _set_action_icon(button: Button, action: StringName) -> void:
 	button.expand_icon = true
 	button.add_theme_constant_override("icon_max_width", 32)
 	action_buttons[action] = button
+
+func _set_management_icon(button: Button, panel: StringName) -> void:
+	button.icon = HotelArt.management_icon(panel)
+	button.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	# Flow children need the bounded icon to contribute to their minimum width.
+	button.expand_icon = false
+	button.add_theme_constant_override("icon_max_width", 28)
+	management_buttons[panel] = button
 
 func refresh(hotel: HotelModel, selected: RoomState) -> void:
 	tariff_choice.visible = selected != null and selected.definition().category in [&"lodging", &"service"]

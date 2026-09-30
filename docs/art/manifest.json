@@ -628,5 +628,32 @@
     "bytes": 1339443,
     "sha256": "63c9f72964219d86ceb0cb021d48b56cb76025e28ddcc6d24d48a473671bfdba",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/finances.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1657319,
+    "sha256": "d00948fd8280d244e8ed80ec37160ed84a9609df55b6dc0123dc363e1db05516",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/operations.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1154448,
+    "sha256": "c15e580ccc96cdb4dc81926adf83def7e240d268a3366553fc997f43bcb02e9d",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/reviews.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1323999,
+    "sha256": "9bed74a0bc2f686c51edf7845e551c7afe434fca736f45cecc525a56380bb449",
+    "generator": "built-in image_gen"
   }
 ]

@@ -77,6 +77,15 @@ const ACTION_ICONS: Dictionary = {
 static func action_icon(action: StringName) -> Texture2D:
 	return ACTION_ICONS.get(action)
 
+const MANAGEMENT_ICONS: Dictionary = {
+	&"finances": preload("res://assets/art/icons/finances.png"),
+	&"operations": preload("res://assets/art/icons/operations.png"),
+	&"reviews": preload("res://assets/art/icons/reviews.png"),
+}
+
+static func management_icon(panel: StringName) -> Texture2D:
+	return MANAGEMENT_ICONS.get(panel)
+
 static func portrait(actor: ActorState) -> Texture2D:
 	return PORTRAITS.get(character_id(actor))
 

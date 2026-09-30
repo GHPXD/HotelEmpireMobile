@@ -8,7 +8,7 @@
 - Logs originais e proveniência preservados em docs/benchmarks/m9.
 
 ## M7 — extensão de personagens e estados, 30/09/2026
-- Catálogo atual com 70 PNGs: pinturas próprias por nível, espera, trabalho,
+- Catálogo atual com 73 PNGs: pinturas próprias por nível, espera, trabalho,
   repouso da equipe e ciclos de serviço dos hóspedes.
 - Quartos aguardando limpeza têm pinturas N1/N2/N3 e retorno à versão limpa.
 - Filas seguem visualmente as reservas, com grupos por andar no elevador.
@@ -21,6 +21,8 @@
   filtragem com mipmaps e preço/nome em texto nativo.
 - Três ícones raster dedicados aos comandos de andar, melhoria e demolição,
   importados a 256px e desenhados em 32px, com mouse/Enter e custos verificados.
+- Finanças, Operação e Avaliações têm três ícones raster de 28px no HUD;
+  tamanho mínimo inclui imagem, navegação devolve foco e campo de jogo foi preservado.
 - Hóspedes chegam e saem com malas próprias por perfil, com quatro poses de
   viagem, contexto no elevador e espelhamento ancorado nos sapatos.
 - Original raster gerado no chat; prompts, hashes e capturas em docs/art.

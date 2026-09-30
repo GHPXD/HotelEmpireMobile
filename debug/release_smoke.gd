@@ -172,6 +172,7 @@ func run(game: Node) -> void:
 	check(not game.staff_panel.role_icon.visible and game.staff_panel.role_icon.texture == null, "exported empty staff list clears icon")
 	var action_icons_verified := await verify_action_icons(game)
 	game.staff_panel.hide()
+	var management_icons_verified := await verify_management_icons(game)
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
 		var employee := ActorState.new()
@@ -389,6 +390,7 @@ func run(game: Node) -> void:
 	report["build_icons_verified"] = build_icons_verified
 	report["staff_icons_verified"] = staff_icons_verified
 	report["action_icons_verified"] = action_icons_verified
+	report["management_icons_verified"] = management_icons_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))
@@ -425,6 +427,31 @@ func verify_action_icons(game: Node) -> int:
 			&"demolish":
 				check(session.hotel.by_id(room.id) == null and session.economy.cash == cash and game.selection == -1, "exported demolition icon removes without refund")
 		check(session.speed == 0 and session.tick_count == 0, "exported action input preserves pause")
+		verified += 1
+	return verified
+
+func verify_management_icons(game: Node) -> int:
+	var tree: SceneTree = game.get_tree()
+	var session := SimulationRunner.make_hotel(848, "standard", 250000)
+	session.speed = 0
+	game._replace_session(session)
+	for frame in 4:
+		await tree.process_frame
+	var before := SessionSnapshot.capture(session)
+	var panels: Dictionary = {&"finances": game.finances_dialog, &"operations": game.operations_panel, &"reviews": game.reviews_panel}
+	var verified := 0
+	for id: StringName in panels:
+		var button: Button = game.hud.management_buttons[id]
+		var panel: Window = panels[id]
+		var texture := HotelArt.management_icon(id)
+		check(button.icon == texture and texture.get_width() == 256 and texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported dedicated management icon")
+		check(not button.expand_icon and button.get_theme_constant("icon_max_width") == 28, "exported management icon contributes to minimum width")
+		check(tree.root.get_visible_rect().encloses(button.get_global_rect()) and button.size.x >= button.get_combined_minimum_size().x, "exported decorated management button bounds")
+		await click(tree, button.get_global_rect().get_center())
+		check(panel.visible, "exported icon opens correct management panel")
+		check(equivalent(before, SessionSnapshot.capture(session)), "exported management icon navigation preserves session")
+		await close_popup(tree, panel)
+		check(not panel.visible and button.has_focus(), "exported Escape returns focus to management icon button")
 		verified += 1
 	return verified
 

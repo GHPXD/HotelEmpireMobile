@@ -490,3 +490,21 @@ Erro inicial e correção preservados em art-preview-failure-20260930.json.
 O runner registra resultados também em falha e limita cada processo a 120s
 por padrão, ajustável por `-SuiteTimeoutSeconds`, encerrando apenas o handle criado.
 Isso não valida compatibilidade externa, FPS de 1000 hóspedes ou balanceamento humano.
+
+## M7 — ícones da barra de gestão (30/09/2026)
+
+Três fontes RGBA 1254×1254 originais do gerador integrado ao chat, sem edição;
+catálogo atual de 73 PNGs e 14 ícones. Novos imports de 256px com mipmaps e
+botões de 28px. Quatro scripts válidos pelo gda. Nove suítes gráficas passaram:
+ui_management_icons, ui_management, ui_operations, ui_reviews, ui_smoke,
+ui_resume, ui_new_game, ui_help e ui_art (seis camas/24 amostras de repouso).
+
+ui_management_icons cobre 48 ativações de três painéis, quatro janelas, dois
+textos e mouse/Enter; Esc retorna foco, snapshot pausado preservado. Confere
+24 áreas com pixels pintados, largura mínima, bounds e ausência de sobreposição.
+Altura lógica do playfield igual à barra sem imagens nos oito layouts medidos;
+dados em docs/art/management-icons-ui.json. Primeira configuração com
+expand_icon passava propriedades, mas ocultava imagens; capturas identificaram
+o problema e a configuração/checagem de pixels foram corrigidas e repetidas.
+Capturas em janela pequena e 4K inspecionadas; não certificam monitor físico.
+Origem, prompts, limites e comportamento em docs/art/management-icons.md.

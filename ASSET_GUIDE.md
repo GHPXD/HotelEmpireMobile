@@ -1,6 +1,6 @@
 # Assets
 
-M7 usa 70 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
+M7 usa 73 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
 novas faixas de serviço documentadas em `docs/art/`. Sem CLI/API alternativa,
 SVG ou imagens copiadas de jogos de referência.
 Não são assets feitos manualmente por um ilustrador. Prompts completos e referências
@@ -13,7 +13,7 @@ em `docs/art/*.txt` e `docs/art/*.json`; dimensões/hashes em
 | `assets/art/environment/` | Poço, cabine nos níveis 1/2/3, corredor, cidade e passeio |
 | `assets/art/characters/` | Cinco faixas de caminhada, três de viagem com bagagem, três de espera de hóspedes, duas de repouso da equipe, duas de trabalho, 12 folhas de serviço, três poses de dormir e três poses de café preservadas como referências |
 | `assets/art/portraits/` | Cinco bustos RGBA dedicados ao inspetor: três perfis de hóspedes e duas funções da equipe |
-| `assets/art/icons/` | Seis ícones RGBA de construção, dois da equipe e três de comandos (andar, melhoria e demolição), com silhuetas de objetos |
+| `assets/art/icons/` | Seis ícones RGBA de construção, dois da equipe, três de comandos (andar, melhoria e demolição) e três de gestão (finanças, operação e avaliações) |
 | `assets/audio/` | Três WAVs originais sintetizados localmente |
 
 O projeto consome cópias locais versionadas; não depende de `.codex/generated_images`.
@@ -51,6 +51,8 @@ Contratação e gestão da equipe têm ícones próprios para as duas funções;
 detalhes em `docs/art/staff-icons.md`.
 Andar, melhoria e demolição usam três fontes raster próprias nos botões nativos
 de 32px, com import limitado a 256px; detalhes em `docs/art/action-icons.md`.
+Finanças, Operação e Avaliações têm ícones raster de 28px na barra do HUD;
+fontes intactas e imports de 256px. Detalhes em `docs/art/management-icons.md`.
 
 Sons gerados pelo código original `tools/generate_audio.py`, sem samples externos:
 PCM mono 16 bits/22050 Hz, envelope de ataque/decay e volume moderado na reprodução.
