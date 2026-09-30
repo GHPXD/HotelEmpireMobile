@@ -3,7 +3,7 @@
 O indicador “…” usava deslocamento fixo que cobria parte do cabelo nas faixas
 de espera. Agora sua borda inferior fica quatro pixels de mundo acima do recorte
 desenhado, acompanhando altura, gesto e zoom. Tamanho e tipografia continuam
-nativos; os 45 PNGs originais permanecem preservados.
+nativos; os PNGs originais permanecem preservados.
 
 `HotelView.actor_sprite_rect` calcula o mesmo retângulo usado no desenho, com
 região, escala e âncora do catálogo de arte. O indicador é centralizado no ponto

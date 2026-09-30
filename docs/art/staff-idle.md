@@ -23,7 +23,7 @@ sapatos medido na faixa inferior de 20 pixels; altura da âncora coincide com o
 em zoom 1, preserva proporção e alinhamento dos pés entre gestos. Não se presumem
 células de recorte iguais nem se normalizam pixels dos PNGs.
 
-Catálogo atual: 45 PNGs e 27 texturas de personagens. O diagnóstico do export
+Catálogo atual: 48 PNGs e 27 texturas de personagens. O diagnóstico do export
 confere os dois novos sprites em quatro contextos (duas funções × dois estados),
 além dos 12 sprites de uso dos hóspedes.
 

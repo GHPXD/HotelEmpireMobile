@@ -403,5 +403,32 @@
     "sha256": "8c5c693c32a68bdc37f7fb6faeb50b32a484cfd0b1c6348d9958de068192b4d7",
     "mode": "RGBA",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/balanced-sleeping-loop.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 847171,
+    "sha256": "b206937b2a36389b61f020bae1dfd624c4c16a9dd52f10de5866271b0728985b",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/business-sleeping-loop.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1006207,
+    "sha256": "3310b36e4437725a881bdd3b3362f4f51a05d2608d4c58159c1ef9fc9ac322a7",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/leisure-sleeping-loop.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 933628,
+    "sha256": "53af29d0fe6cdcd9047319ecdaf85a6994faa8242435611823e87d5782a9c9dd",
+    "generator": "built-in image_gen"
   }
 ]

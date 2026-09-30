@@ -44,9 +44,9 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 const CHARACTERS: Dictionary = {
 	&"cleaner-idle": preload("res://assets/art/characters/cleaner-idle.png"),
 	&"receptionist-idle": preload("res://assets/art/characters/receptionist-idle.png"),
-	&"balanced-sleeping": preload("res://assets/art/characters/balanced-sleeping.png"),
-	&"business-sleeping": preload("res://assets/art/characters/business-sleeping.png"),
-	&"leisure-sleeping": preload("res://assets/art/characters/leisure-sleeping.png"),
+	&"balanced-sleeping": preload("res://assets/art/characters/balanced-sleeping-loop.png"),
+	&"business-sleeping": preload("res://assets/art/characters/business-sleeping-loop.png"),
+	&"leisure-sleeping": preload("res://assets/art/characters/leisure-sleeping-loop.png"),
 	&"balanced-dining": preload("res://assets/art/characters/balanced-dining.png"),
 	&"business-dining": preload("res://assets/art/characters/business-dining.png"),
 	&"leisure-dining": preload("res://assets/art/characters/leisure-dining.png"),
@@ -81,9 +81,9 @@ static func character(actor: ActorState, service_id: StringName = &"") -> Textur
 const ACTION_REGIONS: Dictionary = {
 	&"cleaner-idle": [[246, 21, 208, 719], [729, 18, 205, 722], [1202, 29, 214, 711], [1653, 21, 203, 719]],
 	&"receptionist-idle": [[116, 42, 260, 812], [558, 41, 262, 813], [1001, 51, 263, 803], [1446, 42, 261, 812]],
-	&"balanced-sleeping": [[28, 9, 1718, 867]],
-	&"business-sleeping": [[31, 16, 1713, 862]],
-	&"leisure-sleeping": [[23, 12, 1730, 864]],
+	&"balanced-sleeping": [[4, 159, 619, 353], [631, 159, 619, 353], [4, 786, 619, 353], [631, 786, 619, 353]],
+	&"business-sleeping": [[9, 149, 617, 389], [629, 148, 616, 390], [9, 774, 617, 391], [629, 774, 616, 393]],
+	&"leisure-sleeping": [[9, 151, 616, 365], [630, 151, 615, 365], [10, 781, 619, 369], [631, 782, 613, 368]],
 	&"balanced-dining": [[66, 89, 455, 582], [600, 89, 440, 582], [1118, 89, 437, 582], [1635, 89, 439, 582]],
 	&"business-dining": [[68, 76, 461, 598], [595, 76, 447, 598], [1114, 76, 448, 598], [1649, 76, 455, 598]],
 	&"leisure-dining": [[83, 66, 459, 611], [612, 66, 447, 611], [1141, 66, 445, 611], [1674, 66, 448, 611]],
@@ -119,7 +119,7 @@ const ACTION_ANCHORS: Dictionary = {
 }
 
 const SERVICE_ACTIONS: Dictionary = {&"cafe": "drinking", &"lounge": "reading", &"restaurant": "dining", &"bedroom": "sleeping"}
-const SERVICE_FRAME_TICKS: Dictionary = {&"cafe": 8.0, &"lounge": 12.0, &"restaurant": 6.0}
+const SERVICE_FRAME_TICKS: Dictionary = {&"cafe": 8.0, &"lounge": 12.0, &"restaurant": 6.0, &"bedroom": 12.0}
 const SERVICE_HEIGHTS: Dictionary = {&"lounge": 36.0, &"restaurant": 36.0}
 const SLEEP_WIDTH: float = 52.0
 const STAFF_IDLE_ROLES: Array[StringName] = [&"cleaner", &"receptionist"]

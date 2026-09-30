@@ -18,7 +18,9 @@ Arte original gerada pelo image_gen integrado; prompts e referências em `docs/a
   discretos sem ferramentas, usadas em `idle` e `lift_queue`. Âncoras nos sapatos,
   escala comum e ciclo de 64 ticks. Prompts e medições em `art/staff-idle*.json`.
 - Hóspedes têm espera própria, ciclos de beber, ler sentado e comer nos serviços,
-  além de poses estáticas de dormir sobre as camas dos três níveis.
+  além de ciclos sutis de repouso sobre as camas dos três níveis. As três folhas
+  de dormir usam grade 2×2, quatro poses e ciclo de 48 ticks; originais estáticos
+  preservados como referências. Detalhes em `art/bedroom-sleeping-loop.md`.
 - Miniaturas do catálogo reaproveitam a arte da instalação correspondente.
 - Três efeitos WAV sintetizados por `tools/generate_audio.py`: construção, melhoria
   e objetivo. Botão Som com preferência em `user://audio.cfg`.
@@ -46,13 +48,13 @@ mesmo sem um hóspede presente. A geração tem pequenas variações entre poses
 não equivale a uma animação produzida com rig esquelético.
 
 ## Limites
-Repouso nas camas tem poses estáticas, sem ciclo de respiração. Leitura e refeições
+Repouso nas camas tem quatro poses pintadas de respiração sutil, sem rig esquelético. Leitura e refeições
 têm ciclos sentados e posições separadas por usuário. Quartos, recepções e restaurante têm pinturas próprias para níveis 2 e 3;
 cabines N2 usam pintura de nogueira e N3 tem mármore e medalhão de latão; o poço
 mantém a pintura base. Sem música ou ambiente
 contínuo nesta entrega. Novos conteúdos precisam de arte própria. M8 mediu render
 isolado até 1000 e operação contínua até 120; esta entrega não comprova 1000 hóspedes
-atendidos simultaneamente a 60 FPS. Catálogo atual: 45 PNGs, 27 texturas de personagens.
+atendidos simultaneamente a 60 FPS. Catálogo atual: 48 PNGs, 27 texturas de personagens.
 
 ## Verificação
 `ui_art.gd`: carregamento, alpha, limites dos recortes, ciclo, zoom mínimo/normal/máximo,

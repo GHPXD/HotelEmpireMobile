@@ -84,12 +84,12 @@ memória do processo, objetivos concluídos, tick de cada conquista, serviços u
 perfis dos hóspedes ainda presentes, estado do evento e falhas.
 Medidas headless não equivalem a FPS com renderização.
 
-Arte atual: 45 PNGs originais, com caminhada, espera, trabalho e repouso da equipe, poses de dormir
-e ciclos dedicados de beber, ler sentado e comer para os três perfis. Os usuários admitidos
+Arte atual: 48 PNGs originais, com caminhada, espera, trabalho e repouso da equipe,
+e ciclos dedicados de dormir, beber, ler sentado e comer para os três perfis. Os usuários admitidos
 nos serviços têm posições visuais separadas; animações acompanham velocidade e pausa.
 
-Limitações atuais: seis instalações, três perfis, dois eventos, poses de dormir
-estáticas e sem música ambiente. A operação integrada foi medida até 120 hóspedes. Testes
+Limitações atuais: seis instalações, três perfis, dois eventos e sem música ambiente.
+Animações usam quatro poses pintadas, com pequenas variações entre quadros. A operação integrada foi medida até 120 hóspedes. Testes
 multi-seed são regressões e estudos de gestão, não balanceamento final. Export
 Windows validado nesta máquina; mobile/Web e compatibilidade externa permanecem abertos.
 

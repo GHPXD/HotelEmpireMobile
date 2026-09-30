@@ -303,3 +303,13 @@ contextos de repouso da equipe. ZIP, documentos e 45 PNGs auditados; kit externo
 atualizado. Matriz: docs/release/queue-presentation-matrix.json. Perfil sintético
 de caminhada concluído em oito casos; escopo e dados em
 docs/benchmarks/m8/QUEUE_PRESENTATION.md. Não mede latência de clique ou operação de filas.
+
+Ciclo de repouso (30/09/2026): `ui_art` aprovado nas nove combinações perfil ×
+cama N1/N2/N3, quatro quadros e três zooms. Recortes contidos, largura máxima de
+52px, âncora inferior, cadência de 12 ticks, loop em 48 e retorno à caminhada.
+Cliques selecionam os nove hóspedes; quatro capturas inspecionadas com peseira N3
+preservada. Seis camas completas mudaram pixels entre fases; snapshots inalterados
+durante pausa/desenho/seleção. `ui_culling` passou nas 11 câmeras;
+`ui_actor_presentation` e `ui_content` passaram. Quatro scripts válidos pelo gda.
+Catálogo: 48 PNGs e 27 texturas de personagens; poses estáticas preservadas como
+referências e novos arquivos ativos com os mesmos IDs. PNGs não foram editados.

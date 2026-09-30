@@ -1,5 +1,10 @@
 # Hóspedes em repouso nos quartos
 
+Registro da primeira entrega estática. Desde 30/09/2026, os IDs de dormir carregam
+as novas folhas de quatro poses descritas em [ciclo de repouso](bedroom-sleeping-loop.md).
+Os três PNGs abaixo permanecem preservados como referências; não são as texturas
+selecionadas para o repouso atual.
+
 Três poses estáticas geradas diretamente pelo `image_gen` do chat. Cada recorte
 mostra o rosto do perfil, pijama em sua paleta, mãos sobre o edredom e travesseiro.
 As imagens usam a perspectiva frontal vista do pé da cama, com corpo encurtado
@@ -32,7 +37,7 @@ Snapshots antes/depois de desenho e seleção iguais. `ui_culling` incluiu os tr
 níveis de cama nas nove comparações pixel a pixel; `ui_content` passou. Cinco
 scripts validados pelo `gda` sem diagnósticos.
 
-Catálogo: 43 PNGs, 25 texturas de personagens. O diagnóstico do executável verifica
+Catálogo nessa entrega: 43 PNGs, 25 texturas de personagens. O diagnóstico do executável verifica
 12 sprites de uso: nove faixas de quatro poses e três recortes estáticos de dormir.
 
 Pacote verificado em 29/09/2026 local (30/09 UTC), revisão e074d08 com árvore limpa.

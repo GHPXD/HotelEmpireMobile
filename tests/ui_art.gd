@@ -216,11 +216,18 @@ func run() -> void:
 		var texture := HotelArt.character(guest, &"bedroom")
 		check(texture != HotelArt.character(guest, &"lounge"), "sleep is bedroom specific")
 		check(texture.get_image().detect_alpha() != Image.ALPHA_NONE, "sleeper alpha")
-		check(HotelArt.character_regions(guest, &"bedroom").size() == 1, "sleep is a static pose")
-		var region := HotelArt.character_region(guest, 0, &"bedroom")
-		check(Rect2(Vector2.ZERO, texture.get_size()).encloses(region), "sleep region contained")
-		check(region == HotelArt.character_region(guest, 500, &"bedroom"), "sleep pose remains stable")
-		check(is_equal_approx(region.size.x * HotelArt.character_scale(guest, &"bedroom"), 52.0), "sleep width fits painted bed")
+		check(HotelArt.character_regions(guest, &"bedroom").size() == 4, "four sleep breathing poses")
+		check(HotelArt.character_region(guest, 0, &"bedroom") != HotelArt.character_region(guest, 12, &"bedroom"), "sleep breathing advances")
+		check(HotelArt.character_region(guest, 0, &"bedroom") == HotelArt.character_region(guest, 48, &"bedroom"), "sleep breathing loops")
+		var maximum_width := 0.0
+		for tick: int in [0, 12, 24, 36]:
+			var region := HotelArt.character_region(guest, tick, &"bedroom")
+			var scale := HotelArt.character_scale(guest, &"bedroom")
+			maximum_width = maxf(maximum_width, region.size.x * scale)
+			check(Rect2(Vector2.ZERO, texture.get_size()).encloses(region), "sleep region contained")
+			check(region.size.x * scale >= 50.0 and region.size.x * scale <= 52.01, "sleep width stable across poses")
+			check(HotelArt.character_anchor(guest, tick, &"bedroom").y == region.size.y, "sleep blanket bottom anchored")
+		check(is_equal_approx(maximum_width, 52.0), "sleep maximum width fits painted bed")
 		guest.state = &"walking"
 		check(HotelArt.character(guest, &"bedroom") != texture, "waking restores base sprite")
 		guest.state = &"using"
@@ -256,12 +263,13 @@ func run() -> void:
 			var room := session.hotel.by_id(sleeper.target_room)
 			var bed: Rect2 = game.view.room_rect(room.column, room.floor_index, room.definition().width)
 			var point: Vector2 = game.view.actor_screen_position(sleeper)
-			var region := HotelArt.character_region(sleeper, session.tick_count, &"bedroom")
-			var scale: float = HotelArt.character_scale(sleeper, &"bedroom") * zoom
-			var anchor := HotelArt.character_anchor(sleeper, session.tick_count, &"bedroom")
-			var pose := Rect2(point + Vector2(0, 17 * zoom) - anchor * scale, region.size * scale)
-			check(bed.encloses(pose), "sleeping cutout stays in its bedroom")
-			check(pose.get_center().y < bed.end.y - 30 * zoom, "sleeper placed on mattress above floor")
+			for tick: int in [0, 12, 24, 36]:
+				var region := HotelArt.character_region(sleeper, tick, &"bedroom")
+				var scale: float = HotelArt.character_scale(sleeper, &"bedroom") * zoom
+				var anchor := HotelArt.character_anchor(sleeper, tick, &"bedroom")
+				var pose := Rect2(point + Vector2(0, 17 * zoom) - anchor * scale, region.size * scale)
+				check(bed.encloses(pose), "all sleep breathing poses stay in bedroom")
+				check(pose.get_center().y < bed.end.y - 30 * zoom, "breathing sleeper stays on mattress above floor")
 		for room: RoomState in session.hotel.rooms:
 			if room.definition_id != &"restaurant":
 				continue
@@ -341,10 +349,31 @@ func run() -> void:
 	session.tick_count = before["session"]["tick_count"]
 	session.time = before["session"]["time"]
 	game.view.pan = Vector2(400, 400)
-	for frame in 4:
-		await process_frame
-	await RenderingServer.frame_post_draw
-	root.get_texture().get_image().save_png("res://.runtime/m7-sleeping-beds.png")
+	var sleep_samples: Dictionary = {}
+	for tick: int in [0, 12, 24, 36]:
+		session.tick_count = tick
+		session.time = tick * session.rules.tick
+		var phase_before := SessionSnapshot.capture(session)
+		for frame in 4:
+			await process_frame
+		await RenderingServer.frame_post_draw
+		var capture := root.get_texture().get_image()
+		capture.save_png("res://.runtime/m7-sleeping-loop-frame-%d.png" % (tick / 12))
+		for sleeper: ActorState in sleepers:
+			var room := session.hotel.by_id(sleeper.target_room)
+			var bed: Rect2 = game.view.room_rect(room.column, room.floor_index, room.definition().width)
+			if not Rect2(Vector2.ZERO, game.view.size).encloses(bed):
+				continue
+			if not sleep_samples.has(sleeper.id):
+				sleep_samples[sleeper.id] = []
+			sleep_samples[sleeper.id].append(capture.get_region(Rect2i(bed.position + game.view.global_position, bed.size)).get_data())
+		check(SessionSnapshot.capture(session) == phase_before, "paused sleep breathing leaves session unchanged")
+	check(sleep_samples.size() == 6, "six complete beds visible in breathing preview")
+	for frames: Array in sleep_samples.values():
+		check(frames.size() == 4, "bed preview covers all breathing phases")
+		check(frames[0] != frames[1] or frames[0] != frames[2] or frames[0] != frames[3], "breathing changes actual rendered bed pixels")
+	session.tick_count = before["session"]["tick_count"]
+	session.time = before["session"]["time"]
 	check(SessionSnapshot.capture(session) == before, "sleep composition leaves session unchanged")
 	game.view.pan = Vector2.ZERO
 	await click(root, game.hud.audio_button.get_global_rect().get_center())
