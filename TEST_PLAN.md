@@ -426,4 +426,10 @@ ui_content manteve 30 casos de retrato e 36 casos dos ícones de construção.
 Capturas inspecionadas em 1024×640 com texto ampliado:
 docs/art/hotel-staff-hiring.png, hotel-staff-management-receptionist.png e
 hotel-staff-management-cleaner.png. Detalhes e proveniência em docs/art/staff-icons.md.
+
+Pacote de equipe: revisão 5847132, árvore limpa; boot e smoke de 6120 ticks,
+39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas. Duas funções
+contratadas pelo ícone com custo correto e arte na gestão em cada configuração
+da matriz docs/release/staff-icons-matrix.json. ZIP, documentos e 67 PNGs
+auditados; kit de compatibilidade atualizado.
 Resultados de outro computador e playtest humano continuam pendentes.

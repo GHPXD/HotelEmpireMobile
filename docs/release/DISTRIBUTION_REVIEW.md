@@ -4,7 +4,7 @@ Resultado: pacote do protótipo preparado e verificado para testes externos.
 Isso não conclui M10 nem autoriza publicação comercial.
 
 Artefato revisado: `builds/HotelEmpire-windows-x86_64.zip`, revisão de código
-`2f5bf1e938200fe4a08e4a17ee3ae2e9b7ee25ff`. O manifesto registra árvore limpa
+`5847132d38854e3d2a5ac1846202be3693a2d447`. O manifesto registra árvore limpa
 no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 `local-distribution-audit.json`. O comando falha se qualquer verificação divergir.
 
@@ -13,8 +13,8 @@ no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 | Inventário do ZIP | Exatamente executável, guia, licença Godot, avisos de terceiros e manifesto; sem entradas adicionais ou duplicadas |
 | Identidade do executável | SHA-256 e tamanho conferem com o manifesto |
 | Guia e avisos | Bytes empacotados iguais aos arquivos fonte; guia explica instalação, controles, save, recuperação e limites |
-| Arte | Todos os 65 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; seis ícones de construção, três faixas de bagagem, cinco retratos, três pinturas de quartos aguardando limpeza, 12 sprites de uso dos hóspedes com quatro quadros e dois de repouso da equipe, em quatro contextos, verificados dentro do executável |
-| Funcionamento exportado | `build-icons-matrix.json`: seis combinações locais; fontes, alpha, layout e ativação dos seis ícones; três faixas de viagem nos dois sentidos, quatro poses e três zooms, seleção e rolagem de cinco retratos, seleção/indicadores e filas registradas em três zooms, pinturas limpa/suja dos três níveis, boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
+| Arte | Todos os 67 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; dois ícones da equipe, seis ícones de construção, três faixas de bagagem, cinco retratos, três pinturas de quartos aguardando limpeza, 12 sprites de uso dos hóspedes com quatro quadros e dois de repouso da equipe, em quatro contextos, verificados dentro do executável |
+| Funcionamento exportado | `staff-icons-matrix.json`: seis combinações locais; contratação das duas funções com preço correto e ícone da gestão; fontes, alpha, layout e ativação dos seis ícones de construção; três faixas de viagem nos dois sentidos, quatro poses e três zooms, seleção e rolagem de cinco retratos, seleção/indicadores e filas registradas em três zooms, pinturas limpa/suja dos três níveis, boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
 | Teste sem repositório | `external-kit-local-matrix.json`: validação anterior do runner em Windows PowerShell 5.1; kit atualizado com o novo ZIP, cujo jogo passou na matriz local atual |
 | Dados do jogador | Testes usam APPDATA isolado; o guia informa ausência de autosave e localização do save manual |
 | Distribuição pública | Não publicada, não assinada; sem instalador, atualização automática ou requisito mínimo certificado |
