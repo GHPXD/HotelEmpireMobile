@@ -64,6 +64,9 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 	return ROOMS.get(id)
 
 const CHARACTERS: Dictionary = {
+	&"balanced-travel": preload("res://assets/art/characters/balanced-travel.png"),
+	&"business-travel": preload("res://assets/art/characters/business-travel.png"),
+	&"leisure-travel": preload("res://assets/art/characters/leisure-travel.png"),
 	&"cleaner-idle": preload("res://assets/art/characters/cleaner-idle.png"),
 	&"receptionist-idle": preload("res://assets/art/characters/receptionist-idle.png"),
 	&"balanced-sleeping": preload("res://assets/art/characters/balanced-sleeping-loop.png"),
@@ -101,6 +104,9 @@ static func character(actor: ActorState, service_id: StringName = &"") -> Textur
 	return CHARACTERS[animation_id(actor, service_id)]
 
 const ACTION_REGIONS: Dictionary = {
+	&"balanced-travel": [[27, 173, 445, 572], [495, 173, 344, 571], [908, 173, 446, 571], [1382, 173, 314, 572]],
+	&"business-travel": [[12, 143, 442, 626], [484, 142, 364, 626], [888, 142, 453, 627], [1370, 143, 388, 626]],
+	&"leisure-travel": [[18, 152, 449, 615], [474, 153, 379, 609], [900, 153, 442, 612], [1348, 153, 411, 612]],
 	&"cleaner-idle": [[246, 21, 208, 719], [729, 18, 205, 722], [1202, 29, 214, 711], [1653, 21, 203, 719]],
 	&"receptionist-idle": [[116, 42, 260, 812], [558, 41, 262, 813], [1001, 51, 263, 803], [1446, 42, 261, 812]],
 	&"balanced-sleeping": [[4, 159, 619, 353], [631, 159, 619, 353], [4, 786, 619, 353], [631, 786, 619, 353]],
@@ -127,6 +133,9 @@ const ACTION_REGIONS: Dictionary = {
 
 # Local foot centers measured from alpha; gestures keep a shared floor anchor.
 const ACTION_ANCHORS: Dictionary = {
+	&"balanced-travel": [Vector2(259, 568), Vector2(240.5, 567), Vector2(271, 567), Vector2(241, 568)],
+	&"business-travel": [Vector2(280, 622), Vector2(226, 622), Vector2(284.5, 623), Vector2(258, 622)],
+	&"leisure-travel": [Vector2(283, 611), Vector2(264.5, 605), Vector2(276, 608), Vector2(280, 608)],
 	&"cleaner-idle": [Vector2(118, 715), Vector2(115.5, 718), Vector2(119, 707), Vector2(113, 715)],
 	&"receptionist-idle": [Vector2(120, 808), Vector2(122, 809), Vector2(122.5, 799), Vector2(120, 808)],
 	&"balanced-dining": [Vector2(225.5, 578), Vector2(216, 578), Vector2(218, 578), Vector2(215, 578)],
@@ -152,6 +161,8 @@ const SLEEP_BED_ANCHOR: Vector2 = Vector2(0.5, 0.62)
 const SLEEP_FOOTBOARD: Rect2 = Rect2(0.28, 0.572, 0.435, 0.09)
 
 static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
+	if travelling_with_luggage(actor):
+		return StringName("%s-travel" % actor.archetype_id)
 	if actor.role in STAFF_IDLE_ROLES and actor.state in STAFF_IDLE_STATES:
 		return StringName("%s-idle" % actor.role)
 	if actor.role == &"guest" and actor.state == &"using" and SERVICE_ACTIONS.has(service_id):
@@ -164,6 +175,13 @@ static func animation_id(actor: ActorState, service_id: StringName = &"") -> Str
 		return &"receptionist-working"
 	return character_id(actor)
 
+static func travelling_with_luggage(actor: ActorState) -> bool:
+	if actor.role != &"guest":
+		return false
+	if actor.state in [&"arriving", &"exit"]:
+		return true
+	return actor.in_transit() and (actor.destination_state == &"exit" or (actor.destination_state == &"checkin" and not actor.checked_in))
+
 static func character_regions(actor: ActorState, service_id: StringName = &"") -> Array:
 	var id := animation_id(actor, service_id)
 	return ACTION_REGIONS[id] if ACTION_REGIONS.has(id) else REGIONS[id]
@@ -171,7 +189,7 @@ static func character_regions(actor: ActorState, service_id: StringName = &"") -
 static func character_frame(actor: ActorState, tick: int, service_id: StringName = &"") -> int:
 	var regions := character_regions(actor, service_id)
 	var index: int = (tick + actor.id * 2) % 4 if actor.state == &"walking" else 1
-	if ACTION_REGIONS.has(animation_id(actor, service_id)):
+	if ACTION_REGIONS.has(animation_id(actor, service_id)) and not travelling_with_luggage(actor):
 		# All gestures freeze with simulation ticks; service cadence is contextual.
 		var frame_ticks := 12.0 if actor.role == &"guest" else 4.0
 		if actor.role in STAFF_IDLE_ROLES and actor.state in STAFF_IDLE_STATES:

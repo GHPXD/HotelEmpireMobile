@@ -1,6 +1,6 @@
 # Assets
 
-M7 usa 56 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
+M7 usa 59 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
 novas faixas de serviço documentadas em `docs/art/`. Sem CLI/API alternativa,
 SVG ou imagens copiadas de jogos de referência.
 Não são assets feitos manualmente por um ilustrador. Prompts completos e referências
@@ -38,6 +38,9 @@ Indicadores de espera respeitam os limites dos sprites, e cliques aceitam cabeç
 e corpo. Critérios de sobreposição e validação em `docs/art/queue-presentation.md`.
 O inspetor mostra retratos próprios de perfil/função em 96px, com seleção e rolagem
 automáticas. Proveniência e limites em `docs/art/character-portraits.md`.
+
+Chegada e saída têm faixas próprias com malas por perfil; quatro poses e apoio
+dos pés preservado nos dois sentidos. Detalhes em `docs/art/guest-travel.md`.
 
 Sons gerados pelo código original `tools/generate_audio.py`, sem samples externos:
 PCM mono 16 bits/22050 Hz, envelope de ataque/decay e volume moderado na reprodução.

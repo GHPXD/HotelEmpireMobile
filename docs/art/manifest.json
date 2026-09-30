@@ -502,5 +502,32 @@
     "bytes": 1313627,
     "sha256": "de36f0c817a9bc6496a69ba4addc658b766ef479330952c67f499cc096cbff24",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/balanced-travel.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 843217,
+    "sha256": "e701038d301216b46ddd6d2163deb33b1725efda6fefefbc0a4e00fcecdfa9d3",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/business-travel.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 888291,
+    "sha256": "5eba5caef616587282ded4f7bfa9ccff4dd5a2a3b1f4f4ad67bc618d5787675f",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/leisure-travel.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 1006202,
+    "sha256": "4f79b9ce59a126593b627acd00f1febb7b4f5bb05b4591860ed6d8f00395692d",
+    "generator": "built-in image_gen"
   }
 ]

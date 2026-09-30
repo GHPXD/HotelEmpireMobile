@@ -174,6 +174,9 @@ func _sprite_rect(actor: ActorState, point: Vector2) -> Rect2:
 	var region := HotelArt.character_region(actor, session.tick_count, service)
 	var scale := HotelArt.character_scale(actor, service) * zoom_factor
 	var anchor := HotelArt.character_anchor(actor, session.tick_count, service)
+	if actor.state == &"walking" and actor.target_x < actor.x:
+		# Reflect around the shoe anchor, including asymmetric luggage silhouettes.
+		anchor.x = region.size.x - anchor.x
 	return Rect2(point + Vector2(0, 17 * zoom_factor) - anchor * scale, region.size * scale)
 
 func actor_at_screen_position(at: Vector2) -> int:

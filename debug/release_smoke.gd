@@ -64,6 +64,36 @@ func run(game: Node) -> void:
 			check(not visual_view.actor_wait_badge_rect(actor).has_area(), "exported shared queue status")
 		queue_projection_verified += 1
 	check(equivalent(queue_before, SessionSnapshot.capture(visual_session)), "exported queue presentation is read-only")
+	var travel_art_verified := 0
+	visual_session.actors.clear()
+	for profile: StringName in [&"balanced", &"business", &"leisure"]:
+		var actor := visual_session.spawn_guest()
+		actor.archetype_id = profile
+		actor.x = 6
+		actor.destination_state = &"exit"
+		var texture: Texture2D
+		for state: StringName in [&"arriving", &"walking", &"lift_queue", &"riding", &"exit"]:
+			actor.state = state
+			texture = HotelArt.character(actor)
+			check(HotelArt.animation_id(actor) == StringName("%s-travel" % profile), "exported entry/exit luggage context")
+			check(texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported travel alpha")
+		actor.state = &"walking"
+		for direction: int in [-1, 1]:
+			actor.target_x = actor.x + direction
+			for zoom: float in [0.35, 0.9, 1.8]:
+				visual_view.zoom_factor = zoom
+				for phase in 4:
+					visual_session.tick_count = phase
+					var region := HotelArt.character_region(actor, phase)
+					var anchor := HotelArt.character_anchor(actor, phase)
+					if direction < 0:
+						anchor.x = region.size.x - anchor.x
+					var sprite := visual_view.actor_sprite_rect(actor)
+					check((sprite.position + anchor * HotelArt.character_scale(actor) * zoom).distance_to(visual_view.actor_screen_position(actor) + Vector2(0, 17 * zoom)) < 0.001, "exported travel shoe anchor")
+					check(Rect2(Vector2.ZERO, texture.get_size()).encloses(region), "exported travel source bounds")
+					check(visual_view.actor_at_screen_position(sprite.get_center()) == actor.id, "exported travel selection")
+		travel_art_verified += 1
+		visual_session.actors.clear()
 	visual_view.free()
 	var housekeeping_art_verified := 0
 	for level in range(1, 4):
@@ -305,6 +335,7 @@ func run(game: Node) -> void:
 	report["queue_projection_verified"] = queue_projection_verified
 	report["housekeeping_art_verified"] = housekeeping_art_verified
 	report["portrait_art_verified"] = portrait_art_verified
+	report["travel_art_verified"] = travel_art_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))

@@ -364,4 +364,23 @@ Pacote de retratos (30/09/2026): revisão a3b2554, árvore limpa; boot e smoke d
 6120 ticks sem falhas. Seis combinações de janela/texto verificaram os cinco
 retratos, seleção real e rolagem. Matriz docs/release/character-portraits-matrix.json.
 ZIP, documentos e 56 PNGs auditados; kit de compatibilidade atualizado.
+
+## M7 — bagagem na chegada e saída (30/09/2026)
+
+Três faixas RGBA preservadas do gerador do chat, quatro poses por perfil.
+Catálogo atual: 59 PNGs, 30 texturas de animação e cinco retratos separados.
+Quatro scripts validados pelo gda; oito suítes passaram: ui_actor_presentation,
+ui_culling, ui_art, ui_content, ui_smoke, ui_resume, simulation_test e save_test.
+
+ui_actor_presentation acrescenta 72 combinações (três perfis, dois sentidos,
+quatro poses e três zooms), com clique no corpo e na mala, âncora de apoio
+espelhada, limites da fonte e snapshot imutável. Compara pixels de culling
+em 18 casos de pose 0. Exercita chegada à recepção, recusa sem recepção,
+fim da estadia, escolha contextual em fila/cabine, caminhada interna e
+restauração de destino sem alterar o esquema de save. Fixtures de relógio
+e destino foram corrigidas após a primeira execução falhar; nova execução completa passou.
+
+Capturas inspecionadas: docs/art/hotel-travel-balanced.png,
+hotel-travel-business.png e hotel-travel-leisure.png. Proveniência e limites
+em docs/art/guest-travel.md. Não há rig nem animação de porta/desempacotar.
 Resultados de outro computador e playtest humano continuam pendentes.

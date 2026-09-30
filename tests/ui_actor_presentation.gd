@@ -85,10 +85,97 @@ func run() -> void:
 	session.tick_count = 0
 	check(SessionSnapshot.capture(session) == before, "fixture restored after phase inspection")
 	await registered_queues(view)
+	await luggage_travel(view)
 	print(JSON.stringify({"suite": "ui_actor_presentation", "failures": failures, "waiting_contexts": waiting.size(), "zooms": 3, "phases": 4}))
 	view.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
+
+func luggage_travel(view: HotelView) -> void:
+	var session := HotelSession.new(712)
+	session.speed = 0
+	view.session = session
+	view.hotel = session.hotel
+	for profile: StringName in [&"balanced", &"business", &"leisure"]:
+		session.actors.clear()
+		var actor := session.spawn_guest()
+		actor.archetype_id = profile
+		actor.x = 5
+		session.guests._arrive(actor, [])
+		check(actor.destination_state == &"exit" and HotelArt.travelling_with_luggage(actor), "rejected arrival exits with luggage")
+		actor.state = &"deciding"
+		actor.age = 10000
+		session.guests._choose(actor, session.hotel, session.transport)
+		check(actor.destination_state == &"exit" and HotelArt.travelling_with_luggage(actor), "stay completion selects travel art")
+		var reception := session.hotel.by_id(1)
+		if reception == null:
+			reception = session.hotel.build(HotelCatalog.room(&"reception"), 3, 0)
+		actor.state = &"arriving"
+		session.guests._arrive(actor, [reception])
+		check(actor.destination_state == &"checkin" and HotelArt.travelling_with_luggage(actor), "real reception arrival selects travel art")
+		reception.queue.leave(actor.id)
+		for destination: StringName in [&"checkin", &"exit"]:
+			actor.destination_state = destination
+			for state: StringName in [&"walking", &"lift_queue", &"riding"]:
+				actor.state = state
+				check(HotelArt.animation_id(actor) == StringName("%s-travel" % profile), "travel context retains luggage")
+				if state != &"walking":
+					check(HotelArt.character_frame(actor, 0) == HotelArt.character_frame(actor, 99), "stationary luggage pose does not walk")
+		actor.state = &"checkin"
+		check(HotelArt.animation_id(actor) == StringName("%s-waiting" % profile), "reception service retains wait animation")
+		actor.state = &"walking"
+		actor.destination_state = &"checkin"
+		actor.checked_in = true
+		check(not HotelArt.travelling_with_luggage(actor), "stale checkin destination does not show luggage after admission")
+		actor.checked_in = false
+		actor.destination_state = &"service_queue"
+		check(HotelArt.animation_id(actor) == profile, "internal service trip uses base walk")
+		actor.destination_state = &"exit"
+		var texture := HotelArt.character(actor)
+		check(texture.get_image().detect_alpha() != Image.ALPHA_NONE, "travel texture has alpha")
+		for zoom: float in [0.35, 0.9, 1.8]:
+			view.zoom_factor = zoom
+			view.pan = Vector2.ZERO
+			view.pan += view.size * 0.5 - view.actor_screen_position(actor)
+			for direction: int in [-1, 1]:
+				actor.target_x = actor.x + direction
+				for phase in 4:
+					session.tick_count = phase
+					session.time = phase * session.rules.tick
+					var before := SessionSnapshot.capture(session)
+					var region := HotelArt.character_region(actor, phase)
+					var anchor := HotelArt.character_anchor(actor, phase)
+					var scale := HotelArt.character_scale(actor) * zoom
+					var sprite := view.actor_sprite_rect(actor)
+					var reflected := Vector2(region.size.x - anchor.x, anchor.y) if direction < 0 else anchor
+					check((sprite.position + reflected * scale).distance_to(view.actor_screen_position(actor) + Vector2(0, 17 * zoom)) < 0.001, "mirrored shoe anchor remains on actor floor point")
+					check(Rect2(Vector2.ZERO, texture.get_size()).encloses(region), "travel source rectangle within texture")
+					await click(root, sprite.get_center())
+					check(selected_id == actor.id, "travel body is selectable")
+					var luggage := sprite.position + sprite.size * Vector2(0.9 if direction < 0 else 0.1, 0.85)
+					await click(root, luggage)
+					check(selected_id == actor.id, "travel luggage is selectable in either direction")
+					check(SessionSnapshot.capture(session) == before, "paused travel render and input preserve simulation")
+					if phase == 0:
+						view.cull_offscreen = false
+						view.queue_redraw()
+						await process_frame
+						await RenderingServer.frame_post_draw
+						var full := root.get_texture().get_image()
+						view.cull_offscreen = true
+						view.queue_redraw()
+						await process_frame
+						await RenderingServer.frame_post_draw
+						var culled := root.get_texture().get_image()
+						check(full.get_data() == culled.get_data(), "luggage culling preserves visible pixels")
+						if zoom == 1.8:
+							culled.save_png("res://.runtime/m7-travel-%s-%d.png" % [profile, direction])
+		var restored := SessionSnapshot.restore(SessionSnapshot.capture(session))
+		check(restored.error.is_empty(), "travel context snapshot restores: %s" % restored.error)
+		if restored.error.is_empty():
+			var loaded: ActorState = restored.session.actors[actor.id]
+			check(HotelArt.animation_id(loaded) == HotelArt.animation_id(actor), "luggage context restored without schema changes")
+	print(JSON.stringify({"travel_profiles": 3, "travel_directions": 2, "travel_phases": 4, "travel_zooms": 3, "failures": failures}))
 
 func registered_queues(view: HotelView) -> void:
 	var session := HotelSession.new(511)

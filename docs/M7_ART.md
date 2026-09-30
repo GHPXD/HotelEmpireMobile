@@ -25,6 +25,8 @@ Arte original gerada pelo image_gen integrado; prompts e referências em `docs/a
 - Cinco retratos transparentes de perfil/função para inspeção de hóspedes e equipe,
   separados das faixas de animação. Cartão de 96px na lateral, com texto nativo
   e rolagem automática ao selecionar. Detalhes em `art/character-portraits.md`.
+- Três faixas com bagagem para chegada e saída: quatro poses por perfil,
+  contexto de trânsito e âncoras espelhadas nos sapatos. Detalhes em `art/guest-travel.md`.
 - Quartos aguardando limpeza têm pinturas próprias N1/N2/N3, com cama desfeita
   e toalhas usadas. O estado persistido seleciona a pintura; concluir a limpeza
   restaura a versão limpa. Detalhes em `art/bedroom-housekeeping.md`.
