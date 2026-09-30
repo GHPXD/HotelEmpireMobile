@@ -56,5 +56,8 @@ de janela/texto: restauração pela barra, fatos do último registro, janela den
 do viewport, pausa em 1x e fechamento com foco restaurado. Evidência em
 `docs/release/reviews-cafe-matrix.json`.
 
-Esse pacote anterior usa v6 e não inclui os tempos de visita. A validação do
-schema v7 ocorre no projeto; sua reexportação permanece pendente.
+O pacote Windows 28fc7c9 inclui os tempos de visita e saves v7. Smoke de 6120
+ticks e seis combinações de janela/texto passaram, com tempos reais de recepção
+e elevador, round-trip, continuidade e exibição dos fatos restaurados.
+Evidência em `docs/release/visit-times-matrix.json`. Kit externo atualizado;
+compatibilidade em outro computador permanece pendente.

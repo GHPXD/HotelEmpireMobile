@@ -22,5 +22,5 @@ embarque sem espera antiga, saída, decisão, ausência de mutação e save/load
 `ui_management` cobre os fluxos de gestão existentes. Ambas passaram em
 29/09/2026; a captura do inspetor foi inspecionada visualmente.
 
-O ZIP Windows 45d2eb6 permanece como artefato anterior validado; este incremento
-ainda não foi reexportado.
+O incremento está incluído no ZIP Windows 28fc7c9, exportado com árvore limpa.
+Seu smoke e seis combinações locais passaram em `release/visit-times-matrix.json`.

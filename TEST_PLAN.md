@@ -211,3 +211,10 @@ conservação dos totais ao mudar trajeto e registro na saída conferidos. Save 
 preserva avaliações v6 com tempos desconhecidos, sem alterar a origem; visitantes
 antigos não produzem falsos zeros. JSON e continuidade em várias seeds passaram,
 assim como a janela de avaliações com tempos reais e texto ampliado.
+
+Pacote v7 (29/09/2026 local, 30/09 UTC): revisão 28fc7c9, export limpo, smoke
+de 6120 ticks e seis combinações de janela/texto aprovados. Tempos reais de
+recepção/elevador conferidos antes do save e fatos da avaliação restaurada
+verificados na janela. ZIP, documentos e 31 PNGs passaram na auditoria. Matriz
+em docs/release/visit-times-matrix.json; kit externo atualizado. O pacote também
+inclui o incremento anterior do inspetor de personagens.
