@@ -4,14 +4,24 @@ extends SceneTree
 var failures: int = 0
 var observe_departures: bool = false
 var upgrade_study: bool = false
+var adaptive_study: bool = false
+const ADAPTIVE_LOW: float = 75.0
+const ADAPTIVE_HIGH: float = 80.0
+const ADAPTIVE_MIN_REVIEWS: int = 5
 
 func _initialize() -> void:
 	var reports: Array[Dictionary] = []
-	upgrade_study = OS.get_cmdline_user_args().has("--lodging-upgrades")
+	adaptive_study = OS.get_cmdline_user_args().has("--adaptive-lodging")
+	upgrade_study = adaptive_study or OS.get_cmdline_user_args().has("--lodging-upgrades")
 	observe_departures = upgrade_study or OS.get_cmdline_user_args().has("--departure-cohorts")
 	var value_study := observe_departures or OS.get_cmdline_user_args().has("--lodging-value")
 	var mixed := value_study or OS.get_cmdline_user_args().has("--tariff-mixed")
-	if upgrade_study:
+	if adaptive_study:
+		for seed_value in [1, 17, 123]:
+			for percent in [75, 100, 125]:
+				reports.append(run_case(seed_value, 8, percent, 100, false, 2))
+			reports.append(run_case(seed_value, 8, 100, 100, false, 2, true))
+	elif upgrade_study:
 		for level in [1, 2, 3]:
 			for seed_value in [1, 17, 123]:
 				for percent in [75, 100, 125]:
@@ -32,13 +42,15 @@ func _initialize() -> void:
 		output = "res://.runtime/departure-cohorts.json"
 	if upgrade_study:
 		output = "res://.runtime/lodging-upgrades.json"
+	if adaptive_study:
+		output = "res://.runtime/adaptive-lodging.json"
 	var file := FileAccess.open(output, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"days": 30, "reports": reports, "failures": failures}, "\t"))
 	file.close()
 	print(JSON.stringify({"suite": "tariff_scenarios", "failures": failures, "scenarios": reports.size()}))
 	quit(1 if failures else 0)
 
-func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int = -1, expanded: bool = false, bedroom_level: int = 1) -> Dictionary:
+func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int = -1, expanded: bool = false, bedroom_level: int = 1, adaptive: bool = false) -> Dictionary:
 	if service_percent < 0:
 		service_percent = percent
 	var session := HotelSession.new(seed_value)
@@ -65,6 +77,7 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 	var later_observer := preload("res://tests/departure_observer.gd").new()
 	var upgrade_events: Array[Dictionary] = []
 	var before_upgrades: Dictionary = {}
+	var decisions: Array[Dictionary] = []
 	session.opened = true
 	for tick in range(1, 36001):
 		if upgrade_study and (tick == 6001 or tick == 18001):
@@ -81,6 +94,19 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 						if shadow != null:
 							check(shadow.upgrade_room(room.id).is_empty(), "mirror upgrade into continued save")
 				upgrade_events.append({"tick": tick, "level": desired_level, "rooms": bought, "cash_before": before_cash, "cash_after": session.economy.cash, "spent": before_cash - session.economy.cash})
+		if adaptive and tick >= 6001 and (tick - 6001) % 1200 == 0:
+			var before_decision := SessionSnapshot.capture(session)
+			var decision := adaptive_decision(session)
+			check(SessionSnapshot.capture(session) == before_decision, "adaptive observation does not mutate game")
+			decision["tick"] = tick
+			decisions.append(decision)
+			if shadow != null:
+				check(decision.current == adaptive_decision(shadow).current and decision.next == adaptive_decision(shadow).next, "restored reviews produce independent identical price decision")
+			for room: RoomState in session.hotel.rooms:
+				if room.definition().category == &"lodging":
+					check(session.set_room_tariff(room.id, decision.next).is_empty(), "adaptive price applied through management command")
+					if shadow != null:
+						check(shadow.set_room_tariff(room.id, decision.next).is_empty(), "apply independently verified restored decision")
 		if expanded and tick == 6001:
 			for spec in [[&"cafe", 7], [&"lounge", 9]]:
 				var definition := HotelCatalog.room(spec[0])
@@ -148,7 +174,31 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 		report["before_upgrades"] = before_upgrades
 		report["post_day5_cohorts"] = later_observer.report()
 		report["capital_spent"] = session.economy.capital_spent
+	if adaptive_study:
+		report["adaptive"] = adaptive
+		report["decisions"] = decisions
 	return report
+
+static func adaptive_decision(session: HotelSession) -> Dictionary:
+	var current: int = 100
+	for room: RoomState in session.hotel.rooms:
+		if room.definition().category == &"lodging":
+			current = room.price_percent
+			break
+	var reviews: Array[Dictionary] = []
+	var total: float = 0.0
+	for review: Dictionary in session.guests.reviews:
+		if review.checked_in:
+			reviews.append({"guest_id": review.guest_id, "time": review.time, "score": review.score})
+			total += review.score
+	var mean: Variant = total / reviews.size() if not reviews.is_empty() else null
+	var next := current
+	if reviews.size() >= ADAPTIVE_MIN_REVIEWS:
+		if mean < ADAPTIVE_LOW:
+			next = maxi(75, current - 25)
+		elif mean > ADAPTIVE_HIGH:
+			next = mini(125, current + 25)
+	return {"current": current, "next": next, "samples": reviews.size(), "score_total": total, "mean": mean, "observations": reviews}
 
 func check(condition: bool, message: String) -> void:
 	if not condition:

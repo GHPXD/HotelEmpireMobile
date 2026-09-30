@@ -196,3 +196,11 @@ espelhadas no save em continuidade, desbloqueios naturais, conservação de caix
 níveis finais e contagens/somas de coortes conferidos. O resumidor validou os
 custos, datas, contexto e reprodução exata de nove referências N1. Resultados
 em docs/LODGING_UPGRADES.md. Não altera parâmetros de balanceamento nem o runtime.
+
+Tarifa adaptativa (29/09/2026): 12 partidas com --adaptive-lodging, zero falhas,
+60 checkpoints e nove controles fixos idênticos ao estudo N2. 75 decisões
+baseadas em avaliações já existentes validadas, inclusive a decisão recalculada
+no save restaurado. Observação somente leitura, custos, coortes e contexto
+conferidos. O resumidor rejeitou cinco corrupções deliberadas de relatório.
+Resultados em docs/ADAPTIVE_LODGING.md; não adiciona automação ao jogo nem muda
+parâmetros do runtime. Playtest humano permanece pendente.

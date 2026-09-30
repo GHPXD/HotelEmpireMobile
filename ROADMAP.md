@@ -63,6 +63,8 @@ v1–v4 para v5 e contratos em curso preservados. Detalhes em `docs/TARIFFS.md`.
   - [ ] Calibrar com upgrades/políticas adaptativas e avaliar em playtest humano.
     - [x] Medir três políticas de melhoria em 27 cenários e 135 checkpoints; contrapartida de preço preservada e retorno dependente da tarifa/data de compra.
     - [ ] Comparar políticas adaptativas e revisar a experiência com jogadores.
+      - [x] Política diária baseada nas avaliações: 12 cenários, 60 checkpoints, alvo de caixa/satisfação cumprido em três seeds.
+      - [ ] Avaliar leitura do histórico e frequência de mudanças em playtest humano.
 M10 permanece aberto para resultados de compatibilidade em outro computador.
 M6 não conclui suporte integral a teclado/controller, leitores de tela ou touch.
 M8 mede render isolado, transporte e sobrecarga até 1000; operação integrada
