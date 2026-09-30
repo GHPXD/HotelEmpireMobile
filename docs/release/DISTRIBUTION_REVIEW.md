@@ -4,7 +4,7 @@ Resultado: pacote do protótipo preparado e verificado para testes externos.
 Isso não conclui M10 nem autoriza publicação comercial.
 
 Artefato revisado: `builds/HotelEmpire-windows-x86_64.zip`, revisão de código
-`090b8af9098a769861fc79a13d4257f8807d95dc`. O manifesto registra árvore limpa
+`a3b2554c857019d5be1568ba3930c55c14f3b73b`. O manifesto registra árvore limpa
 no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 `local-distribution-audit.json`. O comando falha se qualquer verificação divergir.
 
@@ -13,8 +13,8 @@ no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 | Inventário do ZIP | Exatamente executável, guia, licença Godot, avisos de terceiros e manifesto; sem entradas adicionais ou duplicadas |
 | Identidade do executável | SHA-256 e tamanho conferem com o manifesto |
 | Guia e avisos | Bytes empacotados iguais aos arquivos fonte; guia explica instalação, controles, save, recuperação e limites |
-| Arte | Todos os 51 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; três pinturas de quartos aguardando limpeza, 12 sprites de uso dos hóspedes com quatro quadros e dois de repouso da equipe, em quatro contextos, verificados dentro do executável |
-| Funcionamento exportado | `housekeeping-fifo-matrix.json`: seis combinações locais; seleção/indicadores e filas registradas em três zooms, pinturas limpa/suja dos três níveis, boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
+| Arte | Todos os 56 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; cinco retratos, três pinturas de quartos aguardando limpeza, 12 sprites de uso dos hóspedes com quatro quadros e dois de repouso da equipe, em quatro contextos, verificados dentro do executável |
+| Funcionamento exportado | `character-portraits-matrix.json`: seis combinações locais; seleção e rolagem de cinco retratos, seleção/indicadores e filas registradas em três zooms, pinturas limpa/suja dos três níveis, boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
 | Teste sem repositório | `external-kit-local-matrix.json`: validação anterior do runner em Windows PowerShell 5.1; kit atualizado com o novo ZIP, cujo jogo passou na matriz local atual |
 | Dados do jogador | Testes usam APPDATA isolado; o guia informa ausência de autosave e localização do save manual |
 | Distribuição pública | Não publicada, não assinada; sem instalador, atualização automática ou requisito mínimo certificado |

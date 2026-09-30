@@ -359,3 +359,9 @@ por função e câmera comum. Retomada executada após ui_smoke produzir seu sav
 Capturas inspecionadas em docs/art/hotel-character-portraits.png e
 hotel-staff-portrait.png. Textos e necessidades permanecem nativos; retrato não
 representa emoção atual. Economia, estados e schema v7 preservados.
+
+Pacote de retratos (30/09/2026): revisão a3b2554, árvore limpa; boot e smoke de
+6120 ticks sem falhas. Seis combinações de janela/texto verificaram os cinco
+retratos, seleção real e rolagem. Matriz docs/release/character-portraits-matrix.json.
+ZIP, documentos e 56 PNGs auditados; kit de compatibilidade atualizado.
+Resultados de outro computador e playtest humano continuam pendentes.

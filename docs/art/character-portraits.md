@@ -27,3 +27,11 @@ estado/satisfação independentes, snapshot, save/load e limpeza de seleção.
 O diagnóstico do executável verifica as cinco imagens, alpha e seleção pela
 interface em cada combinação de janela/texto. Nenhuma mudança em gameplay,
 economia, dados de atores, RNG ou schema v7.
+
+Validação em Godot 4.7.2: oito suítes gráficas aprovadas, 30 casos de retrato e
+cinco scripts válidos pelo gda. Capturas `hotel-character-portraits.png` e
+`hotel-staff-portrait.png` inspecionadas. Pacote da revisão a3b2554 gerado com
+árvore limpa, boot e smoke de 6120 ticks aprovados. As seis combinações de
+janela/texto verificaram os cinco retratos por cliques reais e limites na rolagem.
+Matriz `../release/character-portraits-matrix.json`. ZIP, documentos e 56 PNGs
+auditados; kit externo atualizado. Compatibilidade em outra máquina pendente.
