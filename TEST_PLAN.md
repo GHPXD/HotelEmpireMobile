@@ -204,3 +204,10 @@ no save restaurado. Observação somente leitura, custos, coortes e contexto
 conferidos. O resumidor rejeitou cinco corrupções deliberadas de relatório.
 Resultados em docs/ADAPTIVE_LODGING.md; não adiciona automação ao jogo nem muda
 parâmetros do runtime. Playtest humano permanece pendente.
+
+Tempos de visita (29/09/2026): 28 suítes -Visual -Stress aprovadas. Medição de
+recepção, múltiplas admissões de serviço e filas de elevador, exclusão da equipe,
+conservação dos totais ao mudar trajeto e registro na saída conferidos. Save v7
+preserva avaliações v6 com tempos desconhecidos, sem alterar a origem; visitantes
+antigos não produzem falsos zeros. JSON e continuidade em várias seeds passaram,
+assim como a janela de avaliações com tempos reais e texto ampliado.

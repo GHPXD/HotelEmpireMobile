@@ -16,6 +16,9 @@ Roda: zoom. Botão do meio: mover câmera. Botão direito/Esc: cancelar.
 Espaço: pausa. Ctrl+S: salvar. F2: Operação. F3: debug. F4: texto ampliado.
 F1: ajuda. No guia, use a rolagem ou as teclas de navegação; Esc fecha o painel.
 Ctrl+F: buscar construção. Salvar/Carregar também estão na barra superior.
+Avaliações: últimas 20 saídas, satisfação e tempos registrados na recepção e
+nas filas. A leitura pausa o hotel; Esc fecha. Tempos ausentes em saves antigos
+aparecem como não registrados.
 
 SAVE
 O save fica em %APPDATA%\Godot\app_userdata\Hotel Empire\hotel-v1.json.

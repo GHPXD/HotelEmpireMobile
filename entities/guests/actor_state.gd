@@ -1,6 +1,7 @@
 class_name ActorState
 extends RefCounted
 ## One lightweight simulated actor; visual nodes are not required.
+const WAIT_FIELDS: Array[String] = ["reception_seconds", "lift_queue_seconds", "service_queue_seconds"]
 
 var id: int
 var role: StringName = &"guest"
@@ -16,6 +17,10 @@ var elevator_id: int = -1
 var timer: float = 0.0
 var age: float = 0.0
 var waiting: float = 0.0
+## Cumulative visit times. -1 means a legacy save did not record this history.
+var reception_seconds: float = 0.0
+var lift_queue_seconds: float = 0.0
+var service_queue_seconds: float = 0.0
 var happiness: float = 85.0
 var money: int = 320
 var bedroom: int = -1

@@ -39,6 +39,8 @@ func step(actors: Dictionary, delta: float) -> void:
 			_walk(actor, delta)
 		elif actor.state == &"lift_queue":
 			actor.waiting += delta
+			if actor.role == &"guest" and actor.lift_queue_seconds >= 0:
+				actor.lift_queue_seconds += delta
 			actor.happiness = maxf(0, actor.happiness - delta * rules.waiting_penalty)
 	for lift in lifts:
 		_step_lift(lift, actors, delta)

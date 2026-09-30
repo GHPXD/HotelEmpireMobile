@@ -26,6 +26,12 @@ func run(game: Node) -> void:
 	check(session.guests.bookings >= 10 and session.guests.meals_served >= 5 and session.employees.cleaned >= 5, "productive packaged game")
 	check(session.economy.cash > 0, "solvent packaged game")
 	check(session.guests.reviews.size() == GuestSystem.REVIEW_LIMIT, "packaged gameplay fills bounded review history")
+	var lift_wait_recorded := false
+	for review: Dictionary in session.guests.reviews:
+		check(review.reception_seconds != null and review.reception_seconds > 0, "fresh packaged guest records actual reception time")
+		if review.lift_queue_seconds > 0:
+			lift_wait_recorded = true
+	check(lift_wait_recorded, "packaged visits contain real lift queue time")
 	var upgraded_levels: Dictionary = {}
 	for index: int in [0, 1, 3]:
 		var room: RoomState = session.hotel.rooms[index]

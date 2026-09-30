@@ -46,8 +46,82 @@ func _initialize() -> void:
 	var duplicate := before.duplicate(true)
 	duplicate.reviews[1] = duplicate.reviews[0].duplicate()
 	check(not SessionSnapshot.restore(duplicate).error.is_empty(), "duplicate guest review rejected")
+	_test_visit_times()
+	_test_v6_history(before)
 	print(JSON.stringify({"suite": "reviews", "failures": failures}))
 	quit(1 if failures else 0)
+
+func _test_visit_times() -> void:
+	var session := HotelSession.new(64)
+	var reception := session.hotel.build(HotelCatalog.room(&"reception"), 0, 0)
+	var restaurant := session.hotel.build(HotelCatalog.room(&"restaurant"), 3, 0)
+	var guest := session.spawn_guest()
+	guest.target_room = reception.id
+	guest.state = &"checkin"
+	reception.queue.join(guest.id)
+	for tick in 3:
+		session.guests._check_in(guest, session.actors, session.hotel, session.transport, 0.1, 0.0)
+	check(is_equal_approx(guest.reception_seconds, 0.3), "reception measures actual check-in ticks")
+	reception.queue.leave(guest.id)
+	for visit in 2:
+		guest.travel_to(restaurant.center(), 0, &"service_queue")
+		guest.state = &"service_queue"
+		guest.target_room = restaurant.id
+		session.guests._queue_service(guest, session.hotel, 0.1)
+		check(guest.state == &"using", "immediate service admission is counted once")
+		session.guests._use(guest, session.hotel, 8.0, 0.0)
+	check(is_equal_approx(guest.service_queue_seconds, 0.2), "service queue totals accumulate across visits")
+	var employee := ActorState.new()
+	employee.id = 100
+	employee.role = &"cleaner"
+	employee.state = &"lift_queue"
+	guest.state = &"lift_queue"
+	var actors := {guest.id: guest, employee.id: employee}
+	for tick in 2:
+		session.transport.step(actors, 0.1)
+	guest.travel_to(-0.8, 0, &"exit")
+	guest.state = &"lift_queue"
+	session.transport.step(actors, 0.1)
+	check(is_equal_approx(guest.lift_queue_seconds, 0.3), "lift waits survive travel reset and add later episodes")
+	check(employee.lift_queue_seconds == 0, "guest history excludes employee lift waits")
+	guest.travel_to(-0.8, 0, &"exit")
+	guest.state = &"exit"
+	session.tick(0.1)
+	var review: Dictionary = session.guests.reviews.back()
+	check(is_equal_approx(review.reception_seconds, 0.3) and is_equal_approx(review.service_queue_seconds, 0.2) and is_equal_approx(review.lift_queue_seconds, 0.3), "departure copies all accumulated visit times")
+	check(GuestReviewsPanel.describe(review, session.rules.day_seconds).contains("Filas de elevador: 0.3s"), "review prints measured wait")
+
+func _test_v6_history(before: Dictionary) -> void:
+	var loaded := SessionSnapshot.restore(before)
+	var active: ActorState = loaded.session.spawn_guest()
+	var legacy := SessionSnapshot.capture(loaded.session)
+	legacy.version = 6
+	for row: Dictionary in legacy.actors:
+		for field: String in ActorState.WAIT_FIELDS:
+			row.erase(field)
+	for row: Dictionary in legacy.reviews:
+		for field: String in ActorState.WAIT_FIELDS:
+			row.erase(field)
+	var untouched := JSON.stringify(legacy)
+	var migrated := SessionSnapshot.restore(legacy)
+	check(migrated.error.is_empty(), "v6 reviews and active guests migrate")
+	check(JSON.stringify(legacy) == untouched, "v6 migration leaves input unchanged")
+	if migrated.session == null:
+		return
+	var guest: ActorState = migrated.session.actors[active.id]
+	check(guest.reception_seconds == -1 and guest.lift_queue_seconds == -1 and guest.service_queue_seconds == -1, "legacy active guest times are unknown")
+	check(migrated.session.guests.reviews.back().reception_seconds == null, "existing reviews keep unknown times")
+	guest.state = &"exit"
+	migrated.session.tick(0.1)
+	check(GuestReviewsPanel.describe(migrated.session.guests.reviews.back(), migrated.session.rules.day_seconds).contains("não registrado"), "legacy departure never invents zero waits")
+	check(migrated.session.spawn_guest().lift_queue_seconds == 0, "new visitors have measured history after migration")
+	var invalid := SessionSnapshot.capture(migrated.session)
+	invalid.actors.back().lift_queue_seconds = -0.5
+	check(not SessionSnapshot.restore(invalid).error.is_empty(), "invalid active wait rejected")
+	for value: Variant in [-1, "zero", INF]:
+		invalid = before.duplicate(true)
+		invalid.reviews[0].lift_queue_seconds = value
+		check(not SessionSnapshot.restore(invalid).error.is_empty(), "invalid recorded wait rejected")
 
 func check(condition: bool, message: String) -> void:
 	if not condition:

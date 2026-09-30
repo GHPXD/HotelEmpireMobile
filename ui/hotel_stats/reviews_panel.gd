@@ -32,7 +32,7 @@ func _ready() -> void:
 func open_for(session: HotelSession) -> void:
 	details.text = "ÚLTIMAS SAÍDAS • até %d registros\nRelatos baseados na experiência registrada. A nota abaixo é satisfação individual, não a reputação do hotel.\n\n" % GuestSystem.REVIEW_LIMIT
 	if session.guests.reviews.is_empty():
-		details.text += "Nenhuma avaliação registrada. Novas saídas aparecerão aqui. Saves antigos começam sem histórico reconstruído."
+		details.text += "Nenhuma avaliação registrada. Novas saídas aparecerão aqui."
 	else:
 		for index in range(session.guests.reviews.size() - 1, -1, -1):
 			details.text += describe(session.guests.reviews[index], session.rules.day_seconds) + "\n\n"
@@ -44,7 +44,11 @@ static func describe(review: Dictionary, day_seconds: float) -> String:
 	var opinion := "Saí satisfeito com a experiência." if review.score >= 80 else ("Minha experiência foi razoável." if review.score >= 50 else "Saí insatisfeito com a experiência.")
 	var stay := "Consegui me hospedar." if review.checked_in else "Saí sem me hospedar."
 	var facts := "Refeições: %d • Outros serviços: %d • Descansos: %d" % [review.meals, review.services - review.meals, review.sleeps]
+	facts += "\nTempo na recepção: %s\nFilas de elevador: %s • Filas de serviço: %s" % [visit_seconds(review.reception_seconds), visit_seconds(review.lift_queue_seconds), visit_seconds(review.service_queue_seconds)]
 	return "Visitante %03d • %s • Dia %d\nSatisfação: %.1f/100\n%s %s\n%s" % [review.guest_id, HotelCatalog.guest(StringName(review.profile)).display_name, floori(review.time / day_seconds) + 1, review.score, opinion, stay, facts]
+
+static func visit_seconds(value: Variant) -> String:
+	return "não registrado" if value == null else "%.1fs" % float(value)
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

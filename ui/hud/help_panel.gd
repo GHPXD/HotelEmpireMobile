@@ -19,7 +19,7 @@ Em Operação, selecione uma recepção para ver a causa atual da espera e uma o
 
 [b]TARIFAS E AVALIAÇÕES[/b]
 Selecione um quarto ou serviço para escolher uma tarifa de 75%, 100% ou 125%. A prévia mostra o preço; nos quartos, também mostra o efeito de valor na satisfação por perfil. Contratos já iniciados mantêm o preço combinado.
-Avaliações mostra as últimas 20 saídas, com satisfação individual e fatos da visita. Essa nota não é a reputação do hotel. Saves antigos começam sem histórico; novas saídas geram relatos.
+Avaliações mostra as últimas 20 saídas, com satisfação individual, serviços usados e tempos na recepção e nas filas. Tempo na recepção inclui o atendimento; filas de elevador somam as esperas da visita. Essa nota não é a reputação do hotel. Saves anteriores às avaliações começam sem histórico; tempos que não foram medidos aparecem como não registrados.
 Ler as avaliações pausa o hotel. Esc fecha a janela e mantém a velocidade anterior.
 
 [b]CÂMERA E CONSTRUÇÃO[/b]

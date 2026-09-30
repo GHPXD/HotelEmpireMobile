@@ -45,6 +45,9 @@ func step(actors: Dictionary, hotel: HotelModel, transport: TransportSystem, del
 				score_total += actor.happiness
 				reputation = clampf(lerpf(reputation, actor.happiness, 0.12), 0, 100)
 				reviews.append({"guest_id": actor.id, "profile": String(actor.archetype_id), "time": time, "score": actor.happiness, "checked_in": actor.checked_in, "meals": actor.meals, "services": actor.service_uses, "sleeps": actor.sleeps})
+				for field: String in ActorState.WAIT_FIELDS:
+					var seconds: float = actor.get(field)
+					reviews.back()[field] = seconds if seconds >= 0 else null
 				if reviews.size() > REVIEW_LIMIT:
 					reviews.pop_front()
 				departures.append(actor.id)
@@ -73,6 +76,8 @@ func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transpo
 		actor.travel_to(-0.8, 0, &"exit")
 		return
 	actor.waiting += delta
+	if actor.reception_seconds >= 0:
+		actor.reception_seconds += delta
 	actor.happiness = maxf(0, actor.happiness - delta * rules.waiting_penalty)
 	if actor.waiting > rules.patience_seconds * actor.archetype().patience_multiplier + SimulationRules.TIME_EPSILON:
 		reception.queue.leave(actor.id)
@@ -162,6 +167,8 @@ func _queue_service(actor: ActorState, hotel: HotelModel, delta: float) -> void:
 		actor.state = &"deciding"
 		return
 	actor.waiting += delta
+	if actor.service_queue_seconds >= 0:
+		actor.service_queue_seconds += delta
 	if room.queue.members[0] == actor.id and room.users.size() < room.capacity():
 		room.queue.take()
 		room.users.append(actor.id)

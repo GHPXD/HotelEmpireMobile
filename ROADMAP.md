@@ -15,6 +15,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
 - [x] M4 Progression: desbloqueios e objetivos.
 - [x] M5 Content Expansion: novos serviços, perfis e eventos.
   - [x] Histórico das últimas 20 avaliações com fatos das visitas e persistência v6.
+  - [x] Tempos reais de recepção e filas por visita; migração v7 conserva histórico antigo com tempos desconhecidos.
 - [x] M6 UI/UX Polish: filtros, analytics e melhorias de leitura/foco no desktop.
   - [x] Causa atual da fila de check-in e ação sugerida no inspetor e em Operação.
   - [x] Métricas por elevador em Operação: cabine, fila, espera atual e histórico de embarques.

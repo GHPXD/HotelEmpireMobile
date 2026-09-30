@@ -1,10 +1,11 @@
 class_name SessionSnapshot
 extends RefCounted
-## Schema v6 adds factual departure reviews. Legacy history is not reconstructed.
+## Schema v7 adds measured visit times. Legacy waits remain unknown.
 
-const VERSION: int = 6
+const VERSION: int = 7
+const WAIT_FIELDS: Array[String] = ActorState.WAIT_FIELDS
 const ROOM_FIELDS: Array[String] = ["id", "definition_id", "column", "floor_index", "occupant", "dirty", "cleaning_by", "income", "level", "price_percent"]
-const ACTOR_FIELDS: Array[String] = ["id", "role", "display_name", "state", "x", "floor_index", "target_x", "target_floor", "target_room", "destination_state", "elevator_id", "timer", "age", "waiting", "happiness", "money", "bedroom", "checked_in", "meals", "sleeps", "speed", "skill", "assignment", "workload", "agreed_price", "preferred_room", "preferred_floor", "archetype_id", "service_uses"]
+const ACTOR_FIELDS: Array[String] = ["id", "role", "display_name", "state", "x", "floor_index", "target_x", "target_floor", "target_room", "destination_state", "elevator_id", "timer", "age", "waiting", "happiness", "money", "bedroom", "checked_in", "meals", "sleeps", "speed", "skill", "assignment", "workload", "agreed_price", "preferred_room", "preferred_floor", "archetype_id", "service_uses", "reception_seconds", "lift_queue_seconds", "service_queue_seconds"]
 const LIFT_FIELDS: Array[String] = ["room_id", "column", "capacity", "floor_position", "target_floor", "door_timer", "boarded", "delivered", "wait_total", "wait_max", "busy_seconds"]
 const SESSION_FIELDS: Array[String] = ["next_actor_id", "time", "tick_count", "arrival_timer", "day", "opened", "speed"]
 const ECONOMY_FIELDS: Array[String] = ["cash", "revenue", "expenses", "capital_spent"]
@@ -54,6 +55,21 @@ static func restore(data: Variant) -> Dictionary:
 	if data is Dictionary and data.get("version") == 5:
 		data = data.duplicate(true)
 		data["reviews"] = []
+		data.version = 6
+	if data is Dictionary and data.get("version") == 6:
+		data = data.duplicate(true)
+		if not data.get("actors") is Array or not data.get("reviews") is Array:
+			return _error("Histórico de espera inválido.")
+		for actor_data: Variant in data.actors:
+			if not actor_data is Dictionary:
+				return _error("Agente inválido.")
+			for field: String in WAIT_FIELDS:
+				actor_data[field] = -1.0
+		for review_data: Variant in data.reviews:
+			if not review_data is Dictionary or review_data.size() != 8:
+				return _error("Avaliação antiga inválida.")
+			for field: String in WAIT_FIELDS:
+				review_data[field] = null
 		data.version = VERSION
 	if not data is Dictionary or data.get("version") != VERSION:
 		return _error("Versão de save desconhecida ou formato inválido.")
@@ -107,6 +123,10 @@ static func restore(data: Variant) -> Dictionary:
 			return _error("Papel ou estado de agente desconhecido.")
 		if actor.archetype() == null or actor.service_uses < actor.meals or actor.service_uses < 0:
 			return _error("Perfil ou contagem de serviços inválida.")
+		for field: String in WAIT_FIELDS:
+			var seconds: float = actor.get(field)
+			if seconds != -1.0 and (seconds < 0 or seconds > 100000000):
+				return _error("Tempo de espera inválido.")
 		if actor.agreed_price < 0 or actor.preferred_floor < -1 or actor.preferred_floor >= session.hotel.floors or actor.preferred_room < -1:
 			return _error("Preço ou atribuição inválida.")
 		if actor.preferred_room >= 0:
@@ -180,7 +200,7 @@ static func _restore_reviews(session: HotelSession, entries: Variant) -> bool:
 	var seen: Dictionary = {}
 	var previous_time: float = -1
 	for entry: Variant in entries:
-		if not entry is Dictionary or entry.size() != 8:
+		if not entry is Dictionary or entry.size() != 11:
 			return false
 		if not _integer(entry.get("guest_id"), 1, session.next_actor_id - 1) or seen.has(int(entry.guest_id)) or session.actors.has(int(entry.guest_id)):
 			return false
@@ -195,9 +215,14 @@ static func _restore_reviews(session: HotelSession, entries: Variant) -> bool:
 				return false
 		if entry.services < entry.meals:
 			return false
+		for field: String in WAIT_FIELDS:
+			if not entry.has(field) or (entry[field] != null and (not _number(entry[field]) or entry[field] < 0 or entry[field] > 100000000)):
+				return false
 		seen[int(entry.guest_id)] = true
 		previous_time = float(entry.time)
 		session.guests.reviews.append({"guest_id": int(entry.guest_id), "profile": entry.profile, "time": float(entry.time), "score": float(entry.score), "checked_in": entry.checked_in, "meals": int(entry.meals), "services": int(entry.services), "sleeps": int(entry.sleeps)})
+		for field: String in WAIT_FIELDS:
+			session.guests.reviews.back()[field] = float(entry[field]) if entry[field] != null else null
 	return true
 
 static func _validate_relations(session: HotelSession) -> String:

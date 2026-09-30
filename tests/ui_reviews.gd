@@ -17,6 +17,8 @@ func run() -> void:
 	game._replace_session(session)
 	await click(root, game.hud.session_buttons["Avaliações"].get_global_rect().get_center())
 	check(game.reviews_panel.details.has_focus() and game.reviews_panel.details.text.contains("Visitante"), "populated reviews focus reading area")
+	check(game.reviews_panel.details.text.contains("Tempo na recepção:") and game.reviews_panel.details.text.contains("Filas de elevador:"), "actual visit times appear in reviews")
+	check(session.guests.reviews.back().reception_seconds > 0, "real visitor departure has measured reception time")
 	var paused := SessionSnapshot.capture(session)
 	game._process(1.0)
 	check(SessionSnapshot.capture(session) == paused, "reading reviews pauses simulation")
