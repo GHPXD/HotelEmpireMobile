@@ -271,6 +271,7 @@ func _select_actor(id: int) -> void:
 	selected_actor = id
 	selection = -1
 	_refresh()
+	hud.reveal_actor_inspection.call_deferred()
 
 func _replace_session(value: HotelSession) -> void:
 	reviews_panel.hide()

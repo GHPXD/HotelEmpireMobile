@@ -40,6 +40,17 @@ const DIRTY_BEDROOMS: Array[Texture2D] = [
 	preload("res://assets/art/rooms/bedroom-level-3-dirty.png"),
 ]
 
+const PORTRAITS: Dictionary = {
+	&"balanced": preload("res://assets/art/portraits/balanced.png"),
+	&"business": preload("res://assets/art/portraits/business.png"),
+	&"leisure": preload("res://assets/art/portraits/leisure.png"),
+	&"receptionist": preload("res://assets/art/portraits/receptionist.png"),
+	&"cleaner": preload("res://assets/art/portraits/cleaner.png"),
+}
+
+static func portrait(actor: ActorState) -> Texture2D:
+	return PORTRAITS.get(character_id(actor))
+
 static func room_state(state: RoomState) -> Texture2D:
 	if state.definition_id == &"bedroom" and state.dirty:
 		return DIRTY_BEDROOMS[clampi(state.level - 1, 0, DIRTY_BEDROOMS.size() - 1)]

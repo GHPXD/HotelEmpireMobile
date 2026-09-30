@@ -84,11 +84,13 @@ memória do processo, objetivos concluídos, tick de cada conquista, serviços u
 perfis dos hóspedes ainda presentes, estado do evento e falhas.
 Medidas headless não equivalem a FPS com renderização.
 
-Arte atual: 51 PNGs originais, com caminhada, espera, trabalho e repouso da equipe,
+Arte atual: 56 PNGs originais, com caminhada, espera, trabalho e repouso da equipe,
 e ciclos dedicados de dormir, beber, ler sentado e comer para os três perfis. Os usuários admitidos
 nos serviços têm posições visuais separadas; animações acompanham velocidade e pausa.
 Quartos aguardando limpeza têm pinturas próprias nos três níveis. Filas seguem
 visualmente a ordem das reservas, com grupos por andar no elevador.
+Cinco retratos próprios identificam os perfis e funções no inspetor; clicar no
+personagem leva a rolagem até o cartão e seus dados.
 
 Limitações atuais: seis instalações, três perfis, dois eventos e sem música ambiente.
 Animações usam quatro poses pintadas, com pequenas variações entre quadros. A operação integrada foi medida até 120 hóspedes. Testes

@@ -344,3 +344,18 @@ de 6120 ticks aprovados. Seis casos em 1024×640, 1280×800 e 1600×900, com tex
 normal/ampliado, verificaram os três níveis de quarto e seleção de filas em três
 zooms. Matriz docs/release/housekeeping-fifo-matrix.json. ZIP e 51 PNGs auditados;
 kit externo atualizado. Compatibilidade em outra máquina permanece pendente.
+
+Retratos de inspeção (30/09/2026): cinco PNGs RGBA originais 1254×1254 gerados no
+chat, sem editar pixels, com alpha real, cantos transparentes e mipmaps. Catálogo
+atual: 56 PNGs; retratos separados das 27 texturas de animação. Cinco scripts
+válidos pelo gda. `ui_content` passou nos 30 casos de perfil/função × janela/texto,
+incluindo clique real, rolagem automática, limites do cartão, identidade fixa,
+snapshot, save/load, troca de partida e pessoa removida sem retrato antigo.
+
+`ui_art`, `ui_actor_presentation`, `ui_operations`, `ui_management`, `ui_new_game`,
+`ui_smoke` e `ui_resume` passaram. A primeira fixture incluiu dois camareiros e
+manteve uma câmera centralizada em sala de outro caso; corrigida para uma pessoa
+por função e câmera comum. Retomada executada após ui_smoke produzir seu save.
+Capturas inspecionadas em docs/art/hotel-character-portraits.png e
+hotel-staff-portrait.png. Textos e necessidades permanecem nativos; retrato não
+representa emoção atual. Economia, estados e schema v7 preservados.

@@ -1,5 +1,13 @@
 # Changelog
 
+## M7 — extensão de personagens e estados, 30/09/2026
+- Catálogo atual com 56 PNGs: pinturas próprias por nível, espera, trabalho,
+  repouso da equipe e ciclos de serviço dos hóspedes.
+- Quartos aguardando limpeza têm pinturas N1/N2/N3 e retorno à versão limpa.
+- Filas seguem visualmente as reservas, com grupos por andar no elevador.
+- Cinco retratos dedicados ao inspetor e rolagem automática ao selecionar pessoas.
+- Original raster gerado no chat; prompts, hashes e capturas em docs/art.
+
 ## M9 — continuidade longa
 - Seis cenários de 30 dias com orçamento inicial, procura natural e 30 checkpoints de save/load.
 - Runner -Soak e relatório econômico reprodutível para hotéis de dois/oito quartos.

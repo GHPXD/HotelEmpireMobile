@@ -22,6 +22,9 @@ Arte original gerada pelo image_gen integrado; prompts e referências em `docs/a
   de dormir usam grade 2×2, quatro poses e ciclo de 48 ticks; originais estáticos
   preservados como referências. Detalhes em `art/bedroom-sleeping-loop.md`.
 - Miniaturas do catálogo reaproveitam a arte da instalação correspondente.
+- Cinco retratos transparentes de perfil/função para inspeção de hóspedes e equipe,
+  separados das faixas de animação. Cartão de 96px na lateral, com texto nativo
+  e rolagem automática ao selecionar. Detalhes em `art/character-portraits.md`.
 - Quartos aguardando limpeza têm pinturas próprias N1/N2/N3, com cama desfeita
   e toalhas usadas. O estado persistido seleciona a pintura; concluir a limpeza
   restaura a versão limpa. Detalhes em `art/bedroom-housekeeping.md`.
@@ -59,7 +62,7 @@ cabines N2 usam pintura de nogueira e N3 tem mármore e medalhão de latão; o p
 mantém a pintura base. Sem música ou ambiente
 contínuo nesta entrega. Novos conteúdos precisam de arte própria. M8 mediu render
 isolado até 1000 e operação contínua até 120; esta entrega não comprova 1000 hóspedes
-atendidos simultaneamente a 60 FPS. Catálogo atual: 51 PNGs, 27 texturas de personagens.
+atendidos simultaneamente a 60 FPS. Catálogo atual: 56 PNGs, 27 texturas de personagens.
 
 ## Verificação
 `ui_art.gd`: carregamento, alpha, limites dos recortes, ciclo, zoom mínimo/normal/máximo,

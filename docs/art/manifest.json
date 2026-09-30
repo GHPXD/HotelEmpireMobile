@@ -457,5 +457,50 @@
     "bytes": 2114949,
     "sha256": "a320b4c6ad29bd3a0f539bbe586ede031e14d44fbfb35982a5f1659bffece135",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/portraits/balanced.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1534926,
+    "sha256": "7200a872c4534cb668ee52121907e4a4f32a042eac9a32516cbfa24ba4823b9a",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/portraits/business.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1382719,
+    "sha256": "8d052cf83c9b488d5409c68411ddb99b6f11e9c34dad21addb02c458ad1c2213",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/portraits/leisure.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1725933,
+    "sha256": "601460587b54ff223710089251ddb806783345e148df1955cc299aee03bb2414",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/portraits/receptionist.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1278646,
+    "sha256": "bd5fd5b31e0e63a7f07f8e3fba9f00031a01d7a9cd81f45c443d1f845f6f702d",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/portraits/cleaner.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1313627,
+    "sha256": "de36f0c817a9bc6496a69ba4addc658b766ef479330952c67f499cc096cbff24",
+    "generator": "built-in image_gen"
   }
 ]

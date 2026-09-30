@@ -87,10 +87,90 @@ func run() -> void:
 			await click(root, button.get_global_rect().get_center())
 	check(preload("res://tests/snapshot_comparison.gd").difference(saved, SessionSnapshot.capture(game.session), "ui-content").is_empty(), "content and active event roundtrip through UI")
 	check(game.hud.event_label.text.contains("150%") and not game.hud.build_buttons[&"cafe"].disabled, "restored event and unlock displayed")
+	await portraits(game)
 	print(JSON.stringify({"suite": "ui_content", "failures": failures}))
 	game.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
+
+func portraits(game: Node) -> void:
+	var session := SimulationRunner.make_hotel(951, "standard", 250000)
+	session.speed = 0
+	game._replace_session(session)
+	var people: Array[ActorState] = []
+	for profile: StringName in [&"balanced", &"business", &"leisure"]:
+		var actor := session.spawn_guest()
+		actor.archetype_id = profile
+		actor.state = &"walking"
+		people.append(actor)
+	var roles: Array[StringName] = []
+	for actor: ActorState in session.actors.values():
+		if actor.role != &"guest" and not roles.has(actor.role):
+			people.append(actor)
+			roles.append(actor.role)
+	check(people.size() == 5 and HotelArt.PORTRAITS.size() == 5, "five portrait identities")
+	for index in people.size():
+		people[index].x = 3 + index * 2
+		people[index].floor_index = 0
+	var before := SessionSnapshot.capture(session)
+	var original_size := root.size
+	var original_large: bool = game.large_text
+	for resolution: Vector2i in [Vector2i(1024, 640), Vector2i(1280, 800), Vector2i(1600, 900)]:
+		root.size = resolution
+		for large: bool in [false, true]:
+			game.view.pan = Vector2.ZERO
+			game.view.zoom_factor = 0.75
+			if game.large_text != large:
+				game._toggle_text_size()
+			for frame in 4:
+				await process_frame
+			for actor: ActorState in people:
+				game.hud.sidebar_scroll.scroll_vertical = 0
+				await click(root, game.view.actor_screen_position(actor) + game.view.global_position)
+				for frame in 3:
+					await process_frame
+				check(game.selected_actor == actor.id, "real click selects portrait subject")
+				check(game.hud.actor_card.visible and game.hud.actor_portrait.texture == HotelArt.portrait(actor), "portrait follows archetype or role")
+				var scroll_rect: Rect2 = game.hud.sidebar_scroll.get_global_rect()
+				check(scroll_rect.encloses(game.hud.actor_card.get_global_rect()), "auto scroll reveals entire portrait card")
+				check(root.get_visible_rect().encloses(game.hud.actor_card.get_global_rect()), "portrait card fits window and text size")
+				check(game.hud.actor_portrait.get_size().is_equal_approx(Vector2(96, 96)), "portrait has fixed UI bounds independent of PNG size")
+				check(not game.hud.actor_portrait_caption.text.is_empty(), "portrait has a textual profile or role")
+				check(game.hud.actor_portrait.mouse_filter == Control.MOUSE_FILTER_IGNORE and game.hud.actor_portrait.focus_mode == Control.FOCUS_NONE, "decorative portrait cannot steal input or focus")
+				if resolution == Vector2i(1280, 800) and not large:
+					await RenderingServer.frame_post_draw
+					root.get_texture().get_image().save_png("res://.runtime/m7-portrait-%s.png" % HotelArt.character_id(actor))
+				check(SessionSnapshot.capture(session) == before, "portrait selection and layout preserve session")
+			game._inspect_room(session.hotel.rooms[0].id)
+			check(not game.hud.actor_card.visible and game.hud.actor_portrait.texture == null, "room selection removes stale portrait")
+	root.size = original_size
+	if game.large_text != original_large:
+		game._toggle_text_size()
+	var actor: ActorState = people[0]
+	game._select_actor(actor.id)
+	var portrait: Texture2D = game.hud.actor_portrait.texture
+	var previous_state := actor.state
+	actor.state = &"service_queue"
+	actor.happiness = 1
+	game._refresh()
+	check(game.hud.actor_portrait.texture == portrait and game.hud.inspector.text.contains("Satisfação: 1"), "portrait identifies character independently of state and happiness")
+	actor.state = previous_state
+	actor.happiness = before.actors.filter(func(item: Dictionary) -> bool: return item.id == actor.id)[0].happiness
+	var path := "user://portrait-ui.json"
+	check(SaveStore.save_session(session, path).is_empty(), "portrait fixture save")
+	game.save_path = path
+	game._replace_session(HotelSession.new())
+	check(not game.hud.actor_card.visible and game.hud.actor_portrait.texture == null, "new session clears portrait")
+	await click(root, game.hud.session_buttons["Carregar"].get_global_rect().get_center())
+	check(not game.hud.actor_card.visible, "loading starts without stale selection")
+	var restored: ActorState = game.session.actors.get(actor.id)
+	check(restored != null, "portrait fixture actor restored")
+	if restored != null:
+		game._select_actor(restored.id)
+		check(game.hud.actor_portrait.texture == portrait, "restored archetype resolves same portrait")
+		game.session.actors.erase(restored.id)
+		game._refresh()
+		check(not game.hud.actor_card.visible and game.hud.actor_portrait.texture == null, "departed actor leaves no stale portrait")
 
 func press_build(button: Button) -> void:
 	var scroll: ScrollContainer = button.get_parent().get_parent()

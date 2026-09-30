@@ -77,6 +77,36 @@ func run(game: Node) -> void:
 		room.dirty = false
 		check(HotelArt.room_state(room) == HotelArt.room(&"bedroom", level), "exported clean room painting restored")
 		housekeeping_art_verified += 1
+	var portrait_art_verified := 0
+	var portrait_session := HotelSession.new(619)
+	portrait_session.speed = 0
+	for identity: StringName in HotelArt.PORTRAITS:
+		var actor := portrait_session.spawn_guest()
+		if identity in HotelArt.STAFF_IDLE_ROLES:
+			actor.role = identity
+			actor.state = &"idle"
+		else:
+			actor.archetype_id = identity
+			actor.state = &"walking"
+		actor.x = 1 + portrait_session.actors.size() * 2
+	if OS.get_cmdline_user_args().has("--smoke-large-text") and not game.large_text:
+		game._toggle_text_size()
+	game._replace_session(portrait_session)
+	for frame in 4:
+		await tree.process_frame
+	var portrait_before := SessionSnapshot.capture(portrait_session)
+	for actor: ActorState in portrait_session.actors.values():
+		await click(tree, game.view.actor_screen_position(actor) + game.view.global_position)
+		for frame in 3:
+			await tree.process_frame
+		var texture := HotelArt.portrait(actor)
+		check(game.selected_actor == actor.id and game.hud.actor_card.visible, "exported actor portrait selected by real click")
+		check(game.hud.actor_portrait.texture == texture and texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported dedicated portrait with alpha")
+		check(game.hud.sidebar_scroll.get_global_rect().encloses(game.hud.actor_card.get_global_rect()), "exported portrait auto-scroll and bounds")
+		portrait_art_verified += 1
+	check(equivalent(portrait_before, SessionSnapshot.capture(portrait_session)), "exported portrait selection preserves session")
+	game._replace_session(HotelSession.new(620))
+	check(not game.hud.actor_card.visible and game.hud.actor_portrait.texture == null, "exported new session clears portrait")
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
 		var employee := ActorState.new()
@@ -274,6 +304,7 @@ func run(game: Node) -> void:
 	report["actor_presentation_verified"] = actor_presentation_verified
 	report["queue_projection_verified"] = queue_projection_verified
 	report["housekeeping_art_verified"] = housekeeping_art_verified
+	report["portrait_art_verified"] = portrait_art_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))

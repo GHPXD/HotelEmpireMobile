@@ -26,6 +26,9 @@ signal reviews_requested
 var stats: Label
 var message: Label
 var inspector: Label
+var actor_card: PanelContainer
+var actor_portrait: TextureRect
+var actor_portrait_caption: Label
 var world_slot: Control
 var operations: Label
 var open_button: Button
@@ -166,6 +169,36 @@ func _ready() -> void:
 	tools.add_child(staff_title)
 	for definition in HotelSession.EMPLOYEES:
 		_button(tools, "+ %s • $ %d" % [definition.display_name, definition.hire_cost], func() -> void: hire_requested.emit(definition))
+	actor_card = PanelContainer.new()
+	actor_card.visible = false
+	actor_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var portrait_style := StyleBoxFlat.new()
+	portrait_style.bg_color = Color("17303a")
+	portrait_style.border_color = Color("627260")
+	portrait_style.set_border_width_all(1)
+	portrait_style.set_corner_radius_all(8)
+	portrait_style.content_margin_left = 8
+	portrait_style.content_margin_right = 8
+	portrait_style.content_margin_top = 8
+	portrait_style.content_margin_bottom = 8
+	actor_card.add_theme_stylebox_override("panel", portrait_style)
+	tools.add_child(actor_card)
+	var portrait_row := HBoxContainer.new()
+	portrait_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	portrait_row.add_theme_constant_override("separation", 8)
+	actor_card.add_child(portrait_row)
+	actor_portrait = TextureRect.new()
+	actor_portrait.custom_minimum_size = Vector2(96, 96)
+	actor_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	actor_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	actor_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	actor_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	portrait_row.add_child(actor_portrait)
+	actor_portrait_caption = Label.new()
+	actor_portrait_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	actor_portrait_caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	actor_portrait_caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	portrait_row.add_child(actor_portrait_caption)
 	inspector = Label.new()
 	inspector.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	inspector.text = "Construa uma recepção no térreo para começar."
@@ -287,6 +320,9 @@ func refresh_simulation(session: HotelSession, actor_id: int) -> void:
 			riding += lift.passengers.size()
 		debug_label.text = "FPS %d | Agentes %d | Elevador: fila %d, bordo %d | Rotas %d | Tick %d" % [Engine.get_frames_per_second(), session.actors.size(), waiting, riding, session.transport.path_requests, session.tick_count]
 	var actor: ActorState = session.actors.get(actor_id)
+	actor_portrait.texture = HotelArt.portrait(actor) if actor != null else null
+	actor_card.visible = actor_portrait.texture != null
+	actor_portrait_caption.text = ("Perfil\n" + actor.archetype().display_name if actor.role == &"guest" else "Equipe\n" + UILabels.role(actor.role)) if actor != null else ""
 	if actor != null:
 		inspector.text = "%s\n%s • %s\n\nObjetivo: %s\n\nSatisfação: %.0f\nFome: %.0f\nCansaço: %.0f\nDinheiro: $ %d\nQuarto: %s\nTempo no hotel: %.0fs" % [actor.display_name, UILabels.role(actor.role), UILabels.state(actor.state), UILabels.actor_goal(actor, session.hotel), actor.happiness, actor.needs.hunger, actor.needs.energy, actor.money, "Sem reserva" if actor.bedroom < 0 else UILabels.room_reference(session.hotel, actor.bedroom), actor.age]
 		var wait_text := UILabels.actor_wait(actor)
@@ -307,6 +343,11 @@ func refresh_unlock(session: HotelSession, room: RoomState) -> void:
 		upgrade_button.text = "N3 bloqueado • veja Objetivos"
 		upgrade_button.tooltip_text = locked
 		upgrade_preview.text += "\n\n" + locked
+
+func reveal_actor_inspection() -> void:
+	# Container layout has settled; scroll to the selected character's card.
+	if actor_card.visible:
+		sidebar_scroll.scroll_vertical = maxi(0, roundi(actor_card.position.y))
 
 func _build_theme() -> void:
 	theme = Theme.new()
