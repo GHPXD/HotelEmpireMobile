@@ -348,7 +348,18 @@ func run() -> void:
 		check(SessionSnapshot.capture(session) == phase_before, "paused staff idle and selection do not mutate session")
 	session.tick_count = before["session"]["tick_count"]
 	session.time = before["session"]["time"]
-	game.view.pan = Vector2(400, 400)
+	# Fit the six upper beds using the settled playfield, including large-text HUD.
+	var preview_beds := Rect2()
+	var preview_ids: Array[int] = []
+	for sleeper: ActorState in sleepers:
+		var room := session.hotel.by_id(sleeper.target_room)
+		if room.floor_index not in [3, 4]:
+			continue
+		var bed: Rect2 = game.view.room_rect(room.column, room.floor_index, room.definition().width)
+		preview_beds = bed if preview_ids.is_empty() else preview_beds.merge(bed)
+		preview_ids.append(sleeper.id)
+	game.view.pan += game.view.size / 2.0 - preview_beds.get_center()
+	check(preview_ids.size() == 6, "six explicit upper beds in breathing preview")
 	var sleep_samples: Dictionary = {}
 	for tick: int in [0, 12, 24, 36]:
 		session.tick_count = tick
@@ -358,6 +369,7 @@ func run() -> void:
 			await process_frame
 		await RenderingServer.frame_post_draw
 		var capture := root.get_texture().get_image()
+		var pixel_scale := Vector2(capture.get_size()) / root.get_visible_rect().size
 		capture.save_png("res://.runtime/m7-sleeping-loop-frame-%d.png" % (tick / 12))
 		for sleeper: ActorState in sleepers:
 			var room := session.hotel.by_id(sleeper.target_room)
@@ -366,9 +378,14 @@ func run() -> void:
 				continue
 			if not sleep_samples.has(sleeper.id):
 				sleep_samples[sleeper.id] = []
-			sleep_samples[sleeper.id].append(capture.get_region(Rect2i(bed.position + game.view.global_position, bed.size)).get_data())
+			var pixels := Rect2((bed.position + game.view.global_position) * pixel_scale, bed.size * pixel_scale)
+			var pixel_rect := Rect2i(pixels.position.floor(), pixels.end.ceil() - pixels.position.floor())
+			check(Rect2i(Vector2i.ZERO, capture.get_size()).encloses(pixel_rect), "complete bed pixel crop fits actual capture")
+			sleep_samples[sleeper.id].append(capture.get_region(pixel_rect).get_data())
 		check(SessionSnapshot.capture(session) == phase_before, "paused sleep breathing leaves session unchanged")
 	check(sleep_samples.size() == 6, "six complete beds visible in breathing preview")
+	for id: int in preview_ids:
+		check(sleep_samples.has(id), "each intended upper bed fully visible")
 	for frames: Array in sleep_samples.values():
 		check(frames.size() == 4, "bed preview covers all breathing phases")
 		check(frames[0] != frames[1] or frames[0] != frames[2] or frames[0] != frames[3], "breathing changes actual rendered bed pixels")
@@ -387,7 +404,7 @@ func run() -> void:
 	for cue: StringName in HotelAudio.SOUNDS:
 		check(HotelAudio.SOUNDS[cue].get_length() > 0.1, "audio asset loads")
 	await housekeeping_art()
-	print(JSON.stringify({"suite": "ui_art", "failures": failures, "rooms": HotelArt.ROOMS.size(), "characters": HotelArt.CHARACTERS.size()}))
+	print(JSON.stringify({"suite": "ui_art", "failures": failures, "rooms": HotelArt.ROOMS.size(), "characters": HotelArt.CHARACTERS.size(), "sleep_beds_verified": sleep_samples.size(), "sleep_pixel_samples": sleep_samples.size() * 4}))
 	game.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
