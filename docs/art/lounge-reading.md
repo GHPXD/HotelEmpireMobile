@@ -36,3 +36,8 @@ haviam causado conflito artificial de classes globais no validador.
 Catálogo: 37 PNGs, 19 texturas de personagens. Não fornece poses de dormir ou
 refeição no restaurante. O teste interno do executável agora verifica os seis
 sprites de serviço, com alpha, quatro quadros e recortes dentro das texturas.
+
+Pacote Windows: revisão `e7bfa21`, árvore limpa na exportação. Smoke de 6120 ticks
+e matriz de seis janelas/textos passaram; cada caso verificou os seis sprites de
+serviço. Auditoria de inventário e hashes dos 37 PNGs aprovada. Evidência em
+`docs/release/lounge-reading-matrix.json`; kit externo inclui o mesmo ZIP.

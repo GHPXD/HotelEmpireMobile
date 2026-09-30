@@ -236,3 +236,9 @@ mutação da sessão. `ui_culling` agora inclui usuários registrados no café e
 nove comparações pixel a pixel e snapshot inalterado aprovados. `ui_content`
 aprovado. Arte atual: 37 PNGs, 19 texturas de personagens. O fixture de câmera
 desbloqueia os serviços antes de construir; o de arte aguarda layout antes do clique.
+
+Pacote com leitores (29/09/2026 local, 30/09 UTC): revisão e7bfa21, árvore limpa,
+smoke de 6120 ticks e seis combinações de janela/texto aprovadas. Cada caso
+validou alpha, quatro quadros e recortes dos seis sprites de serviço. Auditoria
+do ZIP e dos 37 PNGs aprovada; kit externo atualizado. Matriz preservada em
+docs/release/lounge-reading-matrix.json. Compatibilidade em outra máquina pendente.
