@@ -408,4 +408,22 @@ Pacote de ícones: revisão 2f5bf1e, árvore limpa; boot e smoke de 6120 ticks,
 39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas. Os seis ícones
 foram verificados em cada combinação da matriz docs/release/build-icons-matrix.json.
 ZIP, documentos e 65 PNGs auditados; kit de compatibilidade atualizado.
+
+## M7 — ícones de contratação e gestão da equipe (30/09/2026)
+
+Dois PNGs RGBA 1254×1254 originais do gerador integrado, preservados byte a byte;
+catálogo atual: 67 PNGs, 30 texturas de animação, cinco retratos e oito ícones.
+Cinco scripts válidos pelo gda. Seis suítes gráficas passaram: ui_management,
+ui_content, ui_smoke, ui_resume, ui_new_game e ui_operations.
+
+ui_management cobre 12 casos de função/janela/texto: 24 contratações por mouse
+e Enter, papel/custo/salário, bounds, ícone da seleção, atribuição por teclado,
+restauração de funcionários/atribuições, caixa insuficiente sem mutação e lista
+vazia sem imagem antiga. A fixture de atribuição foi corrigida após falhas na
+primeira execução: elevador para alcançar o andar e ativação por teclado da janela.
+ui_content manteve 30 casos de retrato e 36 casos dos ícones de construção.
+
+Capturas inspecionadas em 1024×640 com texto ampliado:
+docs/art/hotel-staff-hiring.png, hotel-staff-management-receptionist.png e
+hotel-staff-management-cleaner.png. Detalhes e proveniência em docs/art/staff-icons.md.
 Resultados de outro computador e playtest humano continuam pendentes.

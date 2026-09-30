@@ -583,5 +583,23 @@
     "bytes": 1020047,
     "sha256": "8245b97bf2d500615940667462b647a32775c2d8b85733c4efd882e776062c5b",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/receptionist.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1539168,
+    "sha256": "afd68945450bb8821215ab94d2a702c108ffb0323ac31d567f2f4f284096c415",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/cleaner.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 819732,
+    "sha256": "ff7a51e5b639b7586ba32eb556ace62eb826d6264d659571713184f92934130b",
+    "generator": "built-in image_gen"
   }
 ]

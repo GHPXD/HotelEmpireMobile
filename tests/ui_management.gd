@@ -82,10 +82,91 @@ func run() -> void:
 	game.finances_dialog.hide()
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png("res://.runtime/m3-upgrade.png")
+	await staff_icons(game)
 	print(JSON.stringify({"suite": "ui_management", "failures": failures}))
 	game.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
+
+func staff_icons(game: Node) -> void:
+	var original_size := root.size
+	var original_large: bool = game.large_text
+	var cases := 0
+	for resolution: Vector2i in [Vector2i(1024, 640), Vector2i(1280, 800), Vector2i(1600, 900)]:
+		root.size = resolution
+		for large: bool in [false, true]:
+			if game.large_text != large:
+				game._toggle_text_size()
+			var session := HotelSession.new(817)
+			session.speed = 0
+			session.hotel.add_floor()
+			var reception := session.hotel.build(HotelCatalog.room(&"reception"), 3, 0)
+			session.hotel.build(HotelCatalog.room(&"elevator"), 15, 0)
+			game._replace_session(session)
+			for frame in 4:
+				await process_frame
+			for definition: EmployeeDefinition in HotelSession.EMPLOYEES:
+				var button: Button = game.hud.hire_buttons[definition.id]
+				check(button.icon == HotelArt.staff_icon(definition.id) and button.icon.get_image().detect_alpha() != Image.ALPHA_NONE, "dedicated transparent staff hire icon")
+				check(button.text.contains(definition.display_name) and button.text.contains(str(definition.hire_cost)) and button.tooltip_text.contains(str(definition.salary)), "hire role, price and salary remain native text")
+				game.hud.sidebar_scroll.ensure_control_visible(button)
+				for frame in 3:
+					await process_frame
+				check(game.hud.sidebar_scroll.get_global_rect().encloses(button.get_global_rect()) and root.get_visible_rect().encloses(button.get_global_rect()), "hire button fits smallest/largest viewport and both text sizes")
+				var cash := session.economy.cash
+				var count := session.actors.size()
+				await click(root, button.get_global_rect().get_center())
+				button.grab_focus()
+				await key(root, KEY_ENTER)
+				check(session.economy.cash == cash - definition.hire_cost * 2 and session.actors.size() == count + 2, "mouse and Enter hire exactly one employee each at correct price")
+				var actor: ActorState = session.actors.get(session.next_actor_id - 1)
+				check(actor != null and actor.role == definition.id, "hire icon selects correct employee role")
+				if actor == null:
+					continue
+				game.staff_panel.open_for(session)
+				var panel: StaffPanel = game.staff_panel
+				for index in panel.employee_choice.item_count:
+					if panel.employee_choice.get_item_id(index) == actor.id:
+						panel.employee_choice.select(index)
+						panel.employee_choice.item_selected.emit(index)
+				for frame in 3:
+					await process_frame
+				check(panel.role_icon.texture == button.icon and panel.role_icon.visible, "assignment icon follows selected role")
+				check(panel.role_icon.size.is_equal_approx(Vector2(48, 48)) and Rect2(Vector2.ZERO, panel.size).encloses(panel.role_icon.get_global_rect()), "role icon fits staff window")
+				check(panel.role_icon.mouse_filter == Control.MOUSE_FILTER_IGNORE and panel.role_icon.focus_mode == Control.FOCUS_NONE, "decorative staff icon does not intercept input")
+				panel.destination_choice.select(1 if actor.role == &"receptionist" else 2)
+				panel.apply_button.grab_focus()
+				await key(panel, KEY_SPACE)
+				check(actor.preferred_room == reception.id if actor.role == &"receptionist" else actor.preferred_floor == 1, "assignment remains functional with role icon")
+				if resolution == Vector2i(1024, 640) and large:
+					await RenderingServer.frame_post_draw
+					panel.get_texture().get_image().save_png("res://.runtime/m7-staff-icon-%s.png" % actor.role)
+				panel.hide()
+				cases += 1
+			var restored := SessionSnapshot.restore(SessionSnapshot.capture(session))
+			check(restored.error.is_empty(), "hired staff and assignments restore")
+			if restored.error.is_empty():
+				game.staff_panel.open_for(restored.session)
+				check(game.staff_panel.role_icon.texture == HotelArt.staff_icon(&"receptionist"), "restored staff resolve same role icon")
+				game.staff_panel.hide()
+			session.economy.cash = 0
+			var before := SessionSnapshot.capture(session)
+			var denied: Button = game.hud.hire_buttons[&"cleaner"]
+			game.hud.sidebar_scroll.ensure_control_visible(denied)
+			for frame in 3:
+				await process_frame
+			await click(root, denied.get_global_rect().get_center())
+			check(SessionSnapshot.capture(session) == before and game.hud.message.text.contains("insuficiente"), "unaffordable hiring preserves session and explains failure")
+			if resolution == Vector2i(1024, 640) and large:
+				await RenderingServer.frame_post_draw
+				root.get_texture().get_image().save_png("res://.runtime/m7-staff-hiring.png")
+			game.staff_panel.open_for(HotelSession.new())
+			check(not game.staff_panel.role_icon.visible and game.staff_panel.role_icon.texture == null, "empty staff list clears previous icon")
+			game.staff_panel.hide()
+	root.size = original_size
+	if game.large_text != original_large:
+		game._toggle_text_size()
+	print(JSON.stringify({"staff_icon_cases": cases, "hires_verified": 24, "failures": failures}))
 
 func click(viewport: Viewport, point: Vector2) -> void:
 	var motion := InputEventMouseMotion.new()

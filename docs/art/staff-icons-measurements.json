@@ -1,0 +1,36 @@
+[
+  {
+    "path": "assets/art/icons/receptionist.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1539168,
+    "sha256": "afd68945450bb8821215ab94d2a702c108ffb0323ac31d567f2f4f284096c415",
+    "generator": "built-in image_gen",
+    "original": "exec-46db7fde-dad7-4990-8c1c-3784a70cc123.png",
+    "alpha_bbox": [
+      0,
+      31,
+      1176,
+      1230
+    ],
+    "transparent_corners": true
+  },
+  {
+    "path": "assets/art/icons/cleaner.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 819732,
+    "sha256": "ff7a51e5b639b7586ba32eb556ace62eb826d6264d659571713184f92934130b",
+    "generator": "built-in image_gen",
+    "original": "exec-6d241529-9385-4258-8163-cebc75fdf221.png",
+    "alpha_bbox": [
+      97,
+      47,
+      1230,
+      1230
+    ],
+    "transparent_corners": true
+  }
+]

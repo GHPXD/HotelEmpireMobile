@@ -60,6 +60,14 @@ const BUILD_ICONS: Dictionary = {
 static func build_icon(id: StringName) -> Texture2D:
 	return BUILD_ICONS.get(id)
 
+const STAFF_ICONS: Dictionary = {
+	&"receptionist": preload("res://assets/art/icons/receptionist.png"),
+	&"cleaner": preload("res://assets/art/icons/cleaner.png"),
+}
+
+static func staff_icon(role: StringName) -> Texture2D:
+	return STAFF_ICONS.get(role)
+
 static func portrait(actor: ActorState) -> Texture2D:
 	return PORTRAITS.get(character_id(actor))
 

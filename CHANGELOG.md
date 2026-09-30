@@ -1,11 +1,13 @@
 # Changelog
 
 ## M7 — extensão de personagens e estados, 30/09/2026
-- Catálogo atual com 65 PNGs: pinturas próprias por nível, espera, trabalho,
+- Catálogo atual com 67 PNGs: pinturas próprias por nível, espera, trabalho,
   repouso da equipe e ciclos de serviço dos hóspedes.
 - Quartos aguardando limpeza têm pinturas N1/N2/N3 e retorno à versão limpa.
 - Filas seguem visualmente as reservas, com grupos por andar no elevador.
 - Cinco retratos dedicados ao inspetor e rolagem automática ao selecionar pessoas.
+- Dois ícones dedicados à contratação e ao funcionário selecionado no painel
+  de atribuições, com custo/salário em texto nativo e limpeza da imagem em lista vazia.
 - Seis ícones dedicados aos botões de construção, com objetos legíveis em 36px,
   filtragem com mipmaps e preço/nome em texto nativo.
 - Hóspedes chegam e saem com malas próprias por perfil, com quatro poses de

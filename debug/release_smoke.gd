@@ -11,6 +11,7 @@ func run(game: Node) -> void:
 	check(not FileAccess.file_exists("res://docs/PRODUCT_VISION.md"), "documentation excluded")
 	var service_art_verified := 0
 	var build_icons_verified := 0
+	var staff_icons_verified := 0
 	var actor_presentation_verified := 0
 	var visual_session := HotelSession.new(418)
 	var visual_view := HotelView.new()
@@ -138,6 +139,38 @@ func run(game: Node) -> void:
 	check(equivalent(portrait_before, SessionSnapshot.capture(portrait_session)), "exported portrait selection preserves session")
 	game._replace_session(HotelSession.new(620))
 	check(not game.hud.actor_card.visible and game.hud.actor_portrait.texture == null, "exported new session clears portrait")
+	var staff_session := HotelSession.new(830)
+	staff_session.speed = 0
+	game._replace_session(staff_session)
+	for frame in 4:
+		await tree.process_frame
+	for definition: EmployeeDefinition in HotelSession.EMPLOYEES:
+		var button: Button = game.hud.hire_buttons[definition.id]
+		check(button.icon == HotelArt.staff_icon(definition.id) and button.icon.get_image().detect_alpha() != Image.ALPHA_NONE, "exported dedicated staff icon")
+		game.hud.sidebar_scroll.ensure_control_visible(button)
+		for frame in 3:
+			await tree.process_frame
+		check(root.get_visible_rect().encloses(button.get_global_rect()), "exported hiring button bounds")
+		var cash := staff_session.economy.cash
+		await click(tree, button.get_global_rect().get_center())
+		var employee: ActorState = staff_session.actors.get(staff_session.next_actor_id - 1)
+		check(employee != null and employee.role == definition.id and staff_session.economy.cash == cash - definition.hire_cost, "exported icon hires correct role and price")
+		game.staff_panel.open_for(staff_session)
+		var panel: StaffPanel = game.staff_panel
+		if employee != null:
+			for index in panel.employee_choice.item_count:
+				if panel.employee_choice.get_item_id(index) == employee.id:
+					panel.employee_choice.select(index)
+					panel.employee_choice.item_selected.emit(index)
+		for frame in 3:
+			await tree.process_frame
+		check(panel.role_icon.texture == button.icon and panel.role_icon.visible, "exported selected staff role icon")
+		check(panel.role_icon.mouse_filter == Control.MOUSE_FILTER_IGNORE and panel.role_icon.focus_mode == Control.FOCUS_NONE, "exported staff decoration ignores input")
+		panel.hide()
+		staff_icons_verified += 1
+	game.staff_panel.open_for(HotelSession.new(831))
+	check(not game.staff_panel.role_icon.visible and game.staff_panel.role_icon.texture == null, "exported empty staff list clears icon")
+	game.staff_panel.hide()
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
 		var employee := ActorState.new()
@@ -353,6 +386,7 @@ func run(game: Node) -> void:
 	report["portrait_art_verified"] = portrait_art_verified
 	report["travel_art_verified"] = travel_art_verified
 	report["build_icons_verified"] = build_icons_verified
+	report["staff_icons_verified"] = staff_icons_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))

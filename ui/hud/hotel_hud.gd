@@ -41,6 +41,7 @@ var tariff_effect: Label
 const TARIFFS: Array[int] = [75, 100, 125]
 var objectives_button: Button
 var build_buttons: Dictionary = {}
+var hire_buttons: Dictionary = {}
 var event_label: Label
 var operations_button: Button
 var text_size_button: Button
@@ -169,7 +170,14 @@ func _ready() -> void:
 	staff_title.text = "EQUIPE"
 	tools.add_child(staff_title)
 	for definition in HotelSession.EMPLOYEES:
-		_button(tools, "+ %s • $ %d" % [definition.display_name, definition.hire_cost], func() -> void: hire_requested.emit(definition))
+		var button := _button(tools, "+ %s\nContratar: $ %d" % [definition.display_name, definition.hire_cost], func() -> void: hire_requested.emit(definition))
+		button.icon = HotelArt.staff_icon(definition.id)
+		button.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 36)
+		button.custom_minimum_size.y = 58
+		button.tooltip_text = "Salário: $ %d/dia" % definition.salary
+		hire_buttons[definition.id] = button
 	actor_card = PanelContainer.new()
 	actor_card.visible = false
 	actor_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
