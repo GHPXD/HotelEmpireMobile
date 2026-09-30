@@ -535,3 +535,10 @@ O runner configura agora 33 suítes com Visual/Stress/Soak; a última bateria
 completa de 31 suítes continua sendo a revisão dcfcd2d, anterior aos seis ícones
 de gestão e partida. Não há nova medição global de memória, compatibilidade
 externa ou playtest humano neste incremento.
+
+Quatro scripts válidos pelo gda. Pacote da revisão limpa 33eca92: boot e smoke
+de 6120 ticks passaram, com 39 reservas, 42 refeições, 31 limpezas e caixa 2021.
+Três comandos de partida verificados em cada uma das seis configurações do ZIP
+extraído: docs/release/session-icons-matrix.json. Gravar/carregar, cancelar e
+confirmar novo hotel e carregar novamente preservam snapshot/bytes salvos.
+Inventário, documentos e hashes dos 76 PNGs conferidos; kit atualizado.

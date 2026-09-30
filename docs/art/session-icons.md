@@ -34,3 +34,11 @@ Janela solicitada 4K não certifica monitor ou hardware físico 4K.
 
 Ícones estáticos, com hover/foco do tema nativo. Três novos imports de 256px;
 a medição M8 anterior não representa a memória do catálogo atual completo.
+
+Pacote da revisão limpa `33eca92`: boot e smoke de 6120 ticks passaram, com
+os três comandos e imports dentro do executável. Seis configurações extraídas
+do ZIP passaram em `../release/session-icons-matrix.json`: gravação, carga após
+sessão vazia, cancelamento e confirmação de Novo hotel, seguida de recuperação
+pela carga, com snapshot e bytes salvos preservados. ZIP, documentos e hashes
+dos 76 PNGs auditados; kit de compatibilidade atualizado. Outros computadores
+e playtest humano permanecem pendentes.
