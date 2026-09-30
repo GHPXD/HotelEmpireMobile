@@ -224,3 +224,8 @@ recepção/elevador conferidos antes do save e fatos da avaliação restaurada
 verificados na janela. ZIP, documentos e 31 PNGs passaram na auditoria. Matriz
 em docs/release/visit-times-matrix.json; kit externo atualizado. O pacote também
 inclui o incremento anterior do inspetor de personagens.
+
+Pacote com animações de café (29/09/2026 local, 30/09 UTC): revisão c63bb6e,
+export limpo, smoke de 6120 ticks e seis combinações de janela/texto aprovados.
+Auditoria de ZIP, documentos e 34 PNGs aprovada. Matriz em
+docs/release/cafe-animation-matrix.json; kit externo atualizado com o mesmo ZIP.

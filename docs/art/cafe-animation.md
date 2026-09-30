@@ -28,3 +28,7 @@ baseline comum. Captura o hotel em zoom 0,35/0,90/1,80 e cada fase do café em 1
 comparando snapshots antes/depois de desenhar uma sessão pausada. As capturas
 foram inspecionadas. O teste de câmera manteve equivalência pixel a pixel em nove
 posições/escalas. Catálogo atual: 34 PNGs e 16 texturas de personagens.
+
+As faixas estão no ZIP Windows exportado da revisão `c63bb6e`, com árvore limpa.
+Smoke e seis combinações locais de janela/texto aprovados; auditoria dos 34 PNGs
+concluída. Evidência em `docs/release/cafe-animation-matrix.json`.
