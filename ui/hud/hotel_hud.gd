@@ -44,6 +44,7 @@ var build_buttons: Dictionary = {}
 var hire_buttons: Dictionary = {}
 var action_buttons: Dictionary = {}
 var management_buttons: Dictionary = {}
+var session_icon_buttons: Dictionary = {}
 var event_label: Label
 var operations_button: Button
 var text_size_button: Button
@@ -90,9 +91,12 @@ func _ready() -> void:
 	toolbar.add_child(operations)
 	var session_bar := HFlowContainer.new()
 	layout.add_child(session_bar)
-	_button(session_bar, "Novo hotel", func() -> void: new_requested.emit())
-	_button(session_bar, "Salvar", func() -> void: save_requested.emit())
-	_button(session_bar, "Carregar", func() -> void: load_requested.emit())
+	var new_button := _button(session_bar, "Novo hotel", func() -> void: new_requested.emit())
+	_set_session_icon(new_button, &"new")
+	var save_button := _button(session_bar, "Salvar", func() -> void: save_requested.emit())
+	_set_session_icon(save_button, &"save")
+	var load_button := _button(session_bar, "Carregar", func() -> void: load_requested.emit())
+	_set_session_icon(load_button, &"load")
 	var finances_button := _button(session_bar, "Finanças", func() -> void: finances_requested.emit())
 	_set_management_icon(finances_button, &"finances")
 	_button(session_bar, "Equipe", func() -> void: staff_requested.emit())
@@ -263,6 +267,13 @@ func _set_management_icon(button: Button, panel: StringName) -> void:
 	button.expand_icon = false
 	button.add_theme_constant_override("icon_max_width", 28)
 	management_buttons[panel] = button
+
+func _set_session_icon(button: Button, command: StringName) -> void:
+	button.icon = HotelArt.session_icon(command)
+	button.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	button.expand_icon = false
+	button.add_theme_constant_override("icon_max_width", 28)
+	session_icon_buttons[command] = button
 
 func refresh(hotel: HotelModel, selected: RoomState) -> void:
 	tariff_choice.visible = selected != null and selected.definition().category in [&"lodging", &"service"]

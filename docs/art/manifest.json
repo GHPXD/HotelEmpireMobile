@@ -655,5 +655,32 @@
     "bytes": 1323999,
     "sha256": "9bed74a0bc2f686c51edf7845e551c7afe434fca736f45cecc525a56380bb449",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/new-hotel.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1357174,
+    "sha256": "641bdbba07112b135f8d2834e926cc577e39eb82e751199a3337a6a39acb00d6",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/save.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1212237,
+    "sha256": "c57cfa44d0b4cdc2f296b19bb9a29a0ae009da4ad1de6c46d2fb4da3f28eb475",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/load.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1120566,
+    "sha256": "4b61510f536839ff22111eeac6f2059bb914f0c2b6f178ea6128a7c7cb49a27d",
+    "generator": "built-in image_gen"
   }
 ]

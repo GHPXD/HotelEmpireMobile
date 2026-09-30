@@ -1,6 +1,6 @@
 # Assets
 
-M7 usa 73 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
+M7 usa 76 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
 novas faixas de serviço documentadas em `docs/art/`. Sem CLI/API alternativa,
 SVG ou imagens copiadas de jogos de referência.
 Não são assets feitos manualmente por um ilustrador. Prompts completos e referências
@@ -53,6 +53,8 @@ Andar, melhoria e demolição usam três fontes raster próprias nos botões nat
 de 32px, com import limitado a 256px; detalhes em `docs/art/action-icons.md`.
 Finanças, Operação e Avaliações têm ícones raster de 28px na barra do HUD;
 fontes intactas e imports de 256px. Detalhes em `docs/art/management-icons.md`.
+Novo hotel, Salvar e Carregar têm fontes raster próprias, em botões de 28px;
+confirmação e continuidade preservadas. Detalhes em `docs/art/session-icons.md`.
 
 Sons gerados pelo código original `tools/generate_audio.py`, sem samples externos:
 PCM mono 16 bits/22050 Hz, envelope de ataque/decay e volume moderado na reprodução.

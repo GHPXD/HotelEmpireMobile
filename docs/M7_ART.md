@@ -29,6 +29,8 @@ Arte original gerada pelo image_gen integrado; prompts e referências em `docs/a
   com fonte intacta, import de 256px e Button.icon de 32px. Detalhes em `art/action-icons.md`.
 - Três ícones raster para Finanças, Operação e Avaliações no HUD, em 28px,
   com mínimo nativo, input/foco preservados. Detalhes em `art/management-icons.md`.
+- Três ícones raster para Novo hotel, Salvar e Carregar, com import de 256px,
+  confirmação nativa e continuidade pelo disco. Detalhes em `art/session-icons.md`.
 - Cinco retratos transparentes de perfil/função para inspeção de hóspedes e equipe,
   separados das faixas de animação. Cartão de 96px na lateral, com texto nativo
   e rolagem automática ao selecionar. Detalhes em `art/character-portraits.md`.
@@ -71,8 +73,8 @@ cabines N2 usam pintura de nogueira e N3 tem mármore e medalhão de latão; o p
 mantém a pintura base. Sem música ou ambiente
 contínuo nesta entrega. Novos conteúdos precisam de arte própria. M8 mediu render
 isolado até 1000 e operação contínua até 120; esta entrega não comprova 1000 hóspedes
-atendidos simultaneamente a 60 FPS. Catálogo atual: 73 PNGs, 30 texturas de animação,
-cinco retratos e 14 ícones de interface.
+atendidos simultaneamente a 60 FPS. Catálogo atual: 76 PNGs, 30 texturas de animação,
+cinco retratos e 17 ícones de interface.
 
 ## Verificação
 `ui_art.gd`: carregamento, alpha, limites dos recortes, ciclo, zoom mínimo/normal/máximo,

@@ -21,7 +21,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Métricas por elevador em Operação: cabine, fila, espera atual e histórico de embarques.
   - [x] Satisfação dos presentes separada por check-in, com contagens, médias e resumo rolável por teclado.
   - [x] Inspetor identifica objetivo, sala e andar do personagem, sem destinos ou esperas antigos em etapas posteriores.
-- [x] M7 Art & Animation: 73 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
+- [x] M7 Art & Animation: 76 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
   - [x] Pinturas dedicadas para quartos, recepções e restaurante nos níveis 2 e 3.
   - [x] Cabine de elevador N2 com pintura dedicada.
   - [x] Cabine N3 distinta, com mármore e medalhão de latão.
@@ -42,6 +42,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Dois ícones próprios para contratar e gerir a equipe, com nomes/custos nativos e função da seleção atual.
   - [x] Três ícones de comando para adicionar andar, melhorar sala e demolir seleção, com mouse/Enter e falhas sem mutação verificados.
   - [x] Ícones próprios de Finanças, Operação e Avaliações no HUD, com pixels visíveis, 48 ativações e altura do playfield preservada nos oito layouts medidos.
+  - [x] Ícones próprios de Novo hotel, Salvar e Carregar, com 48 ativações, confirmação/cancelamento, bytes salvos e restauração integral verificados em oito layouts.
 - [x] M8 Optimization: perfis 100/250/500/1000 agentes e operação até o limite atual de 120.
   - [x] M8a perfil inicial, descarte de render fora da câmera e equivalência visual.
   - [x] M8b admissão/saídas otimizadas; perfil integrado contínuo com 118–120 hóspedes.

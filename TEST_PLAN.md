@@ -514,3 +514,24 @@ Pacote de gestão: revisão 4c7d81b, árvore limpa; boot e smoke de 6120 ticks,
 abertos pelos ícones, Esc/foco e snapshot preservados em cada caso da matriz
 docs/release/management-icons-matrix.json. ZIP, documentos e 73 PNGs auditados;
 kit de compatibilidade atualizado. Validação externa e playtest humano pendentes.
+
+## M7 — ícones de partida (30/09/2026)
+
+Três fontes RGBA 1254×1254 originais geradas no chat, sem edição de pixels;
+catálogo de 76 PNGs e 17 ícones. Imports de 256px com mipmaps, Button.icon de
+28px incluído no mínimo do fluxo. Nove suítes gráficas passaram: ui_session_icons,
+ui_smoke, ui_resume, ui_new_game, ui_recovery, ui_exit, ui_management_icons,
+ui_help e ui_content (36 construções e seleções de retrato).
+
+ui_session_icons verifica 48 ativações por mouse/Enter em quatro janelas e dois
+textos, oito cancelamentos e oito confirmações; gravação validada no disco,
+restauração integral após sessão vazia, reset/fundos/objetivos e bytes salvos
+preservados. 24 áreas de ícone realmente pintadas, mínimo/bounds/sem sobreposição,
+foco e preferência de texto. Playfield não ganhou linha nesses oito layouts.
+Capturas pequena/4K inspecionadas; dados em docs/art/session-icons-ui.json,
+prompts/origem/hashes em docs/art/session-icons*.json.
+
+O runner configura agora 33 suítes com Visual/Stress/Soak; a última bateria
+completa de 31 suítes continua sendo a revisão dcfcd2d, anterior aos seis ícones
+de gestão e partida. Não há nova medição global de memória, compatibilidade
+externa ou playtest humano neste incremento.

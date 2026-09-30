@@ -102,3 +102,17 @@ Detalhes e dados em `../../art/management-icons.md`.
 
 A bateria completa de 31 suítes acima é anterior a esse incremento. O runner
 atual tem 32 suítes com Visual/Stress/Soak; não afirmamos nova execução completa.
+
+## Incremento dos controles de partida — 30/09/2026
+
+Novo hotel, Salvar e Carregar usam três fontes raster originais adicionais
+(76 PNGs no catálogo). Nove suítes gráficas passaram: ui_session_icons,
+ui_smoke, ui_resume, ui_new_game, ui_recovery, ui_exit, ui_management_icons,
+ui_help e ui_content. 48 ativações em oito layouts, oito cancelamentos e oito
+confirmações; hotel inteiro e bytes salvos preservados/restaurados. Capturas
+pequena/4K inspecionadas e 24 áreas de ícone efetivamente pintadas.
+Detalhes em `../../art/session-icons.md`.
+
+O runner configura agora 33 suítes com Visual/Stress/Soak. A bateria integrada
+de 31 suítes acima é anterior aos incrementos de gestão e partida; as nove
+suítes deste incremento não substituem a bateria completa ou o playtest humano.

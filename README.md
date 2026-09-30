@@ -61,13 +61,13 @@ com vários quartos. Contrate os dois tipos de funcionário antes de abrir chega
 Poucos quartos criam fila na recepção; expansão excessiva pressiona transporte e limpeza.
 
 No Windows deste ambiente: `powershell -File tools/test.ps1 -Visual` executa import,
-11 suítes headless e 17 testes gráficos. Passe `-GodotPath` para outro engine.
+11 suítes headless e 18 testes gráficos. Passe `-GodotPath` para outro engine.
 Testes isolam dados em `.runtime/`; não sobrescrevem seu save normal.
 O runner limita cada processo a 120s (`-SuiteTimeoutSeconds` ajusta o prazo) e
 grava revisão, opções, duração, resumos e hashes dos logs em `.runtime/test-run-report.json`.
 Acrescente `-Stress` para três suítes adicionais com múltiplas seeds, continuidade de save e transporte com
 100/250/500/1000 agentes. Evidências: [benchmarks](docs/benchmarks/README.md).
-Última bateria completa em 30/09/2026, anterior aos ícones da barra de gestão,
+Última bateria completa em 30/09/2026, anterior aos ícones de gestão e partida,
 com `-Visual -Stress -Soak`: 31 suítes passaram; relatório e logs
 preservados na [revisão de QA](docs/benchmarks/m9/QA_REVIEW.md).
 
@@ -89,7 +89,7 @@ memória do processo, objetivos concluídos, tick de cada conquista, serviços u
 perfis dos hóspedes ainda presentes, estado do evento e falhas.
 Medidas headless não equivalem a FPS com renderização.
 
-Arte atual: 73 PNGs originais, com caminhada, espera, trabalho e repouso da equipe,
+Arte atual: 76 PNGs originais, com caminhada, espera, trabalho e repouso da equipe,
 e ciclos dedicados de dormir, beber, ler sentado e comer para os três perfis. Os usuários admitidos
 nos serviços têm posições visuais separadas; animações acompanham velocidade e pausa.
 Quartos aguardando limpeza têm pinturas próprias nos três níveis. Filas seguem
@@ -101,6 +101,8 @@ com malas de viagem dedicadas aos três perfis.
 Contratação e gestão da equipe usam dois ícones de função dedicados.
 Andar, melhoria e demolição têm três ícones próprios em botões nativos de 32px.
 Finanças, Operação e Avaliações usam três ícones próprios de 28px no HUD.
+Novo hotel, Salvar e Carregar também têm ícones dedicados de 28px, com
+confirmação nativa e preservação dos saves verificados em oito layouts.
 
 Limitações atuais: seis instalações, três perfis, dois eventos e sem música ambiente.
 Animações usam quatro poses pintadas, com pequenas variações entre quadros. A operação integrada foi medida até 120 hóspedes. Testes

@@ -173,6 +173,7 @@ func run(game: Node) -> void:
 	var action_icons_verified := await verify_action_icons(game)
 	game.staff_panel.hide()
 	var management_icons_verified := await verify_management_icons(game)
+	var session_icons_verified := await verify_session_icons(game)
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
 		var employee := ActorState.new()
@@ -391,6 +392,7 @@ func run(game: Node) -> void:
 	report["staff_icons_verified"] = staff_icons_verified
 	report["action_icons_verified"] = action_icons_verified
 	report["management_icons_verified"] = management_icons_verified
+	report["session_icons_verified"] = session_icons_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))
@@ -454,6 +456,47 @@ func verify_management_icons(game: Node) -> int:
 		check(not panel.visible and button.has_focus(), "exported Escape returns focus to management icon button")
 		verified += 1
 	return verified
+
+func verify_session_icons(game: Node) -> int:
+	var tree: SceneTree = game.get_tree()
+	var session := SimulationRunner.make_hotel(849, "standard", 250000)
+	session.speed = 0
+	game._replace_session(session)
+	var before := SessionSnapshot.capture(session)
+	var original_save_path: String = game.save_path
+	game.save_path = "user://release-session-icons.json"
+	for frame in 4:
+		await tree.process_frame
+	for id: StringName in game.hud.session_icon_buttons:
+		var button: Button = game.hud.session_icon_buttons[id]
+		var texture := HotelArt.session_icon(id)
+		check(button.icon == texture and texture.get_width() == 256 and texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported dedicated session icon")
+		check(not button.expand_icon and button.get_theme_constant("icon_max_width") == 28, "exported session icon contributes to minimum width")
+		check(tree.root.get_visible_rect().encloses(button.get_global_rect()) and button.size.x >= button.get_combined_minimum_size().x, "exported decorated session button bounds")
+	await click(tree, game.hud.session_icon_buttons[&"save"].get_global_rect().get_center())
+	var saved_bytes := FileAccess.get_file_as_bytes(game.save_path)
+	check(not saved_bytes.is_empty(), "exported painted save writes file")
+	check(equivalent(before, SessionSnapshot.capture(game.session)), "exported save preserves paused state")
+	game._replace_session(HotelSession.new())
+	for frame in 3:
+		await tree.process_frame
+	await click(tree, game.hud.session_icon_buttons[&"load"].get_global_rect().get_center())
+	check(equivalent(before, SessionSnapshot.capture(game.session)), "exported painted load restores entire hotel")
+	var opener: Button = game.hud.session_icon_buttons[&"new"]
+	await click(tree, opener.get_global_rect().get_center())
+	check(game.new_dialog.visible, "exported painted new opens confirmation")
+	await close_popup(tree, game.new_dialog)
+	check(not game.new_dialog.visible and opener.has_focus(), "exported cancel returns decorated new opener focus")
+	check(equivalent(before, SessionSnapshot.capture(game.session)), "exported cancel preserves hotel")
+	await click(tree, opener.get_global_rect().get_center())
+	game.new_dialog.get_ok_button().grab_focus()
+	await popup_key(tree, game.new_dialog, KEY_ENTER)
+	check(game.hotel.rooms.is_empty() and game.hotel.floors == 1 and game.session.actors.is_empty(), "exported confirmed new resets hotel")
+	check(saved_bytes == FileAccess.get_file_as_bytes(game.save_path), "exported confirmed new preserves saved bytes")
+	await click(tree, game.hud.session_icon_buttons[&"load"].get_global_rect().get_center())
+	check(equivalent(before, SessionSnapshot.capture(game.session)), "exported painted load recovers hotel after new confirmation")
+	game.save_path = original_save_path
+	return 3
 
 func close_popup(tree: SceneTree, window: Window) -> void:
 	await popup_key(tree, window, KEY_ESCAPE)

@@ -86,6 +86,15 @@ const MANAGEMENT_ICONS: Dictionary = {
 static func management_icon(panel: StringName) -> Texture2D:
 	return MANAGEMENT_ICONS.get(panel)
 
+const SESSION_ICONS: Dictionary = {
+	&"new": preload("res://assets/art/icons/new-hotel.png"),
+	&"save": preload("res://assets/art/icons/save.png"),
+	&"load": preload("res://assets/art/icons/load.png"),
+}
+
+static func session_icon(command: StringName) -> Texture2D:
+	return SESSION_ICONS.get(command)
+
 static func portrait(actor: ActorState) -> Texture2D:
 	return PORTRAITS.get(character_id(actor))
 
