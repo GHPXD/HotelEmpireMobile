@@ -229,3 +229,10 @@ Pacote com animações de café (29/09/2026 local, 30/09 UTC): revisão c63bb6e,
 export limpo, smoke de 6120 ticks e seis combinações de janela/texto aprovados.
 Auditoria de ZIP, documentos e 34 PNGs aprovada. Matriz em
 docs/release/cafe-animation-matrix.json; kit externo atualizado com o mesmo ZIP.
+
+Leitura sentada: `ui_art` aprovado para os três perfis, incluindo clique em cada
+assento, alpha, baseline, altura de 36px, avanço/loop e quatro capturas de fase sem
+mutação da sessão. `ui_culling` agora inclui usuários registrados no café e lounge;
+nove comparações pixel a pixel e snapshot inalterado aprovados. `ui_content`
+aprovado. Arte atual: 37 PNGs, 19 texturas de personagens. O fixture de câmera
+desbloqueia os serviços antes de construir; o de arte aguarda layout antes do clique.

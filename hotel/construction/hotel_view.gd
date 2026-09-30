@@ -138,6 +138,13 @@ func actor_screen_position(actor: ActorState) -> Vector2:
 		if lift != null:
 			level = lift.floor_position
 			column = lift.column
+	if actor.role == &"guest" and actor.state == &"using":
+		var room := hotel.by_id(actor.target_room)
+		if room != null and room.definition_id in [&"cafe", &"lounge"]:
+			var slot := room.users.find(actor.id)
+			if slot >= 0:
+				# Spread admitted guests visually; navigation and save state stay intact.
+				column = room.column + room.definition().width * (float(slot) + 0.5) / room.capacity()
 	var offset: float = float(actor.id % 5) * 0.13 if actor.state in [&"checkin", &"service_queue", &"lift_queue"] else 0.0
 	return world_to_screen(Vector2((column + offset) * CELL, -level * FLOOR_HEIGHT - 20))
 

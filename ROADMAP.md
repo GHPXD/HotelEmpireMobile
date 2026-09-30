@@ -21,13 +21,14 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Métricas por elevador em Operação: cabine, fila, espera atual e histórico de embarques.
   - [x] Satisfação dos presentes separada por check-in, com contagens, médias e resumo rolável por teclado.
   - [x] Inspetor identifica objetivo, sala e andar do personagem, sem destinos ou esperas antigos em etapas posteriores.
-- [x] M7 Art & Animation: 34 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
+- [x] M7 Art & Animation: 37 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
   - [x] Pinturas dedicadas para quartos, recepções e restaurante nos níveis 2 e 3.
   - [x] Cabine de elevador N2 com pintura dedicada.
   - [x] Cabine N3 distinta, com mármore e medalhão de latão.
   - [x] Quatro poses de espera próprias para cada um dos três perfis de hóspede.
   - [x] Pose com xícara para cada perfil durante o uso do Café Brisa, com transparência e escala validadas.
   - [x] Ciclo de beber com quatro poses por perfil, escala compartilhada e pés alinhados; acompanha velocidade e pausa.
+  - [x] Leitura sentada na Sala Horizonte: quatro poses por perfil e assentos separados para os usuários admitidos; café também distribui usuários visualmente.
 - [x] M8 Optimization: perfis 100/250/500/1000 agentes e operação até o limite atual de 120.
   - [x] M8a perfil inicial, descarte de render fora da câmera e equivalência visual.
   - [x] M8b admissão/saídas otimizadas; perfil integrado contínuo com 118–120 hóspedes.

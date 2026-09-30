@@ -9,6 +9,19 @@ func run(game: Node) -> void:
 	check(not OS.has_feature("editor"), "running export template")
 	check(not ResourceLoader.exists("res://tests/ui_art.gd"), "tests excluded from package")
 	check(not FileAccess.file_exists("res://docs/PRODUCT_VISION.md"), "documentation excluded")
+	var service_art_verified := 0
+	for profile: StringName in [&"balanced", &"business", &"leisure"]:
+		var visual_guest := ActorState.new()
+		visual_guest.role = &"guest"
+		visual_guest.archetype_id = profile
+		visual_guest.state = &"using"
+		for service: StringName in [&"cafe", &"lounge"]:
+			var texture := HotelArt.character(visual_guest, service)
+			check(texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported service sprite has alpha")
+			check(HotelArt.character_regions(visual_guest, service).size() == 4, "exported service has four frames")
+			for tick: int in [0, 8, 12, 16, 24, 36]:
+				check(Rect2(Vector2.ZERO, texture.get_size()).encloses(HotelArt.character_region(visual_guest, tick, service)), "exported service region contained")
+			service_art_verified += 1
 	var session := HotelSession.new(123)
 	session.hotel.build(HotelCatalog.room(&"reception"), 0, 0)
 	session.hotel.build(HotelCatalog.room(&"restaurant"), 3, 0)
@@ -176,6 +189,7 @@ func run(game: Node) -> void:
 		await RenderingServer.frame_post_draw
 		check(root.get_texture().get_image().save_png("user://release-smoke.png") == OK, "capture packaged game")
 	var report: Dictionary = {"suite": "release_smoke", "failures": failures, "bookings": session.guests.bookings, "meals": session.guests.meals_served, "cleaned": session.employees.cleaned, "cash": session.economy.cash, "ticks": session.tick_count, "user_data": OS.get_user_data_dir(), "executable": OS.get_executable_path()}
+	report["service_art_verified"] = service_art_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))

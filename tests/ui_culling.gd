@@ -2,6 +2,7 @@ extends "res://tests/ui_management.gd"
 
 func run() -> void:
 	var session := SimulationRunner.make_hotel(765, "tower", 1000000)
+	session.progression.completed.assign([&"first_stays", &"steady_service"])
 	var view := HotelView.new()
 	root.add_child(view)
 	view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -20,6 +21,25 @@ func run() -> void:
 		elif index % 5 == 1:
 			actor.role = &"receptionist"
 			actor.state = &"working"
+	for column: int in [0, 2, 4]:
+		check(session.hotel.demolish(session.hotel.room_at(column, 1).id).is_empty(), "clear service showcase space")
+	var lounge := session.hotel.build(HotelCatalog.room(&"lounge"), 0, 1)
+	var cafe := session.hotel.build(HotelCatalog.room(&"cafe"), 4, 1)
+	check(lounge != null and cafe != null, "unlocked service rooms built")
+	if lounge == null or cafe == null:
+		view.queue_free()
+		await process_frame
+		quit(1)
+		return
+	for room: RoomState in [lounge, cafe]:
+		for slot in room.capacity():
+			var actor := session.spawn_guest()
+			actor.archetype_id = [&"balanced", &"business", &"leisure"][slot]
+			actor.state = &"using"
+			actor.target_room = room.id
+			actor.x = room.center()
+			actor.floor_index = room.floor_index
+			room.users.append(actor.id)
 	for room: RoomState in session.hotel.rooms:
 		if room.definition().category == &"lodging":
 			room.dirty = true

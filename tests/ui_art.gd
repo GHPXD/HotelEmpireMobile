@@ -98,12 +98,56 @@ func run() -> void:
 			if room.definition_id == &"cafe":
 				guest.target_room = room.id
 			guest.x = 5.8 + [&"balanced", &"business", &"leisure"].find(profile) * 0.6
+	var readers: Array[ActorState] = []
+	var lounge: RoomState = session.hotel.room_at(8, 0)
+	for profile: StringName in [&"balanced", &"business", &"leisure"]:
+		var guest := session.spawn_guest()
+		guest.archetype_id = profile
+		guest.state = &"using"
+		guest.target_room = lounge.id
+		guest.x = lounge.center()
+		lounge.users.append(guest.id)
+		readers.append(guest)
+		var reading := HotelArt.character(guest, &"lounge")
+		check(reading != HotelArt.character(guest, &"cafe"), "lounge has distinct reading art")
+		check(reading != HotelArt.character(guest, &"bedroom"), "reading art is lounge specific")
+		check(reading.get_image().detect_alpha() != Image.ALPHA_NONE, "reading has real alpha")
+		check(HotelArt.character_regions(guest, &"lounge").size() == 4, "four reading frames")
+		check(HotelArt.character_region(guest, 0, &"lounge") != HotelArt.character_region(guest, 12, &"lounge"), "page turn advances")
+		check(HotelArt.character_region(guest, 0, &"lounge") == HotelArt.character_region(guest, 48, &"lounge"), "page turn loops")
+		var baseline := -1.0
+		for tick: int in [0, 12, 24, 36]:
+			var region := HotelArt.character_region(guest, tick, &"lounge")
+			var anchor := HotelArt.character_anchor(guest, tick, &"lounge")
+			check(Rect2(Vector2.ZERO, reading.get_size()).encloses(region), "reading frame contained")
+			check(Rect2(Vector2.ZERO, region.size).has_point(anchor), "reading anchor contained")
+			check(is_equal_approx(region.size.y * HotelArt.character_scale(guest, &"lounge"), 36.0), "seated readers lower than standing guests")
+			check(baseline < 0.0 or is_equal_approx(baseline, anchor.y), "reading baseline stable")
+			baseline = anchor.y
+		guest.state = &"service_queue"
+		check(HotelArt.character(guest, &"lounge") != reading, "leaving seat restores waiting art")
+		guest.state = &"using"
+	for actor: ActorState in session.actors.values():
+		if actor.role == &"cleaner":
+			actor.floor_index = 1
+			actor.x = 5.5
 	session.speed = 0
 	for room: RoomState in session.hotel.rooms:
 		if room.definition().category == &"lodging" and room.column == 8:
 			room.dirty = true
 	game._replace_session(session)
 	var before := SessionSnapshot.capture(session)
+	game.view.zoom_factor = 0.9
+	for frame in 4:
+		await process_frame
+	var previous_seat := -INF
+	for reader: ActorState in readers:
+		var point: Vector2 = game.view.actor_screen_position(reader)
+		check(point.x > previous_seat + 28 * game.view.zoom_factor, "lounge seats separately pickable")
+		previous_seat = point.x
+		await click(root, point + game.view.global_position)
+		check(game.selected_actor == reader.id, "click selects the reader at its drawn seat")
+	check(SessionSnapshot.capture(session) == before, "seat layout and selection leave session unchanged")
 	for zoom: float in [0.35, 0.9, 1.8]:
 		game.view.zoom_factor = zoom
 		game.view.pan = Vector2.ZERO
@@ -123,6 +167,17 @@ func run() -> void:
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png("res://.runtime/m7-cafe-frame-%d.png" % (tick / 8))
 		check(preload("res://tests/snapshot_comparison.gd").difference(phase_before, SessionSnapshot.capture(session), "cafe").is_empty(), "paused cafe frame leaves simulation unchanged")
+	session.tick_count = before["session"]["tick_count"]
+	session.time = before["session"]["time"]
+	for tick: int in [0, 12, 24, 36]:
+		session.tick_count = tick
+		session.time = tick * session.rules.tick
+		var phase_before := SessionSnapshot.capture(session)
+		for frame in 4:
+			await process_frame
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("res://.runtime/m7-reading-frame-%d.png" % (tick / 12))
+		check(SessionSnapshot.capture(session) == phase_before, "paused reading does not mutate session")
 	session.tick_count = before["session"]["tick_count"]
 	session.time = before["session"]["time"]
 	var old_audio: bool = game.audio.enabled

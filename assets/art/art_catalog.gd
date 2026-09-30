@@ -42,6 +42,9 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 	return ROOMS.get(id)
 
 const CHARACTERS: Dictionary = {
+	&"balanced-reading": preload("res://assets/art/characters/balanced-reading.png"),
+	&"business-reading": preload("res://assets/art/characters/business-reading.png"),
+	&"leisure-reading": preload("res://assets/art/characters/leisure-reading.png"),
 	&"balanced-drinking": preload("res://assets/art/characters/balanced-drinking.png"),
 	&"business-drinking": preload("res://assets/art/characters/business-drinking.png"),
 	&"leisure-drinking": preload("res://assets/art/characters/leisure-drinking.png"),
@@ -68,6 +71,9 @@ static func character(actor: ActorState, service_id: StringName = &"") -> Textur
 	return CHARACTERS[animation_id(actor, service_id)]
 
 const ACTION_REGIONS: Dictionary = {
+	&"balanced-reading": [[41, 201, 420, 547], [478, 201, 419, 547], [917, 201, 417, 547], [1354, 201, 418, 547]],
+	&"business-reading": [[56, 88, 478, 618], [583, 88, 480, 618], [1106, 88, 478, 618], [1646, 88, 474, 618]],
+	&"leisure-reading": [[43, 66, 489, 629], [586, 66, 490, 629], [1130, 66, 489, 629], [1685, 66, 486, 629]],
 	&"balanced-drinking": [[68, 5, 382, 874], [468, 5, 380, 874], [876, 5, 379, 874], [1314, 5, 380, 874]],
 	&"business-drinking": [[94, 8, 319, 867], [515, 8, 311, 867], [939, 8, 306, 867], [1365, 8, 318, 867]],
 	&"leisure-drinking": [[84, 6, 313, 881], [528, 6, 313, 881], [959, 6, 324, 881], [1396, 6, 317, 881]],
@@ -83,6 +89,9 @@ const ACTION_REGIONS: Dictionary = {
 
 # Local foot centers measured from alpha. Cup movement never shifts the body.
 const ACTION_ANCHORS: Dictionary = {
+	&"balanced-reading": [Vector2(217.5, 543), Vector2(217, 543), Vector2(216, 543), Vector2(216, 543)],
+	&"business-reading": [Vector2(291.5, 614), Vector2(286.5, 614), Vector2(286.5, 614), Vector2(282.5, 614)],
+	&"leisure-reading": [Vector2(262.5, 625), Vector2(262.5, 625), Vector2(261.5, 625), Vector2(260.5, 625)],
 	&"balanced-drinking": [Vector2(234, 870), Vector2(232, 870), Vector2(231, 870), Vector2(232, 870)],
 	&"business-drinking": [Vector2(182, 863), Vector2(183, 863), Vector2(181, 863), Vector2(183, 863)],
 	&"leisure-drinking": [Vector2(188, 877), Vector2(189, 877), Vector2(190, 877), Vector2(192, 877)],
@@ -91,6 +100,8 @@ const ACTION_ANCHORS: Dictionary = {
 static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
 	if actor.role == &"guest" and actor.state == &"using" and service_id == &"cafe":
 		return StringName("%s-drinking" % actor.archetype_id)
+	if actor.role == &"guest" and actor.state == &"using" and service_id == &"lounge":
+		return StringName("%s-reading" % actor.archetype_id)
 	if actor.role == &"guest" and actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
 		return StringName("%s-waiting" % actor.archetype_id)
 	if actor.role == &"cleaner" and actor.state == &"cleaning":
@@ -129,4 +140,6 @@ static func character_scale(actor: ActorState, service_id: StringName = &"") -> 
 	var height: float = 0.0
 	for box: Array in character_regions(actor, service_id):
 		height = maxf(height, box[3])
-	return 46.0 / height
+	# Seated readers have a lower head height than standing guests.
+	var visual_height := 36.0 if actor.role == &"guest" and actor.state == &"using" and service_id == &"lounge" else 46.0
+	return visual_height / height
