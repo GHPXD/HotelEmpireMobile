@@ -95,12 +95,18 @@ func run() -> void:
 		game._toggle_audio()
 	if game.large_text != original_large:
 		game._toggle_text_size()
-	print(JSON.stringify({"suite": "ui_preferences_icons", "preference_icons": 3, "activations": activations, "f4_activations": shortcuts, "preference_reloads": reloads, "painted_areas": painted_areas, "layouts": layouts, "failures": failures}))
+	print(JSON.stringify({"suite": "ui_preferences_icons", "preference_icons": 3, "activations": activations, "initial_audio_enabled": original_audio, "initial_large_text": original_large, "f4_activations": shortcuts, "preference_reloads": reloads, "painted_areas": painted_areas, "layouts": layouts, "failures": failures}))
 	game.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
 
 func activate_preference(button: Button, keyboard: bool) -> void:
+	# Wait for the painted layout before reading a mouse target after reflow.
+	await RenderingServer.frame_post_draw
+	var pressed_count: Array[int] = [0]
+	var count_press := func() -> void: pressed_count[0] += 1
+	button.pressed.connect(count_press)
+	var initial_bounds := button.get_global_rect()
 	if keyboard:
 		button.grab_focus()
 		await key(root, KEY_ENTER)
@@ -108,6 +114,8 @@ func activate_preference(button: Button, keyboard: bool) -> void:
 		await click(root, button.get_global_rect().get_center())
 	for frame in 4:
 		await process_frame
+	button.pressed.disconnect(count_press)
+	check(pressed_count[0] == 1, "native preference input activates exactly once: %s, keyboard %s, presses %d, bounds %s -> %s" % [button.text, keyboard, pressed_count[0], initial_bounds, button.get_global_rect()])
 	check(button.has_focus(), "preference activation retains native focus")
 
 func verify_painted(button: Button, id: StringName) -> void:
