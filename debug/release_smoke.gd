@@ -440,7 +440,7 @@ func verify_management_icons(game: Node) -> int:
 	for frame in 4:
 		await tree.process_frame
 	var before := SessionSnapshot.capture(session)
-	var panels: Dictionary = {&"finances": game.finances_dialog, &"operations": game.operations_panel, &"reviews": game.reviews_panel}
+	var panels: Dictionary = {&"finances": game.finances_dialog, &"operations": game.operations_panel, &"reviews": game.reviews_panel, &"staff": game.staff_panel, &"objectives": game.progression_panel, &"help": game.help_panel}
 	var verified := 0
 	for id: StringName in panels:
 		var button: Button = game.hud.management_buttons[id]

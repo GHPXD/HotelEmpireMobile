@@ -542,3 +542,24 @@ Três comandos de partida verificados em cada uma das seis configurações do ZI
 extraído: docs/release/session-icons-matrix.json. Gravar/carregar, cancelar e
 confirmar novo hotel e carregar novamente preservam snapshot/bytes salvos.
 Inventário, documentos e hashes dos 76 PNGs conferidos; kit atualizado.
+
+## M7 — Equipe, Objetivos e Ajuda (30/09/2026)
+
+Três fontes RGBA 1254×1254 do gerador integrado; Equipe refinada por edição no
+próprio gerador, arquivos finais copiados sem edição local de pixels. Origem,
+prompts e hashes em docs/art/utility-icons*.json. Catálogo de 79 PNGs/20 ícones.
+Quatro scripts válidos pelo gda. Dez suítes gráficas passaram: ui_management_icons,
+ui_session_icons, ui_management, ui_progression, ui_help, ui_smoke, ui_resume,
+ui_new_game, ui_recovery e ui_exit.
+
+O teste de painéis agora cobre seis comandos/96 ativações em quatro janelas,
+dois textos e mouse/Enter; 48 áreas com pixels pintados, largura mínima, bounds,
+sem sobreposição, painel correto, snapshot e Esc/foco. Equipe/atribuições,
+contador/desbloqueios de objetivos e rolagem/F1/pausa da ajuda seguem nativos.
+Capturas pequena/4K inspecionadas e dados em docs/art/utility-icons-ui.json.
+Barra padrão ocupa uma linha adicional: playfield lógico 680→634; ampliada
+conserva 624. Não há corte dos controles ou redução do tamanho de texto.
+
+Runner continua configurado com 33 suítes Visual/Stress/Soak. A bateria completa
+de 31 suítes permanece anterior aos incrementos de painéis e partida; dez
+suítes deste incremento não substituem playtest ou compatibilidade externa.

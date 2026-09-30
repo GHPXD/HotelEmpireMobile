@@ -1,5 +1,5 @@
 extends "res://tests/ui_management.gd"
-## Native toolbar navigation, focus and playfield cost of the three painted icons.
+## Native navigation, focus and playfield cost of all six painted panel controls.
 
 func run() -> void:
 	var game: Node = load("res://core/game/main.tscn").instantiate()
@@ -9,7 +9,7 @@ func run() -> void:
 	session.speed = 0
 	game._replace_session(session)
 	var snapshot := SessionSnapshot.capture(session)
-	var panels: Dictionary = {&"finances": game.finances_dialog, &"operations": game.operations_panel, &"reviews": game.reviews_panel}
+	var panels: Dictionary = {&"finances": game.finances_dialog, &"operations": game.operations_panel, &"reviews": game.reviews_panel, &"staff": game.staff_panel, &"objectives": game.progression_panel, &"help": game.help_panel}
 	var cases := 0
 	var layouts: Array[Dictionary] = []
 	for resolution: Vector2i in [Vector2i(1024, 640), Vector2i(1280, 800), Vector2i(1600, 900), Vector2i(3840, 2160)]:
@@ -35,7 +35,7 @@ func run() -> void:
 				maximum_button_height = maxf(maximum_button_height, button.size.y)
 			var bar: HFlowContainer = game.hud.operations_button.get_parent()
 			var allowed_row := maximum_button_height + bar.get_theme_constant("v_separation")
-			check(game.hud.world_slot.size.y >= plain_height - allowed_row - 0.01, "three management icons cost at most one extra toolbar row")
+			check(game.hud.world_slot.size.y >= plain_height - allowed_row - 0.01, "six panel icons cost at most one extra toolbar row")
 			layouts.append({"window": [resolution.x, resolution.y], "large_text": large, "plain_playfield_height": plain_height, "decorated_playfield_height": game.hud.world_slot.size.y})
 			await RenderingServer.frame_post_draw
 			var capture := root.get_texture().get_image()
@@ -79,7 +79,7 @@ func run() -> void:
 			if resolution in [Vector2i(1024, 640), Vector2i(3840, 2160)] and large:
 				await RenderingServer.frame_post_draw
 				root.get_texture().get_image().save_png("res://.runtime/m7-management-toolbar-%d.png" % resolution.x)
-	print(JSON.stringify({"suite": "ui_management_icons", "management_icons": 3, "activations": cases, "layouts": layouts, "failures": failures}))
+	print(JSON.stringify({"suite": "ui_management_icons", "management_icons": panels.size(), "painted_areas": panels.size() * layouts.size(), "activations": cases, "layouts": layouts, "failures": failures}))
 	game.queue_free()
 	await process_frame
 	quit(1 if failures else 0)

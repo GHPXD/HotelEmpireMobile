@@ -8,7 +8,7 @@
 - Logs originais e proveniência preservados em docs/benchmarks/m9.
 
 ## M7 — extensão de personagens e estados, 30/09/2026
-- Catálogo atual com 76 PNGs: pinturas próprias por nível, espera, trabalho,
+- Catálogo atual com 79 PNGs: pinturas próprias por nível, espera, trabalho,
   repouso da equipe e ciclos de serviço dos hóspedes.
 - Quartos aguardando limpeza têm pinturas N1/N2/N3 e retorno à versão limpa.
 - Filas seguem visualmente as reservas, com grupos por andar no elevador.
@@ -25,6 +25,9 @@
   tamanho mínimo inclui imagem, navegação devolve foco e campo de jogo foi preservado.
 - Novo hotel, Salvar e Carregar têm três ícones próprios de 28px; 48 ativações,
   oito cancelamentos e oito confirmações preservam o save e restauram o hotel inteiro.
+- Equipe, Objetivos e Ajuda têm três ícones próprios no catálogo dos painéis;
+  seis painéis/96 ativações e pixels pintados verificados em oito layouts.
+  Barra padrão passa a duas linhas; ampliada conserva a altura anterior.
 - Hóspedes chegam e saem com malas próprias por perfil, com quatro poses de
   viagem, contexto no elevador e espelhamento ancorado nos sapatos.
 - Original raster gerado no chat; prompts, hashes e capturas em docs/art.

@@ -81,6 +81,9 @@ const MANAGEMENT_ICONS: Dictionary = {
 	&"finances": preload("res://assets/art/icons/finances.png"),
 	&"operations": preload("res://assets/art/icons/operations.png"),
 	&"reviews": preload("res://assets/art/icons/reviews.png"),
+	&"staff": preload("res://assets/art/icons/team.png"),
+	&"objectives": preload("res://assets/art/icons/objectives.png"),
+	&"help": preload("res://assets/art/icons/help.png"),
 }
 
 static func management_icon(panel: StringName) -> Texture2D:

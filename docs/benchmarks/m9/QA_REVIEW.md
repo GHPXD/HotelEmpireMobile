@@ -116,3 +116,16 @@ Detalhes em `../../art/session-icons.md`.
 O runner configura agora 33 suítes com Visual/Stress/Soak. A bateria integrada
 de 31 suítes acima é anterior aos incrementos de gestão e partida; as nove
 suítes deste incremento não substituem a bateria completa ou o playtest humano.
+
+## Incremento Equipe, Objetivos e Ajuda — 30/09/2026
+
+Três artes dedicadas adicionadas ao catálogo dos painéis (79 PNGs no total).
+Dez suítes gráficas passaram: ui_management_icons, ui_session_icons,
+ui_management, ui_progression, ui_help, ui_smoke, ui_resume, ui_new_game,
+ui_recovery e ui_exit. A matriz de painéis foi ampliada para seis/96 ativações,
+48 áreas realmente pintadas, Esc/foco, snapshot e oito layouts. Contador e
+desbloqueios, equipe/atribuições, rolagem e F1 da ajuda preservados.
+No texto padrão, a barra refluída custa uma linha adicional de 46px lógicos;
+ampliada mantém a altura anterior. Capturas pequena/4K inspecionadas.
+Detalhes em `../../art/utility-icons.md`. A bateria completa de 31 suítes
+continua anterior aos ícones de painéis/partida; 33 estão configuradas atualmente.

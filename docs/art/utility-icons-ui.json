@@ -1,0 +1,81 @@
+{
+  "activations": 96,
+  "failures": 0,
+  "layouts": [
+    {
+      "decorated_playfield_height": 634.0,
+      "large_text": false,
+      "plain_playfield_height": 680.0,
+      "window": [
+        1024,
+        640
+      ]
+    },
+    {
+      "decorated_playfield_height": 624.0,
+      "large_text": true,
+      "plain_playfield_height": 624.0,
+      "window": [
+        1024,
+        640
+      ]
+    },
+    {
+      "decorated_playfield_height": 634.0,
+      "large_text": false,
+      "plain_playfield_height": 680.0,
+      "window": [
+        1280,
+        800
+      ]
+    },
+    {
+      "decorated_playfield_height": 624.0,
+      "large_text": true,
+      "plain_playfield_height": 624.0,
+      "window": [
+        1280,
+        800
+      ]
+    },
+    {
+      "decorated_playfield_height": 634.0,
+      "large_text": false,
+      "plain_playfield_height": 680.0,
+      "window": [
+        1600,
+        900
+      ]
+    },
+    {
+      "decorated_playfield_height": 624.0,
+      "large_text": true,
+      "plain_playfield_height": 624.0,
+      "window": [
+        1600,
+        900
+      ]
+    },
+    {
+      "decorated_playfield_height": 634.0,
+      "large_text": false,
+      "plain_playfield_height": 680.0,
+      "window": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "decorated_playfield_height": 624.0,
+      "large_text": true,
+      "plain_playfield_height": 624.0,
+      "window": [
+        3840,
+        2160
+      ]
+    }
+  ],
+  "management_icons": 6,
+  "painted_areas": 48,
+  "suite": "ui_management_icons"
+}

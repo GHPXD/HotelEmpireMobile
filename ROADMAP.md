@@ -21,7 +21,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Métricas por elevador em Operação: cabine, fila, espera atual e histórico de embarques.
   - [x] Satisfação dos presentes separada por check-in, com contagens, médias e resumo rolável por teclado.
   - [x] Inspetor identifica objetivo, sala e andar do personagem, sem destinos ou esperas antigos em etapas posteriores.
-- [x] M7 Art & Animation: 76 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
+- [x] M7 Art & Animation: 79 PNGs originais, caminhada, espera de hóspedes, ações de funcionários e efeitos sonoros.
   - [x] Pinturas dedicadas para quartos, recepções e restaurante nos níveis 2 e 3.
   - [x] Cabine de elevador N2 com pintura dedicada.
   - [x] Cabine N3 distinta, com mármore e medalhão de latão.
@@ -43,6 +43,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Três ícones de comando para adicionar andar, melhorar sala e demolir seleção, com mouse/Enter e falhas sem mutação verificados.
   - [x] Ícones próprios de Finanças, Operação e Avaliações no HUD, com pixels visíveis, 48 ativações e altura do playfield preservada nos oito layouts medidos.
   - [x] Ícones próprios de Novo hotel, Salvar e Carregar, com 48 ativações, confirmação/cancelamento, bytes salvos e restauração integral verificados em oito layouts.
+  - [x] Ícones próprios de Equipe, Objetivos e Ajuda; seis painéis/96 ativações, pixels, contador/F1 e foco. Barra padrão usa mais uma linha; ampliada mantém altura.
 - [x] M8 Optimization: perfis 100/250/500/1000 agentes e operação até o limite atual de 120.
   - [x] M8a perfil inicial, descarte de render fora da câmera e equivalência visual.
   - [x] M8b admissão/saídas otimizadas; perfil integrado contínuo com 118–120 hóspedes.
@@ -52,7 +53,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Seis cenários de 30 dias com orçamento inicial e continuidade de save/load.
   - [x] Comparação de quatro decisões de gestão em três seeds, 30 dias e orçamento real.
   - [x] Diagnóstico do check-in: 15 cenários isolando limpeza, quartos, recepção e elevador.
-  - [x] Revisão de QA e bateria conjunta atualizada: 31 suítes, incluindo arte atual, stress e continuidade de 30 dias, sem falhas na execução final.
+  - [x] Revisão de QA e bateria conjunta com 70 PNGs: 31 suítes, stress e continuidade de 30 dias, sem falhas. Ícones posteriores têm regressões de escopo próprio registradas no TEST_PLAN.
 - [ ] M10 Release Preparation: exports, compatibilidade e distribuição.
   - [x] Preset Windows, build reproduzível, ZIP, licenças e manifesto de hash/revisão.
   - [x] Boot e operação/save/load pela interface no executável, inclusive ZIP extraído em caminho com espaços.

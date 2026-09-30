@@ -682,5 +682,32 @@
     "bytes": 1120566,
     "sha256": "4b61510f536839ff22111eeac6f2059bb914f0c2b6f178ea6128a7c7cb49a27d",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/team.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1352897,
+    "sha256": "f979df012e95e38dcc4b4d6a01d9d699b5a850b875c8cb7b621f81650942ec1f",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/objectives.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1115341,
+    "sha256": "a1a6a428ebf92d64d9da33a2ebb39bee60b492f10d39752b289d9cb09bcf96c2",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/help.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1337227,
+    "sha256": "c5ffc9669fbf1bcd7e3db46a761da7121e4b2658a8564a3d96d80e953d05fdbd",
+    "generator": "built-in image_gen"
   }
 ]
