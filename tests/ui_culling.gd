@@ -17,10 +17,10 @@ func run() -> void:
 		actor.target_x = 0
 		if index % 5 == 0:
 			actor.role = &"cleaner"
-			actor.state = &"cleaning"
+			actor.state = [&"cleaning", &"idle", &"lift_queue"][index / 5 % 3]
 		elif index % 5 == 1:
 			actor.role = &"receptionist"
-			actor.state = &"working"
+			actor.state = [&"working", &"idle", &"lift_queue"][index / 5 % 3]
 	for column: int in [0, 2, 4]:
 		check(session.hotel.demolish(session.hotel.room_at(column, 1).id).is_empty(), "clear service showcase space")
 	var lounge := session.hotel.build(HotelCatalog.room(&"lounge"), 0, 1)

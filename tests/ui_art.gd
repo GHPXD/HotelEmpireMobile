@@ -72,8 +72,36 @@ func run() -> void:
 		for box: Array in HotelArt.character_regions(actor):
 			check(Rect2(Vector2.ZERO, work_texture.get_size()).encloses(Rect2(box[0], box[1], box[2], box[3])), "work frame bounds")
 		actor.state = &"idle"
-		check(HotelArt.character(actor) == walk_texture, "idle restores base texture")
+		var idle_texture := HotelArt.character(actor)
+		check(idle_texture != walk_texture and idle_texture != work_texture, "idle has dedicated staff texture")
+		check(idle_texture.get_image().detect_alpha() != Image.ALPHA_NONE, "staff idle alpha")
+		for state: StringName in HotelArt.STAFF_IDLE_STATES:
+			actor.state = state
+			check(HotelArt.character(actor) == idle_texture, "idle and lift queue share calm posture")
+			check(HotelArt.character_regions(actor).size() == 4, "staff idle four poses")
+			check(HotelArt.character_region(actor, 0) != HotelArt.character_region(actor, 16), "staff idle advances")
+			check(HotelArt.character_region(actor, 0) == HotelArt.character_region(actor, 64), "staff idle loops")
+			var scale := HotelArt.character_scale(actor)
+			check(is_equal_approx(scale, 46.0 / (722.0 if actor.role == &"cleaner" else 813.0)), "staff idle shared scale")
+			for tick: int in [0, 16, 32, 48]:
+				var region := HotelArt.character_region(actor, tick)
+				var anchor := HotelArt.character_anchor(actor, tick)
+				check(Rect2(Vector2.ZERO, idle_texture.get_size()).encloses(region), "staff idle frame bounds")
+				check(Rect2(Vector2.ZERO, region.size).has_point(anchor), "staff idle shoe anchor inside frame")
+				check(is_equal_approx(anchor.y, region.size.y - 4), "staff idle shoes keep four pixel padding")
+		actor.state = &"walking"
+		check(HotelArt.character(actor) == walk_texture, "staff movement restores walk")
 		actor.state = &"cleaning" if actor.role == &"cleaner" else &"working"
+		check(HotelArt.character(actor) == work_texture, "staff assignment restores work")
+	var resting_staff: Array[ActorState] = []
+	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
+		for state: StringName in HotelArt.STAFF_IDLE_STATES:
+			var employee := session.spawn_guest()
+			employee.role = role
+			employee.state = state
+			employee.floor_index = 1
+			employee.x = 10.5 + resting_staff.size() * 0.8
+			resting_staff.append(employee)
 	# Service cycles are contextual: cups must never appear in other rooms.
 	for profile: StringName in [&"balanced", &"business", &"leisure"]:
 		var guest := session.spawn_guest()
@@ -128,7 +156,7 @@ func run() -> void:
 		check(HotelArt.character(guest, &"lounge") != reading, "leaving seat restores waiting art")
 		guest.state = &"using"
 	for actor: ActorState in session.actors.values():
-		if actor.role == &"cleaner":
+		if actor.role == &"cleaner" and actor.state == &"cleaning":
 			actor.floor_index = 2
 			actor.x = 7.5
 		if actor.role == &"guest" and actor.state == &"checkin":
@@ -297,6 +325,21 @@ func run() -> void:
 	session.tick_count = before["session"]["tick_count"]
 	session.time = before["session"]["time"]
 	var old_audio: bool = game.audio.enabled
+	game.view.pan = Vector2(-400, 0)
+	for tick: int in [0, 16, 32, 48]:
+		session.tick_count = tick
+		session.time = tick * session.rules.tick
+		var phase_before := SessionSnapshot.capture(session)
+		for frame in 4:
+			await process_frame
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("res://.runtime/m7-staff-idle-frame-%d.png" % (tick / 16))
+		for employee: ActorState in resting_staff:
+			await click(root, game.view.actor_screen_position(employee) + game.view.global_position)
+			check(game.selected_actor == employee.id, "resting %s %s selected at rendered position" % [employee.role, employee.state])
+		check(SessionSnapshot.capture(session) == phase_before, "paused staff idle and selection do not mutate session")
+	session.tick_count = before["session"]["tick_count"]
+	session.time = before["session"]["time"]
 	game.view.pan = Vector2(400, 400)
 	for frame in 4:
 		await process_frame

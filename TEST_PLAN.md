@@ -272,3 +272,11 @@ smoke de 6120 ticks e seis combinações locais de janela/texto aprovados. Cada 
 verificou os 12 sprites de uso. ZIP, documentos e hashes dos 43 PNGs auditados;
 kit externo atualizado com o mesmo pacote. Matriz preservada em
 docs/release/bedroom-sleeping-matrix.json. Teste em outra máquina permanece pendente.
+
+Repouso da equipe: `ui_art` aprovado nos quatro contextos função × idle/lift_queue,
+com alpha, recortes, cadência de 16 ticks, loop em 64, escala única, âncoras dos
+sapatos e retorno à caminhada/trabalho. Quatro fases capturadas e inspecionadas;
+cliques nos quatro funcionários e snapshots inalterados. A vitrine separa repouso
+da camareira em limpeza. `ui_culling` passou nas nove câmeras incluindo os três
+contextos da equipe; `ui_content` passou. Quatro scripts válidos pelo gda após
+importação. Catálogo: 45 PNGs e 27 texturas de personagens.

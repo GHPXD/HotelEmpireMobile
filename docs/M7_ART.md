@@ -14,6 +14,11 @@ Arte original gerada pelo image_gen integrado; prompts e referências em `docs/a
   prancheta, quatro poses cada. Originais RGBA preservados, gerados no chat pelo
   image_gen integrado; prompts em `art/staff-actions-prompts.json` e recortes em
   `assets/art/characters/action-regions.json`.
+- Duas faixas de repouso para a equipe, com quatro poses por função e gestos
+  discretos sem ferramentas, usadas em `idle` e `lift_queue`. Âncoras nos sapatos,
+  escala comum e ciclo de 64 ticks. Prompts e medições em `art/staff-idle*.json`.
+- Hóspedes têm espera própria, ciclos de beber, ler sentado e comer nos serviços,
+  além de poses estáticas de dormir sobre as camas dos três níveis.
 - Miniaturas do catálogo reaproveitam a arte da instalação correspondente.
 - Três efeitos WAV sintetizados por `tools/generate_audio.py`: construção, melhoria
   e objetivo. Botão Som com preferência em `user://audio.cfg`.
@@ -34,19 +39,20 @@ com fase por ID. Espelhamento segue destino horizontal. Parado usa pose 1; pausa
 congela animação. Cabine acompanha posição autoritativa. Não há RNG, nós por ator
 ou estado visual no save. Não há mudanças de economia ou gameplay.
 Os estados `cleaning` e `working` selecionam as faixas próprias dos funcionários,
-com troca de pose a cada quatro ticks (2,5 fps). Caminhada e espera mantêm a faixa
-original. O atendimento representa trabalho administrativo durante a atribuição,
+com troca de pose a cada quatro ticks (2,5 fps). Funcionários em repouso ou fila do
+elevador trocam pose a cada 16 ticks; caminhada mantém a faixa original.
+O atendimento representa trabalho administrativo durante a atribuição,
 mesmo sem um hóspede presente. A geração tem pequenas variações entre poses;
 não equivale a uma animação produzida com rig esquelético.
 
 ## Limites
-Sem poses dedicadas para sentar ou dormir: hóspedes parados usam uma pose da
-faixa. Quartos, recepções e restaurante têm pinturas próprias para níveis 2 e 3;
+Repouso nas camas tem poses estáticas, sem ciclo de respiração. Leitura e refeições
+têm ciclos sentados e posições separadas por usuário. Quartos, recepções e restaurante têm pinturas próprias para níveis 2 e 3;
 cabines N2 usam pintura de nogueira e N3 tem mármore e medalhão de latão; o poço
 mantém a pintura base. Sem música ou ambiente
-contínuo nesta entrega. Novos conteúdos precisam de arte própria. M8 ainda deve
-medir custo de render/VRAM em grandes hotéis; esta entrega não comprova 1000 agentes
-renderizados a 60 FPS.
+contínuo nesta entrega. Novos conteúdos precisam de arte própria. M8 mediu render
+isolado até 1000 e operação contínua até 120; esta entrega não comprova 1000 hóspedes
+atendidos simultaneamente a 60 FPS. Catálogo atual: 45 PNGs, 27 texturas de personagens.
 
 ## Verificação
 `ui_art.gd`: carregamento, alpha, limites dos recortes, ciclo, zoom mínimo/normal/máximo,

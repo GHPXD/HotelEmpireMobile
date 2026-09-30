@@ -385,5 +385,23 @@
     "bytes": 1042119,
     "sha256": "b766be0ab984f237d4f71142b896ca627d8ceea7d6d0bbb97511ead62f3b954e",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/cleaner-idle.png",
+    "width": 2100,
+    "height": 749,
+    "bytes": 839713,
+    "sha256": "42f309f81f9686b313609f544f5be714edd5f0efece219a57920b8ed2f1e64ce",
+    "mode": "RGBA",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/receptionist-idle.png",
+    "width": 1774,
+    "height": 887,
+    "bytes": 939417,
+    "sha256": "8c5c693c32a68bdc37f7fb6faeb50b32a484cfd0b1c6348d9958de068192b4d7",
+    "mode": "RGBA",
+    "generator": "built-in image_gen"
   }
 ]

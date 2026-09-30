@@ -42,6 +42,8 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 	return ROOMS.get(id)
 
 const CHARACTERS: Dictionary = {
+	&"cleaner-idle": preload("res://assets/art/characters/cleaner-idle.png"),
+	&"receptionist-idle": preload("res://assets/art/characters/receptionist-idle.png"),
 	&"balanced-sleeping": preload("res://assets/art/characters/balanced-sleeping.png"),
 	&"business-sleeping": preload("res://assets/art/characters/business-sleeping.png"),
 	&"leisure-sleeping": preload("res://assets/art/characters/leisure-sleeping.png"),
@@ -77,6 +79,8 @@ static func character(actor: ActorState, service_id: StringName = &"") -> Textur
 	return CHARACTERS[animation_id(actor, service_id)]
 
 const ACTION_REGIONS: Dictionary = {
+	&"cleaner-idle": [[246, 21, 208, 719], [729, 18, 205, 722], [1202, 29, 214, 711], [1653, 21, 203, 719]],
+	&"receptionist-idle": [[116, 42, 260, 812], [558, 41, 262, 813], [1001, 51, 263, 803], [1446, 42, 261, 812]],
 	&"balanced-sleeping": [[28, 9, 1718, 867]],
 	&"business-sleeping": [[31, 16, 1713, 862]],
 	&"leisure-sleeping": [[23, 12, 1730, 864]],
@@ -101,6 +105,8 @@ const ACTION_REGIONS: Dictionary = {
 
 # Local foot centers measured from alpha; gestures keep a shared floor anchor.
 const ACTION_ANCHORS: Dictionary = {
+	&"cleaner-idle": [Vector2(118, 715), Vector2(115.5, 718), Vector2(119, 707), Vector2(113, 715)],
+	&"receptionist-idle": [Vector2(120, 808), Vector2(122, 809), Vector2(122.5, 799), Vector2(120, 808)],
 	&"balanced-dining": [Vector2(225.5, 578), Vector2(216, 578), Vector2(218, 578), Vector2(215, 578)],
 	&"business-dining": [Vector2(234, 594), Vector2(229, 594), Vector2(226, 594), Vector2(230, 594)],
 	&"leisure-dining": [Vector2(228.5, 607), Vector2(222, 607), Vector2(222, 607), Vector2(223, 607)],
@@ -116,11 +122,16 @@ const SERVICE_ACTIONS: Dictionary = {&"cafe": "drinking", &"lounge": "reading", 
 const SERVICE_FRAME_TICKS: Dictionary = {&"cafe": 8.0, &"lounge": 12.0, &"restaurant": 6.0}
 const SERVICE_HEIGHTS: Dictionary = {&"lounge": 36.0, &"restaurant": 36.0}
 const SLEEP_WIDTH: float = 52.0
+const STAFF_IDLE_ROLES: Array[StringName] = [&"cleaner", &"receptionist"]
+const STAFF_IDLE_STATES: Array[StringName] = [&"idle", &"lift_queue"]
+const STAFF_IDLE_FRAME_TICKS: float = 16.0
 const SLEEP_BED_ANCHOR: Vector2 = Vector2(0.5, 0.62)
 # Normalized bounds of the N3 footboard, restored in front of the sleeper.
 const SLEEP_FOOTBOARD: Rect2 = Rect2(0.28, 0.572, 0.435, 0.09)
 
 static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
+	if actor.role in STAFF_IDLE_ROLES and actor.state in STAFF_IDLE_STATES:
+		return StringName("%s-idle" % actor.role)
 	if actor.role == &"guest" and actor.state == &"using" and SERVICE_ACTIONS.has(service_id):
 		return StringName("%s-%s" % [actor.archetype_id, SERVICE_ACTIONS[service_id]])
 	if actor.role == &"guest" and actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
@@ -141,6 +152,8 @@ static func character_frame(actor: ActorState, tick: int, service_id: StringName
 	if ACTION_REGIONS.has(animation_id(actor, service_id)):
 		# All gestures freeze with simulation ticks; service cadence is contextual.
 		var frame_ticks := 12.0 if actor.role == &"guest" else 4.0
+		if actor.role in STAFF_IDLE_ROLES and actor.state in STAFF_IDLE_STATES:
+			frame_ticks = STAFF_IDLE_FRAME_TICKS
 		if actor.role == &"guest" and actor.state == &"using":
 			frame_ticks = SERVICE_FRAME_TICKS.get(service_id, frame_ticks)
 		index = (floori(tick / frame_ticks) + actor.id) % 4

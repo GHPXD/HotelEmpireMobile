@@ -84,7 +84,7 @@ memória do processo, objetivos concluídos, tick de cada conquista, serviços u
 perfis dos hóspedes ainda presentes, estado do evento e falhas.
 Medidas headless não equivalem a FPS com renderização.
 
-Arte atual: 43 PNGs originais, com caminhada, espera, ações da equipe, poses de dormir
+Arte atual: 45 PNGs originais, com caminhada, espera, trabalho e repouso da equipe, poses de dormir
 e ciclos dedicados de beber, ler sentado e comer para os três perfis. Os usuários admitidos
 nos serviços têm posições visuais separadas; animações acompanham velocidade e pausa.
 

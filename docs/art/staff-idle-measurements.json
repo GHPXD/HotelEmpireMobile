@@ -1,0 +1,120 @@
+{
+  "cleaner-idle": {
+    "path": "assets/art/characters/cleaner-idle.png",
+    "size": [
+      2100,
+      749
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "regions": [
+      [
+        246,
+        21,
+        208,
+        719
+      ],
+      [
+        729,
+        18,
+        205,
+        722
+      ],
+      [
+        1202,
+        29,
+        214,
+        711
+      ],
+      [
+        1653,
+        21,
+        203,
+        719
+      ]
+    ],
+    "anchors": [
+      [
+        118.0,
+        715
+      ],
+      [
+        115.5,
+        718
+      ],
+      [
+        119.0,
+        707
+      ],
+      [
+        113.0,
+        715
+      ]
+    ],
+    "threshold": 100,
+    "margin": 4,
+    "foot_band": 20
+  },
+  "receptionist-idle": {
+    "path": "assets/art/characters/receptionist-idle.png",
+    "size": [
+      1774,
+      887
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "regions": [
+      [
+        116,
+        42,
+        260,
+        812
+      ],
+      [
+        558,
+        41,
+        262,
+        813
+      ],
+      [
+        1001,
+        51,
+        263,
+        803
+      ],
+      [
+        1446,
+        42,
+        261,
+        812
+      ]
+    ],
+    "anchors": [
+      [
+        120.0,
+        808
+      ],
+      [
+        122.0,
+        809
+      ],
+      [
+        122.5,
+        799
+      ],
+      [
+        120.0,
+        808
+      ]
+    ],
+    "threshold": 100,
+    "margin": 4,
+    "foot_band": 20
+  }
+}
