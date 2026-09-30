@@ -383,4 +383,10 @@ e destino foram corrigidas após a primeira execução falhar; nova execução c
 Capturas inspecionadas: docs/art/hotel-travel-balanced.png,
 hotel-travel-business.png e hotel-travel-leisure.png. Proveniência e limites
 em docs/art/guest-travel.md. Não há rig nem animação de porta/desempacotar.
+
+Pacote de bagagem: revisão 89f2a6c, árvore limpa; boot e smoke de 6120 ticks,
+39 reservas, 42 refeições, 31 limpezas, caixa 2021 e zero falhas. As três faixas
+de viagem foram verificadas em cada uma das seis combinações de janela/texto:
+docs/release/guest-travel-matrix.json. ZIP, documentos e 59 PNGs auditados;
+kit de compatibilidade atualizado. Teste externo em outra máquina ainda aberto.
 Resultados de outro computador e playtest humano continuam pendentes.
