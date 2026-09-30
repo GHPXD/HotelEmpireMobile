@@ -295,3 +295,11 @@ inspecionadas. `ui_culling` passou nas 11 câmeras, duas com somente o indicador
 na borda inferior; `ui_art`, `ui_content` e `ui_checkin_diagnostics` passaram.
 Quatro scripts válidos pelo gda. Seleção `-Visual` agora contém 15 suítes gráficas.
 `ui_smoke`, `ui_resume` e `ui_management` passaram após a mudança de seleção.
+
+Pacote da apresentação de filas (30/09/2026): revisão 1043b78, árvore limpa,
+smoke de 6120 ticks e seis combinações locais de janela/texto aprovados. Cada
+caso verificou seleção e indicadores em três zooms, 12 sprites de uso e quatro
+contextos de repouso da equipe. ZIP, documentos e 45 PNGs auditados; kit externo
+atualizado. Matriz: docs/release/queue-presentation-matrix.json. Perfil sintético
+de caminhada concluído em oito casos; escopo e dados em
+docs/benchmarks/m8/QUEUE_PRESENTATION.md. Não mede latência de clique ou operação de filas.

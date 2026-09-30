@@ -1,0 +1,15 @@
+{
+  "sourceRevision": "1043b78a7cc6776103e1210b23f8687b9554b458",
+  "sourceDirtyAtProfileStart": false,
+  "dateLocal": "2026-09-30",
+  "command": "Godot_v4.7.2-stable_win64.exe --path C:/Projects/HotelEmpire --script res://debug/performance_profile.gd -- --render-only --label=queue-presentation",
+  "warmupFramesPerCase": 30,
+  "sampleFramesPerCase": 120,
+  "sourceHashes": {
+    "hotel/construction/hotel_view.gd": "364e674fef5fbcc3aee16bd1dc0194baf396b7e48f76390e341547daa45679e5",
+    "assets/art/art_catalog.gd": "a4f0f6ae24c9843839b90a01df38edbc27edbe7101ceb7daadfb704b645272f8",
+    "debug/performance_profile.gd": "09b4695f56d8957ab59614aa97bcbf1b40de6ff427b1f3942c1bd4c4e37ab052"
+  },
+  "scope": "Synthetic walking render only; no HUD, AI, waiting badge load or pointer timing; one host; no before/after causal comparison",
+  "report": "queue-presentation-render.json"
+}

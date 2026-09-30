@@ -37,3 +37,13 @@ visível na borda inferior, comparando pixels com e sem descarte. `ui_art`,
 retomada e gestão depois da ampliação da área de clique dos personagens.
 O diagnóstico do executável confere separação e seleção em três zooms, além dos
 12 sprites de uso dos hóspedes e quatro contextos de repouso da equipe.
+
+Pacote verificado em 30/09/2026, revisão 1043b78 com árvore limpa. Smoke de 6120
+ticks e seis combinações de janela/texto aprovados. Cada caso verificou seleção
+e separação de indicador em três zooms. Matriz em
+`../release/queue-presentation-matrix.json`; ZIP, documentos e hashes dos 45 PNGs
+auditados. Kit externo atualizado. Compatibilidade em outra máquina pendente.
+
+Perfil sintético de caminhada com 100/250/500/1000 hóspedes e duas distribuições
+executado sem HUD ou simulação. Resultados e limites em
+`../benchmarks/m8/QUEUE_PRESENTATION.md`. Não mede carga de filas nem latência do clique.

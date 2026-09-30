@@ -5,6 +5,7 @@ Godot 4.7.2 Compatibility, Windows. Resultados brutos preservados em baseline.js
 e culled.json. Sem comparação com outro hardware nem promessa de 60 FPS integrado.
 
 Continuação: [admissão, saídas e perfil integrado inicial](ADMISSION.md).
+Perfil atual após a revisão de apresentação: [30/09/2026](QUEUE_PRESENTATION.md).
 
 ## Método
 `debug/performance_profile.gd` abre HotelView real com todos os PNGs M7, torre de

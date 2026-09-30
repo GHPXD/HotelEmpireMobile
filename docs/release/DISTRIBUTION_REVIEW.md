@@ -1,10 +1,10 @@
-# Revisão local de distribuição — 29/09/2026
+# Revisão local de distribuição — 30/09/2026
 
 Resultado: pacote do protótipo preparado e verificado para testes externos.
 Isso não conclui M10 nem autoriza publicação comercial.
 
 Artefato revisado: `builds/HotelEmpire-windows-x86_64.zip`, revisão de código
-`eff5486f385c10646314ccabeca6fbcc6ea90764`. O manifesto registra árvore limpa
+`1043b78a7cc6776103e1210b23f8687b9554b458`. O manifesto registra árvore limpa
 no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 `local-distribution-audit.json`. O comando falha se qualquer verificação divergir.
 
@@ -14,7 +14,7 @@ no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 | Identidade do executável | SHA-256 e tamanho conferem com o manifesto |
 | Guia e avisos | Bytes empacotados iguais aos arquivos fonte; guia explica instalação, controles, save, recuperação e limites |
 | Arte | Todos os 45 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; 12 sprites de uso dos hóspedes e dois de repouso da equipe, em quatro contextos, verificados dentro do executável |
-| Funcionamento exportado | `staff-idle-matrix.json`: seis combinações locais; boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
+| Funcionamento exportado | `queue-presentation-matrix.json`: seis combinações locais; seleção/indicadores em três zooms, boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
 | Teste sem repositório | `external-kit-local-matrix.json`: validação anterior do runner em Windows PowerShell 5.1; kit atualizado com o novo ZIP, cujo jogo passou na matriz local atual |
 | Dados do jogador | Testes usam APPDATA isolado; o guia informa ausência de autosave e localização do save manual |
 | Distribuição pública | Não publicada, não assinada; sem instalador, atualização automática ou requisito mínimo certificado |
