@@ -251,3 +251,10 @@ loop em 24 ticks e quatro capturas de fase aprovados sem mutação da sessão.
 `ui_content` aprovado. Cinco scripts validados pelo gda sem diagnósticos. Arte:
 40 PNGs, 22 texturas de personagens. O diagnóstico do export verifica nove sprites
 de serviço.
+
+Pacote com refeições (29/09/2026 local, 30/09 UTC): revisão a02edbe, árvore limpa,
+smoke de 6120 ticks e seis combinações locais de janela/texto aprovados. Cada caso
+verificou os nove sprites de serviço. ZIP, guia, avisos e hashes dos 40 PNGs
+auditados; kit externo atualizado com o mesmo pacote. Matriz preservada em
+docs/release/restaurant-dining-matrix.json. README e guia de assets atualizados
+para o catálogo, schema v7, seleção de testes e export local atuais.
