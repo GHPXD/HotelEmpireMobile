@@ -17,6 +17,9 @@ Decoração ignora mouse e foco. Lista vazia ou seleção indisponível limpa a 
 seleção indisponível desabilita a aplicação. Ícone centralizado verticalmente sem
 esticar quando o texto ocupa mais linhas. Nenhum novo estado no save ou na simulação.
 
+Imports atuais com limite de 256px; as fontes de 1254px permanecem intactas.
+Memória e verificação em janela 4K em `../benchmarks/m8/UI_TEXTURES.md`.
+
 `tests/ui_management.gd` verifica duas funções × três resoluções × texto normal
 ou ampliado: contratação por clique e Enter (24 contratações), função/custo,
 bounds e rótulos, seleção e ícone da gestão, atribuições por teclado, restauração

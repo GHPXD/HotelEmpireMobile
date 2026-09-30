@@ -6,6 +6,8 @@
 - Quartos aguardando limpeza têm pinturas N1/N2/N3 e retorno à versão limpa.
 - Filas seguem visualmente as reservas, com grupos por andar no elevador.
 - Cinco retratos dedicados ao inspetor e rolagem automática ao selecionar pessoas.
+- Imports de ícones/retratos limitados a 256/512px, com fontes originais intactas:
+  redução medida de 94,61 MiB no monitor de vídeo e inspeção da UI em janela 4K.
 - Dois ícones dedicados à contratação e ao funcionário selecionado no painel
   de atribuições, com custo/salário em texto nativo e limpeza da imagem em lista vazia.
 - Seis ícones dedicados aos botões de construção, com objetos legíveis em 36px,

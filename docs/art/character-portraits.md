@@ -14,7 +14,7 @@ dimensões, extensão do alpha e hashes em `character-portraits-measurements.jso
 e no manifesto geral. Imports com mipmaps; nenhuma dependência do diretório
 de geração fora do projeto.
 
-`HotelArt.PORTRAITS` é separado das 27 texturas de animação. A escolha lê somente
+`HotelArt.PORTRAITS` é separado das 30 texturas de animação. A escolha lê somente
 perfil ou função. O HUD usa TextureRect de 96×96 com proporção preservada, em
 um cartão dentro da rolagem lateral. O texto identifica perfil/função e os dados
 da pessoa continuam no inspetor nativo. Os elementos decorativos não recebem
@@ -27,6 +27,9 @@ estado/satisfação independentes, snapshot, save/load e limpeza de seleção.
 O diagnóstico do executável verifica as cinco imagens, alpha e seleção pela
 interface em cada combinação de janela/texto. Nenhuma mudança em gameplay,
 economia, dados de atores, RNG ou schema v7.
+
+O import atual limita os retratos a 512px com mipmaps; fontes de 1254px preservadas.
+Orçamento, comparação e janela 4K em `../benchmarks/m8/UI_TEXTURES.md`.
 
 Validação em Godot 4.7.2: oito suítes gráficas aprovadas, 30 casos de retrato e
 cinco scripts válidos pelo gda. Capturas `hotel-character-portraits.png` e

@@ -432,4 +432,20 @@ Pacote de equipe: revisão 5847132, árvore limpa; boot e smoke de 6120 ticks,
 contratadas pelo ícone com custo correto e arte na gestão em cada configuração
 da matriz docs/release/staff-icons-matrix.json. ZIP, documentos e 67 PNGs
 auditados; kit de compatibilidade atualizado.
+
+## M8 — orçamento de texturas da interface (30/09/2026)
+
+`debug/ui_asset_profile.gd` válido pelo gda; baseline limpa 43baeb6 e execução
+com somente 13 imports limitados a ícones 256px/retratos 512px. Mesmo código,
+seed, cena pausada e host. Dados e proveniência em docs/benchmarks/m8/UI_TEXTURES.md.
+Monitor de vídeo reduzido em 99.206.244 bytes (94,61 MiB) nos quatro pares de
+janela/texto; cadeia RGBA8+mips das 13 texturas reduzida de 103,94 para 9,33 MiB.
+Não há medição de FPS ou nova capacidade de hóspedes.
+
+20 seleções de retrato nas janelas reais 1280×800/3840×2160 e ambos os textos,
+sem alteração do snapshot ou corte do cartão. Canvas capturado em 4K: 3456×2160,
+mantendo a proporção lógica 1440×900. Capturas portrait/hiring inspecionadas.
+67 PNGs fonte com hashes preservados; nenhum ambiente ou sprite foi reduzido.
+Seis suítes gráficas passaram: ui_management (12 casos/24 contratações),
+ui_content (30 retratos/36 ícones), ui_smoke, ui_resume, ui_new_game e ui_operations.
 Resultados de outro computador e playtest humano continuam pendentes.

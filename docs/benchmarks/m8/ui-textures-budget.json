@@ -1,0 +1,178 @@
+{
+  "cpu": "AMD Ryzen 7 5700U with Radeon Graphics",
+  "engine": "4.7.2-stable (official)",
+  "errors": [],
+  "gpu": "AMD Radeon(TM) Graphics",
+  "label": "budget",
+  "rgba8_ui_mip_chain_estimate_bytes": 9786692,
+  "rows": [
+    {
+      "actual_window": [
+        1280,
+        800
+      ],
+      "engine_static_memory_bytes": 42338956,
+      "large_text": false,
+      "requested_window": [
+        1280,
+        800
+      ],
+      "video_memory_bytes": 410901551.0,
+      "viewport": [
+        1440.0,
+        900.0
+      ]
+    },
+    {
+      "actual_window": [
+        1280,
+        800
+      ],
+      "engine_static_memory_bytes": 42494036,
+      "large_text": true,
+      "requested_window": [
+        1280,
+        800
+      ],
+      "video_memory_bytes": 411032623.0,
+      "viewport": [
+        1440.0,
+        900.0
+      ]
+    },
+    {
+      "actual_window": [
+        3840,
+        2160
+      ],
+      "engine_static_memory_bytes": 44754380,
+      "large_text": false,
+      "requested_window": [
+        3840,
+        2160
+      ],
+      "video_memory_bytes": 464792911.0,
+      "viewport": [
+        1440.0,
+        900.0
+      ]
+    },
+    {
+      "actual_window": [
+        3840,
+        2160
+      ],
+      "engine_static_memory_bytes": 44757856,
+      "large_text": true,
+      "requested_window": [
+        3840,
+        2160
+      ],
+      "video_memory_bytes": 464792911.0,
+      "viewport": [
+        1440.0,
+        900.0
+      ]
+    }
+  ],
+  "scope": "13 UI textures, paused main scene, 5 portrait identities, 4 window/text cases; not simulation throughput or certified hardware",
+  "texture_groups": {
+    "build_icons": [
+      {
+        "height": 256,
+        "id": "reception",
+        "path": "res://assets/art/icons/reception.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      },
+      {
+        "height": 256,
+        "id": "bedroom",
+        "path": "res://assets/art/icons/bedroom.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      },
+      {
+        "height": 256,
+        "id": "restaurant",
+        "path": "res://assets/art/icons/restaurant.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      },
+      {
+        "height": 256,
+        "id": "cafe",
+        "path": "res://assets/art/icons/cafe.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      },
+      {
+        "height": 256,
+        "id": "lounge",
+        "path": "res://assets/art/icons/lounge.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      },
+      {
+        "height": 256,
+        "id": "elevator",
+        "path": "res://assets/art/icons/elevator.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      }
+    ],
+    "portraits": [
+      {
+        "height": 512,
+        "id": "balanced",
+        "path": "res://assets/art/portraits/balanced.png",
+        "rgba8_mip_chain_estimate_bytes": 1398100,
+        "width": 512
+      },
+      {
+        "height": 512,
+        "id": "business",
+        "path": "res://assets/art/portraits/business.png",
+        "rgba8_mip_chain_estimate_bytes": 1398100,
+        "width": 512
+      },
+      {
+        "height": 512,
+        "id": "leisure",
+        "path": "res://assets/art/portraits/leisure.png",
+        "rgba8_mip_chain_estimate_bytes": 1398100,
+        "width": 512
+      },
+      {
+        "height": 512,
+        "id": "receptionist",
+        "path": "res://assets/art/portraits/receptionist.png",
+        "rgba8_mip_chain_estimate_bytes": 1398100,
+        "width": 512
+      },
+      {
+        "height": 512,
+        "id": "cleaner",
+        "path": "res://assets/art/portraits/cleaner.png",
+        "rgba8_mip_chain_estimate_bytes": 1398100,
+        "width": 512
+      }
+    ],
+    "staff_icons": [
+      {
+        "height": 256,
+        "id": "receptionist",
+        "path": "res://assets/art/icons/receptionist.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      },
+      {
+        "height": 256,
+        "id": "cleaner",
+        "path": "res://assets/art/icons/cleaner.png",
+        "rgba8_mip_chain_estimate_bytes": 349524,
+        "width": 256
+      }
+    ]
+  }
+}

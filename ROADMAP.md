@@ -43,6 +43,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
 - [x] M8 Optimization: perfis 100/250/500/1000 agentes e operação até o limite atual de 120.
   - [x] M8a perfil inicial, descarte de render fora da câmera e equivalência visual.
   - [x] M8b admissão/saídas otimizadas; perfil integrado contínuo com 118–120 hóspedes.
+  - [x] M8c orçamento de ícones/retratos: fontes intactas, imports de 256/512px e redução medida de 94,61 MiB no monitor de vídeo, com UI em janela 4K.
 - [x] M9 QA: regressões, cenários e diagnóstico de balanceamento do protótipo desktop.
   - [x] Confirmação/cancelamento de novo hotel e preservação do save pela interface.
   - [x] Seis cenários de 30 dias com orçamento inicial e continuidade de save/load.

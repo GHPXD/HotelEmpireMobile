@@ -19,6 +19,8 @@ em `docs/art/*.txt` e `docs/art/*.json`; dimensões/hashes em
 O projeto consome cópias locais versionadas; não depende de `.codex/generated_images`.
 PNGs fonte preservados. Recorte, escala e espelhamento acontecem no Godot;
 transparência preservada. Texturas compartilhadas, mipmaps e filtragem linear.
+Imports de UI limitam ícones a 256px e retratos a 512px; as fontes de 1254px
+continuam intactas. Perfil e capturas em `docs/benchmarks/m8/UI_TEXTURES.md`.
 `assets/art/art_catalog.gd` centraliza o mapeamento visual por ID.
 
 Café, leitura no lounge e refeição no restaurante têm quatro poses próprias para

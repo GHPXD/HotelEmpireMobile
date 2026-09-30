@@ -25,6 +25,9 @@ reduzidos. Os ícones identificam o tipo da instalação, sem representar nível
 disponibilidade. Bloqueio, foco e hover continuam a cargo do Button/Theme.
 Nome, preço, células e tooltip permanecem texto nativo.
 
+O import atual limita os ícones a 256px, preservando as fontes de 1254px.
+Orçamento e verificação em janela 4K em `../benchmarks/m8/UI_TEXTURES.md`.
+
 `tests/ui_content.gd` verifica seis instalações × três tamanhos de janela ×
 texto normal/ampliado: fonte distinta da pintura, alpha, limite de tamanho,
 botão dentro da rolagem e viewport, mínimos do layout, clique e Enter escolhem
