@@ -42,6 +42,7 @@ const TARIFFS: Array[int] = [75, 100, 125]
 var objectives_button: Button
 var build_buttons: Dictionary = {}
 var hire_buttons: Dictionary = {}
+var action_buttons: Dictionary = {}
 var event_label: Label
 var operations_button: Button
 var text_size_button: Button
@@ -163,9 +164,12 @@ func _ready() -> void:
 		button.pressed.connect(func() -> void: build_requested.emit(definition))
 		tools.add_child(button)
 		build_buttons[definition.id] = button
-	_button(tools, "+ Andar   •   $ 750", func() -> void: floor_requested.emit())
+	var floor_button := _button(tools, "+ Andar   •   $ 750", func() -> void: floor_requested.emit())
+	_set_action_icon(floor_button, &"add_floor")
 	_button(tools, "Selecionar / cancelar", func() -> void: cancel_requested.emit())
-	_button(tools, "Demolir seleção", func() -> void: demolish_requested.emit())
+	var demolish_button := _button(tools, "Demolir seleção", func() -> void: demolish_requested.emit())
+	_set_action_icon(demolish_button, &"demolish")
+	demolish_button.tooltip_text = "Remove a sala selecionada sem reembolso."
 	var staff_title := Label.new()
 	staff_title.text = "EQUIPE"
 	tools.add_child(staff_title)
@@ -231,6 +235,7 @@ func _ready() -> void:
 	tools.add_child(upgrade_preview)
 	upgrade_button = Button.new()
 	upgrade_button.custom_minimum_size.y = 44
+	_set_action_icon(upgrade_button, &"upgrade")
 	upgrade_button.pressed.connect(func() -> void: upgrade_requested.emit())
 	tools.add_child(upgrade_button)
 	var footer := PanelContainer.new()
@@ -239,6 +244,13 @@ func _ready() -> void:
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.text = "Comece pela recepção, quartos e equipe. Ajuda • F1 mostra como abrir seu hotel."
 	footer.add_child(message)
+
+func _set_action_icon(button: Button, action: StringName) -> void:
+	button.icon = HotelArt.action_icon(action)
+	button.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	button.expand_icon = true
+	button.add_theme_constant_override("icon_max_width", 32)
+	action_buttons[action] = button
 
 func refresh(hotel: HotelModel, selected: RoomState) -> void:
 	tariff_choice.visible = selected != null and selected.definition().category in [&"lodging", &"service"]
