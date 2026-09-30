@@ -4,7 +4,7 @@ Resultado: pacote do protótipo preparado e verificado para testes externos.
 Isso não conclui M10 nem autoriza publicação comercial.
 
 Artefato revisado: `builds/HotelEmpire-windows-x86_64.zip`, revisão de código
-`7f651a3a594e0502a598a483988ec4efae2df0c4`. O manifesto registra árvore limpa
+`4c7d81b78d6b268c752e8a5c610cba32e6363cc5`. O manifesto registra árvore limpa
 no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 `local-distribution-audit.json`. O comando falha se qualquer verificação divergir.
 
@@ -13,9 +13,9 @@ no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 | Inventário do ZIP | Exatamente executável, guia, licença Godot, avisos de terceiros e manifesto; sem entradas adicionais ou duplicadas |
 | Identidade do executável | SHA-256 e tamanho conferem com o manifesto |
 | Guia e avisos | Bytes empacotados iguais aos arquivos fonte; guia explica instalação, controles, save, recuperação e limites |
-| Arte | Todos os 70 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; três ícones de comando, dois da equipe, seis de construção, três faixas de bagagem, cinco retratos, três pinturas de quartos aguardando limpeza, 12 sprites de uso dos hóspedes com quatro quadros e dois de repouso da equipe, em quatro contextos, verificados dentro do executável |
-| Funcionamento exportado | `action-icons-matrix.json`: seis combinações locais; andar, melhoria e demolição por seus ícones com custo/seleção/ausência de reembolso corretos; contratação das duas funções com preço correto e ícone da gestão; fontes, alpha, layout e ativação dos seis ícones de construção; três faixas de viagem nos dois sentidos, quatro poses e três zooms, seleção e rolagem de cinco retratos, seleção/indicadores e filas registradas em três zooms, pinturas limpa/suja dos três níveis, boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
-| Memória das texturas UI | `../benchmarks/m8/UI_TEXTURES.md`: medição anterior dos oito ícones e cinco retratos, com redução de 94,61 MiB e capturas na janela 4K. Os três novos comandos também importam a 256px, sem nova medição de memória do jogo completo. Fontes PNG preservadas. Não mede FPS nem certifica hardware |
+| Arte | Todos os 73 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; três ícones da barra de gestão, três de comando, dois da equipe, seis de construção, três faixas de bagagem, cinco retratos, três pinturas de quartos aguardando limpeza, 12 sprites de uso dos hóspedes com quatro quadros e dois de repouso da equipe, em quatro contextos, verificados dentro do executável |
+| Funcionamento exportado | `management-icons-matrix.json`: seis combinações locais; Finanças/Operação/Avaliações pelos ícones com painel correto, snapshot preservado e Esc/foco; andar, melhoria e demolição por seus ícones com custo/seleção/ausência de reembolso corretos; contratação das duas funções com preço correto e ícone da gestão; fontes, alpha, layout e ativação dos seis ícones de construção; três faixas de viagem nos dois sentidos, quatro poses e três zooms, seleção e rolagem de cinco retratos, seleção/indicadores e filas registradas em três zooms, pinturas limpa/suja dos três níveis, boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
+| Memória das texturas UI | `../benchmarks/m8/UI_TEXTURES.md`: medição anterior dos oito ícones e cinco retratos, com redução de 94,61 MiB e capturas na janela 4K. Os seis ícones posteriores (comandos e gestão) também importam a 256px, sem nova medição de memória do jogo completo. Fontes PNG preservadas. Não mede FPS nem certifica hardware |
 | Teste sem repositório | `external-kit-local-matrix.json`: validação anterior do runner em Windows PowerShell 5.1; kit atualizado com o novo ZIP, cujo jogo passou na matriz local atual |
 | Dados do jogador | Testes usam APPDATA isolado; o guia informa ausência de autosave e localização do save manual |
 | Distribuição pública | Não publicada, não assinada; sem instalador, atualização automática ou requisito mínimo certificado |

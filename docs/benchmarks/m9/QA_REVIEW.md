@@ -81,9 +81,24 @@ além de construção/gestão, avaliações, saída, ajuda, recuperação e diag
 Transporte isolado conserva e entrega 100/250/500/1000 agentes; não prova operação
 simultânea de 1000 hóspedes nem performance de render em hardware externo.
 
-O ZIP permanece na revisão `7f651a3`, cuja matriz de seis configurações está em
-`../../release/action-icons-matrix.json`. Desde ela mudaram somente documentação,
+Ao fechar essa bateria, o ZIP estava na revisão `7f651a3`, cuja matriz de seis configurações está em
+`../../release/action-icons-matrix.json`. Até `dcfcd2d` mudaram somente documentação,
 runner e teste de arte, excluídos do executável. Esta bateria usa o editor e não
 substitui a validação do pacote ou os resultados pendentes de outro computador.
 Animações continuam com quatro poses pintadas; balanceamento e acessibilidade
 de produção requerem avaliação humana.
+
+## Incremento da barra de gestão — 30/09/2026
+
+Revisão de arte `4c7d81b`: nove suítes gráficas passaram depois de integrar
+os três ícones de Finanças, Operação e Avaliações (catálogo de 73 PNGs).
+`ui_management_icons` verifica 48 aberturas por mouse/Enter, Esc/foco,
+snapshot, largura mínima, pixels efetivamente desenhados e oito layouts.
+Também passaram ui_management, ui_operations, ui_reviews, ui_smoke, ui_resume,
+ui_new_game, ui_help e ui_art. Capturas pequena/4K inspecionadas.
+Primeira configuração ocultava imagens porque expand_icon não reservava largura
+no fluxo; detectado na inspeção e corrigido antes do pacote.
+Detalhes e dados em `../../art/management-icons.md`.
+
+A bateria completa de 31 suítes acima é anterior a esse incremento. O runner
+atual tem 32 suítes com Visual/Stress/Soak; não afirmamos nova execução completa.

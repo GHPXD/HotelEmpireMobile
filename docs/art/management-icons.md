@@ -37,3 +37,8 @@ sem as margens externas). Não é certificação de monitor/hardware físico 4K.
 Só apresentação e navegação: sem novo estado, preços ou mudança no save v7.
 Ícones estáticos; hover/foco usam o tema nativo. A biblioteca soma três imports
 de 256px; a medição M8 anterior não representa o total novo de memória do jogo.
+
+Pacote da revisão limpa `4c7d81b`: boot e smoke de 6120 ticks, sem falhas;
+os três painéis abertos por seus ícones, snapshot preservado e Esc/foco em cada
+uma das seis configurações de `../release/management-icons-matrix.json`.
+ZIP, documentos e hashes dos 73 PNGs auditados; kit de compatibilidade atualizado.

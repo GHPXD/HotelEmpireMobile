@@ -508,3 +508,9 @@ expand_icon passava propriedades, mas ocultava imagens; capturas identificaram
 o problema e a configuração/checagem de pixels foram corrigidas e repetidas.
 Capturas em janela pequena e 4K inspecionadas; não certificam monitor físico.
 Origem, prompts, limites e comportamento em docs/art/management-icons.md.
+
+Pacote de gestão: revisão 4c7d81b, árvore limpa; boot e smoke de 6120 ticks,
+39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas. Três painéis
+abertos pelos ícones, Esc/foco e snapshot preservados em cada caso da matriz
+docs/release/management-icons-matrix.json. ZIP, documentos e 73 PNGs auditados;
+kit de compatibilidade atualizado. Validação externa e playtest humano pendentes.
