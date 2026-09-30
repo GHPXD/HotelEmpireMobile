@@ -7,8 +7,9 @@ e letras Aa com base jade para tamanho do texto. Fontes selecionadas em
 Prompts completos, incluindo tentativas e edições, em `preferences-icons-prompts.json`.
 Origem, hashes, dimensões, cantos transparentes e bounds opacos (>100/255)
 em `preferences-icons-measurements.json`. Fontes finais copiadas byte a byte,
-sem edição local de pixels. Catálogo atual: 82 PNGs, 30 texturas de animação,
-cinco retratos e 23 ícones.
+sem edição local de pixels. Catálogo atual: 82 PNGs, 30 texturas de personagens
+(27 folhas animadas e três referências estáticas do café), cinco retratos e
+23 ícones. As poses estáticas anteriores de dormir ficam fora do preload.
 
 A primeira dupla de som incluía caixa, cone e ondas; o ícone ligado ficou denso
 em 1024×640. Quatro checagens de pixels brilhantes falharam, embora alternância,
@@ -57,3 +58,11 @@ ui_preferences_icons, ui_management_icons, ui_session_icons, ui_management,
 ui_progression, ui_help, ui_smoke, ui_resume, ui_new_game, ui_recovery e ui_exit.
 Runner agora configura 34 suítes Visual/Stress/Soak; a última bateria completa
 de 31 suítes do M9 é anterior aos ícones posteriores e não foi repetida aqui.
+
+Pacote da revisão limpa `6859db9`: boot e smoke de 6120 ticks passaram, com
+39 reservas, 42 refeições, 31 limpezas e caixa 2021. Três texturas de preferências
+verificadas nas seis configurações do ZIP extraído, com alternância real de
+som/texto, arquivos, F4 e snapshot preservado; ciclos restauram a configuração
+inicial. Matriz em `../release/preferences-icons-matrix.json`. ZIP, documentos
+e hashes dos 82 PNGs auditados; kit atualizado. Compatibilidade externa e
+playtest humano continuam pendentes.

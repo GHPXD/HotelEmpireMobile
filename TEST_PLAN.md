@@ -599,3 +599,10 @@ docs/art/preferences-icons-initial-failure.json. Não certifica audição/áudio
 Runner configura agora 34 suítes Visual/Stress/Soak; a bateria completa de 31
 continua anterior aos ícones posteriores. Compatibilidade externa e playtest
 humano permanecem pendentes.
+
+Pacote da revisão limpa 6859db9: boot e smoke de 6120 ticks passaram, com
+39 reservas, 42 refeições, 31 limpezas e caixa 2021. Preferências de som/texto,
+três texturas/alpha/import, rótulos, arquivos e F4 verificados em cada uma das
+seis configurações do ZIP extraído; ciclos restauram o estado inicial e
+preservam snapshot. Matriz: docs/release/preferences-icons-matrix.json.
+Inventário, documentos e hashes dos 82 PNGs auditados; kit atualizado.

@@ -77,8 +77,9 @@ cabines N2 usam pintura de nogueira e N3 tem mármore e medalhão de latão; o p
 mantém a pintura base. Sem música ou ambiente
 contínuo nesta entrega. Novos conteúdos precisam de arte própria. M8 mediu render
 isolado até 1000 e operação contínua até 120; esta entrega não comprova 1000 hóspedes
-atendidos simultaneamente a 60 FPS. Catálogo atual: 82 PNGs, 30 texturas de animação,
-cinco retratos e 23 ícones de interface.
+atendidos simultaneamente a 60 FPS. Catálogo atual: 82 PNGs, 30 texturas de personagens
+(27 folhas animadas e três poses estáticas de referência do café), cinco retratos
+e 23 ícones de interface. Referências de dormir anteriores ficam fora do preload.
 
 ## Verificação
 `ui_art.gd`: carregamento, alpha, limites dos recortes, ciclo, zoom mínimo/normal/máximo,
