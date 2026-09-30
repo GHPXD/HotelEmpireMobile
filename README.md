@@ -61,7 +61,7 @@ com vários quartos. Contrate os dois tipos de funcionário antes de abrir chega
 Poucos quartos criam fila na recepção; expansão excessiva pressiona transporte e limpeza.
 
 No Windows deste ambiente: `powershell -File tools/test.ps1 -Visual` executa import,
-11 suítes headless e 14 testes gráficos. Passe `-GodotPath` para outro engine.
+11 suítes headless e 15 testes gráficos. Passe `-GodotPath` para outro engine.
 Testes isolam dados em `.runtime/`; não sobrescrevem seu save normal.
 Acrescente `-Stress` para três suítes adicionais com múltiplas seeds, continuidade de save e transporte com
 100/250/500/1000 agentes. Evidências: [benchmarks](docs/benchmarks/README.md).

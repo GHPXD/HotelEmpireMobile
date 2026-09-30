@@ -9,6 +9,7 @@ signal actor_clicked(id: int)
 
 const CELL: float = 62.0
 const FLOOR_HEIGHT: float = 108.0
+const WAITING_STATES: Array[StringName] = [&"lift_queue", &"checkin", &"service_queue"]
 var hotel: HotelModel
 var session: HotelSession
 var selected: int = -1
@@ -58,10 +59,10 @@ func _gui_input(event: InputEvent) -> void:
 			return
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if blueprint == null and session != null:
-				for actor: ActorState in session.actors.values():
-					if actor_screen_position(actor).distance_to(pointer) < 14 * zoom_factor:
-						actor_clicked.emit(actor.id)
-						return
+				var actor_id := actor_at_screen_position(pointer)
+				if actor_id >= 0:
+					actor_clicked.emit(actor_id)
+					return
 			var cell := cell_at(pointer)
 			cell_clicked.emit(cell.x, cell.y)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
@@ -152,6 +153,43 @@ func actor_screen_position(actor: ActorState) -> Vector2:
 	var offset: float = float(actor.id % 5) * 0.13 if actor.state in [&"checkin", &"service_queue", &"lift_queue"] else 0.0
 	return world_to_screen(Vector2((column + offset) * CELL, -level * FLOOR_HEIGHT - 20))
 
+func _actor_service(actor: ActorState) -> StringName:
+	var room := hotel.by_id(actor.target_room) if actor.state == &"using" else null
+	return room.definition_id if room != null else &""
+
+func actor_sprite_rect(actor: ActorState) -> Rect2:
+	var service := _actor_service(actor)
+	var region := HotelArt.character_region(actor, session.tick_count, service)
+	var scale := HotelArt.character_scale(actor, service) * zoom_factor
+	var anchor := HotelArt.character_anchor(actor, session.tick_count, service)
+	return Rect2(actor_screen_position(actor) + Vector2(0, 17 * zoom_factor) - anchor * scale, region.size * scale)
+
+func actor_at_screen_position(at: Vector2) -> int:
+	var closest_id := -1
+	var closest_distance := INF
+	# Match the two drawing passes. Equal-distance ties favor the foreground actor.
+	for sleepers: bool in [true, false]:
+		for actor: ActorState in session.actors.values():
+			if (_sleeping_room(actor) != null) != sleepers:
+				continue
+			var point := actor_screen_position(actor)
+			var distance := point.distance_squared_to(at)
+			if distance > closest_distance:
+				continue
+			if actor_sprite_rect(actor).grow(2 * zoom_factor).has_point(at):
+				closest_id = actor.id
+				closest_distance = distance
+	return closest_id
+
+func actor_wait_badge_rect(actor: ActorState) -> Rect2:
+	if actor.state not in WAITING_STATES:
+		return Rect2()
+	return _wait_badge_rect(actor_screen_position(actor), actor_sprite_rect(actor))
+
+func _wait_badge_rect(point: Vector2, sprite: Rect2) -> Rect2:
+	var size_hint := _status_badge_size("…")
+	return Rect2(Vector2(point.x - size_hint.x / 2, sprite.position.y - 4 * zoom_factor - size_hint.y), size_hint)
+
 func _sleeping_room(actor: ActorState) -> RoomState:
 	if actor.role != &"guest" or actor.state != &"using":
 		return null
@@ -186,14 +224,11 @@ func _draw_actor(actor: ActorState, sleeping_room: RoomState) -> void:
 	# Include the entire sprite, waiting badge and antialiased edge at every zoom.
 	if not _in_view(Rect2(point - Vector2(36, 60) * zoom_factor, Vector2(72, 88) * zoom_factor).grow(16)):
 		return
-	var service_room := hotel.by_id(actor.target_room) if actor.state == &"using" else null
-	var service_id: StringName = service_room.definition_id if service_room != null else &""
+	var service_id := _actor_service(actor)
 	var texture := HotelArt.character(actor, service_id)
 	var region := HotelArt.character_region(actor, session.tick_count, service_id)
-	var sprite_scale := HotelArt.character_scale(actor, service_id) * zoom_factor
-	var sprite_size := region.size * sprite_scale
-	var anchor := HotelArt.character_anchor(actor, session.tick_count, service_id)
-	var destination := Rect2(point + Vector2(0, 17 * zoom_factor) - anchor * sprite_scale, sprite_size)
+	var destination := actor_sprite_rect(actor)
+	var wait_badge := _wait_badge_rect(point, destination) if actor.state in WAITING_STATES else Rect2()
 	if actor.target_x < actor.x and actor.state == &"walking":
 		destination.position.x += destination.size.x
 		destination.size.x = -destination.size.x
@@ -203,13 +238,17 @@ func _draw_actor(actor: ActorState, sleeping_room: RoomState) -> void:
 		var bed_texture := HotelArt.room(&"bedroom", sleeping_room.level)
 		var front := HotelArt.SLEEP_FOOTBOARD
 		draw_texture_rect_region(bed_texture, Rect2(bed.position + bed.size * front.position, bed.size * front.size), Rect2(bed_texture.get_size() * front.position, bed_texture.get_size() * front.size))
-	if actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
-		_status_badge(point + Vector2(-7, -42) * zoom_factor, "…")
+	if actor.state in WAITING_STATES:
+		_status_badge(wait_badge.position, "…")
+
+func _status_badge_size(label: String) -> Vector2:
+	var font_size := maxi(9, int(12 * zoom_factor))
+	return ThemeDB.fallback_font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size) + Vector2(8, 2)
 
 func _status_badge(at: Vector2, label: String) -> void:
 	var font_size := maxi(9, int(12 * zoom_factor))
-	var text_size := ThemeDB.fallback_font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
-	if not _in_view(Rect2(at, text_size + Vector2(8, 2))):
+	var badge_size := _status_badge_size(label)
+	if not _in_view(Rect2(at, badge_size)):
 		return
-	draw_rect(Rect2(at, Vector2(text_size.x + 8, text_size.y + 2)), Color(0.12, 0.18, 0.17, 0.94))
-	_text(at + Vector2(4, text_size.y - 3), label, Color("ffe0a0"), font_size)
+	draw_rect(Rect2(at, badge_size), Color(0.12, 0.18, 0.17, 0.94))
+	_text(at + Vector2(4, badge_size.y - 5), label, Color("ffe0a0"), font_size)

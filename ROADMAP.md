@@ -32,6 +32,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Refeição sentada no Bistrô Aurora: quatro poses por perfil, mesas próprias e usuários separados nos níveis 1/2/3, sem sobreposição no limite de cinco lugares.
   - [x] Pose de dormir por perfil sobre a cama pintada; nove combinações de perfil/nível selecionáveis e peseira N3 em primeiro plano.
   - [x] Quatro poses próprias de repouso para camareira e recepcionista, também usadas na fila do elevador, com pés alinhados e pausa pelo relógio da simulação.
+  - [x] Indicador de espera acima dos sprites e seleção pelo rosto/corpo; clique escolhe o personagem próximo quando as silhuetas se sobrepõem.
 - [x] M8 Optimization: perfis 100/250/500/1000 agentes e operação até o limite atual de 120.
   - [x] M8a perfil inicial, descarte de render fora da câmera e equivalência visual.
   - [x] M8b admissão/saídas otimizadas; perfil integrado contínuo com 118–120 hóspedes.

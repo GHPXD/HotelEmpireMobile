@@ -75,8 +75,32 @@ func run() -> void:
 			await process_frame
 			await RenderingServer.frame_post_draw
 			check(reference == root.get_texture().get_image().get_data(), "pixel equivalence zoom %s pan %s" % [zoom, offset])
+	# Keep only a waiting badge visible below the viewport, with its actor outside.
+	var edge_actor: ActorState
+	for actor: ActorState in session.actors.values():
+		if actor.role == &"guest" and actor.state == &"checkin":
+			edge_actor = actor
+			break
+	check(edge_actor != null, "waiting edge fixture exists")
+	if edge_actor != null:
+		for zoom: float in [0.35, 1.8]:
+			view.zoom_factor = zoom
+			view.pan = Vector2.ZERO
+			view.pan.y += view.size.y - 2 - view.actor_wait_badge_rect(edge_actor).get_center().y
+			check(not Rect2(Vector2.ZERO, view.size).intersects(view.actor_sprite_rect(edge_actor)), "edge actor outside viewport")
+			check(Rect2(Vector2.ZERO, view.size).intersects(view.actor_wait_badge_rect(edge_actor)), "edge wait badge still visible")
+			view.cull_offscreen = false
+			view.queue_redraw()
+			await process_frame
+			await RenderingServer.frame_post_draw
+			var reference: PackedByteArray = root.get_texture().get_image().get_data()
+			view.cull_offscreen = true
+			view.queue_redraw()
+			await process_frame
+			await RenderingServer.frame_post_draw
+			check(reference == root.get_texture().get_image().get_data(), "badge-only edge culling equivalence zoom %s" % zoom)
 	check(preload("res://tests/snapshot_comparison.gd").difference(before, SessionSnapshot.capture(session), "culling").is_empty(), "culling does not mutate gameplay")
-	print(JSON.stringify({"suite": "ui_culling", "failures": failures, "camera_cases": 9}))
+	print(JSON.stringify({"suite": "ui_culling", "failures": failures, "camera_cases": 11}))
 	view.queue_free()
 	await process_frame
 	quit(1 if failures else 0)

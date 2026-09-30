@@ -286,3 +286,12 @@ limpa, smoke de 6120 ticks e seis combinações locais de janela/texto aprovados
 Cada caso verificou quatro contextos de repouso da equipe e 12 sprites de uso dos
 hóspedes. ZIP, documentos e hashes dos 45 PNGs auditados; kit externo atualizado.
 Matriz em docs/release/staff-idle-matrix.json. Compatibilidade externa pendente.
+
+Apresentação das filas (30/09/2026): nova `ui_actor_presentation` passou nos 11
+contextos de espera, quatro fases e três zooms, incluindo clique pela parte superior
+do sprite, dois personagens a cinco pixels de distância e empate por ordem de
+desenho. Indicadores acima de todos os recortes, snapshots inalterados e capturas
+inspecionadas. `ui_culling` passou nas 11 câmeras, duas com somente o indicador
+na borda inferior; `ui_art`, `ui_content` e `ui_checkin_diagnostics` passaram.
+Quatro scripts válidos pelo gda. Seleção `-Visual` agora contém 15 suítes gráficas.
+`ui_smoke`, `ui_resume` e `ui_management` passaram após a mudança de seleção.

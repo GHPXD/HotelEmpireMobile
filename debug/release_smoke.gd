@@ -10,6 +10,30 @@ func run(game: Node) -> void:
 	check(not ResourceLoader.exists("res://tests/ui_art.gd"), "tests excluded from package")
 	check(not FileAccess.file_exists("res://docs/PRODUCT_VISION.md"), "documentation excluded")
 	var service_art_verified := 0
+	var actor_presentation_verified := 0
+	var visual_session := HotelSession.new(418)
+	var visual_view := HotelView.new()
+	visual_view.session = visual_session
+	visual_view.hotel = visual_session.hotel
+	var neighbors: Array[ActorState] = []
+	for index in 2:
+		var actor := visual_session.spawn_guest()
+		actor.archetype_id = &"balanced"
+		actor.state = &"checkin"
+		actor.x = 3.0 + index * 0.08 - (actor.id % 5) * 0.13
+		neighbors.append(actor)
+	for zoom: float in [0.35, 0.9, 1.8]:
+		visual_view.zoom_factor = zoom
+		for actor: ActorState in neighbors:
+			var sprite := visual_view.actor_sprite_rect(actor)
+			var badge := visual_view.actor_wait_badge_rect(actor)
+			check(badge.end.y <= sprite.position.y - 3.9 * zoom, "exported wait status clears sprite")
+			check(visual_view.actor_at_screen_position(visual_view.actor_screen_position(actor)) == actor.id, "exported near queue actor selectable")
+		var face := visual_view.actor_sprite_rect(neighbors[0]).get_center()
+		face.y -= visual_view.actor_sprite_rect(neighbors[0]).size.y * 0.3
+		check(visual_view.actor_at_screen_position(face) == neighbors[0].id, "exported face picking")
+		actor_presentation_verified += 1
+	visual_view.free()
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
 		var employee := ActorState.new()
@@ -204,6 +228,7 @@ func run(game: Node) -> void:
 	var report: Dictionary = {"suite": "release_smoke", "failures": failures, "bookings": session.guests.bookings, "meals": session.guests.meals_served, "cleaned": session.employees.cleaned, "cash": session.economy.cash, "ticks": session.tick_count, "user_data": OS.get_user_data_dir(), "executable": OS.get_executable_path()}
 	report["service_art_verified"] = service_art_verified
 	report["staff_idle_art_verified"] = staff_idle_art_verified
+	report["actor_presentation_verified"] = actor_presentation_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))

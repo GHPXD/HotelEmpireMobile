@@ -28,6 +28,8 @@ ambientes; peseira N3 e circulação ficam à frente. Detalhes em `bedroom-sleep
 Funcionários em repouso ou fila do elevador usam ciclos discretos de quatro poses,
 sem ferramentas de trabalho. Âncoras medidas nos sapatos e escala comum preservam
 o apoio no piso. Detalhes em `docs/art/staff-idle.md`.
+Indicadores de espera respeitam os limites dos sprites, e cliques aceitam cabeça
+e corpo. Critérios de sobreposição e validação em `docs/art/queue-presentation.md`.
 
 Sons gerados pelo código original `tools/generate_audio.py`, sem samples externos:
 PCM mono 16 bits/22050 Hz, envelope de ataque/decay e volume moderado na reprodução.
