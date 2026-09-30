@@ -43,6 +43,20 @@ func run() -> void:
 			actor.x = room.center()
 			actor.floor_index = room.floor_index
 			room.users.append(actor.id)
+	for slot in 3:
+		var room := session.hotel.room_at(slot * 2, 2)
+		while room.level < slot + 1:
+			check(session.upgrade_room(room.id).is_empty(), "sleep bed level for culling")
+		var actor := session.spawn_guest()
+		actor.archetype_id = [&"balanced", &"business", &"leisure"][slot]
+		actor.state = &"using"
+		actor.x = room.center()
+		actor.floor_index = room.floor_index
+		actor.target_room = room.id
+		actor.bedroom = room.id
+		actor.checked_in = true
+		room.users.append(actor.id)
+		room.occupant = actor.id
 	for room: RoomState in session.hotel.rooms:
 		if room.definition().category == &"lodging":
 			room.dirty = true

@@ -15,10 +15,10 @@ func run(game: Node) -> void:
 		visual_guest.role = &"guest"
 		visual_guest.archetype_id = profile
 		visual_guest.state = &"using"
-		for service: StringName in [&"cafe", &"lounge", &"restaurant"]:
+		for service: StringName in [&"cafe", &"lounge", &"restaurant", &"bedroom"]:
 			var texture := HotelArt.character(visual_guest, service)
 			check(texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported service sprite has alpha")
-			check(HotelArt.character_regions(visual_guest, service).size() == 4, "exported service has four frames")
+			check(HotelArt.character_regions(visual_guest, service).size() == (1 if service == &"bedroom" else 4), "exported service frame count")
 			for tick: int in [0, 8, 12, 16, 24, 36]:
 				check(Rect2(Vector2.ZERO, texture.get_size()).encloses(HotelArt.character_region(visual_guest, tick, service)), "exported service region contained")
 			service_art_verified += 1

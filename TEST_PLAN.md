@@ -258,3 +258,11 @@ verificou os nove sprites de serviço. ZIP, guia, avisos e hashes dos 40 PNGs
 auditados; kit externo atualizado com o mesmo pacote. Matriz preservada em
 docs/release/restaurant-dining-matrix.json. README e guia de assets atualizados
 para o catálogo, schema v7, seleção de testes e export local atuais.
+
+Repouso nas camas: `ui_art` aprovado nas nove combinações perfil × N1/N2/N3,
+incluindo clique no hóspede, alpha, recorte, largura de 52px, estabilidade da pose,
+retorno à caminhada e localização acima do piso em três escalas. Peseira N3
+inspecionada na captura; snapshots de render e seleção iguais. `ui_culling`
+incluiu camas dos três níveis nas nove comparações pixel a pixel; `ui_content`
+aprovado. Cinco scripts validados pelo gda. Arte: 43 PNGs, 25 texturas de personagens;
+repouso usa uma pose estática por perfil. Diagnóstico exportado verifica 12 sprites.

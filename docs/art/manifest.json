@@ -358,5 +358,32 @@
     "bytes": 1361998,
     "sha256": "6e5c6cb44af27cab934d63f37c8f0b857b4e9833b48e2e3e131cfadae4d5e1c7",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/balanced-sleeping.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 1065987,
+    "sha256": "979535d3120321575002e26916d2236f14910d4365135be42eaf350b1e4eb226",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/business-sleeping.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 1016431,
+    "sha256": "1b86d7db3a4c56a3e0e98e94bc3272a0f70e12fb846903a2e0d2eb3e011bea77",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/characters/leisure-sleeping.png",
+    "width": 1774,
+    "height": 887,
+    "mode": "RGBA",
+    "bytes": 1042119,
+    "sha256": "b766be0ab984f237d4f71142b896ca627d8ceea7d6d0bbb97511ead62f3b954e",
+    "generator": "built-in image_gen"
   }
 ]

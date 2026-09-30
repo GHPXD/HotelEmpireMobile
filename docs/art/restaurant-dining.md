@@ -36,7 +36,7 @@ a pixel, e `ui_content` passou. Cinco scripts validados por `gda` sem diagnósti
 
 Catálogo: 40 PNGs e 22 texturas de personagens. O diagnóstico interno do export
 verifica nove sprites de serviço, com alpha, quatro quadros e regiões contidas.
-Poses de dormir ainda não estão implementadas.
+Poses de dormir foram adicionadas depois, conforme `bedroom-sleeping.md`.
 
 Pacote Windows exportado da revisão `a02edbe`, árvore limpa no build. Smoke de
 6120 ticks e seis combinações locais de janela/texto aprovados; cada combinação

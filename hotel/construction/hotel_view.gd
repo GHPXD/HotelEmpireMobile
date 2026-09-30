@@ -131,6 +131,10 @@ func _text(at: Vector2, value: String, color: Color, font_size: int) -> void:
 	draw_string(ThemeDB.fallback_font, at, value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
 
 func actor_screen_position(actor: ActorState) -> Vector2:
+	var sleeping_room := _sleeping_room(actor)
+	if sleeping_room != null:
+		var bed := room_rect(sleeping_room.column, sleeping_room.floor_index, sleeping_room.definition().width).grow(-2 * zoom_factor)
+		return bed.position + bed.size * HotelArt.SLEEP_BED_ANCHOR - Vector2(0, 17 * zoom_factor)
 	var level: float = actor.floor_index
 	var column: float = actor.x
 	if actor.state == &"riding":
@@ -148,6 +152,12 @@ func actor_screen_position(actor: ActorState) -> Vector2:
 	var offset: float = float(actor.id % 5) * 0.13 if actor.state in [&"checkin", &"service_queue", &"lift_queue"] else 0.0
 	return world_to_screen(Vector2((column + offset) * CELL, -level * FLOOR_HEIGHT - 20))
 
+func _sleeping_room(actor: ActorState) -> RoomState:
+	if actor.role != &"guest" or actor.state != &"using":
+		return null
+	var room := hotel.by_id(actor.target_room)
+	return room if room != null and room.definition_id == &"bedroom" else null
+
 func _draw_simulation() -> void:
 	for lift in session.transport.lifts:
 		var cabin := Rect2(world_to_screen(Vector2((lift.column - 0.37) * CELL, -(lift.floor_position + 0.72) * FLOOR_HEIGHT)), Vector2(CELL * 0.74, FLOOR_HEIGHT * 0.65) * zoom_factor)
@@ -164,25 +174,37 @@ func _draw_simulation() -> void:
 		if not room.queue.members.is_empty():
 			var box := room_rect(room.column, room.floor_index, room.definition().width)
 			_status_badge(box.position + Vector2(7, 51) * zoom_factor, "Fila: %d" % room.queue.members.size())
-	for actor: ActorState in session.actors.values():
-		var point := actor_screen_position(actor)
-		# Include the entire sprite, waiting badge and antialiased edge at every zoom.
-		if not _in_view(Rect2(point - Vector2(36, 60) * zoom_factor, Vector2(72, 88) * zoom_factor).grow(16)):
-			continue
-		var service_room := hotel.by_id(actor.target_room) if actor.state == &"using" else null
-		var service_id: StringName = service_room.definition_id if service_room != null else &""
-		var texture := HotelArt.character(actor, service_id)
-		var region := HotelArt.character_region(actor, session.tick_count, service_id)
-		var sprite_scale := HotelArt.character_scale(actor, service_id) * zoom_factor
-		var sprite_size := region.size * sprite_scale
-		var anchor := HotelArt.character_anchor(actor, session.tick_count, service_id)
-		var destination := Rect2(point + Vector2(0, 17 * zoom_factor) - anchor * sprite_scale, sprite_size)
-		if actor.target_x < actor.x and actor.state == &"walking":
-			destination.position.x += destination.size.x
-			destination.size.x = -destination.size.x
-		draw_texture_rect_region(texture, destination, region)
-		if actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
-			_status_badge(point + Vector2(-7, -42) * zoom_factor, "…")
+	# Beds and their footboards precede people circulating in the foreground.
+	for draw_sleepers: bool in [true, false]:
+		for actor: ActorState in session.actors.values():
+			var sleeping_room := _sleeping_room(actor)
+			if (sleeping_room != null) == draw_sleepers:
+				_draw_actor(actor, sleeping_room)
+
+func _draw_actor(actor: ActorState, sleeping_room: RoomState) -> void:
+	var point := actor_screen_position(actor)
+	# Include the entire sprite, waiting badge and antialiased edge at every zoom.
+	if not _in_view(Rect2(point - Vector2(36, 60) * zoom_factor, Vector2(72, 88) * zoom_factor).grow(16)):
+		return
+	var service_room := hotel.by_id(actor.target_room) if actor.state == &"using" else null
+	var service_id: StringName = service_room.definition_id if service_room != null else &""
+	var texture := HotelArt.character(actor, service_id)
+	var region := HotelArt.character_region(actor, session.tick_count, service_id)
+	var sprite_scale := HotelArt.character_scale(actor, service_id) * zoom_factor
+	var sprite_size := region.size * sprite_scale
+	var anchor := HotelArt.character_anchor(actor, session.tick_count, service_id)
+	var destination := Rect2(point + Vector2(0, 17 * zoom_factor) - anchor * sprite_scale, sprite_size)
+	if actor.target_x < actor.x and actor.state == &"walking":
+		destination.position.x += destination.size.x
+		destination.size.x = -destination.size.x
+	draw_texture_rect_region(texture, destination, region)
+	if sleeping_room != null and sleeping_room.level >= 3:
+		var bed := room_rect(sleeping_room.column, sleeping_room.floor_index, sleeping_room.definition().width).grow(-2 * zoom_factor)
+		var bed_texture := HotelArt.room(&"bedroom", sleeping_room.level)
+		var front := HotelArt.SLEEP_FOOTBOARD
+		draw_texture_rect_region(bed_texture, Rect2(bed.position + bed.size * front.position, bed.size * front.size), Rect2(bed_texture.get_size() * front.position, bed_texture.get_size() * front.size))
+	if actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
+		_status_badge(point + Vector2(-7, -42) * zoom_factor, "…")
 
 func _status_badge(at: Vector2, label: String) -> void:
 	var font_size := maxi(9, int(12 * zoom_factor))

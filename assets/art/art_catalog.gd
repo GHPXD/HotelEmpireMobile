@@ -42,6 +42,9 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 	return ROOMS.get(id)
 
 const CHARACTERS: Dictionary = {
+	&"balanced-sleeping": preload("res://assets/art/characters/balanced-sleeping.png"),
+	&"business-sleeping": preload("res://assets/art/characters/business-sleeping.png"),
+	&"leisure-sleeping": preload("res://assets/art/characters/leisure-sleeping.png"),
 	&"balanced-dining": preload("res://assets/art/characters/balanced-dining.png"),
 	&"business-dining": preload("res://assets/art/characters/business-dining.png"),
 	&"leisure-dining": preload("res://assets/art/characters/leisure-dining.png"),
@@ -74,6 +77,9 @@ static func character(actor: ActorState, service_id: StringName = &"") -> Textur
 	return CHARACTERS[animation_id(actor, service_id)]
 
 const ACTION_REGIONS: Dictionary = {
+	&"balanced-sleeping": [[28, 9, 1718, 867]],
+	&"business-sleeping": [[31, 16, 1713, 862]],
+	&"leisure-sleeping": [[23, 12, 1730, 864]],
 	&"balanced-dining": [[66, 89, 455, 582], [600, 89, 440, 582], [1118, 89, 437, 582], [1635, 89, 439, 582]],
 	&"business-dining": [[68, 76, 461, 598], [595, 76, 447, 598], [1114, 76, 448, 598], [1649, 76, 455, 598]],
 	&"leisure-dining": [[83, 66, 459, 611], [612, 66, 447, 611], [1141, 66, 445, 611], [1674, 66, 448, 611]],
@@ -106,9 +112,13 @@ const ACTION_ANCHORS: Dictionary = {
 	&"leisure-drinking": [Vector2(188, 877), Vector2(189, 877), Vector2(190, 877), Vector2(192, 877)],
 }
 
-const SERVICE_ACTIONS: Dictionary = {&"cafe": "drinking", &"lounge": "reading", &"restaurant": "dining"}
+const SERVICE_ACTIONS: Dictionary = {&"cafe": "drinking", &"lounge": "reading", &"restaurant": "dining", &"bedroom": "sleeping"}
 const SERVICE_FRAME_TICKS: Dictionary = {&"cafe": 8.0, &"lounge": 12.0, &"restaurant": 6.0}
 const SERVICE_HEIGHTS: Dictionary = {&"lounge": 36.0, &"restaurant": 36.0}
+const SLEEP_WIDTH: float = 52.0
+const SLEEP_BED_ANCHOR: Vector2 = Vector2(0.5, 0.62)
+# Normalized bounds of the N3 footboard, restored in front of the sleeper.
+const SLEEP_FOOTBOARD: Rect2 = Rect2(0.28, 0.572, 0.435, 0.09)
 
 static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
 	if actor.role == &"guest" and actor.state == &"using" and SERVICE_ACTIONS.has(service_id):
@@ -149,8 +159,12 @@ static func character_anchor(actor: ActorState, tick: int, service_id: StringNam
 
 static func character_scale(actor: ActorState, service_id: StringName = &"") -> float:
 	var height: float = 0.0
+	var width: float = 0.0
 	for box: Array in character_regions(actor, service_id):
 		height = maxf(height, box[3])
+		width = maxf(width, box[2])
+	if actor.role == &"guest" and actor.state == &"using" and service_id == &"bedroom":
+		return SLEEP_WIDTH / width
 	# Seated guests have a lower head height than standing guests.
 	var visual_height: float = SERVICE_HEIGHTS.get(service_id, 46.0) if actor.role == &"guest" and actor.state == &"using" else 46.0
 	return visual_height / height
