@@ -33,8 +33,9 @@ pixel a pixel nas nove câmeras. `ui_content` aprovado. `gda script validate` co
 caminhos `res://` validou os scripts sem diagnósticos; caminhos relativos Windows
 haviam causado conflito artificial de classes globais no validador.
 
-Catálogo: 37 PNGs, 19 texturas de personagens. Não fornece poses de dormir ou
-refeição no restaurante. O teste interno do executável agora verifica os seis
+Catálogo neste incremento: 37 PNGs, 19 texturas de personagens. Refeições foram
+adicionadas depois, conforme `restaurant-dining.md`; poses de dormir ainda faltam.
+O teste interno do executável nesta revisão verificou os seis
 sprites de serviço, com alpha, quatro quadros e recortes dentro das texturas.
 
 Pacote Windows: revisão `e7bfa21`, árvore limpa na exportação. Smoke de 6120 ticks

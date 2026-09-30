@@ -15,7 +15,7 @@ func run(game: Node) -> void:
 		visual_guest.role = &"guest"
 		visual_guest.archetype_id = profile
 		visual_guest.state = &"using"
-		for service: StringName in [&"cafe", &"lounge"]:
+		for service: StringName in [&"cafe", &"lounge", &"restaurant"]:
 			var texture := HotelArt.character(visual_guest, service)
 			check(texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported service sprite has alpha")
 			check(HotelArt.character_regions(visual_guest, service).size() == 4, "exported service has four frames")

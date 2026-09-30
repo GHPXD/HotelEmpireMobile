@@ -129,8 +129,41 @@ func run() -> void:
 		guest.state = &"using"
 	for actor: ActorState in session.actors.values():
 		if actor.role == &"cleaner":
+			actor.floor_index = 2
+			actor.x = 7.5
+		if actor.role == &"guest" and actor.state == &"checkin":
 			actor.floor_index = 1
-			actor.x = 5.5
+	var diners: Array[ActorState] = []
+	for room: RoomState in session.hotel.rooms:
+		if room.definition_id != &"restaurant":
+			continue
+		for slot in room.capacity():
+			var guest := session.spawn_guest()
+			guest.archetype_id = [&"balanced", &"business", &"leisure"][slot % 3]
+			guest.state = &"using"
+			guest.x = room.center()
+			guest.floor_index = room.floor_index
+			guest.target_room = room.id
+			room.users.append(guest.id)
+			diners.append(guest)
+			var dining := HotelArt.character(guest, &"restaurant")
+			check(dining != HotelArt.character(guest, &"lounge") and dining != HotelArt.character(guest, &"cafe"), "meal art is service specific")
+			check(dining.get_image().detect_alpha() != Image.ALPHA_NONE, "dining alpha")
+			check(HotelArt.character_regions(guest, &"restaurant").size() == 4, "four meal frames")
+			check(HotelArt.character_region(guest, 0, &"restaurant") != HotelArt.character_region(guest, 6, &"restaurant"), "fork gesture advances")
+			check(HotelArt.character_region(guest, 0, &"restaurant") == HotelArt.character_region(guest, 24, &"restaurant"), "meal loop")
+			var baseline := -1.0
+			for tick: int in [0, 6, 12, 18]:
+				var region := HotelArt.character_region(guest, tick, &"restaurant")
+				var anchor := HotelArt.character_anchor(guest, tick, &"restaurant")
+				check(Rect2(Vector2.ZERO, dining.get_size()).encloses(region), "meal frame contained")
+				check(Rect2(Vector2.ZERO, region.size).has_point(anchor), "meal anchor contained")
+				check(is_equal_approx(region.size.y * HotelArt.character_scale(guest, &"restaurant"), 36.0), "seated dining height")
+				check(baseline < 0.0 or is_equal_approx(baseline, anchor.y), "meal baseline stable")
+				baseline = anchor.y
+			guest.state = &"service_queue"
+			check(HotelArt.character(guest, &"restaurant") != dining, "meal art ends in queue")
+			guest.state = &"using"
 	session.speed = 0
 	for room: RoomState in session.hotel.rooms:
 		if room.definition().category == &"lodging" and room.column == 8:
@@ -148,9 +181,32 @@ func run() -> void:
 		await click(root, point + game.view.global_position)
 		check(game.selected_actor == reader.id, "click selects the reader at its drawn seat")
 	check(SessionSnapshot.capture(session) == before, "seat layout and selection leave session unchanged")
+	for diner: ActorState in diners:
+		await click(root, game.view.actor_screen_position(diner) + game.view.global_position)
+		check(game.selected_actor == diner.id, "diner selected at drawn seat, including upgraded rooms")
+	check(SessionSnapshot.capture(session) == before, "diner selection leaves session unchanged")
 	for zoom: float in [0.35, 0.9, 1.8]:
 		game.view.zoom_factor = zoom
 		game.view.pan = Vector2.ZERO
+		for room: RoomState in session.hotel.rooms:
+			if room.definition_id != &"restaurant":
+				continue
+			var room_bounds: Rect2 = game.view.room_rect(room.column, room.floor_index, room.definition().width)
+			var previous_right := -INF
+			for id: int in room.users:
+				var diner: ActorState = session.actors[id]
+				var point: Vector2 = game.view.actor_screen_position(diner)
+				var left := INF
+				var right := -INF
+				var scale: float = HotelArt.character_scale(diner, &"restaurant") * zoom
+				for tick: int in [0, 6, 12, 18]:
+					var region := HotelArt.character_region(diner, tick, &"restaurant")
+					var anchor := HotelArt.character_anchor(diner, tick, &"restaurant")
+					left = minf(left, point.x - anchor.x * scale)
+					right = maxf(right, point.x + (region.size.x - anchor.x) * scale)
+				check(left > previous_right + 2 * zoom, "full restaurant has separated silhouettes at every level and phase")
+				check(left >= room_bounds.position.x and right <= room_bounds.end.x, "all restaurant seats stay inside room")
+				previous_right = right
 		for frame in 4:
 			await process_frame
 		await RenderingServer.frame_post_draw
@@ -169,6 +225,20 @@ func run() -> void:
 		check(preload("res://tests/snapshot_comparison.gd").difference(phase_before, SessionSnapshot.capture(session), "cafe").is_empty(), "paused cafe frame leaves simulation unchanged")
 	session.tick_count = before["session"]["tick_count"]
 	session.time = before["session"]["time"]
+	# Pan the upper restaurants into view to inspect full N2 and N3 dining rooms.
+	game.view.pan = Vector2(400, 150)
+	for tick: int in [0, 6, 12, 18]:
+		session.tick_count = tick
+		session.time = tick * session.rules.tick
+		var phase_before := SessionSnapshot.capture(session)
+		for frame in 4:
+			await process_frame
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("res://.runtime/m7-dining-frame-%d.png" % (tick / 6))
+		check(SessionSnapshot.capture(session) == phase_before, "paused dining does not mutate session")
+	session.tick_count = before["session"]["tick_count"]
+	session.time = before["session"]["time"]
+	game.view.pan = Vector2.ZERO
 	for tick: int in [0, 12, 24, 36]:
 		session.tick_count = tick
 		session.time = tick * session.rules.tick

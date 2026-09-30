@@ -1,22 +1,28 @@
 # Assets
 
-M7 usa 17 PNGs originais produzidos pelo **image_gen integrado ao chat** em
-16/09/2026 e 21/09/2026. Sem CLI/API alternativa, SVG ou imagens copiadas de jogos de referência.
+M7 usa 40 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
+novas faixas de serviço documentadas em `docs/art/`. Sem CLI/API alternativa,
+SVG ou imagens copiadas de jogos de referência.
 Não são assets feitos manualmente por um ilustrador. Prompts completos e referências
-em `docs/art/*.txt` e `docs/art/characters.json`; dimensões/hashes em
+em `docs/art/*.txt` e `docs/art/*.json`; dimensões/hashes em
 `docs/art/manifest.json`. Não atribuir licença de terceiros inexistente.
 
 | Pasta | Conteúdo |
 |---|---|
-| `assets/art/rooms/` | Recepção, quarto, bistrô, café e lounge |
-| `assets/art/environment/` | Poço, cabine, corredor, cidade e passeio |
-| `assets/art/characters/` | Cinco faixas de caminhada e duas de trabalho, RGBA com quatro poses e coordenadas |
+| `assets/art/rooms/` | Recepção, quarto e bistrô nos níveis 1/2/3; café e lounge |
+| `assets/art/environment/` | Poço, cabine nos níveis 1/2/3, corredor, cidade e passeio |
+| `assets/art/characters/` | Cinco faixas de caminhada, três de espera, duas de trabalho, nove de serviço e três poses de café preservadas como referências |
 | `assets/audio/` | Três WAVs originais sintetizados localmente |
 
 O projeto consome cópias locais versionadas; não depende de `.codex/generated_images`.
 PNGs fonte preservados. Recorte, escala e espelhamento acontecem no Godot;
 transparência preservada. Texturas compartilhadas, mipmaps e filtragem linear.
 `assets/art/art_catalog.gd` centraliza o mapeamento visual por ID.
+
+Café, leitura no lounge e refeição no restaurante têm quatro poses próprias para
+cada perfil, cadência por serviço e âncoras medidas nos pés/móveis. Assentos usam
+usuários admitidos, com o mesmo ponto para desenho e clique. Fluxos e validação em
+`docs/art/cafe-animation.md`, `lounge-reading.md` e `restaurant-dining.md`.
 
 Sons gerados pelo código original `tools/generate_audio.py`, sem samples externos:
 PCM mono 16 bits/22050 Hz, envelope de ataque/decay e volume moderado na reprodução.

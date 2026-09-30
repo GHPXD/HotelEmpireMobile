@@ -31,10 +31,13 @@ func run() -> void:
 		await process_frame
 		quit(1)
 		return
-	for room: RoomState in [lounge, cafe]:
+	var restaurant := session.hotel.room_at(6, 0)
+	check(session.upgrade_room(restaurant.id).is_empty(), "restaurant N2 for culling")
+	check(session.upgrade_room(restaurant.id).is_empty(), "restaurant N3 for culling")
+	for room: RoomState in [lounge, cafe, restaurant]:
 		for slot in room.capacity():
 			var actor := session.spawn_guest()
-			actor.archetype_id = [&"balanced", &"business", &"leisure"][slot]
+			actor.archetype_id = [&"balanced", &"business", &"leisure"][slot % 3]
 			actor.state = &"using"
 			actor.target_room = room.id
 			actor.x = room.center()

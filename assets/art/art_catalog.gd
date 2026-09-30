@@ -42,6 +42,9 @@ static func room(id: StringName, level: int = 1) -> Texture2D:
 	return ROOMS.get(id)
 
 const CHARACTERS: Dictionary = {
+	&"balanced-dining": preload("res://assets/art/characters/balanced-dining.png"),
+	&"business-dining": preload("res://assets/art/characters/business-dining.png"),
+	&"leisure-dining": preload("res://assets/art/characters/leisure-dining.png"),
 	&"balanced-reading": preload("res://assets/art/characters/balanced-reading.png"),
 	&"business-reading": preload("res://assets/art/characters/business-reading.png"),
 	&"leisure-reading": preload("res://assets/art/characters/leisure-reading.png"),
@@ -71,6 +74,9 @@ static func character(actor: ActorState, service_id: StringName = &"") -> Textur
 	return CHARACTERS[animation_id(actor, service_id)]
 
 const ACTION_REGIONS: Dictionary = {
+	&"balanced-dining": [[66, 89, 455, 582], [600, 89, 440, 582], [1118, 89, 437, 582], [1635, 89, 439, 582]],
+	&"business-dining": [[68, 76, 461, 598], [595, 76, 447, 598], [1114, 76, 448, 598], [1649, 76, 455, 598]],
+	&"leisure-dining": [[83, 66, 459, 611], [612, 66, 447, 611], [1141, 66, 445, 611], [1674, 66, 448, 611]],
 	&"balanced-reading": [[41, 201, 420, 547], [478, 201, 419, 547], [917, 201, 417, 547], [1354, 201, 418, 547]],
 	&"business-reading": [[56, 88, 478, 618], [583, 88, 480, 618], [1106, 88, 478, 618], [1646, 88, 474, 618]],
 	&"leisure-reading": [[43, 66, 489, 629], [586, 66, 490, 629], [1130, 66, 489, 629], [1685, 66, 486, 629]],
@@ -87,8 +93,11 @@ const ACTION_REGIONS: Dictionary = {
 	&"receptionist-working": [[121, 44, 271, 796], [531, 60, 297, 780], [955, 43, 275, 797], [1353, 41, 390, 799]],
 }
 
-# Local foot centers measured from alpha. Cup movement never shifts the body.
+# Local foot centers measured from alpha; gestures keep a shared floor anchor.
 const ACTION_ANCHORS: Dictionary = {
+	&"balanced-dining": [Vector2(225.5, 578), Vector2(216, 578), Vector2(218, 578), Vector2(215, 578)],
+	&"business-dining": [Vector2(234, 594), Vector2(229, 594), Vector2(226, 594), Vector2(230, 594)],
+	&"leisure-dining": [Vector2(228.5, 607), Vector2(222, 607), Vector2(222, 607), Vector2(223, 607)],
 	&"balanced-reading": [Vector2(217.5, 543), Vector2(217, 543), Vector2(216, 543), Vector2(216, 543)],
 	&"business-reading": [Vector2(291.5, 614), Vector2(286.5, 614), Vector2(286.5, 614), Vector2(282.5, 614)],
 	&"leisure-reading": [Vector2(262.5, 625), Vector2(262.5, 625), Vector2(261.5, 625), Vector2(260.5, 625)],
@@ -97,11 +106,13 @@ const ACTION_ANCHORS: Dictionary = {
 	&"leisure-drinking": [Vector2(188, 877), Vector2(189, 877), Vector2(190, 877), Vector2(192, 877)],
 }
 
+const SERVICE_ACTIONS: Dictionary = {&"cafe": "drinking", &"lounge": "reading", &"restaurant": "dining"}
+const SERVICE_FRAME_TICKS: Dictionary = {&"cafe": 8.0, &"lounge": 12.0, &"restaurant": 6.0}
+const SERVICE_HEIGHTS: Dictionary = {&"lounge": 36.0, &"restaurant": 36.0}
+
 static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
-	if actor.role == &"guest" and actor.state == &"using" and service_id == &"cafe":
-		return StringName("%s-drinking" % actor.archetype_id)
-	if actor.role == &"guest" and actor.state == &"using" and service_id == &"lounge":
-		return StringName("%s-reading" % actor.archetype_id)
+	if actor.role == &"guest" and actor.state == &"using" and SERVICE_ACTIONS.has(service_id):
+		return StringName("%s-%s" % [actor.archetype_id, SERVICE_ACTIONS[service_id]])
 	if actor.role == &"guest" and actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
 		return StringName("%s-waiting" % actor.archetype_id)
 	if actor.role == &"cleaner" and actor.state == &"cleaning":
@@ -118,10 +129,10 @@ static func character_frame(actor: ActorState, tick: int, service_id: StringName
 	var regions := character_regions(actor, service_id)
 	var index: int = (tick + actor.id * 2) % 4 if actor.state == &"walking" else 1
 	if ACTION_REGIONS.has(animation_id(actor, service_id)):
-		# All gestures freeze with simulation ticks; cafe cycles every 3.2 seconds.
+		# All gestures freeze with simulation ticks; service cadence is contextual.
 		var frame_ticks := 12.0 if actor.role == &"guest" else 4.0
-		if actor.role == &"guest" and actor.state == &"using" and service_id == &"cafe":
-			frame_ticks = 8.0
+		if actor.role == &"guest" and actor.state == &"using":
+			frame_ticks = SERVICE_FRAME_TICKS.get(service_id, frame_ticks)
 		index = (floori(tick / frame_ticks) + actor.id) % 4
 	return index % regions.size()
 
@@ -140,6 +151,6 @@ static func character_scale(actor: ActorState, service_id: StringName = &"") -> 
 	var height: float = 0.0
 	for box: Array in character_regions(actor, service_id):
 		height = maxf(height, box[3])
-	# Seated readers have a lower head height than standing guests.
-	var visual_height := 36.0 if actor.role == &"guest" and actor.state == &"using" and service_id == &"lounge" else 46.0
+	# Seated guests have a lower head height than standing guests.
+	var visual_height: float = SERVICE_HEIGHTS.get(service_id, 46.0) if actor.role == &"guest" and actor.state == &"using" else 46.0
 	return visual_height / height

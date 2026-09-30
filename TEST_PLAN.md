@@ -242,3 +242,12 @@ smoke de 6120 ticks e seis combinações de janela/texto aprovadas. Cada caso
 validou alpha, quatro quadros e recortes dos seis sprites de serviço. Auditoria
 do ZIP e dos 37 PNGs aprovada; kit externo atualizado. Matriz preservada em
 docs/release/lounge-reading-matrix.json. Compatibilidade em outra máquina pendente.
+
+Refeições sentadas: `ui_art` aprovado com restaurantes cheios nos níveis N1/N2/N3,
+12 hóspedes selecionados pelo clique e limites de todas as silhuetas contidos e
+separados em três escalas. Alpha, altura de 36px, baseline, avanço a cada seis ticks,
+loop em 24 ticks e quatro capturas de fase aprovados sem mutação da sessão.
+`ui_culling` incluiu restaurante N3 cheio nas nove comparações pixel a pixel;
+`ui_content` aprovado. Cinco scripts validados pelo gda sem diagnósticos. Arte:
+40 PNGs, 22 texturas de personagens. O diagnóstico do export verifica nove sprites
+de serviço.

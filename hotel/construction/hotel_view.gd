@@ -140,7 +140,7 @@ func actor_screen_position(actor: ActorState) -> Vector2:
 			column = lift.column
 	if actor.role == &"guest" and actor.state == &"using":
 		var room := hotel.by_id(actor.target_room)
-		if room != null and room.definition_id in [&"cafe", &"lounge"]:
+		if room != null and HotelArt.SERVICE_ACTIONS.has(room.definition_id):
 			var slot := room.users.find(actor.id)
 			if slot >= 0:
 				# Spread admitted guests visually; navigation and save state stay intact.
