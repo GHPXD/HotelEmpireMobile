@@ -34,7 +34,7 @@ func _ready() -> void:
 	hud = HotelHUD.new()
 	add_child(hud)
 	hud.audio_requested.connect(_toggle_audio)
-	hud.audio_button.text = "Som: ligado" if audio.enabled else "Som: desligado"
+	hud.set_audio_enabled(audio.enabled)
 	view = HotelView.new()
 	view.hotel = hotel
 	view.session = session
@@ -399,7 +399,7 @@ func _set_selected_tariff(percent: int) -> void:
 
 func _toggle_audio() -> void:
 	audio.toggle()
-	hud.audio_button.text = "Som: ligado" if audio.enabled else "Som: desligado"
+	hud.set_audio_enabled(audio.enabled)
 
 func _register_input() -> void:
 	if not InputMap.has_action("show_help"):

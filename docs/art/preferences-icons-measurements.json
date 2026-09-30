@@ -1,0 +1,56 @@
+[
+  {
+    "path": "assets/art/icons/sound-on-v2.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1113493,
+    "sha256": "72e36125520d88396ef06fa5fa10467ef8bfe9dae6628c2708badd515c0f520d",
+    "generator": "built-in image_gen",
+    "original": "C:\\Users\\GHPXD\\.codex\\generated_images\\01a0a915-2716-7f90-a3cc-87023fafadff\\exec-79334b6c-1a44-4477-8b45-8fe6dcdd0601.png",
+    "opaque_bbox_alpha_gt_100": [
+      42,
+      119,
+      1228,
+      1128
+    ],
+    "transparent_corners": true,
+    "import_limit": 256
+  },
+  {
+    "path": "assets/art/icons/sound-off-v2.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1036096,
+    "sha256": "d0e4a986564cabe7cb4e7c6489e0840ebbeaf7ecbea943dcd6b602a7b4d0a262",
+    "generator": "built-in image_gen",
+    "original": "C:\\Users\\GHPXD\\.codex\\generated_images\\01a0a915-2716-7f90-a3cc-87023fafadff\\exec-dc6787c8-d72a-4b57-8f67-92505b8aa8af.png",
+    "opaque_bbox_alpha_gt_100": [
+      40,
+      116,
+      1224,
+      1132
+    ],
+    "transparent_corners": true,
+    "import_limit": 256
+  },
+  {
+    "path": "assets/art/icons/text-size.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1200697,
+    "sha256": "558588e7622c256bd710d68c97fbaa8807967c7517867c5c9095b3ac6238cdbf",
+    "generator": "built-in image_gen",
+    "original": "C:\\Users\\GHPXD\\.codex\\generated_images\\01a0a915-2716-7f90-a3cc-87023fafadff\\exec-52fab402-20f2-49c9-ba88-2d4dad2180e1.png",
+    "opaque_bbox_alpha_gt_100": [
+      75,
+      196,
+      1181,
+      1094
+    ],
+    "transparent_corners": true,
+    "import_limit": 256
+  }
+]

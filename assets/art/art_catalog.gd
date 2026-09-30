@@ -98,6 +98,15 @@ const SESSION_ICONS: Dictionary = {
 static func session_icon(command: StringName) -> Texture2D:
 	return SESSION_ICONS.get(command)
 
+const PREFERENCE_ICONS: Dictionary = {
+	&"sound_on": preload("res://assets/art/icons/sound-on-v2.png"),
+	&"sound_off": preload("res://assets/art/icons/sound-off-v2.png"),
+	&"text_size": preload("res://assets/art/icons/text-size.png"),
+}
+
+static func preference_icon(setting: StringName) -> Texture2D:
+	return PREFERENCE_ICONS.get(setting)
+
 static func portrait(actor: ActorState) -> Texture2D:
 	return PORTRAITS.get(character_id(actor))
 

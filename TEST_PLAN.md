@@ -570,3 +570,32 @@ Pacote da revisão limpa befcc66: boot e smoke de 6120 ticks, 39 reservas,
 Esc/foco e imports de 256px; também preserva os demais controles decorados.
 Matriz: docs/release/utility-icons-matrix.json. ZIP, documentos e hashes dos
 79 PNGs conferidos; kit de compatibilidade atualizado.
+
+## M7 — ícones de som e tamanho de texto (30/09/2026)
+
+Três fontes finais RGBA 1254×1254 do image_gen integrado, com som silenciado
+derivado por edição do próprio gerador. Arquivos locais sem edição de pixels;
+catálogo de 82 PNGs/23 ícones. Imports de 256px com mipmaps. Helper compartilhado
+para os ícones de 28px do fluxo; rótulo e ícone do áudio atualizados juntos no
+boot e após alternar. Sem mudança no save v7 ou simulação.
+
+Cinco scripts válidos pelo gda. Onze suítes gráficas passaram:
+ui_preferences_icons, ui_management_icons, ui_session_icons, ui_management,
+ui_progression, ui_help, ui_smoke, ui_resume, ui_new_game, ui_recovery e ui_exit.
+Preferências: 64 ativações por mouse/Enter em oito layouts, 16 atalhos F4,
+quatro combinações de som/texto lidas por cenas principais novas, arquivos
+separados, rótulos/tema e snapshot integral. Fixture inicia stream antes de
+silenciar e confere player parado, com volume de teste em −80 dB.
+
+64 áreas de ícone com pixels pintados e escala correta da captura; min width,
+bounds, foco e ausência de sobreposição. Playfield 634/624 preservado com e sem
+as duas imagens nos oito layouts. Capturas pequena ligada/silenciada e 4K
+inspecionadas; dados em docs/art/preferences-icons-ui.json.
+
+Primeira dupla de áudio era densa em 1024: quatro checagens de brilho falharam
+apenas no ícone ligado. Dupla regenerada com cone claro maior, mantendo critério
+e todos os casos; nova bateria passou. Erro e resumos preservados em
+docs/art/preferences-icons-initial-failure.json. Não certifica audição/áudio físico.
+Runner configura agora 34 suítes Visual/Stress/Soak; a bateria completa de 31
+continua anterior aos ícones posteriores. Compatibilidade externa e playtest
+humano permanecem pendentes.

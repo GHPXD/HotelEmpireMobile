@@ -709,5 +709,32 @@
     "bytes": 1337227,
     "sha256": "c5ffc9669fbf1bcd7e3db46a761da7121e4b2658a8564a3d96d80e953d05fdbd",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/sound-on-v2.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1113493,
+    "sha256": "72e36125520d88396ef06fa5fa10467ef8bfe9dae6628c2708badd515c0f520d",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/sound-off-v2.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1036096,
+    "sha256": "d0e4a986564cabe7cb4e7c6489e0840ebbeaf7ecbea943dcd6b602a7b4d0a262",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/text-size.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1200697,
+    "sha256": "558588e7622c256bd710d68c97fbaa8807967c7517867c5c9095b3ac6238cdbf",
+    "generator": "built-in image_gen"
   }
 ]

@@ -8,7 +8,7 @@
 - Logs originais e proveniência preservados em docs/benchmarks/m9.
 
 ## M7 — extensão de personagens e estados, 30/09/2026
-- Catálogo atual com 79 PNGs: pinturas próprias por nível, espera, trabalho,
+- Catálogo atual com 82 PNGs: pinturas próprias por nível, espera, trabalho,
   repouso da equipe e ciclos de serviço dos hóspedes.
 - Quartos aguardando limpeza têm pinturas N1/N2/N3 e retorno à versão limpa.
 - Filas seguem visualmente as reservas, com grupos por andar no elevador.
@@ -28,6 +28,9 @@
 - Equipe, Objetivos e Ajuda têm três ícones próprios no catálogo dos painéis;
   seis painéis/96 ativações e pixels pintados verificados em oito layouts.
   Barra padrão passa a duas linhas; ampliada conserva a altura anterior.
+- Som ligado/silenciado tem duas variantes raster e Texto tem ícone Aa;
+  64 ativações, 16 atalhos F4 e quatro combinações de preferências no boot.
+  Dupla de som refinada após verificar contraste no tamanho real.
 - Hóspedes chegam e saem com malas próprias por perfil, com quatro poses de
   viagem, contexto no elevador e espelhamento ancorado nos sapatos.
 - Original raster gerado no chat; prompts, hashes e capturas em docs/art.

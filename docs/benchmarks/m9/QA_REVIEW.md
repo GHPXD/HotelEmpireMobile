@@ -129,3 +129,19 @@ No texto padrão, a barra refluída custa uma linha adicional de 46px lógicos;
 ampliada mantém a altura anterior. Capturas pequena/4K inspecionadas.
 Detalhes em `../../art/utility-icons.md`. A bateria completa de 31 suítes
 continua anterior aos ícones de painéis/partida; 33 estão configuradas atualmente.
+
+## Incremento de som e tamanho de texto — 30/09/2026
+
+Som ligado/silenciado e Texto usam três fontes raster finais (82 PNGs no total).
+Onze suítes gráficas passaram: ui_preferences_icons, ui_management_icons,
+ui_session_icons, ui_management, ui_progression, ui_help, ui_smoke, ui_resume,
+ui_new_game, ui_recovery e ui_exit. 64 ativações por mouse/Enter, 16 atalhos F4,
+64 áreas efetivamente pintadas e quatro combinações de preferências no boot;
+snapshot do hotel preservado. As duas imagens de preferências não acrescentaram
+linha nos oito layouts; capturas pequena ligada/silenciada e 4K inspecionadas.
+
+Dupla inicial de áudio gerou quatro falhas de brilho em 1024. Foi regenerada
+com cone maior e claro; critério e casos mantidos, bateria repetida com sucesso.
+Erro, dados e prompts em `../../art/preferences-icons.md`. Configurados agora
+34 testes Visual/Stress/Soak; a bateria integrada de 31 continua anterior aos
+ícones posteriores. Este incremento não substitui avaliação humana/externa.

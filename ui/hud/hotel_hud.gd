@@ -104,6 +104,7 @@ func _ready() -> void:
 	operations_button = _button(session_bar, "Operação • F2", func() -> void: operations_requested.emit())
 	_set_management_icon(operations_button, &"operations")
 	text_size_button = _button(session_bar, "Texto + • F4", func() -> void: text_size_requested.emit())
+	_set_toolbar_icon(text_size_button, HotelArt.preference_icon(&"text_size"))
 	objectives_button = Button.new()
 	objectives_button.text = "Objetivos 0/%d" % HotelProgression.OBJECTIVES.size()
 	objectives_button.custom_minimum_size.y = 42
@@ -112,6 +113,7 @@ func _ready() -> void:
 	session_bar.add_child(objectives_button)
 	_button(session_bar, "Debug • F3", func() -> void: debug_requested.emit())
 	audio_button = _button(session_bar, "Som: ligado", func() -> void: audio_requested.emit())
+	set_audio_enabled(true)
 	help_button = _button(session_bar, "Ajuda • F1", func() -> void: help_requested.emit())
 	_set_management_icon(help_button, &"help")
 	var reviews_button := _button(session_bar, "Avaliações", func() -> void: reviews_requested.emit())
@@ -264,19 +266,23 @@ func _set_action_icon(button: Button, action: StringName) -> void:
 	action_buttons[action] = button
 
 func _set_management_icon(button: Button, panel: StringName) -> void:
-	button.icon = HotelArt.management_icon(panel)
+	_set_toolbar_icon(button, HotelArt.management_icon(panel))
+	management_buttons[panel] = button
+
+func _set_session_icon(button: Button, command: StringName) -> void:
+	_set_toolbar_icon(button, HotelArt.session_icon(command))
+	session_icon_buttons[command] = button
+
+func _set_toolbar_icon(button: Button, texture: Texture2D) -> void:
+	button.icon = texture
 	button.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	# Flow children need the bounded icon to contribute to their minimum width.
 	button.expand_icon = false
 	button.add_theme_constant_override("icon_max_width", 28)
-	management_buttons[panel] = button
 
-func _set_session_icon(button: Button, command: StringName) -> void:
-	button.icon = HotelArt.session_icon(command)
-	button.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	button.expand_icon = false
-	button.add_theme_constant_override("icon_max_width", 28)
-	session_icon_buttons[command] = button
+func set_audio_enabled(enabled: bool) -> void:
+	audio_button.text = "Som: ligado" if enabled else "Som: desligado"
+	_set_toolbar_icon(audio_button, HotelArt.preference_icon(&"sound_on" if enabled else &"sound_off"))
 
 func refresh(hotel: HotelModel, selected: RoomState) -> void:
 	tariff_choice.visible = selected != null and selected.definition().category in [&"lodging", &"service"]

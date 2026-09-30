@@ -1,6 +1,6 @@
 # Assets
 
-M7 usa 79 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
+M7 usa 82 PNGs originais produzidos pelo **image_gen integrado ao chat**, com
 novas faixas de serviço documentadas em `docs/art/`. Sem CLI/API alternativa,
 SVG ou imagens copiadas de jogos de referência.
 Não são assets feitos manualmente por um ilustrador. Prompts completos e referências
@@ -57,6 +57,9 @@ Novo hotel, Salvar e Carregar têm fontes raster próprias, em botões de 28px;
 confirmação e continuidade preservadas. Detalhes em `docs/art/session-icons.md`.
 Equipe, Objetivos e Ajuda também têm arte dedicada de 28px no mesmo catálogo
 dos painéis, com contador/F1/foco nativos. Detalhes em `docs/art/utility-icons.md`.
+Som ligado/silenciado usa duas variantes próprias, e tamanho do texto tem
+ícone Aa. Estado e preferências acompanham rótulos nativos; detalhes em
+`docs/art/preferences-icons.md`.
 
 Sons gerados pelo código original `tools/generate_audio.py`, sem samples externos:
 PCM mono 16 bits/22050 Hz, envelope de ataque/decay e volume moderado na reprodução.

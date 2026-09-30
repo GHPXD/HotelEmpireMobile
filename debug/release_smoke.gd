@@ -174,6 +174,7 @@ func run(game: Node) -> void:
 	game.staff_panel.hide()
 	var management_icons_verified := await verify_management_icons(game)
 	var session_icons_verified := await verify_session_icons(game)
+	var preference_icons_verified := await verify_preference_icons(game)
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
 		var employee := ActorState.new()
@@ -393,6 +394,7 @@ func run(game: Node) -> void:
 	report["action_icons_verified"] = action_icons_verified
 	report["management_icons_verified"] = management_icons_verified
 	report["session_icons_verified"] = session_icons_verified
+	report["preference_icons_verified"] = preference_icons_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))
@@ -497,6 +499,49 @@ func verify_session_icons(game: Node) -> int:
 	check(equivalent(before, SessionSnapshot.capture(game.session)), "exported painted load recovers hotel after new confirmation")
 	game.save_path = original_save_path
 	return 3
+
+func verify_preference_icons(game: Node) -> int:
+	var tree: SceneTree = game.get_tree()
+	var before := SessionSnapshot.capture(game.session)
+	var original_audio: bool = game.audio.enabled
+	var original_large: bool = game.large_text
+	var seen_audio: Array[StringName] = []
+	for step in 2:
+		var previous: bool = game.audio.enabled
+		await click(tree, game.hud.audio_button.get_global_rect().get_center())
+		for frame in 4:
+			await tree.process_frame
+		var enabled: bool = game.audio.enabled
+		var id: StringName = &"sound_on" if enabled else &"sound_off"
+		var button: Button = game.hud.audio_button
+		check(enabled != previous and button.text == ("Som: ligado" if enabled else "Som: desligado"), "exported native audio toggle and label agree")
+		check(button.icon == HotelArt.preference_icon(id) and button.icon.get_width() == 256 and button.icon.get_image().detect_alpha() != Image.ALPHA_NONE, "exported dedicated audio state icon")
+		check(not button.expand_icon and button.get_theme_constant("icon_max_width") == 28, "exported audio icon included in minimum width")
+		check(tree.root.get_visible_rect().encloses(button.get_global_rect()) and button.size.x >= button.get_combined_minimum_size().x, "exported audio state control fits")
+		var config := ConfigFile.new()
+		check(config.load("user://audio.cfg") == OK and config.get_value("audio", "enabled", null) == enabled, "exported audio preference stored")
+		check(equivalent(before, SessionSnapshot.capture(game.session)), "exported audio toggle preserves hotel")
+		if not id in seen_audio:
+			seen_audio.append(id)
+	for step in 2:
+		var previous: bool = game.large_text
+		await click(tree, game.hud.text_size_button.get_global_rect().get_center())
+		for frame in 4:
+			await tree.process_frame
+		var button: Button = game.hud.text_size_button
+		check(game.large_text != previous and game.hud.theme.default_font_size == (20 if game.large_text else 16), "exported native text toggle changes theme")
+		check(button.text == ("Texto − • F4" if game.large_text else "Texto + • F4"), "exported text toggle retains native direction and shortcut")
+		check(button.icon == HotelArt.preference_icon(&"text_size") and button.icon.get_width() == 256 and button.icon.get_image().detect_alpha() != Image.ALPHA_NONE, "exported text size art")
+		check(not button.expand_icon and button.get_theme_constant("icon_max_width") == 28 and tree.root.get_visible_rect().encloses(button.get_global_rect()), "exported decorated text control fits")
+		check(UIPreferences.load_large_text() == game.large_text, "exported text preference stored")
+		check(equivalent(before, SessionSnapshot.capture(game.session)), "exported text toggle preserves hotel")
+	for step in 2:
+		var previous: bool = game.large_text
+		await popup_key(tree, tree.root, KEY_F4)
+		check(game.large_text != previous and game.hud.text_size_button.icon == HotelArt.preference_icon(&"text_size"), "exported F4 preserves text icon")
+	check(game.audio.enabled == original_audio and game.large_text == original_large, "exported preference cycles restore initial settings")
+	check(equivalent(before, SessionSnapshot.capture(game.session)), "exported preference cycles preserve hotel")
+	return seen_audio.size() + 1
 
 func close_popup(tree: SceneTree, window: Window) -> void:
 	await popup_key(tree, window, KEY_ESCAPE)
