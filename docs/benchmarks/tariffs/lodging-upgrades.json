@@ -1,0 +1,2508 @@
+{
+	"days": 30,
+	"failures": 0,
+	"reports": [
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 6651,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 33.882619047619,
+						"minimum": 25.0,
+						"score_total": 1423.07
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 99.8079999999999,
+						"mean": 81.5061142857106,
+						"minimum": 70.8509999999945,
+						"score_total": 2852.71399999987
+					}
+				},
+				"departures": 77,
+				"profit": 4281,
+				"reputation": 58.2933539876895
+			},
+			"bookings": 226,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 255,
+					"maximum": 35.0,
+					"mean": 34.2374117647058,
+					"minimum": 25.0,
+					"score_total": 8730.53999999999
+				},
+				"stayed": {
+					"count": 223,
+					"maximum": 99.8079999999999,
+					"mean": 78.9447533632245,
+					"minimum": 70.3809999999951,
+					"score_total": 17604.6799999991
+				}
+			},
+			"departures": 478,
+			"ending_cash": 26726,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 23730,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5936
+			},
+			"meals": 212,
+			"minimum_cash": 2370,
+			"occupancy": 0.400003472222222,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 213,
+					"maximum": 35.0,
+					"mean": 34.3073708920188,
+					"minimum": 25.0,
+					"score_total": 7307.47
+				},
+				"stayed": {
+					"count": 188,
+					"maximum": 89.1979999999964,
+					"mean": 78.4679042553148,
+					"minimum": 70.3809999999951,
+					"score_total": 14751.9659999992
+				}
+			},
+			"profit": 24356,
+			"reputation": 58.4034725043958,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 212,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 8009,
+				"cohorts": {
+					"no_stay": {
+						"count": 41,
+						"maximum": 34.94,
+						"mean": 34.0981707317073,
+						"minimum": 25.0,
+						"score_total": 1398.025
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 96.8319999999989,
+						"mean": 75.0589411764668,
+						"minimum": 61.697999999995,
+						"score_total": 2552.00399999987
+					}
+				},
+				"departures": 75,
+				"profit": 5639,
+				"reputation": 51.5179090696057
+			},
+			"bookings": 226,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 241,
+					"maximum": 35.0,
+					"mean": 34.3254356846473,
+					"minimum": 25.0,
+					"score_total": 8272.42999999999
+				},
+				"stayed": {
+					"count": 223,
+					"maximum": 96.8319999999989,
+					"mean": 71.7467040358702,
+					"minimum": 61.697999999995,
+					"score_total": 15999.514999999
+				}
+			},
+			"departures": 464,
+			"ending_cash": 34832,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 31640,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6132
+			},
+			"meals": 219,
+			"minimum_cash": 2370,
+			"occupancy": 0.415302083333333,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 200,
+					"maximum": 35.0,
+					"mean": 34.372025,
+					"minimum": 25.0,
+					"score_total": 6874.405
+				},
+				"stayed": {
+					"count": 189,
+					"maximum": 82.1059999999967,
+					"mean": 71.1508518518475,
+					"minimum": 62.248999999995,
+					"score_total": 13447.5109999992
+				}
+			},
+			"profit": 32462,
+			"reputation": 48.416603715858,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 219,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 9514,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 35.0,
+						"mean": 34.0673076923077,
+						"minimum": 25.0,
+						"score_total": 1328.625
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 89.3319999999989,
+						"mean": 68.0064571428536,
+						"minimum": 57.2019999999956,
+						"score_total": 2380.22599999988
+					}
+				},
+				"departures": 74,
+				"profit": 7144,
+				"reputation": 49.6958957645059
+			},
+			"bookings": 228,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 226,
+					"maximum": 35.0,
+					"mean": 34.2942699115044,
+					"minimum": 25.0,
+					"score_total": 7750.50499999999
+				},
+				"stayed": {
+					"count": 225,
+					"maximum": 89.3319999999989,
+					"mean": 64.8125511111072,
+					"minimum": 56.5659999999962,
+					"score_total": 14582.8239999991
+				}
+			},
+			"departures": 451,
+			"ending_cash": 43092,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 39900,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6132
+			},
+			"meals": 219,
+			"minimum_cash": 2370,
+			"occupancy": 0.415822916666667,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 187,
+					"maximum": 35.0,
+					"mean": 34.3416042780748,
+					"minimum": 25.0,
+					"score_total": 6421.88
+				},
+				"stayed": {
+					"count": 190,
+					"maximum": 72.3899999999966,
+					"mean": 64.224199999996,
+					"minimum": 56.5659999999962,
+					"score_total": 12202.5979999992
+				}
+			},
+			"profit": 40722,
+			"reputation": 50.3234785992028,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 219,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 6707,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 34.352380952381,
+						"minimum": 25.0,
+						"score_total": 1442.8
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 100.0,
+						"mean": 82.1448285714249,
+						"minimum": 71.6879999999946,
+						"score_total": 2875.06899999987
+					}
+				},
+				"departures": 77,
+				"profit": 4337,
+				"reputation": 55.3876894638467
+			},
+			"bookings": 227,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 253,
+					"maximum": 35.0,
+					"mean": 34.2351185770751,
+					"minimum": 25.0,
+					"score_total": 8661.485
+				},
+				"stayed": {
+					"count": 223,
+					"maximum": 100.0,
+					"mean": 78.9804932735384,
+					"minimum": 70.1899999999946,
+					"score_total": 17612.6499999991
+				}
+			},
+			"departures": 476,
+			"ending_cash": 27111,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 23835,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6216
+			},
+			"meals": 222,
+			"minimum_cash": 2370,
+			"occupancy": 0.415878472222222,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 211,
+					"maximum": 35.0,
+					"mean": 34.2117772511848,
+					"minimum": 25.0,
+					"score_total": 7218.685
+				},
+				"stayed": {
+					"count": 188,
+					"maximum": 90.2859999999964,
+					"mean": 78.391388297868,
+					"minimum": 70.1899999999946,
+					"score_total": 14737.5809999992
+				}
+			},
+			"profit": 24741,
+			"reputation": 56.4521983010106,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 222,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 37,
+				"cash": 7869,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 34.3577380952381,
+						"minimum": 25.0,
+						"score_total": 1443.025
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 98.2159999999984,
+						"mean": 75.7157941176433,
+						"minimum": 64.661999999995,
+						"score_total": 2574.33699999987
+					}
+				},
+				"departures": 76,
+				"profit": 5499,
+				"reputation": 49.9225249480657
+			},
+			"bookings": 227,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 239,
+					"maximum": 35.0,
+					"mean": 34.2419456066946,
+					"minimum": 25.0,
+					"score_total": 8183.825
+				},
+				"stayed": {
+					"count": 223,
+					"maximum": 98.2159999999984,
+					"mean": 71.5778565022379,
+					"minimum": 63.454999999995,
+					"score_total": 15961.8619999991
+				}
+			},
+			"departures": 462,
+			"ending_cash": 34916,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 31780,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6076
+			},
+			"meals": 217,
+			"minimum_cash": 2370,
+			"occupancy": 0.398458333333333,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 197,
+					"maximum": 35.0,
+					"mean": 34.2172588832487,
+					"minimum": 25.0,
+					"score_total": 6740.8
+				},
+				"stayed": {
+					"count": 189,
+					"maximum": 78.8439999999963,
+					"mean": 70.8334656084613,
+					"minimum": 63.454999999995,
+					"score_total": 13387.5249999992
+				}
+			},
+			"profit": 32546,
+			"reputation": 49.7971751540008,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 217,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 37,
+				"cash": 9164,
+				"cohorts": {
+					"no_stay": {
+						"count": 40,
+						"maximum": 35.0,
+						"mean": 34.327875,
+						"minimum": 25.0,
+						"score_total": 1373.115
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 90.7159999999984,
+						"mean": 68.3202352941141,
+						"minimum": 56.7439999999959,
+						"score_total": 2322.88799999988
+					}
+				},
+				"departures": 74,
+				"profit": 6794,
+				"reputation": 47.3740899866943
+			},
+			"bookings": 223,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 227,
+					"maximum": 35.0,
+					"mean": 34.3845594713656,
+					"minimum": 25.0,
+					"score_total": 7805.295
+				},
+				"stayed": {
+					"count": 220,
+					"maximum": 90.7159999999984,
+					"mean": 64.2871181818142,
+					"minimum": 54.5679999999957,
+					"score_total": 14143.1659999991
+				}
+			},
+			"departures": 447,
+			"ending_cash": 42161,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 39025,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6076
+			},
+			"meals": 217,
+			"minimum_cash": 2370,
+			"occupancy": 0.404798611111111,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 187,
+					"maximum": 35.0,
+					"mean": 34.3966844919786,
+					"minimum": 25.0,
+					"score_total": 6432.18
+				},
+				"stayed": {
+					"count": 186,
+					"maximum": 73.9519999999965,
+					"mean": 63.549881720426,
+					"minimum": 54.5679999999957,
+					"score_total": 11820.2779999992
+				}
+			},
+			"profit": 39791,
+			"reputation": 46.4775185304521,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 217,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 6728,
+				"cohorts": {
+					"no_stay": {
+						"count": 41,
+						"maximum": 34.865,
+						"mean": 34.0985365853658,
+						"minimum": 25.0,
+						"score_total": 1398.04
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 99.8039999999994,
+						"mean": 83.6968285714252,
+						"minimum": 73.4339999999959,
+						"score_total": 2929.38899999988
+					}
+				},
+				"departures": 76,
+				"profit": 4358,
+				"reputation": 56.3387682740642
+			},
+			"bookings": 228,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 254,
+					"maximum": 35.0,
+					"mean": 34.2390748031496,
+					"minimum": 25.0,
+					"score_total": 8696.72499999999
+				},
+				"stayed": {
+					"count": 223,
+					"maximum": 99.8039999999994,
+					"mean": 78.9360672645697,
+					"minimum": 71.4139999999947,
+					"score_total": 17602.742999999
+				}
+			},
+			"departures": 477,
+			"ending_cash": 27132,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 23940,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6132
+			},
+			"meals": 219,
+			"minimum_cash": 2370,
+			"occupancy": 0.414868055555556,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 213,
+					"maximum": 35.0,
+					"mean": 34.2661267605634,
+					"minimum": 25.0,
+					"score_total": 7298.685
+				},
+				"stayed": {
+					"count": 188,
+					"maximum": 88.7659999999965,
+					"mean": 78.0497553191446,
+					"minimum": 71.4139999999947,
+					"score_total": 14673.3539999992
+				}
+			},
+			"profit": 24762,
+			"reputation": 57.4450655807456,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 219,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 8093,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 34.865,
+						"mean": 34.3117948717949,
+						"minimum": 25.0,
+						"score_total": 1338.16
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 94.8039999999994,
+						"mean": 76.5622285714249,
+						"minimum": 66.5769999999952,
+						"score_total": 2679.67799999987
+					}
+				},
+				"departures": 74,
+				"profit": 5723,
+				"reputation": 54.2370723792133
+			},
+			"bookings": 228,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 239,
+					"maximum": 35.0,
+					"mean": 34.2837866108786,
+					"minimum": 25.0,
+					"score_total": 8193.82499999999
+				},
+				"stayed": {
+					"count": 225,
+					"maximum": 94.8039999999994,
+					"mean": 71.7681111111068,
+					"minimum": 64.6789999999951,
+					"score_total": 16147.824999999
+				}
+			},
+			"departures": 464,
+			"ending_cash": 35112,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 31920,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6132
+			},
+			"meals": 219,
+			"minimum_cash": 2370,
+			"occupancy": 0.408350694444444,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 200,
+					"maximum": 35.0,
+					"mean": 34.278325,
+					"minimum": 25.0,
+					"score_total": 6855.665
+				},
+				"stayed": {
+					"count": 190,
+					"maximum": 78.0709999999961,
+					"mean": 70.8849842105219,
+					"minimum": 64.6789999999951,
+					"score_total": 13468.1469999992
+				}
+			},
+			"profit": 32742,
+			"reputation": 53.2234524263008,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 219,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 1,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 9255,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 34.865,
+						"mean": 34.564358974359,
+						"minimum": 25.0,
+						"score_total": 1348.01
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 89.8039999999994,
+						"mean": 70.312714285711,
+						"minimum": 59.8189999999958,
+						"score_total": 2460.94499999988
+					}
+				},
+				"departures": 74,
+				"profit": 6885,
+				"reputation": 49.9776791293831
+			},
+			"bookings": 232,
+			"capital_spent": 9630,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 222,
+					"maximum": 35.0,
+					"mean": 34.4204054054054,
+					"minimum": 25.0,
+					"score_total": 7641.33
+				},
+				"stayed": {
+					"count": 228,
+					"maximum": 89.8039999999994,
+					"mean": 64.4608640350838,
+					"minimum": 55.5389999999955,
+					"score_total": 14697.0769999991
+				}
+			},
+			"departures": 450,
+			"ending_cash": 43792,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 40600,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6132
+			},
+			"meals": 219,
+			"minimum_cash": 2370,
+			"occupancy": 0.407347222222222,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 183,
+					"maximum": 35.0,
+					"mean": 34.3897267759563,
+					"minimum": 25.0,
+					"score_total": 6293.32
+				},
+				"stayed": {
+					"count": 193,
+					"maximum": 72.5349999999966,
+					"mean": 63.3996476683898,
+					"minimum": 55.5389999999955,
+					"score_total": 12236.1319999992
+				}
+			},
+			"profit": 41422,
+			"reputation": 51.8296405122751,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 219,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": []
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 6651,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 33.882619047619,
+						"minimum": 25.0,
+						"score_total": 1423.07
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 99.8079999999999,
+						"mean": 81.5061142857106,
+						"minimum": 70.8509999999945,
+						"score_total": 2852.71399999987
+					}
+				},
+				"departures": 77,
+				"profit": 4281,
+				"reputation": 58.2933539876895
+			},
+			"bookings": 225,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 261,
+					"maximum": 35.0,
+					"mean": 34.1756130268199,
+					"minimum": 25.0,
+					"score_total": 8919.83499999999
+				},
+				"stayed": {
+					"count": 222,
+					"maximum": 99.8079999999999,
+					"mean": 81.3197567567526,
+					"minimum": 70.8509999999945,
+					"score_total": 18052.9859999991
+				}
+			},
+			"departures": 483,
+			"ending_cash": 27827,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 28487,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5880
+			},
+			"meals": 210,
+			"minimum_cash": 2370,
+			"occupancy": 0.405520833333333,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 219,
+					"maximum": 35.0,
+					"mean": 34.231803652968,
+					"minimum": 25.0,
+					"score_total": 7496.76499999999
+				},
+				"stayed": {
+					"count": 187,
+					"maximum": 90.2049999999966,
+					"mean": 81.2848770053433,
+					"minimum": 72.5139999999945,
+					"score_total": 15200.2719999992
+				}
+			},
+			"profit": 28257,
+			"reputation": 58.5718918683838,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 210,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 3851,
+					"cash_before": 6651,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 8009,
+				"cohorts": {
+					"no_stay": {
+						"count": 41,
+						"maximum": 34.94,
+						"mean": 34.0981707317073,
+						"minimum": 25.0,
+						"score_total": 1398.025
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 96.8319999999989,
+						"mean": 75.0589411764668,
+						"minimum": 61.697999999995,
+						"score_total": 2552.00399999987
+					}
+				},
+				"departures": 75,
+				"profit": 5639,
+				"reputation": 51.5179090696057
+			},
+			"bookings": 230,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 243,
+					"maximum": 35.0,
+					"mean": 34.1681687242798,
+					"minimum": 25.0,
+					"score_total": 8302.86499999999
+				},
+				"stayed": {
+					"count": 226,
+					"maximum": 96.8319999999989,
+					"mean": 74.1243318584028,
+					"minimum": 61.697999999995,
+					"score_total": 16752.098999999
+				}
+			},
+			"departures": 469,
+			"ending_cash": 38596,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 38920,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6216
+			},
+			"meals": 222,
+			"minimum_cash": 2370,
+			"occupancy": 0.417763888888889,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 202,
+					"maximum": 35.0,
+					"mean": 34.1823762376237,
+					"minimum": 25.0,
+					"score_total": 6904.83999999999
+				},
+				"stayed": {
+					"count": 192,
+					"maximum": 83.0109999999966,
+					"mean": 73.9588281249957,
+					"minimum": 65.9619999999947,
+					"score_total": 14200.0949999992
+				}
+			},
+			"profit": 39026,
+			"reputation": 51.5401358480381,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 222,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 5209,
+					"cash_before": 8009,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 9514,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 35.0,
+						"mean": 34.0673076923077,
+						"minimum": 25.0,
+						"score_total": 1328.625
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 89.3319999999989,
+						"mean": 68.0064571428536,
+						"minimum": 57.2019999999956,
+						"score_total": 2380.22599999988
+					}
+				},
+				"departures": 74,
+				"profit": 7144,
+				"reputation": 49.6958957645059
+			},
+			"bookings": 227,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 229,
+					"maximum": 35.0,
+					"mean": 34.343711790393,
+					"minimum": 25.0,
+					"score_total": 7864.71
+				},
+				"stayed": {
+					"count": 224,
+					"maximum": 89.3319999999989,
+					"mean": 66.9692142857103,
+					"minimum": 57.2019999999956,
+					"score_total": 15001.1039999991
+				}
+			},
+			"departures": 453,
+			"ending_cash": 47505,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 47997,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6048
+			},
+			"meals": 216,
+			"minimum_cash": 2370,
+			"occupancy": 0.409916666666667,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 190,
+					"maximum": 35.0,
+					"mean": 34.400447368421,
+					"minimum": 25.0,
+					"score_total": 6536.085
+				},
+				"stayed": {
+					"count": 189,
+					"maximum": 74.4329999999963,
+					"mean": 66.7771322751281,
+					"minimum": 57.5089999999962,
+					"score_total": 12620.8779999992
+				}
+			},
+			"profit": 47935,
+			"reputation": 50.8271062913164,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 216,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 6714,
+					"cash_before": 9514,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 6707,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 34.352380952381,
+						"minimum": 25.0,
+						"score_total": 1442.8
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 100.0,
+						"mean": 82.1448285714249,
+						"minimum": 71.6879999999946,
+						"score_total": 2875.06899999987
+					}
+				},
+				"departures": 77,
+				"profit": 4337,
+				"reputation": 55.3876894638467
+			},
+			"bookings": 226,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 258,
+					"maximum": 35.0,
+					"mean": 34.1701550387597,
+					"minimum": 25.0,
+					"score_total": 8815.9
+				},
+				"stayed": {
+					"count": 222,
+					"maximum": 100.0,
+					"mean": 80.7557297297255,
+					"minimum": 71.4259999999947,
+					"score_total": 17927.7719999991
+				}
+			},
+			"departures": 480,
+			"ending_cash": 27986,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 28618,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5908
+			},
+			"meals": 211,
+			"minimum_cash": 2370,
+			"occupancy": 0.40296875,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 216,
+					"maximum": 35.0,
+					"mean": 34.1347222222222,
+					"minimum": 25.0,
+					"score_total": 7373.1
+				},
+				"stayed": {
+					"count": 187,
+					"maximum": 92.9619999999966,
+					"mean": 80.49573796791,
+					"minimum": 71.4259999999947,
+					"score_total": 15052.7029999992
+				}
+			},
+			"profit": 28416,
+			"reputation": 57.6680480908737,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 211,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 3907,
+					"cash_before": 6707,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 37,
+				"cash": 7869,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 34.3577380952381,
+						"minimum": 25.0,
+						"score_total": 1443.025
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 98.2159999999984,
+						"mean": 75.7157941176433,
+						"minimum": 64.661999999995,
+						"score_total": 2574.33699999987
+					}
+				},
+				"departures": 76,
+				"profit": 5499,
+				"reputation": 49.9225249480657
+			},
+			"bookings": 224,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 246,
+					"maximum": 35.0,
+					"mean": 34.2585162601626,
+					"minimum": 25.0,
+					"score_total": 8427.595
+				},
+				"stayed": {
+					"count": 220,
+					"maximum": 98.2159999999984,
+					"mean": 74.1492727272685,
+					"minimum": 64.661999999995,
+					"score_total": 16312.8399999991
+				}
+			},
+			"departures": 466,
+			"ending_cash": 37357,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 37905,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5992
+			},
+			"meals": 214,
+			"minimum_cash": 2370,
+			"occupancy": 0.401038194444444,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 204,
+					"maximum": 35.0,
+					"mean": 34.2380882352941,
+					"minimum": 25.0,
+					"score_total": 6984.57
+				},
+				"stayed": {
+					"count": 186,
+					"maximum": 83.1449999999964,
+					"mean": 73.8629193548344,
+					"minimum": 65.7299999999946,
+					"score_total": 13738.5029999992
+				}
+			},
+			"profit": 37787,
+			"reputation": 51.8476498707637,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 214,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 5069,
+					"cash_before": 7869,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 37,
+				"cash": 9164,
+				"cohorts": {
+					"no_stay": {
+						"count": 40,
+						"maximum": 35.0,
+						"mean": 34.327875,
+						"minimum": 25.0,
+						"score_total": 1373.115
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 90.7159999999984,
+						"mean": 68.3202352941141,
+						"minimum": 56.7439999999959,
+						"score_total": 2322.88799999988
+					}
+				},
+				"departures": 74,
+				"profit": 6794,
+				"reputation": 47.3740899866943
+			},
+			"bookings": 226,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 229,
+					"maximum": 35.0,
+					"mean": 34.3865283842795,
+					"minimum": 25.0,
+					"score_total": 7874.515
+				},
+				"stayed": {
+					"count": 222,
+					"maximum": 90.7159999999984,
+					"mean": 66.5311846846807,
+					"minimum": 56.7439999999959,
+					"score_total": 14769.9229999991
+				}
+			},
+			"departures": 451,
+			"ending_cash": 47458,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 47866,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6132
+			},
+			"meals": 219,
+			"minimum_cash": 2370,
+			"occupancy": 0.412284722222222,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 189,
+					"maximum": 35.0,
+					"mean": 34.3989417989418,
+					"minimum": 25.0,
+					"score_total": 6501.4
+				},
+				"stayed": {
+					"count": 188,
+					"maximum": 74.006999999996,
+					"mean": 66.2076329787193,
+					"minimum": 57.6829999999955,
+					"score_total": 12447.0349999992
+				}
+			},
+			"profit": 47888,
+			"reputation": 50.2497877379924,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 219,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 6364,
+					"cash_before": 9164,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 6728,
+				"cohorts": {
+					"no_stay": {
+						"count": 41,
+						"maximum": 34.865,
+						"mean": 34.0985365853658,
+						"minimum": 25.0,
+						"score_total": 1398.04
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 99.8039999999994,
+						"mean": 83.6968285714252,
+						"minimum": 73.4339999999959,
+						"score_total": 2929.38899999988
+					}
+				},
+				"departures": 76,
+				"profit": 4358,
+				"reputation": 56.3387682740642
+			},
+			"bookings": 226,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 261,
+					"maximum": 35.0,
+					"mean": 34.2163984674329,
+					"minimum": 25.0,
+					"score_total": 8930.48
+				},
+				"stayed": {
+					"count": 223,
+					"maximum": 99.8039999999994,
+					"mean": 81.1212825112065,
+					"minimum": 73.2799999999945,
+					"score_total": 18090.045999999
+				}
+			},
+			"departures": 484,
+			"ending_cash": 28044,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 28592,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5992
+			},
+			"meals": 214,
+			"minimum_cash": 2370,
+			"occupancy": 0.412434027777778,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 220,
+					"maximum": 35.0,
+					"mean": 34.2383636363636,
+					"minimum": 25.0,
+					"score_total": 7532.44
+				},
+				"stayed": {
+					"count": 188,
+					"maximum": 90.0599999999961,
+					"mean": 80.6417925531871,
+					"minimum": 73.2799999999945,
+					"score_total": 15160.6569999992
+				}
+			},
+			"profit": 28474,
+			"reputation": 54.3604316456392,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 214,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 3928,
+					"cash_before": 6728,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 8093,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 34.865,
+						"mean": 34.3117948717949,
+						"minimum": 25.0,
+						"score_total": 1338.16
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 94.8039999999994,
+						"mean": 76.5622285714249,
+						"minimum": 66.5769999999952,
+						"score_total": 2679.67799999987
+					}
+				},
+				"departures": 74,
+				"profit": 5723,
+				"reputation": 54.2370723792133
+			},
+			"bookings": 226,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 246,
+					"maximum": 35.0,
+					"mean": 34.3401829268292,
+					"minimum": 25.0,
+					"score_total": 8447.68499999999
+				},
+				"stayed": {
+					"count": 222,
+					"maximum": 94.8039999999994,
+					"mean": 73.6116126126082,
+					"minimum": 66.1979999999949,
+					"score_total": 16341.777999999
+				}
+			},
+			"departures": 468,
+			"ending_cash": 37693,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 38185,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6048
+			},
+			"meals": 216,
+			"minimum_cash": 2370,
+			"occupancy": 0.407010416666667,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 207,
+					"maximum": 35.0,
+					"mean": 34.3455314009662,
+					"minimum": 25.0,
+					"score_total": 7109.525
+				},
+				"stayed": {
+					"count": 187,
+					"maximum": 81.768999999996,
+					"mean": 73.0593582887656,
+					"minimum": 66.1979999999949,
+					"score_total": 13662.0999999992
+				}
+			},
+			"profit": 38123,
+			"reputation": 50.1277771949884,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 216,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 5293,
+					"cash_before": 8093,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 2,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 9255,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 34.865,
+						"mean": 34.564358974359,
+						"minimum": 25.0,
+						"score_total": 1348.01
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 89.8039999999994,
+						"mean": 70.312714285711,
+						"minimum": 59.8189999999958,
+						"score_total": 2460.94499999988
+					}
+				},
+				"departures": 74,
+				"profit": 6885,
+				"reputation": 49.9776791293831
+			},
+			"bookings": 228,
+			"capital_spent": 12430,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 228,
+					"maximum": 35.0,
+					"mean": 34.389100877193,
+					"minimum": 25.0,
+					"score_total": 7840.715
+				},
+				"stayed": {
+					"count": 225,
+					"maximum": 89.8039999999994,
+					"mean": 66.7000266666627,
+					"minimum": 57.5389999999955,
+					"score_total": 15007.5059999991
+				}
+			},
+			"departures": 453,
+			"ending_cash": 47768,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 48260,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6048
+			},
+			"meals": 216,
+			"minimum_cash": 2370,
+			"occupancy": 0.406951388888889,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 189,
+					"maximum": 35.0,
+					"mean": 34.3529365079365,
+					"minimum": 25.0,
+					"score_total": 6492.705
+				},
+				"stayed": {
+					"count": 190,
+					"maximum": 76.2239999999961,
+					"mean": 66.0345315789432,
+					"minimum": 57.5389999999955,
+					"score_total": 12546.5609999992
+				}
+			},
+			"profit": 48198,
+			"reputation": 53.5748444685716,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 216,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 6455,
+					"cash_before": 9255,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 6651,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 33.882619047619,
+						"minimum": 25.0,
+						"score_total": 1423.07
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 99.8079999999999,
+						"mean": 81.5061142857106,
+						"minimum": 70.8509999999945,
+						"score_total": 2852.71399999987
+					}
+				},
+				"departures": 77,
+				"profit": 4281,
+				"reputation": 58.2933539876895
+			},
+			"bookings": 225,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 265,
+					"maximum": 35.0,
+					"mean": 34.1483396226415,
+					"minimum": 25.0,
+					"score_total": 9049.30999999999
+				},
+				"stayed": {
+					"count": 221,
+					"maximum": 99.8079999999999,
+					"mean": 82.683542986421,
+					"minimum": 70.8509999999945,
+					"score_total": 18273.0629999991
+				}
+			},
+			"departures": 486,
+			"ending_cash": 25563,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 31511,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5992
+			},
+			"meals": 214,
+			"minimum_cash": 2370,
+			"occupancy": 0.409277777777778,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 223,
+					"maximum": 35.0,
+					"mean": 34.1983856502242,
+					"minimum": 25.0,
+					"score_total": 7626.24
+				},
+				"stayed": {
+					"count": 186,
+					"maximum": 92.3759999999962,
+					"mean": 82.9051021505333,
+					"minimum": 74.1269999999958,
+					"score_total": 15420.3489999992
+				}
+			},
+			"profit": 30793,
+			"reputation": 56.7419870431335,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 214,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 3851,
+					"cash_before": 6651,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 8662,
+					"cash_before": 13462,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 8009,
+				"cohorts": {
+					"no_stay": {
+						"count": 41,
+						"maximum": 34.94,
+						"mean": 34.0981707317073,
+						"minimum": 25.0,
+						"score_total": 1398.025
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 96.8319999999989,
+						"mean": 75.0589411764668,
+						"minimum": 61.697999999995,
+						"score_total": 2552.00399999987
+					}
+				},
+				"departures": 75,
+				"profit": 5639,
+				"reputation": 51.5179090696057
+			},
+			"bookings": 229,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 247,
+					"maximum": 35.0,
+					"mean": 34.2575708502024,
+					"minimum": 25.0,
+					"score_total": 8461.62
+				},
+				"stayed": {
+					"count": 226,
+					"maximum": 96.8319999999989,
+					"mean": 75.3281327433586,
+					"minimum": 61.697999999995,
+					"score_total": 17024.157999999
+				}
+			},
+			"departures": 473,
+			"ending_cash": 36927,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 42735,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6132
+			},
+			"meals": 219,
+			"minimum_cash": 2370,
+			"occupancy": 0.414020833333333,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 206,
+					"maximum": 35.0,
+					"mean": 34.2892961165048,
+					"minimum": 25.0,
+					"score_total": 7063.59499999999
+				},
+				"stayed": {
+					"count": 192,
+					"maximum": 85.7629999999964,
+					"mean": 75.375802083329,
+					"minimum": 67.7949999999953,
+					"score_total": 14472.1539999992
+				}
+			},
+			"profit": 42157,
+			"reputation": 56.7778033801546,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 219,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 5209,
+					"cash_before": 8009,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 13866,
+					"cash_before": 18666,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 9514,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 35.0,
+						"mean": 34.0673076923077,
+						"minimum": 25.0,
+						"score_total": 1328.625
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 89.3319999999989,
+						"mean": 68.0064571428536,
+						"minimum": 57.2019999999956,
+						"score_total": 2380.22599999988
+					}
+				},
+				"departures": 74,
+				"profit": 7144,
+				"reputation": 49.6958957645059
+			},
+			"bookings": 229,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 231,
+					"maximum": 35.0,
+					"mean": 34.3481601731602,
+					"minimum": 25.0,
+					"score_total": 7934.42499999999
+				},
+				"stayed": {
+					"count": 225,
+					"maximum": 89.3319999999989,
+					"mean": 68.3369155555515,
+					"minimum": 57.2019999999956,
+					"score_total": 15375.8059999991
+				}
+			},
+			"departures": 456,
+			"ending_cash": 47627,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 53407,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6160
+			},
+			"meals": 220,
+			"minimum_cash": 2370,
+			"occupancy": 0.419420138888889,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 192,
+					"maximum": 35.0,
+					"mean": 34.4052083333333,
+					"minimum": 25.0,
+					"score_total": 6605.8
+				},
+				"stayed": {
+					"count": 190,
+					"maximum": 78.429999999996,
+					"mean": 68.39778947368,
+					"minimum": 58.9829999999955,
+					"score_total": 12995.5799999992
+				}
+			},
+			"profit": 52857,
+			"reputation": 50.4893668681419,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"service_percent": 100,
+			"service_uses": 220,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 6714,
+					"cash_before": 9514,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 18731,
+					"cash_before": 23531,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 6707,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 34.352380952381,
+						"minimum": 25.0,
+						"score_total": 1442.8
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 100.0,
+						"mean": 82.1448285714249,
+						"minimum": 71.6879999999946,
+						"score_total": 2875.06899999987
+					}
+				},
+				"departures": 77,
+				"profit": 4337,
+				"reputation": 55.3876894638467
+			},
+			"bookings": 227,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 260,
+					"maximum": 35.0,
+					"mean": 34.17475,
+					"minimum": 25.0,
+					"score_total": 8885.435
+				},
+				"stayed": {
+					"count": 223,
+					"maximum": 100.0,
+					"mean": 82.0094708520137,
+					"minimum": 71.4259999999947,
+					"score_total": 18288.1119999991
+				}
+			},
+			"departures": 483,
+			"ending_cash": 25825,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 31773,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5992
+			},
+			"meals": 214,
+			"minimum_cash": 2370,
+			"occupancy": 0.41165625,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 218,
+					"maximum": 35.0,
+					"mean": 34.1405275229358,
+					"minimum": 25.0,
+					"score_total": 7442.635
+				},
+				"stayed": {
+					"count": 188,
+					"maximum": 94.6409999999964,
+					"mean": 81.9842712765914,
+					"minimum": 71.4259999999947,
+					"score_total": 15413.0429999992
+				}
+			},
+			"profit": 31055,
+			"reputation": 57.0256152334892,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 214,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 3907,
+					"cash_before": 6707,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 9036,
+					"cash_before": 13836,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 37,
+				"cash": 7869,
+				"cohorts": {
+					"no_stay": {
+						"count": 42,
+						"maximum": 35.0,
+						"mean": 34.3577380952381,
+						"minimum": 25.0,
+						"score_total": 1443.025
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 98.2159999999984,
+						"mean": 75.7157941176433,
+						"minimum": 64.661999999995,
+						"score_total": 2574.33699999987
+					}
+				},
+				"departures": 76,
+				"profit": 5499,
+				"reputation": 49.9225249480657
+			},
+			"bookings": 222,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 251,
+					"maximum": 35.0,
+					"mean": 34.27,
+					"minimum": 25.0,
+					"score_total": 8601.77
+				},
+				"stayed": {
+					"count": 219,
+					"maximum": 98.2159999999984,
+					"mean": 75.5821004566168,
+					"minimum": 64.661999999995,
+					"score_total": 16552.4799999991
+				}
+			},
+			"departures": 470,
+			"ending_cash": 35380,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 41440,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5880
+			},
+			"meals": 210,
+			"minimum_cash": 2370,
+			"occupancy": 0.398649305555556,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 209,
+					"maximum": 35.0,
+					"mean": 34.2523684210526,
+					"minimum": 25.0,
+					"score_total": 7158.745
+				},
+				"stayed": {
+					"count": 185,
+					"maximum": 86.6069999999963,
+					"mean": 75.5575297297254,
+					"minimum": 65.7299999999946,
+					"score_total": 13978.1429999992
+				}
+			},
+			"profit": 40610,
+			"reputation": 53.7507055990999,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 210,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 5069,
+					"cash_before": 7869,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 13033,
+					"cash_before": 17833,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 37,
+				"cash": 9164,
+				"cohorts": {
+					"no_stay": {
+						"count": 40,
+						"maximum": 35.0,
+						"mean": 34.327875,
+						"minimum": 25.0,
+						"score_total": 1373.115
+					},
+					"stayed": {
+						"count": 34,
+						"maximum": 90.7159999999984,
+						"mean": 68.3202352941141,
+						"minimum": 56.7439999999959,
+						"score_total": 2322.88799999988
+					}
+				},
+				"departures": 74,
+				"profit": 6794,
+				"reputation": 47.3740899866943
+			},
+			"bookings": 223,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 233,
+					"maximum": 35.0,
+					"mean": 34.3955793991416,
+					"minimum": 25.0,
+					"score_total": 8014.17
+				},
+				"stayed": {
+					"count": 220,
+					"maximum": 90.7159999999984,
+					"mean": 67.667409090905,
+					"minimum": 56.7439999999959,
+					"score_total": 14886.8299999991
+				}
+			},
+			"departures": 453,
+			"ending_cash": 46017,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 52049,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 5908
+			},
+			"meals": 211,
+			"minimum_cash": 2370,
+			"occupancy": 0.412951388888889,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 193,
+					"maximum": 35.0,
+					"mean": 34.4096113989637,
+					"minimum": 25.0,
+					"score_total": 6641.055
+				},
+				"stayed": {
+					"count": 186,
+					"maximum": 76.5979999999959,
+					"mean": 67.5480752688131,
+					"minimum": 58.0979999999956,
+					"score_total": 12563.9419999992
+				}
+			},
+			"profit": 51247,
+			"reputation": 52.8461801898934,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"service_percent": 100,
+			"service_uses": 211,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 6364,
+					"cash_before": 9164,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 18134,
+					"cash_before": 22934,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 6728,
+				"cohorts": {
+					"no_stay": {
+						"count": 41,
+						"maximum": 34.865,
+						"mean": 34.0985365853658,
+						"minimum": 25.0,
+						"score_total": 1398.04
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 99.8039999999994,
+						"mean": 83.6968285714252,
+						"minimum": 73.4339999999959,
+						"score_total": 2929.38899999988
+					}
+				},
+				"departures": 76,
+				"profit": 4358,
+				"reputation": 56.3387682740642
+			},
+			"bookings": 225,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 264,
+					"maximum": 35.0,
+					"mean": 34.1869696969697,
+					"minimum": 25.0,
+					"score_total": 9025.35999999999
+				},
+				"stayed": {
+					"count": 222,
+					"maximum": 99.8039999999994,
+					"mean": 82.6932522522479,
+					"minimum": 73.4339999999959,
+					"score_total": 18357.901999999
+				}
+			},
+			"departures": 486,
+			"ending_cash": 25511,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 31431,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6020
+			},
+			"meals": 215,
+			"minimum_cash": 2370,
+			"occupancy": 0.415142361111111,
+			"percent": 75,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 223,
+					"maximum": 35.0,
+					"mean": 34.2032286995516,
+					"minimum": 25.0,
+					"score_total": 7627.32
+				},
+				"stayed": {
+					"count": 187,
+					"maximum": 93.8519999999963,
+					"mean": 82.505417112295,
+					"minimum": 73.9639999999956,
+					"score_total": 15428.5129999992
+				}
+			},
+			"profit": 30741,
+			"reputation": 58.1799019888812,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 215,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 3928,
+					"cash_before": 6728,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 8954,
+					"cash_before": 13754,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 39,
+				"cash": 8093,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 34.865,
+						"mean": 34.3117948717949,
+						"minimum": 25.0,
+						"score_total": 1338.16
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 94.8039999999994,
+						"mean": 76.5622285714249,
+						"minimum": 66.5769999999952,
+						"score_total": 2679.67799999987
+					}
+				},
+				"departures": 74,
+				"profit": 5723,
+				"reputation": 54.2370723792133
+			},
+			"bookings": 229,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 247,
+					"maximum": 35.0,
+					"mean": 34.3409109311741,
+					"minimum": 25.0,
+					"score_total": 8482.20499999999
+				},
+				"stayed": {
+					"count": 226,
+					"maximum": 94.8039999999994,
+					"mean": 75.0725353982258,
+					"minimum": 66.047999999995,
+					"score_total": 16966.392999999
+				}
+			},
+			"departures": 473,
+			"ending_cash": 36836,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 42700,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6076
+			},
+			"meals": 217,
+			"minimum_cash": 2370,
+			"occupancy": 0.41278125,
+			"percent": 100,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 208,
+					"maximum": 35.0,
+					"mean": 34.3463701923077,
+					"minimum": 25.0,
+					"score_total": 7144.045
+				},
+				"stayed": {
+					"count": 191,
+					"maximum": 88.6999999999966,
+					"mean": 74.7995549738176,
+					"minimum": 66.047999999995,
+					"score_total": 14286.7149999992
+				}
+			},
+			"profit": 42066,
+			"reputation": 57.4131270758606,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 217,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 5293,
+					"cash_before": 8093,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 13719,
+					"cash_before": 18519,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		},
+		{
+			"bedroom_level": 3,
+			"bedrooms": 8,
+			"before_upgrades": {
+				"bookings": 38,
+				"cash": 9255,
+				"cohorts": {
+					"no_stay": {
+						"count": 39,
+						"maximum": 34.865,
+						"mean": 34.564358974359,
+						"minimum": 25.0,
+						"score_total": 1348.01
+					},
+					"stayed": {
+						"count": 35,
+						"maximum": 89.8039999999994,
+						"mean": 70.312714285711,
+						"minimum": 59.8189999999958,
+						"score_total": 2460.94499999988
+					}
+				},
+				"departures": 74,
+				"profit": 6885,
+				"reputation": 49.9776791293831
+			},
+			"bookings": 229,
+			"capital_spent": 17230,
+			"construction_cash": 2370,
+			"departure_cohorts": {
+				"no_stay": {
+					"count": 232,
+					"maximum": 35.0,
+					"mean": 34.3120689655172,
+					"minimum": 25.0,
+					"score_total": 7960.4
+				},
+				"stayed": {
+					"count": 225,
+					"maximum": 89.8039999999994,
+					"mean": 68.152959999996,
+					"minimum": 57.5389999999955,
+					"score_total": 15334.4159999991
+				}
+			},
+			"departures": 457,
+			"ending_cash": 47715,
+			"expanded": false,
+			"income_by_type": {
+				"bedroom": 53495,
+				"elevator": 0,
+				"reception": 0,
+				"restaurant": 6160
+			},
+			"meals": 220,
+			"minimum_cash": 2370,
+			"occupancy": 0.420451388888889,
+			"percent": 125,
+			"post_day5_cohorts": {
+				"no_stay": {
+					"count": 193,
+					"maximum": 35.0,
+					"mean": 34.2610880829015,
+					"minimum": 25.0,
+					"score_total": 6612.39
+				},
+				"stayed": {
+					"count": 190,
+					"maximum": 80.9429999999968,
+					"mean": 67.7551105263116,
+					"minimum": 57.5389999999955,
+					"score_total": 12873.4709999992
+				}
+			},
+			"profit": 52945,
+			"reputation": 52.1038133097076,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"service_percent": 100,
+			"service_uses": 220,
+			"starting_cash": 12000,
+			"ticks": 36000,
+			"upgrade_events": [
+				{
+					"cash_after": 6455,
+					"cash_before": 9255,
+					"level": 2,
+					"rooms": 8,
+					"spent": 2800,
+					"tick": 6001
+				},
+				{
+					"cash_after": 18416,
+					"cash_before": 23216,
+					"level": 3,
+					"rooms": 8,
+					"spent": 4800,
+					"tick": 18001
+				}
+			]
+		}
+	]
+}

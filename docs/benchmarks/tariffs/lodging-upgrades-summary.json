@@ -1,0 +1,178 @@
+{
+  "scenarios": 27,
+  "save_checkpoints": 135,
+  "unchanged_n1_references": 9,
+  "groups": [
+    {
+      "bedroom_level": 1,
+      "percent": 75,
+      "profit_mean": 24619.666666666668,
+      "ending_cash_mean": 26989.666666666668,
+      "bookings_mean": 227,
+      "stayed_post_day5_count": 564,
+      "stayed_post_day5_pooled_mean": 78.30301595744255,
+      "cash_difference_vs_n1_by_seed": [
+        0,
+        0,
+        0
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        7.317052403467301,
+        7.557922689406709,
+        7.164771108622688
+      ]
+    },
+    {
+      "bedroom_level": 1,
+      "percent": 100,
+      "profit_mean": 32583.333333333332,
+      "ending_cash_mean": 34953.333333333336,
+      "bookings_mean": 227,
+      "stayed_post_day5_count": 568,
+      "stayed_post_day5_pooled_mean": 70.95630809858733,
+      "cash_difference_vs_n1_by_seed": [
+        0,
+        0,
+        0
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bedroom_level": 1,
+      "percent": 125,
+      "profit_mean": 40645,
+      "ending_cash_mean": 43015,
+      "bookings_mean": 227.66666666666666,
+      "stayed_post_day5_count": 569,
+      "stayed_post_day5_pooled_mean": 63.72409138839649,
+      "cash_difference_vs_n1_by_seed": [
+        0,
+        0,
+        0
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        -6.926651851851503,
+        -7.283583888035295,
+        -7.48533654213211
+      ]
+    },
+    {
+      "bedroom_level": 2,
+      "percent": 75,
+      "profit_mean": 28382.333333333332,
+      "ending_cash_mean": 27952.333333333332,
+      "bookings_mean": 225.66666666666666,
+      "stayed_post_day5_count": 562,
+      "stayed_post_day5_pooled_mean": 80.80717437721992,
+      "cash_difference_vs_n1_by_seed": [
+        1101,
+        875,
+        912
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        7.326048880347599,
+        6.6328186130755995,
+        7.582434264421508
+      ]
+    },
+    {
+      "bedroom_level": 2,
+      "percent": 100,
+      "profit_mean": 38312,
+      "ending_cash_mean": 37882,
+      "bookings_mean": 226.66666666666666,
+      "stayed_post_day5_count": 565,
+      "stayed_post_day5_pooled_mean": 73.62955398229664,
+      "cash_difference_vs_n1_by_seed": [
+        3764,
+        2441,
+        2581
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bedroom_level": 2,
+      "percent": 125,
+      "profit_mean": 48007,
+      "ending_cash_mean": 47577,
+      "bookings_mean": 227,
+      "stayed_post_day5_count": 567,
+      "stayed_post_day5_pooled_mean": 66.33946031745609,
+      "cash_difference_vs_n1_by_seed": [
+        4413,
+        5297,
+        3976
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        -7.181695849867609,
+        -7.6552863761151,
+        -7.024826709822392
+      ]
+    },
+    {
+      "bedroom_level": 3,
+      "percent": 75,
+      "profit_mean": 30863,
+      "ending_cash_mean": 25633,
+      "bookings_mean": 225.66666666666666,
+      "stayed_post_day5_count": 561,
+      "stayed_post_day5_pooled_mean": 82.46328877004919,
+      "cash_difference_vs_n1_by_seed": [
+        -1163,
+        -1286,
+        -1621
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        7.529300067204289,
+        6.426741546865998,
+        7.7058621384774
+      ]
+    },
+    {
+      "bedroom_level": 3,
+      "percent": 100,
+      "profit_mean": 41611,
+      "ending_cash_mean": 36381,
+      "bookings_mean": 226.66666666666666,
+      "stayed_post_day5_count": 568,
+      "stayed_post_day5_pooled_mean": 75.24121830985493,
+      "cash_difference_vs_n1_by_seed": [
+        2095,
+        464,
+        1724
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bedroom_level": 3,
+      "percent": 125,
+      "profit_mean": 52349.666666666664,
+      "ending_cash_mean": 47119.666666666664,
+      "bookings_mean": 227,
+      "stayed_post_day5_count": 566,
+      "stayed_post_day5_pooled_mean": 67.90281448762828,
+      "cash_difference_vs_n1_by_seed": [
+        4535,
+        3856,
+        3923
+      ],
+      "post_day5_satisfaction_difference_vs_standard_by_seed": [
+        -6.978012609648999,
+        -8.009454460912309,
+        -7.0444444475060095
+      ]
+    }
+  ]
+}

@@ -59,7 +59,7 @@ O modo é opcional e fica fora da bateria rápida.
 ## Resultado — 29/09/2026
 
 27 cenários completos, zero falhas, 135 checkpoints e nove referências N1
-reproduzidas exatamente. Todas as 216 compras N2 e 72 compras N3 planejadas
+reproduzidas exatamente. Todas as 144 compras N2 e 72 compras N3 planejadas
 foram pagas com caixa real. As políticas permaneceram idênticas até o quinto dia.
 
 | Política | Tarifa | Caixa final médio | Satisfação atendidos após dia 5 |
