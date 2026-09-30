@@ -1,0 +1,56 @@
+[
+  {
+    "path": "assets/art/icons/add-floor.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1019299,
+    "sha256": "f70f95fff7bb7494445984da143681d9f778a39c67b6e8192873dbed942d2c37",
+    "generator": "built-in image_gen",
+    "original": "C:\\Users\\GHPXD\\.codex\\generated_images\\01a0a915-2716-7f90-a3cc-87023fafadff\\exec-b6dd2cfc-73b5-45a0-9632-11f8c73dfbd5.png",
+    "opaque_bbox_alpha_gt_100": [
+      236,
+      187,
+      1090,
+      1105
+    ],
+    "transparent_corners": true,
+    "import_limit": 256
+  },
+  {
+    "path": "assets/art/icons/upgrade.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 997533,
+    "sha256": "9245620de99b0589ce249119cc3136930af7c230e920538748d97fa1a843ffc4",
+    "generator": "built-in image_gen",
+    "original": "C:\\Users\\GHPXD\\.codex\\generated_images\\01a0a915-2716-7f90-a3cc-87023fafadff\\exec-498947ad-795f-469c-80aa-a0044382311c.png",
+    "opaque_bbox_alpha_gt_100": [
+      166,
+      128,
+      1124,
+      1119
+    ],
+    "transparent_corners": true,
+    "import_limit": 256
+  },
+  {
+    "path": "assets/art/icons/demolish.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1339443,
+    "sha256": "63c9f72964219d86ceb0cb021d48b56cb76025e28ddcc6d24d48a473671bfdba",
+    "generator": "built-in image_gen",
+    "original": "C:\\Users\\GHPXD\\.codex\\generated_images\\01a0a915-2716-7f90-a3cc-87023fafadff\\exec-f6acd6d4-8638-4a39-bc9f-f5c5f5afeeb5.png",
+    "opaque_bbox_alpha_gt_100": [
+      83,
+      87,
+      1182,
+      1143
+    ],
+    "transparent_corners": true,
+    "import_limit": 256
+  }
+]

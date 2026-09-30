@@ -61,7 +61,7 @@ com vários quartos. Contrate os dois tipos de funcionário antes de abrir chega
 Poucos quartos criam fila na recepção; expansão excessiva pressiona transporte e limpeza.
 
 No Windows deste ambiente: `powershell -File tools/test.ps1 -Visual` executa import,
-11 suítes headless e 15 testes gráficos. Passe `-GodotPath` para outro engine.
+11 suítes headless e 16 testes gráficos. Passe `-GodotPath` para outro engine.
 Testes isolam dados em `.runtime/`; não sobrescrevem seu save normal.
 Acrescente `-Stress` para três suítes adicionais com múltiplas seeds, continuidade de save e transporte com
 100/250/500/1000 agentes. Evidências: [benchmarks](docs/benchmarks/README.md).
@@ -84,7 +84,7 @@ memória do processo, objetivos concluídos, tick de cada conquista, serviços u
 perfis dos hóspedes ainda presentes, estado do evento e falhas.
 Medidas headless não equivalem a FPS com renderização.
 
-Arte atual: 67 PNGs originais, com caminhada, espera, trabalho e repouso da equipe,
+Arte atual: 70 PNGs originais, com caminhada, espera, trabalho e repouso da equipe,
 e ciclos dedicados de dormir, beber, ler sentado e comer para os três perfis. Os usuários admitidos
 nos serviços têm posições visuais separadas; animações acompanham velocidade e pausa.
 Quartos aguardando limpeza têm pinturas próprias nos três níveis. Filas seguem
@@ -94,6 +94,7 @@ personagem leva a rolagem até o cartão e seus dados.
 O catálogo de construção usa seis ícones raster próprios; hóspedes chegam e saem
 com malas de viagem dedicadas aos três perfis.
 Contratação e gestão da equipe usam dois ícones de função dedicados.
+Andar, melhoria e demolição têm três ícones próprios em botões nativos de 32px.
 
 Limitações atuais: seis instalações, três perfis, dois eventos e sem música ambiente.
 Animações usam quatro poses pintadas, com pequenas variações entre quadros. A operação integrada foi medida até 120 hóspedes. Testes

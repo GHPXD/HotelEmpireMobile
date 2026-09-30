@@ -19,7 +19,7 @@ try {
     if ($Stress) { $suites += @('save_multiseed_test', 'stress_test', 'admission_equivalence_test') }
     if ($Soak) { $suites += @('long_run_test') }
     if ($Tariffs) { $suites += @('departure_observer_test', 'tariff_scenarios') }
-    if ($Visual) { $suites += @('ui_smoke', 'ui_resume', 'ui_management', 'ui_progression', 'ui_content', 'ui_operations', 'ui_reviews', 'ui_art', 'ui_culling', 'ui_actor_presentation', 'ui_new_game', 'ui_exit', 'ui_help', 'ui_recovery', 'ui_checkin_diagnostics') }
+    if ($Visual) { $suites += @('ui_smoke', 'ui_resume', 'ui_management', 'ui_action_icons', 'ui_progression', 'ui_content', 'ui_operations', 'ui_reviews', 'ui_art', 'ui_culling', 'ui_actor_presentation', 'ui_new_game', 'ui_exit', 'ui_help', 'ui_recovery', 'ui_checkin_diagnostics') }
     foreach ($suite in $suites) {
         $testLog = Join-Path $runtimeRoot ($suite + '.log')
         $arguments = @('--path', $projectRoot, '--script', ('res://tests/' + $suite + '.gd'), '--log-file', $testLog)

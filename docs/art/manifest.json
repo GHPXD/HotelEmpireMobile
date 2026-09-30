@@ -601,5 +601,32 @@
     "bytes": 819732,
     "sha256": "ff7a51e5b639b7586ba32eb556ace62eb826d6264d659571713184f92934130b",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/add-floor.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1019299,
+    "sha256": "f70f95fff7bb7494445984da143681d9f778a39c67b6e8192873dbed942d2c37",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/upgrade.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 997533,
+    "sha256": "9245620de99b0589ce249119cc3136930af7c230e920538748d97fa1a843ffc4",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/demolish.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1339443,
+    "sha256": "63c9f72964219d86ceb0cb021d48b56cb76025e28ddcc6d24d48a473671bfdba",
+    "generator": "built-in image_gen"
   }
 ]

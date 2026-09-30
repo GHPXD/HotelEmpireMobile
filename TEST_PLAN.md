@@ -455,3 +455,17 @@ de 6120 ticks, 39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas
 Seis combinações do executável extraído passaram, incluindo dois ícones da
 equipe, seis de construção e cinco retratos: docs/release/ui-texture-budget-matrix.json.
 ZIP, documentos e 67 PNGs auditados; kit de compatibilidade atualizado.
+
+## M7 — ícones dos comandos de construção (30/09/2026)
+
+Três novos PNGs RGBA originais do gerador integrado ao chat, sem edição dos
+pixels; hashes e cantos transparentes conferidos. Catálogo atual: 70 PNGs,
+30 texturas de animação, cinco retratos e 11 ícones; novos imports a 256px.
+Quatro scripts válidos pelo gda. Sete suítes gráficas passaram: ui_action_icons,
+ui_content, ui_management, ui_smoke, ui_resume, ui_new_game e ui_progression.
+36 ativações dos comandos em três janelas, dois textos e mouse/Enter, com custo,
+nível, seleção, reembolso, pausa e bounds; falhas de caixa/seleção sem mutação.
+Primeira fixture rolava antes do layout; espera corrigida. Um carregamento durante
+edição parcial do diagnóstico falhou; validação e bateria repetidas após concluir
+as edições. Capturas de expansão/demolição e melhoria em 1024×640/texto ampliado
+inspecionadas em docs/art/hotel-action-*.png. Detalhes em docs/art/action-icons.md.

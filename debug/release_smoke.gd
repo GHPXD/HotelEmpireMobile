@@ -170,6 +170,7 @@ func run(game: Node) -> void:
 		staff_icons_verified += 1
 	game.staff_panel.open_for(HotelSession.new(831))
 	check(not game.staff_panel.role_icon.visible and game.staff_panel.role_icon.texture == null, "exported empty staff list clears icon")
+	var action_icons_verified := await verify_action_icons(game)
 	game.staff_panel.hide()
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
@@ -387,12 +388,45 @@ func run(game: Node) -> void:
 	report["travel_art_verified"] = travel_art_verified
 	report["build_icons_verified"] = build_icons_verified
 	report["staff_icons_verified"] = staff_icons_verified
+	report["action_icons_verified"] = action_icons_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()
 	print(JSON.stringify(report))
 	tree.quit(1 if failures else 0)
+
+func verify_action_icons(game: Node) -> int:
+	var tree: SceneTree = game.get_tree()
+	var verified := 0
+	for action: StringName in [&"add_floor", &"upgrade", &"demolish"]:
+		var session := HotelSession.new(844)
+		session.speed = 0
+		var room := session.hotel.build(HotelCatalog.room(&"reception"), 0, 0)
+		game._replace_session(session)
+		game._inspect_room(room.id)
+		for frame in 3:
+			await tree.process_frame
+		var button: Button = game.hud.action_buttons[action]
+		var texture := HotelArt.action_icon(action)
+		check(button.icon == texture and texture.get_width() == 256 and texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported budgeted action icon")
+		game.hud.sidebar_scroll.ensure_control_visible(button)
+		for frame in 3:
+			await tree.process_frame
+		check(game.hud.sidebar_scroll.get_global_rect().encloses(button.get_global_rect()) and tree.root.get_visible_rect().encloses(button.get_global_rect()), "exported action button bounds")
+		var cash := session.economy.cash
+		var cost := room.next_upgrade().cost
+		await click(tree, button.get_global_rect().get_center())
+		match action:
+			&"add_floor":
+				check(session.hotel.floors == 2 and session.economy.cash == cash - 750, "exported floor icon builds at correct cost")
+			&"upgrade":
+				check(room.level == 2 and session.economy.cash == cash - cost, "exported upgrade icon improves selected room")
+			&"demolish":
+				check(session.hotel.by_id(room.id) == null and session.economy.cash == cash and game.selection == -1, "exported demolition icon removes without refund")
+		check(session.speed == 0 and session.tick_count == 0, "exported action input preserves pause")
+		verified += 1
+	return verified
 
 func close_popup(tree: SceneTree, window: Window) -> void:
 	await popup_key(tree, window, KEY_ESCAPE)

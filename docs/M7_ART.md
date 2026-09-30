@@ -25,6 +25,8 @@ Arte original gerada pelo image_gen integrado; prompts e referências em `docs/a
   em 36px, mipmaps e estados nativos de Button. Detalhes em `art/build-icons.md`.
 - Dois ícones raster para contratação e gestão da equipe, em 36/48px,
   com função da seleção atual e entrada nativa. Detalhes em `art/staff-icons.md`.
+- Três ícones raster para adicionar andar, melhorar sala e demolir seleção,
+  com fonte intacta, import de 256px e Button.icon de 32px. Detalhes em `art/action-icons.md`.
 - Cinco retratos transparentes de perfil/função para inspeção de hóspedes e equipe,
   separados das faixas de animação. Cartão de 96px na lateral, com texto nativo
   e rolagem automática ao selecionar. Detalhes em `art/character-portraits.md`.
@@ -67,8 +69,8 @@ cabines N2 usam pintura de nogueira e N3 tem mármore e medalhão de latão; o p
 mantém a pintura base. Sem música ou ambiente
 contínuo nesta entrega. Novos conteúdos precisam de arte própria. M8 mediu render
 isolado até 1000 e operação contínua até 120; esta entrega não comprova 1000 hóspedes
-atendidos simultaneamente a 60 FPS. Catálogo atual: 67 PNGs, 30 texturas de animação,
-cinco retratos e oito ícones de interface.
+atendidos simultaneamente a 60 FPS. Catálogo atual: 70 PNGs, 30 texturas de animação,
+cinco retratos e 11 ícones de interface.
 
 ## Verificação
 `ui_art.gd`: carregamento, alpha, limites dos recortes, ciclo, zoom mínimo/normal/máximo,
