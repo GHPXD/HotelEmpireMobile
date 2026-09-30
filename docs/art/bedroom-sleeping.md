@@ -34,3 +34,9 @@ scripts validados pelo `gda` sem diagnósticos.
 
 Catálogo: 43 PNGs, 25 texturas de personagens. O diagnóstico do executável verifica
 12 sprites de uso: nove faixas de quatro poses e três recortes estáticos de dormir.
+
+Pacote verificado em 29/09/2026 local (30/09 UTC), revisão e074d08 com árvore limpa.
+Smoke de 6120 ticks e seis combinações de janela/texto aprovados; cada caso verificou
+os 12 sprites de uso. Matriz em `../release/bedroom-sleeping-matrix.json`. Auditoria
+do ZIP, documentos e hashes dos 43 PNGs aprovada; kit de compatibilidade atualizado
+com o mesmo pacote. Teste externo em outra máquina permanece pendente.

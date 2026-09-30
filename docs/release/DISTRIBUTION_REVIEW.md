@@ -4,7 +4,7 @@ Resultado: pacote do protótipo preparado e verificado para testes externos.
 Isso não conclui M10 nem autoriza publicação comercial.
 
 Artefato revisado: `builds/HotelEmpire-windows-x86_64.zip`, revisão de código
-`a02edbe052b2d1ff62fd3560fcbb271dc80dc167`. O manifesto registra árvore limpa
+`e074d084598f10de03b2b7cab35148781606ed32`. O manifesto registra árvore limpa
 no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 `local-distribution-audit.json`. O comando falha se qualquer verificação divergir.
 
@@ -13,8 +13,8 @@ no build. Evidência reproduzível: `python tools/audit_release.py`; saída em
 | Inventário do ZIP | Exatamente executável, guia, licença Godot, avisos de terceiros e manifesto; sem entradas adicionais ou duplicadas |
 | Identidade do executável | SHA-256 e tamanho conferem com o manifesto |
 | Guia e avisos | Bytes empacotados iguais aos arquivos fonte; guia explica instalação, controles, save, recuperação e limites |
-| Arte | Todos os 40 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; nove sprites de serviço verificados dentro do executável |
-| Funcionamento exportado | `restaurant-dining-matrix.json`: seis combinações locais; boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
+| Arte | Todos os 43 PNGs em `assets/art` têm entrada única no manifesto e hash/tamanho conferidos; 12 sprites de uso verificados dentro do executável |
+| Funcionamento exportado | `bedroom-sleeping-matrix.json`: seis combinações locais; boot, operação, upgrades, save/load v7, avaliações com tempos registrados, recuperação, ajuda e métricas |
 | Teste sem repositório | `external-kit-local-matrix.json`: validação anterior do runner em Windows PowerShell 5.1; kit atualizado com o novo ZIP, cujo jogo passou na matriz local atual |
 | Dados do jogador | Testes usam APPDATA isolado; o guia informa ausência de autosave e localização do save manual |
 | Distribuição pública | Não publicada, não assinada; sem instalador, atualização automática ou requisito mínimo certificado |
@@ -31,6 +31,6 @@ problemas observados e passos para reproduzir. Resultados desta máquina não
 substituem esse teste. Não declarar hardware mínimo a partir de um único host.
 
 Os limites de produto continuam: 120 hóspedes na operação contínua medida,
-desktop com mouse/teclado, animações de hóspedes sem poses próprias para
-dormir, sem música ambiente. A visão de produto e a evolução futura
+desktop com mouse/teclado, repouso com poses estáticas sem ciclo de respiração,
+sem música ambiente. A visão de produto e a evolução futura
 permanecem abertas; integridade do ZIP não é prova de conclusão do jogo.

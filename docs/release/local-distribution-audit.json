@@ -1,8 +1,8 @@
 {
   "scope": "Local distribution integrity; not external compatibility or commercial clearance",
-  "archiveSha256": "d2bd8ac8e0dd2e0bc8814f77235391b5e4d3b041394eaa394ee4988f61c7088e",
-  "sourceRevision": "a02edbe052b2d1ff62fd3560fcbb271dc80dc167",
-  "executableSha256": "8d754bacc6568ef96cc52a89434f9ed37b940612452c493045a75771e205b850",
+  "archiveSha256": "a3827c06198abf7a06e879b0e590df1fc883923f9287bc6b11a7b3553bf16f6d",
+  "sourceRevision": "e074d084598f10de03b2b7cab35148781606ed32",
+  "executableSha256": "bf341c7d16e07725799e0497467354f4f7c51a6e2e7509d3e0fa9a7df3773f77",
   "sourceDirtyAtBuild": false,
   "packagedFiles": [
     "HotelEmpire.exe",
@@ -11,7 +11,7 @@
     "THIRD-PARTY-NOTICES.txt",
     "build-manifest.json"
   ],
-  "artFilesVerified": 40,
+  "artFilesVerified": 43,
   "checks": [
     "exact ZIP inventory",
     "executable hash and size",

@@ -266,3 +266,9 @@ inspecionada na captura; snapshots de render e seleção iguais. `ui_culling`
 incluiu camas dos três níveis nas nove comparações pixel a pixel; `ui_content`
 aprovado. Cinco scripts validados pelo gda. Arte: 43 PNGs, 25 texturas de personagens;
 repouso usa uma pose estática por perfil. Diagnóstico exportado verifica 12 sprites.
+
+Pacote com repouso (29/09/2026 local, 30/09 UTC): revisão e074d08, árvore limpa,
+smoke de 6120 ticks e seis combinações locais de janela/texto aprovados. Cada caso
+verificou os 12 sprites de uso. ZIP, documentos e hashes dos 43 PNGs auditados;
+kit externo atualizado com o mesmo pacote. Matriz preservada em
+docs/release/bedroom-sleeping-matrix.json. Teste em outra máquina permanece pendente.
