@@ -469,3 +469,8 @@ Primeira fixture rolava antes do layout; espera corrigida. Um carregamento duran
 edição parcial do diagnóstico falhou; validação e bateria repetidas após concluir
 as edições. Capturas de expansão/demolição e melhoria em 1024×640/texto ampliado
 inspecionadas em docs/art/hotel-action-*.png. Detalhes em docs/art/action-icons.md.
+
+Pacote de comandos: revisão 7f651a3, árvore limpa; boot e smoke de 6120 ticks,
+39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas. Os três comandos
+e seus imports de 256px passaram em cada caso de docs/release/action-icons-matrix.json.
+ZIP, documentos e 70 PNGs auditados; kit de compatibilidade atualizado.

@@ -20,9 +20,13 @@ Demolição informa ausência de reembolso também no tooltip.
 imagem, orçamento de importação, bounds na rolagem, mínimos, nível/seleção,
 custo exato, ausência de reembolso e pausa. Caixa insuficiente e seleção vazia
 preservam o snapshot. O teste aguarda o layout antes de rolar; a primeira
-execução antecipava a rolagem e foi corrigida. A captura da melhoria também
-rola novamente após o texto de desbloqueio aumentar o painel.
+execução antecipava a rolagem e foi corrigida. A captura da melhoria é feita
+antes da compra, com o comando habilitado; a de expansão é feita após a compra.
 
 Capturas: `hotel-action-floor.png` (expansão e demolição) e
 `hotel-action-upgrade.png` (melhoria disponível para N2), em 1024×640/texto ampliado.
 São ícones estáticos; o destaque de foco/hover continua no tema do jogo.
+
+O pacote da revisão 7f651a3 verifica os três ícones importados e seus comandos
+por clique em cada uma das seis configurações locais de janela/texto.
+Evidência em `../release/action-icons-matrix.json`. Não altera o preço das ações.
