@@ -35,3 +35,10 @@ funcionários no ponto desenhado e snapshots permanecem iguais. A vitrine posici
 somente a camareira em limpeza no andar superior, mantendo o repouso separado.
 `ui_culling` passou nas nove câmeras com trabalho, repouso e fila da equipe;
 `ui_content` passou. Sem erros de script ou recursos retidos ao sair.
+
+Pacote verificado em 29/09/2026 local (30/09 UTC), revisão eff5486 com árvore limpa.
+Smoke de 6120 ticks e seis combinações de janela/texto aprovados; cada caso verificou
+os quatro contextos de repouso da equipe e os 12 sprites de uso dos hóspedes.
+Matriz em `../release/staff-idle-matrix.json`. Auditoria do ZIP, documentos e hashes
+dos 45 PNGs aprovada; kit de compatibilidade atualizado com o mesmo pacote.
+Teste externo em outra máquina permanece pendente.

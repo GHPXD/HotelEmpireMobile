@@ -280,3 +280,9 @@ cliques nos quatro funcionários e snapshots inalterados. A vitrine separa repou
 da camareira em limpeza. `ui_culling` passou nas nove câmeras incluindo os três
 contextos da equipe; `ui_content` passou. Quatro scripts válidos pelo gda após
 importação. Catálogo: 45 PNGs e 27 texturas de personagens.
+
+Pacote com repouso da equipe (29/09/2026 local, 30/09 UTC): revisão eff5486, árvore
+limpa, smoke de 6120 ticks e seis combinações locais de janela/texto aprovados.
+Cada caso verificou quatro contextos de repouso da equipe e 12 sprites de uso dos
+hóspedes. ZIP, documentos e hashes dos 45 PNGs auditados; kit externo atualizado.
+Matriz em docs/release/staff-idle-matrix.json. Compatibilidade externa pendente.
