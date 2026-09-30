@@ -42,3 +42,8 @@ sessão vazia, cancelamento e confirmação de Novo hotel, seguida de recuperaç
 pela carga, com snapshot e bytes salvos preservados. ZIP, documentos e hashes
 dos 76 PNGs auditados; kit de compatibilidade atualizado. Outros computadores
 e playtest humano permanecem pendentes.
+
+As alturas e dados acima correspondem à revisão 33eca92. Na revisão befcc66,
+novos ícones de Equipe/Objetivos/Ajuda fazem a barra padrão ocupar uma linha
+adicional (playfield 634), enquanto ampliada mantém 624; os 48 comandos de
+partida foram repetidos com sucesso. Detalhes atuais em `utility-icons.md`.

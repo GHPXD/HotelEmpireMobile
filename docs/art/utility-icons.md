@@ -47,3 +47,11 @@ registrada no M9 é anterior aos ícones de painel/partida; não foi repetida aq
 Três imports adicionais de 256px; a medição M8 anterior não representa a memória
 do catálogo atual completo. Não há nova capacidade de hóspedes ou mudança de
 regras; animação e economia usam o mesmo estado existente.
+
+Pacote da revisão limpa `befcc66`: boot e smoke de 6120 ticks passaram, com
+39 reservas, 42 refeições, 31 limpezas e caixa 2021. Seis painéis abertos pelos
+ícones, snapshot preservado e Esc/foco em cada configuração do ZIP extraído:
+`../release/utility-icons-matrix.json`. Os três comandos de partida e os ícones
+de construção/contratação/ação também passaram. ZIP, documentos e hashes dos
+79 PNGs auditados; kit de compatibilidade atualizado. Compatibilidade externa
+e playtest humano continuam pendentes.

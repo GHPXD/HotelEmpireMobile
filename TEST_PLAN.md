@@ -563,3 +563,10 @@ conserva 624. Não há corte dos controles ou redução do tamanho de texto.
 Runner continua configurado com 33 suítes Visual/Stress/Soak. A bateria completa
 de 31 suítes permanece anterior aos incrementos de painéis e partida; dez
 suítes deste incremento não substituem playtest ou compatibilidade externa.
+
+Pacote da revisão limpa befcc66: boot e smoke de 6120 ticks, 39 reservas,
+42 refeições, 31 limpezas e caixa 2021, sem falhas. Os seis painéis por seus
+ícones passaram nas seis configurações do executável extraído, com snapshot,
+Esc/foco e imports de 256px; também preserva os demais controles decorados.
+Matriz: docs/release/utility-icons-matrix.json. ZIP, documentos e hashes dos
+79 PNGs conferidos; kit de compatibilidade atualizado.
