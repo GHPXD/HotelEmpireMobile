@@ -189,3 +189,10 @@ Seleção pela cena, destino durante deslocamento, espera por etapa, embarque,
 saída e decisão sem alvo antigo, projeção sem mutação e save/load conferidos.
 Captura inspecionada em .runtime/m5-content.png; detalhes em
 docs/ACTOR_INSPECTION.md. Não exige mudança de schema. Não incluído ainda no ZIP.
+
+Tarifas com upgrades (29/09/2026): `tariff_scenarios.gd -- --lodging-upgrades`
+aprovado em 27 cenários de 30 dias, com 135 checkpoints. Compras reais N2/N3
+espelhadas no save em continuidade, desbloqueios naturais, conservação de caixa,
+níveis finais e contagens/somas de coortes conferidos. O resumidor validou os
+custos, datas, contexto e reprodução exata de nove referências N1. Resultados
+em docs/LODGING_UPGRADES.md. Não altera parâmetros de balanceamento nem o runtime.

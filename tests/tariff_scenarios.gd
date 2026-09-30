@@ -3,13 +3,20 @@ extends SceneTree
 
 var failures: int = 0
 var observe_departures: bool = false
+var upgrade_study: bool = false
 
 func _initialize() -> void:
 	var reports: Array[Dictionary] = []
-	observe_departures = OS.get_cmdline_user_args().has("--departure-cohorts")
+	upgrade_study = OS.get_cmdline_user_args().has("--lodging-upgrades")
+	observe_departures = upgrade_study or OS.get_cmdline_user_args().has("--departure-cohorts")
 	var value_study := observe_departures or OS.get_cmdline_user_args().has("--lodging-value")
 	var mixed := value_study or OS.get_cmdline_user_args().has("--tariff-mixed")
-	if mixed:
+	if upgrade_study:
+		for level in [1, 2, 3]:
+			for seed_value in [1, 17, 123]:
+				for percent in [75, 100, 125]:
+					reports.append(run_case(seed_value, 8, percent, 100, false, level))
+	elif mixed:
 		for expanded in [false, true]:
 			for seed_value in [1, 17, 123]:
 				for lodging_percent in [75, 100, 125]:
@@ -23,13 +30,15 @@ func _initialize() -> void:
 	var output := "res://.runtime/lodging-value.json" if value_study else ("res://.runtime/tariff-mixed.json" if mixed else "res://.runtime/tariff-scenarios.json")
 	if observe_departures:
 		output = "res://.runtime/departure-cohorts.json"
+	if upgrade_study:
+		output = "res://.runtime/lodging-upgrades.json"
 	var file := FileAccess.open(output, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"days": 30, "reports": reports, "failures": failures}, "\t"))
 	file.close()
 	print(JSON.stringify({"suite": "tariff_scenarios", "failures": failures, "scenarios": reports.size()}))
 	quit(1 if failures else 0)
 
-func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int = -1, expanded: bool = false) -> Dictionary:
+func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int = -1, expanded: bool = false, bedroom_level: int = 1) -> Dictionary:
 	if service_percent < 0:
 		service_percent = percent
 	var session := HotelSession.new(seed_value)
@@ -53,8 +62,25 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 	var shadow: HotelSession
 	var checkpoints: int = 0
 	var observer := preload("res://tests/departure_observer.gd").new()
+	var later_observer := preload("res://tests/departure_observer.gd").new()
+	var upgrade_events: Array[Dictionary] = []
+	var before_upgrades: Dictionary = {}
 	session.opened = true
 	for tick in range(1, 36001):
+		if upgrade_study and (tick == 6001 or tick == 18001):
+			var desired_level := 2 if tick == 6001 else 3
+			if bedroom_level >= desired_level:
+				var before_cash := session.economy.cash
+				var bought: int = 0
+				for room: RoomState in session.hotel.rooms:
+					if room.definition().category == &"lodging":
+						var error := session.upgrade_room(room.id)
+						check(error.is_empty(), "earned cash and natural unlock fund N%d: %s" % [desired_level, error])
+						if error.is_empty():
+							bought += 1
+						if shadow != null:
+							check(shadow.upgrade_room(room.id).is_empty(), "mirror upgrade into continued save")
+				upgrade_events.append({"tick": tick, "level": desired_level, "rooms": bought, "cash_before": before_cash, "cash_after": session.economy.cash, "spent": before_cash - session.economy.cash})
 		if expanded and tick == 6001:
 			for spec in [[&"cafe", 7], [&"lounge", 9]]:
 				var definition := HotelCatalog.room(spec[0])
@@ -69,9 +95,15 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 						shadow.set_room_tariff(mirrored.id, service_percent)
 		if observe_departures:
 			observer.before_step(session)
+		if upgrade_study and tick > 6000:
+			later_observer.before_step(session)
 		session.tick(session.rules.tick)
 		if observe_departures:
 			observer.after_step(session)
+		if upgrade_study and tick > 6000:
+			later_observer.after_step(session)
+		if upgrade_study and tick == 6000:
+			before_upgrades = {"cash": session.economy.cash, "profit": session.economy.profit(), "bookings": session.guests.bookings, "departures": session.guests.completed, "reputation": session.guests.reputation, "cohorts": observer.report()}
 		if shadow != null:
 			shadow.tick(shadow.rules.tick)
 			if tick % 6000 == 120:
@@ -107,6 +139,15 @@ func run_case(seed_value: int, bedrooms: int, percent: int, service_percent: int
 		check(cohorts.stayed.count + cohorts.no_stay.count == session.guests.completed, "historical cohort counts reconcile")
 		check(is_equal_approx(cohorts.stayed.score_total + cohorts.no_stay.score_total, session.guests.score_total), "historical cohort scores reconcile")
 		report["departure_cohorts"] = cohorts
+	if upgrade_study:
+		for room: RoomState in session.hotel.rooms:
+			if room.definition().category == &"lodging":
+				check(room.level == bedroom_level, "all bedrooms reach intended level")
+		report["bedroom_level"] = bedroom_level
+		report["upgrade_events"] = upgrade_events
+		report["before_upgrades"] = before_upgrades
+		report["post_day5_cohorts"] = later_observer.report()
+		report["capital_spent"] = session.economy.capital_spent
 	return report
 
 func check(condition: bool, message: String) -> void:
