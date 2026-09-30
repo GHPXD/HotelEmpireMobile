@@ -474,3 +474,19 @@ Pacote de comandos: revisão 7f651a3, árvore limpa; boot e smoke de 6120 ticks,
 39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas. Os três comandos
 e seus imports de 256px passaram em cada caso de docs/release/action-icons-matrix.json.
 ZIP, documentos e 70 PNGs auditados; kit de compatibilidade atualizado.
+
+## QA integrado após os assets (30/09/2026)
+
+Revisão limpa dcfcd2d, `tools/test.ps1 -Visual -Stress -Soak`: 31 suítes mais
+import passaram. Quinze headless e 16 gráficas; seis cenários de 30 dias,
+30 checkpoints e entrega de 100/250/500/1000 agentes no transporte isolado.
+Relatório e 32 logs originais em docs/benchmarks/m9/regression-20260930*.
+
+A bateria inicial cf37cdf parou em ui_art: preview com pan fixo cortava quartos
+com cabeçalho ampliado. Fixture enquadra seis camas explícitas pelo playfield e
+converte bounds lógicos para pixels da captura; quatro fases/24 amostras reais,
+snapshot preservado. Captura inspecionada e bateria completa repetida sem falhas.
+Erro inicial e correção preservados em art-preview-failure-20260930.json.
+O runner registra resultados também em falha e limita cada processo a 120s
+por padrão, ajustável por `-SuiteTimeoutSeconds`, encerrando apenas o handle criado.
+Isso não valida compatibilidade externa, FPS de 1000 hóspedes ou balanceamento humano.

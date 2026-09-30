@@ -250,3 +250,17 @@
   repetida. Os relatórios finais representam oito quartos realmente construídos.
 - Reputação modesta nos layouts estáticos exige análise de decisões de gestão;
   M9 e balanceamento de produção continuam em andamento. Nenhuma regra alterada.
+
+## Regressão integrada pós-arte (30/09/2026)
+
+- Revisão limpa dcfcd2d, Godot 4.7.2: 31 suítes mais import passaram com
+  `tools/test.ps1 -Visual -Stress -Soak`; sem erros, leaks ou timeout.
+- 15 suítes headless e 16 gráficas; seis cenários de 30 dias/30 checkpoints,
+  conservação/entrega de 100/250/500/1000 passageiros no transporte isolado.
+- Primeira execução parou numa fixture de preview cortada pelo cabeçalho ampliado.
+  Enquadramento adaptado ao playfield e recortes à escala dos pixels; preservados
+  seis quartos, quatro fases e 24 amostras. Nova bateria completa passou.
+- Relatório com revisão/hash do engine, duração/exit code e logs originais arquivados
+  em docs/benchmarks/m9/regression-20260930*. Detalhes e limites em QA_REVIEW.md.
+- Alterações apenas no runner e no teste; jogo e pacote 7f651a3 permanecem iguais.
+  Compatibilidade externa e playtest humano continuam pendentes.

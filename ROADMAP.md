@@ -50,7 +50,7 @@ O pedido operacional atual organiza o trabalho abaixo; a visão permanente em
   - [x] Seis cenários de 30 dias com orçamento inicial e continuidade de save/load.
   - [x] Comparação de quatro decisões de gestão em três seeds, 30 dias e orçamento real.
   - [x] Diagnóstico do check-in: 15 cenários isolando limpeza, quartos, recepção e elevador.
-  - [x] Revisão final de QA e bateria conjunta de 21 suítes, sem falhas.
+  - [x] Revisão de QA e bateria conjunta atualizada: 31 suítes, incluindo arte atual, stress e continuidade de 30 dias, sem falhas na execução final.
 - [ ] M10 Release Preparation: exports, compatibilidade e distribuição.
   - [x] Preset Windows, build reproduzível, ZIP, licenças e manifesto de hash/revisão.
   - [x] Boot e operação/save/load pela interface no executável, inclusive ZIP extraído em caminho com espaços.

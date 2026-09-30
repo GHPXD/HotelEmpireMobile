@@ -1,5 +1,12 @@
 # Changelog
 
+## M9 — regressão integrada pós-arte, 30/09/2026
+- 31 suítes passaram após integrar os 70 PNGs, incluindo 30 dias e save/load.
+- Runner com prazo por processo e relatório consolidado em sucesso/falha.
+- Preview de repouso usa limites reais do playfield e escala da captura;
+  quatro poses comparadas em seis camas, sem cortar a linha superior com texto ampliado.
+- Logs originais e proveniência preservados em docs/benchmarks/m9.
+
 ## M7 — extensão de personagens e estados, 30/09/2026
 - Catálogo atual com 70 PNGs: pinturas próprias por nível, espera, trabalho,
   repouso da equipe e ciclos de serviço dos hóspedes.

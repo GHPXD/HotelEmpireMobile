@@ -1,0 +1,120 @@
+{
+	"days": 30,
+	"failures": 0,
+	"reports": [
+		{
+			"bedrooms": 2,
+			"bookings": 117,
+			"cleaned": 115,
+			"departures": 430,
+			"ending_cash": 22422,
+			"meals": 114,
+			"minimum_cash": 6720,
+			"objective_ticks": {
+				"first_stays": 1261,
+				"steady_service": 3187
+			},
+			"peak_guests_sampled": 14,
+			"reputation": 44.8969180463346,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"starting_cash": 12000,
+			"ticks": 36000
+		},
+		{
+			"bedrooms": 2,
+			"bookings": 116,
+			"cleaned": 114,
+			"departures": 427,
+			"ending_cash": 22198,
+			"meals": 111,
+			"minimum_cash": 6720,
+			"objective_ticks": {
+				"first_stays": 1255,
+				"steady_service": 3290
+			},
+			"peak_guests_sampled": 14,
+			"reputation": 47.5735121870398,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"starting_cash": 12000,
+			"ticks": 36000
+		},
+		{
+			"bedrooms": 2,
+			"bookings": 119,
+			"cleaned": 117,
+			"departures": 431,
+			"ending_cash": 22870,
+			"meals": 120,
+			"minimum_cash": 6720,
+			"objective_ticks": {
+				"first_stays": 1275,
+				"steady_service": 3263
+			},
+			"peak_guests_sampled": 14,
+			"reputation": 45.1930461033571,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"starting_cash": 12000,
+			"ticks": 36000
+		},
+		{
+			"bedrooms": 8,
+			"bookings": 226,
+			"cleaned": 218,
+			"departures": 464,
+			"ending_cash": 34832,
+			"meals": 219,
+			"minimum_cash": 2370,
+			"objective_ticks": {
+				"first_stays": 173,
+				"steady_service": 1969
+			},
+			"peak_guests_sampled": 18,
+			"reputation": 48.416603715858,
+			"save_checkpoints": 5,
+			"seed": 1,
+			"starting_cash": 12000,
+			"ticks": 36000
+		},
+		{
+			"bedrooms": 8,
+			"bookings": 227,
+			"cleaned": 219,
+			"departures": 462,
+			"ending_cash": 34916,
+			"meals": 217,
+			"minimum_cash": 2370,
+			"objective_ticks": {
+				"first_stays": 186,
+				"steady_service": 1937
+			},
+			"peak_guests_sampled": 18,
+			"reputation": 49.7971751540008,
+			"save_checkpoints": 5,
+			"seed": 17,
+			"starting_cash": 12000,
+			"ticks": 36000
+		},
+		{
+			"bedrooms": 8,
+			"bookings": 228,
+			"cleaned": 220,
+			"departures": 464,
+			"ending_cash": 35112,
+			"meals": 219,
+			"minimum_cash": 2370,
+			"objective_ticks": {
+				"first_stays": 208,
+				"steady_service": 1924
+			},
+			"peak_guests_sampled": 17,
+			"reputation": 53.2234524263008,
+			"save_checkpoints": 5,
+			"seed": 123,
+			"starting_cash": 12000,
+			"ticks": 36000
+		}
+	]
+}

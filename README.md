@@ -63,8 +63,12 @@ Poucos quartos criam fila na recepção; expansão excessiva pressiona transport
 No Windows deste ambiente: `powershell -File tools/test.ps1 -Visual` executa import,
 11 suítes headless e 16 testes gráficos. Passe `-GodotPath` para outro engine.
 Testes isolam dados em `.runtime/`; não sobrescrevem seu save normal.
+O runner limita cada processo a 120s (`-SuiteTimeoutSeconds` ajusta o prazo) e
+grava revisão, opções, duração, resumos e hashes dos logs em `.runtime/test-run-report.json`.
 Acrescente `-Stress` para três suítes adicionais com múltiplas seeds, continuidade de save e transporte com
 100/250/500/1000 agentes. Evidências: [benchmarks](docs/benchmarks/README.md).
+Regressão atual com `-Visual -Stress -Soak`: 31 suítes passaram; relatório e logs
+preservados na [revisão de QA](docs/benchmarks/m9/QA_REVIEW.md).
 
 Teste integrado: `godot --headless --path . --script res://tests/simulation_test.gd`.
 
