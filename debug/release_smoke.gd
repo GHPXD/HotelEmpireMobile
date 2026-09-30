@@ -10,6 +10,7 @@ func run(game: Node) -> void:
 	check(not ResourceLoader.exists("res://tests/ui_art.gd"), "tests excluded from package")
 	check(not FileAccess.file_exists("res://docs/PRODUCT_VISION.md"), "documentation excluded")
 	var service_art_verified := 0
+	var build_icons_verified := 0
 	var actor_presentation_verified := 0
 	var visual_session := HotelSession.new(418)
 	var visual_view := HotelView.new()
@@ -226,6 +227,21 @@ func run(game: Node) -> void:
 	game.save_path = path
 	for frame in 4:
 		await tree.process_frame
+	var catalog_before := SessionSnapshot.capture(session)
+	for definition: RoomDefinition in HotelCatalog.ROOMS:
+		var button: Button = game.hud.build_buttons[definition.id]
+		var texture := HotelArt.build_icon(definition.id)
+		check(button.icon == texture and texture != HotelArt.room(definition.id), "exported dedicated construction icon")
+		check(texture.get_width() == texture.get_height() and texture.get_image().detect_alpha() != Image.ALPHA_NONE, "exported square transparent construction icon")
+		game.hud.sidebar_scroll.ensure_control_visible(button)
+		for frame in 3:
+			await tree.process_frame
+		check(root.get_visible_rect().encloses(button.get_global_rect()), "exported catalog button bounds")
+		await click(tree, button.get_global_rect().get_center())
+		check(game.view.blueprint == definition, "exported construction icon activation")
+		game._cancel()
+		build_icons_verified += 1
+	check(equivalent(catalog_before, SessionSnapshot.capture(session)), "exported icon activation preserves simulation")
 	await click(tree, game.hud.session_buttons["Salvar"].get_global_rect().get_center())
 	var expected := SessionSnapshot.capture(game.session)
 	game._replace_session(HotelSession.new(777))
@@ -336,6 +352,7 @@ func run(game: Node) -> void:
 	report["housekeeping_art_verified"] = housekeeping_art_verified
 	report["portrait_art_verified"] = portrait_art_verified
 	report["travel_art_verified"] = travel_art_verified
+	report["build_icons_verified"] = build_icons_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))

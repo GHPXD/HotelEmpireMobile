@@ -389,4 +389,18 @@ Pacote de bagagem: revisão 89f2a6c, árvore limpa; boot e smoke de 6120 ticks,
 de viagem foram verificadas em cada uma das seis combinações de janela/texto:
 docs/release/guest-travel-matrix.json. ZIP, documentos e 59 PNGs auditados;
 kit de compatibilidade atualizado. Teste externo em outra máquina ainda aberto.
+
+## M7 — ícones do catálogo (30/09/2026)
+
+Seis fontes RGBA 1254×1254 preservadas do gerador integrado ao chat; alpha e
+bordas medidos sem editar PNGs. Catálogo atual: 65 PNGs, 30 texturas de animação,
+cinco retratos e seis ícones separados. Quatro scripts válidos pelo gda.
+
+Seis suítes gráficas passaram: ui_content, ui_smoke, ui_resume, ui_management,
+ui_progression e ui_new_game. ui_content cobre 36 casos de instalação/janela/texto,
+clique e Enter, rolagem/bounds e mínimos do layout, fontes distintas das pinturas,
+alpha, preço/nome nativos e snapshot preservado. Café/lounge bloqueados conservam
+ícones e não entram em construção. Capturas normal/ampliada em 1024×640 inspecionadas:
+docs/art/hotel-build-icons.png e hotel-build-icons-large.png.
+Prompts, origem, hashes e limites em docs/art/build-icons.md e arquivos associados.
 Resultados de outro computador e playtest humano continuam pendentes.

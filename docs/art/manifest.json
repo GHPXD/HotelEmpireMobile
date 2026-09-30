@@ -529,5 +529,59 @@
     "bytes": 1006202,
     "sha256": "4f79b9ce59a126593b627acd00f1febb7b4f5bb05b4591860ed6d8f00395692d",
     "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/reception.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1453954,
+    "sha256": "f9656a466299ffeeead08079ee0443dbf667a6871d3c5347eaf75ff192aa0424",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/bedroom.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1438525,
+    "sha256": "6b44846488c3bcbd15b0f89e7ee3572c4930acd2f499424ec5a3dcbeda6138d5",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/restaurant.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1682318,
+    "sha256": "11cd0a0f61439c9a4eabffda82072238683854a59879e25e468c944a07dbb36f",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/cafe.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1449123,
+    "sha256": "ddecaf00b5a655814e87637014fe58b46acc4c32a1dfb6c90bbeddd8a91ada6d",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/lounge.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1721481,
+    "sha256": "0fe4e88d66eaf134a65569eca6efa890b342eb483f9b1417fd5420f072610b4c",
+    "generator": "built-in image_gen"
+  },
+  {
+    "path": "assets/art/icons/elevator.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1020047,
+    "sha256": "8245b97bf2d500615940667462b647a32775c2d8b85733c4efd882e776062c5b",
+    "generator": "built-in image_gen"
   }
 ]

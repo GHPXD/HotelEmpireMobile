@@ -155,7 +155,8 @@ func _ready() -> void:
 		button.text = "%s\n$ %d   •   %d células" % [definition.display_name, definition.build_cost, definition.width]
 		button.tooltip_text = "Manutenção: $ %d/dia • Capacidade: %d\nDisponível desde o início" % [definition.maintenance, definition.capacity]
 		button.custom_minimum_size.y = 58
-		button.icon = HotelArt.room(definition.id)
+		button.icon = HotelArt.build_icon(definition.id)
+		button.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		button.expand_icon = true
 		button.add_theme_constant_override("icon_max_width", 36)
 		button.pressed.connect(func() -> void: build_requested.emit(definition))

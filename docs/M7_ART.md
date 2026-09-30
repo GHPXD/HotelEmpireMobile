@@ -21,7 +21,8 @@ Arte original gerada pelo image_gen integrado; prompts e referências em `docs/a
   além de ciclos sutis de repouso sobre as camas dos três níveis. As três folhas
   de dormir usam grade 2×2, quatro poses e ciclo de 48 ticks; originais estáticos
   preservados como referências. Detalhes em `art/bedroom-sleeping-loop.md`.
-- Miniaturas do catálogo reaproveitam a arte da instalação correspondente.
+- Seis ícones raster próprios para o catálogo, com silhuetas de objetos legíveis
+  em 36px, mipmaps e estados nativos de Button. Detalhes em `art/build-icons.md`.
 - Cinco retratos transparentes de perfil/função para inspeção de hóspedes e equipe,
   separados das faixas de animação. Cartão de 96px na lateral, com texto nativo
   e rolagem automática ao selecionar. Detalhes em `art/character-portraits.md`.

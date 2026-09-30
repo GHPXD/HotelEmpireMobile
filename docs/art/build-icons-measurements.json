@@ -1,0 +1,176 @@
+[
+  {
+    "path": "assets/art/icons/reception.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1453954,
+    "sha256": "f9656a466299ffeeead08079ee0443dbf667a6871d3c5347eaf75ff192aa0424",
+    "generator": "built-in image_gen",
+    "original": "exec-d61a2422-c33c-4724-9992-f669ce1cead6.png",
+    "alpha_bbox": [
+      17,
+      77,
+      1236,
+      1238
+    ],
+    "opaque_bbox": [
+      25,
+      80,
+      1229,
+      1113
+    ],
+    "alpha_threshold": 100,
+    "edge_alpha_max": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "path": "assets/art/icons/bedroom.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1438525,
+    "sha256": "6b44846488c3bcbd15b0f89e7ee3572c4930acd2f499424ec5a3dcbeda6138d5",
+    "generator": "built-in image_gen",
+    "original": "exec-0e2990ca-a0f1-471b-9002-3e744992c7f0.png",
+    "alpha_bbox": [
+      0,
+      31,
+      1243,
+      1254
+    ],
+    "opaque_bbox": [
+      26,
+      164,
+      1239,
+      1127
+    ],
+    "alpha_threshold": 100,
+    "edge_alpha_max": [
+      0,
+      1,
+      1,
+      0
+    ]
+  },
+  {
+    "path": "assets/art/icons/restaurant.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1682318,
+    "sha256": "11cd0a0f61439c9a4eabffda82072238683854a59879e25e468c944a07dbb36f",
+    "generator": "built-in image_gen",
+    "original": "exec-a21ab6d2-3c05-4607-9cb8-bb644bf92f9e.png",
+    "alpha_bbox": [
+      17,
+      48,
+      1244,
+      1254
+    ],
+    "opaque_bbox": [
+      23,
+      218,
+      1240,
+      1032
+    ],
+    "alpha_threshold": 100,
+    "edge_alpha_max": [
+      0,
+      1,
+      0,
+      0
+    ]
+  },
+  {
+    "path": "assets/art/icons/cafe.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1449123,
+    "sha256": "ddecaf00b5a655814e87637014fe58b46acc4c32a1dfb6c90bbeddd8a91ada6d",
+    "generator": "built-in image_gen",
+    "original": "exec-fd59847a-5be0-44ec-bc70-14a4a7022f01.png",
+    "alpha_bbox": [
+      0,
+      47,
+      1254,
+      1198
+    ],
+    "opaque_bbox": [
+      18,
+      150,
+      1246,
+      1109
+    ],
+    "alpha_threshold": 100,
+    "edge_alpha_max": [
+      0,
+      0,
+      1,
+      6
+    ]
+  },
+  {
+    "path": "assets/art/icons/lounge.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1721481,
+    "sha256": "0fe4e88d66eaf134a65569eca6efa890b342eb483f9b1417fd5420f072610b4c",
+    "generator": "built-in image_gen",
+    "original": "exec-b11c8271-5774-4872-b4f7-8b28e8c7da8f.png",
+    "alpha_bbox": [
+      0,
+      21,
+      1240,
+      1222
+    ],
+    "opaque_bbox": [
+      44,
+      60,
+      1236,
+      1193
+    ],
+    "alpha_threshold": 100,
+    "edge_alpha_max": [
+      0,
+      0,
+      1,
+      0
+    ]
+  },
+  {
+    "path": "assets/art/icons/elevator.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1020047,
+    "sha256": "8245b97bf2d500615940667462b647a32775c2d8b85733c4efd882e776062c5b",
+    "generator": "built-in image_gen",
+    "original": "exec-877e3f7e-4752-4908-9d89-2deac7c28809.png",
+    "alpha_bbox": [
+      0,
+      19,
+      1230,
+      1182
+    ],
+    "opaque_bbox": [
+      215,
+      97,
+      1043,
+      1129
+    ],
+    "alpha_threshold": 100,
+    "edge_alpha_max": [
+      0,
+      0,
+      1,
+      0
+    ]
+  }
+]

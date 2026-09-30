@@ -88,6 +88,7 @@ func run() -> void:
 	check(preload("res://tests/snapshot_comparison.gd").difference(saved, SessionSnapshot.capture(game.session), "ui-content").is_empty(), "content and active event roundtrip through UI")
 	check(game.hud.event_label.text.contains("150%") and not game.hud.build_buttons[&"cafe"].disabled, "restored event and unlock displayed")
 	await portraits(game)
+	await catalog_icons(game)
 	print(JSON.stringify({"suite": "ui_content", "failures": failures}))
 	game.queue_free()
 	await process_frame
@@ -171,6 +172,60 @@ func portraits(game: Node) -> void:
 		game.session.actors.erase(restored.id)
 		game._refresh()
 		check(not game.hud.actor_card.visible and game.hud.actor_portrait.texture == null, "departed actor leaves no stale portrait")
+
+func catalog_icons(game: Node) -> void:
+	var original_size := root.size
+	var original_large: bool = game.large_text
+	var session := HotelSession.new(816)
+	session.speed = 0
+	game._replace_session(session)
+	game._cancel()
+	for frame in 3:
+		await process_frame
+	var before := SessionSnapshot.capture(session)
+	for id: StringName in [&"cafe", &"lounge"]:
+		var button: Button = game.hud.build_buttons[id]
+		check(button.disabled and button.icon == HotelArt.build_icon(id), "locked service retains dedicated icon")
+		await press_build(button)
+		check(game.view.blueprint == null, "locked icon button cannot enter construction")
+	check(SessionSnapshot.capture(session) == before, "locked icon input preserves session")
+	session.progression.completed.assign([&"first_stays", &"steady_service"])
+	game._refresh()
+	before = SessionSnapshot.capture(session)
+	var cases := 0
+	for resolution: Vector2i in [Vector2i(1024, 640), Vector2i(1280, 800), Vector2i(1600, 900)]:
+		root.size = resolution
+		for large: bool in [false, true]:
+			if game.large_text != large:
+				game._toggle_text_size()
+			game.hud.reset_catalog()
+			for frame in 4:
+				await process_frame
+			for definition: RoomDefinition in HotelCatalog.ROOMS:
+				var button: Button = game.hud.build_buttons[definition.id]
+				var texture := HotelArt.build_icon(definition.id)
+				check(texture != HotelArt.room(definition.id) and button.icon == texture, "catalog uses dedicated object icon instead of room painting")
+				check(texture.get_image().detect_alpha() != Image.ALPHA_NONE and texture.get_width() == texture.get_height(), "catalog icon square alpha source")
+				check(button.get_theme_constant("icon_max_width") == 36 and button.expand_icon, "full resolution source constrained to native button bounds")
+				await press_build(button)
+				check(game.view.blueprint == definition, "raster icon button selects correct construction")
+				check(game.hud.sidebar_scroll.get_global_rect().encloses(button.get_global_rect()) and root.get_visible_rect().encloses(button.get_global_rect()), "catalog button fits scrolled viewport in all sizes/text modes")
+				check(button.size.x >= button.get_combined_minimum_size().x and button.size.y >= button.get_combined_minimum_size().y, "native icon and label minimum sizes fit button")
+				check(button.text.contains(definition.display_name) and button.text.contains(str(definition.build_cost)), "name and price remain native text")
+				game._cancel()
+				button.grab_focus()
+				await key(root, KEY_ENTER)
+				check(game.view.blueprint == definition, "catalog keyboard activation remains functional")
+				game._cancel()
+				check(SessionSnapshot.capture(session) == before, "icon layout and activation do not construct or mutate simulation")
+				if resolution == Vector2i(1024, 640) and definition.id in [&"reception", &"lounge"]:
+					await RenderingServer.frame_post_draw
+					root.get_texture().get_image().save_png("res://.runtime/m7-catalog-%s-%s.png" % [definition.id, "large" if large else "normal"])
+				cases += 1
+	root.size = original_size
+	if game.large_text != original_large:
+		game._toggle_text_size()
+	print(JSON.stringify({"catalog_icon_cases": cases, "catalog_icons": 6, "failures": failures}))
 
 func press_build(button: Button) -> void:
 	var scroll: ScrollContainer = button.get_parent().get_parent()

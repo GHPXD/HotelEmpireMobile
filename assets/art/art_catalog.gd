@@ -48,6 +48,18 @@ const PORTRAITS: Dictionary = {
 	&"cleaner": preload("res://assets/art/portraits/cleaner.png"),
 }
 
+const BUILD_ICONS: Dictionary = {
+	&"reception": preload("res://assets/art/icons/reception.png"),
+	&"bedroom": preload("res://assets/art/icons/bedroom.png"),
+	&"restaurant": preload("res://assets/art/icons/restaurant.png"),
+	&"cafe": preload("res://assets/art/icons/cafe.png"),
+	&"lounge": preload("res://assets/art/icons/lounge.png"),
+	&"elevator": preload("res://assets/art/icons/elevator.png"),
+}
+
+static func build_icon(id: StringName) -> Texture2D:
+	return BUILD_ICONS.get(id)
+
 static func portrait(actor: ActorState) -> Texture2D:
 	return PORTRAITS.get(character_id(actor))
 
