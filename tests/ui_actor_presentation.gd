@@ -84,7 +84,131 @@ func run() -> void:
 		check(SessionSnapshot.capture(session) == phase_before, "paused presentation stays unchanged")
 	session.tick_count = 0
 	check(SessionSnapshot.capture(session) == before, "fixture restored after phase inspection")
+	await registered_queues(view)
 	print(JSON.stringify({"suite": "ui_actor_presentation", "failures": failures, "waiting_contexts": waiting.size(), "zooms": 3, "phases": 4}))
 	view.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
+
+func registered_queues(view: HotelView) -> void:
+	var session := HotelSession.new(511)
+	session.progression.completed.assign([&"first_stays"])
+	for floor_index in 3:
+		session.hotel.add_floor()
+	var reception := session.hotel.build(HotelCatalog.room(&"reception"), 3, 0)
+	var cafe := session.hotel.build(HotelCatalog.room(&"cafe"), 8, 1)
+	session.hotel.build(HotelCatalog.room(&"elevator"), 15, 0)
+	session.transport.sync(session.hotel)
+	var lift: ElevatorState = session.transport.lifts[0]
+	var arrived: Array[ActorState] = []
+	for room: RoomState in [reception, cafe]:
+		var members: Array[ActorState] = []
+		for index in 12:
+			var actor := session.spawn_guest()
+			actor.archetype_id = [&"balanced", &"business", &"leisure"][index % 3]
+			actor.state = &"checkin" if room == reception else &"service_queue"
+			actor.floor_index = room.floor_index
+			actor.target_floor = room.floor_index
+			actor.target_room = room.id
+			actor.x = room.center()
+			actor.waiting = 1.0
+			members.append(actor)
+		# Reverse IDs: visible order must follow reservations, never ID arithmetic.
+		members.reverse()
+		for actor: ActorState in members:
+			check(room.queue.join(actor.id), "reserve room queue")
+			arrived.append(actor)
+		# Reception reserves places before arrival; retain that gap in the layout.
+		if room == reception:
+			members[4].state = &"walking"
+			arrived.erase(members[4])
+	for index in 10:
+		var actor := session.spawn_guest()
+		actor.state = &"lift_queue"
+		actor.elevator_id = lift.room_id
+		actor.floor_index = 2 if index % 3 else 3
+		actor.x = lift.column
+		actor.waiting = 1.0
+		if index < 2:
+			actor.role = &"cleaner" if index == 0 else &"receptionist"
+		lift.queue.join(actor.id)
+		arrived.append(actor)
+	session.speed = 0
+	view.session = session
+	view.hotel = session.hotel
+	var before := SessionSnapshot.capture(session)
+	var projected := HotelQueueProjection.build(session, view.CELL, view.FLOOR_HEIGHT)
+	check(projected.groups.size() == 4, "two room queues and two lift floors")
+	check(projected.positions.size() == 33, "walk reservation has no waiting sprite position")
+	for group: Dictionary in projected.groups:
+		var ids: Array[int] = []
+		if group.kind == &"room":
+			ids.assign(session.hotel.by_id(group.owner_id).queue.members)
+		else:
+			for id: int in lift.queue.members:
+				if session.actors[id].floor_index == group.floor:
+					ids.append(id)
+		check(group.count == ids.size(), "aggregate counts reservations per group")
+		var previous := INF if group.kind == &"lift" else -INF
+		for id: int in ids:
+			if not projected.positions.has(id):
+				continue
+			var point: Vector2 = projected.positions[id]
+			check(point.x < previous if group.kind == &"lift" else point.x > previous, "FIFO anchors are distinct and ordered")
+			previous = point.x
+			check(point.x > 0 and point.x < HotelModel.COLUMNS * view.CELL, "queue stays inside hotel")
+			check(point == HotelQueueProjection.position_for(session, session.actors[id], view.CELL, view.FLOOR_HEIGHT), "single query matches batched projection")
+	# Entry uses existing elapsed wait; paused drawing has no private animation clock.
+	var first: ActorState = arrived[0]
+	var target: Vector2 = projected.positions[first.id]
+	first.waiting = 0
+	var entry := HotelQueueProjection.position_for(session, first, view.CELL, view.FLOOR_HEIGHT)
+	check(entry == Vector2((first.x + (first.id % 5) * 0.13) * view.CELL, -first.floor_index * view.FLOOR_HEIGHT - 20), "entry starts at arrival anchor")
+	first.waiting = 0.2
+	check(HotelQueueProjection.position_for(session, first, view.CELL, view.FLOOR_HEIGHT).is_equal_approx(entry.lerp(target, 0.5)), "entry interpolation halfway")
+	first.waiting = 1.0
+	# Opposite-edge elevator points inward too.
+	var old_column := lift.column
+	lift.column = 0.5
+	var left := HotelQueueProjection.build(session, view.CELL, view.FLOOR_HEIGHT)
+	var previous := -INF
+	for id: int in lift.queue.members:
+		if session.actors[id].floor_index != 2:
+			continue
+		var point: Vector2 = left.positions[id]
+		check(point.x > previous and point.x < HotelModel.COLUMNS * view.CELL, "left-edge lift FIFO points inward")
+		previous = point.x
+	lift.column = old_column
+	for zoom: float in [0.35, 0.9, 1.8]:
+		view.zoom_factor = zoom
+		for actor: ActorState in arrived:
+			view.pan = Vector2.ZERO
+			view.pan += view.size / 2 - view.actor_screen_position(actor)
+			view.queue_redraw()
+			await process_frame
+			check(not view.actor_wait_badge_rect(actor).has_area(), "registered queue uses aggregate status")
+			await click(root, view.actor_screen_position(actor))
+			check(selected_id == actor.id, "real click selects every registered queue member")
+		for group: Dictionary in projected.groups:
+			var header := view.world_to_screen(group.header_world)
+			for actor: ActorState in arrived:
+				var in_group: bool = actor.target_room == group.owner_id if group.kind == &"room" else actor.elevator_id == group.owner_id and actor.floor_index == group.floor
+				if in_group:
+					check(header.y <= view.actor_sprite_rect(actor).position.y - 3.9 * zoom, "aggregate clears every queue sprite")
+		view.pan = Vector2.ZERO
+		view.cull_offscreen = false
+		view.queue_redraw()
+		await process_frame
+		await RenderingServer.frame_post_draw
+		var reference := root.get_texture().get_image().get_data()
+		view.cull_offscreen = true
+		view.queue_redraw()
+		await process_frame
+		await RenderingServer.frame_post_draw
+		check(reference == root.get_texture().get_image().get_data(), "registered queue culling preserves pixels")
+		root.get_texture().get_image().save_png("res://.runtime/m7-fifo-queue-%s.png" % zoom)
+	check(SessionSnapshot.capture(session) == before, "queue layout and clicks preserve authoritative state")
+	var restored := SessionSnapshot.restore(before)
+	check(restored.error.is_empty(), "queue fixture restores through schema")
+	if restored.error.is_empty():
+		check(HotelQueueProjection.build(restored.session, view.CELL, view.FLOOR_HEIGHT) == projected, "save restore reproduces positions and groups")

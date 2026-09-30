@@ -34,6 +34,17 @@ const ROOM_FINAL_UPGRADES: Dictionary = {
 	&"restaurant": preload("res://assets/art/rooms/restaurant-level-3.png"),
 }
 
+const DIRTY_BEDROOMS: Array[Texture2D] = [
+	preload("res://assets/art/rooms/bedroom-dirty.png"),
+	preload("res://assets/art/rooms/bedroom-level-2-dirty.png"),
+	preload("res://assets/art/rooms/bedroom-level-3-dirty.png"),
+]
+
+static func room_state(state: RoomState) -> Texture2D:
+	if state.definition_id == &"bedroom" and state.dirty:
+		return DIRTY_BEDROOMS[clampi(state.level - 1, 0, DIRTY_BEDROOMS.size() - 1)]
+	return room(state.definition_id, state.level)
+
 static func room(id: StringName, level: int = 1) -> Texture2D:
 	if level >= 3 and ROOM_FINAL_UPGRADES.has(id):
 		return ROOM_FINAL_UPGRADES[id]

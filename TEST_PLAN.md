@@ -319,3 +319,22 @@ Pacote com ciclos de repouso (30/09/2026): revisão a0fcec0, árvore limpa, smok
 os 12 sprites de uso com quatro quadros, quatro contextos da equipe e seleção em
 três zooms. ZIP, documentos e hashes dos 48 PNGs auditados; kit externo atualizado.
 Matriz: docs/release/bedroom-sleeping-loop-matrix.json. Compatibilidade externa pendente.
+
+Limpeza e posições das filas (30/09/2026): três pinturas RGB 1254×1254 geradas no
+chat, copiadas sem alteração de pixels e com mipmaps. `ui_art` passou com compras
+reais de N2/N3, desenho nos três zooms, snapshot inalterado, save/load e conclusão
+da limpeza pelo EmployeeSystem nos três níveis. Comparações antes/depois
+inspecionadas em docs/art/hotel-housekeeping{,-cleaned}.png.
+
+`ui_actor_presentation` passou com duas filas de 12 reservas (uma ainda caminhando),
+IDs em ordem inversa e dez passageiros em dois andares, incluindo funcionários.
+Ordem por reserva, extremos do hotel, entrada interpolada, contadores, seleção real
+de 33 pessoas nos três zooms, culling equivalente e posições reproduzidas após
+restaurar o snapshot. Captura inspecionada em docs/art/hotel-fifo-queues.png.
+Filas grandes comprimem espaçamento e ainda podem sobrepor silhuetas.
+
+Seis scripts válidos pelo gda. Os 11 testes base e 15 gráficos passaram nesta
+entrega. A primeira execução parou numa fixture nova sem desbloqueio para N3;
+corrigida a fixture, as oito suítes gráficas restantes passaram em
+.runtime/housekeeping-verification, com timeout por processo. Sem alteração de
+economia, atendimento, transporte ou schema v7.

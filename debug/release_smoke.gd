@@ -33,7 +33,50 @@ func run(game: Node) -> void:
 		face.y -= visual_view.actor_sprite_rect(neighbors[0]).size.y * 0.3
 		check(visual_view.actor_at_screen_position(face) == neighbors[0].id, "exported face picking")
 		actor_presentation_verified += 1
+	visual_session.actors.clear()
+	visual_session.hotel.add_floor()
+	var queue_room := visual_session.hotel.build(HotelCatalog.room(&"reception"), 3, 0)
+	visual_session.hotel.build(HotelCatalog.room(&"elevator"), 15, 0)
+	visual_session.transport.sync(visual_session.hotel)
+	var queue_lift: ElevatorState = visual_session.transport.lifts[0]
+	for index in 18:
+		var actor := visual_session.spawn_guest()
+		actor.waiting = 1.0
+		if index < 12:
+			actor.state = &"checkin"
+			actor.target_room = queue_room.id
+			actor.x = queue_room.center()
+			queue_room.queue.members.push_front(actor.id)
+		else:
+			actor.state = &"lift_queue"
+			actor.floor_index = 1
+			actor.elevator_id = queue_lift.room_id
+			actor.x = queue_lift.column
+			queue_lift.queue.join(actor.id)
+	var queue_before := SessionSnapshot.capture(visual_session)
+	var projection := HotelQueueProjection.build(visual_session, HotelView.CELL, HotelView.FLOOR_HEIGHT)
+	check(projection.groups.size() == 2 and projection.positions.size() == 18, "exported registered queue groups")
+	var queue_projection_verified := 0
+	for zoom: float in [0.35, 0.9, 1.8]:
+		visual_view.zoom_factor = zoom
+		for actor: ActorState in visual_session.actors.values():
+			check(visual_view.actor_at_screen_position(visual_view.actor_screen_position(actor)) == actor.id, "exported registered queue member selectable")
+			check(not visual_view.actor_wait_badge_rect(actor).has_area(), "exported shared queue status")
+		queue_projection_verified += 1
+	check(equivalent(queue_before, SessionSnapshot.capture(visual_session)), "exported queue presentation is read-only")
 	visual_view.free()
+	var housekeeping_art_verified := 0
+	for level in range(1, 4):
+		var room := RoomState.new()
+		room.definition_id = &"bedroom"
+		room.level = level
+		room.dirty = true
+		var texture := HotelArt.room_state(room)
+		check(texture == HotelArt.DIRTY_BEDROOMS[level - 1] and texture.get_width() > 0, "exported dirty bedroom painting")
+		check(texture.get_size() == HotelArt.room(&"bedroom", level).get_size(), "exported dirty room dimensions")
+		room.dirty = false
+		check(HotelArt.room_state(room) == HotelArt.room(&"bedroom", level), "exported clean room painting restored")
+		housekeeping_art_verified += 1
 	var staff_idle_art_verified := 0
 	for role: StringName in HotelArt.STAFF_IDLE_ROLES:
 		var employee := ActorState.new()
@@ -229,6 +272,8 @@ func run(game: Node) -> void:
 	report["service_art_verified"] = service_art_verified
 	report["staff_idle_art_verified"] = staff_idle_art_verified
 	report["actor_presentation_verified"] = actor_presentation_verified
+	report["queue_projection_verified"] = queue_projection_verified
+	report["housekeeping_art_verified"] = housekeeping_art_verified
 	report["presentation"] = {"window": [root.size.x, root.size.y], "viewport": [root.get_visible_rect().size.x, root.get_visible_rect().size.y], "large_text": game.large_text, "display": DisplayServer.get_name(), "renderer": RenderingServer.get_current_rendering_method(), "adapter": RenderingServer.get_video_adapter_name(), "os": OS.get_name(), "os_version": OS.get_version()}
 	var file := FileAccess.open("user://release-smoke-report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))

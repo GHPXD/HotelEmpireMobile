@@ -121,7 +121,7 @@ func _draw_room(room: RoomState) -> void:
 	else:
 		if not _in_view(rectangle):
 			return
-		draw_texture_rect(HotelArt.room(definition.id, room.level), rectangle, false)
+		draw_texture_rect(HotelArt.room_state(room), rectangle, false)
 		if zoom_factor >= 0.65:
 			draw_rect(Rect2(rectangle.position, Vector2(rectangle.size.x, 22 * zoom_factor)), Color(0.06, 0.14, 0.14, 0.88))
 			_text(rectangle.position + Vector2(7, 17) * zoom_factor, definition.display_name + (" N%d" % room.level if room.level > 1 else ""), Color("fff1cc"), int(13 * zoom_factor))
@@ -132,6 +132,15 @@ func _text(at: Vector2, value: String, color: Color, font_size: int) -> void:
 	draw_string(ThemeDB.fallback_font, at, value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
 
 func actor_screen_position(actor: ActorState) -> Vector2:
+	if actor.state in WAITING_STATES:
+		var projected := HotelQueueProjection.position_for(session, actor, CELL, FLOOR_HEIGHT)
+		if projected.is_finite():
+			return world_to_screen(projected)
+	return _actor_screen_position(actor, {})
+
+func _actor_screen_position(actor: ActorState, queue_positions: Dictionary) -> Vector2:
+	if queue_positions.has(actor.id):
+		return world_to_screen(queue_positions[actor.id])
 	var sleeping_room := _sleeping_room(actor)
 	if sleeping_room != null:
 		var bed := room_rect(sleeping_room.column, sleeping_room.floor_index, sleeping_room.definition().width).grow(-2 * zoom_factor)
@@ -158,31 +167,37 @@ func _actor_service(actor: ActorState) -> StringName:
 	return room.definition_id if room != null else &""
 
 func actor_sprite_rect(actor: ActorState) -> Rect2:
+	return _sprite_rect(actor, actor_screen_position(actor))
+
+func _sprite_rect(actor: ActorState, point: Vector2) -> Rect2:
 	var service := _actor_service(actor)
 	var region := HotelArt.character_region(actor, session.tick_count, service)
 	var scale := HotelArt.character_scale(actor, service) * zoom_factor
 	var anchor := HotelArt.character_anchor(actor, session.tick_count, service)
-	return Rect2(actor_screen_position(actor) + Vector2(0, 17 * zoom_factor) - anchor * scale, region.size * scale)
+	return Rect2(point + Vector2(0, 17 * zoom_factor) - anchor * scale, region.size * scale)
 
 func actor_at_screen_position(at: Vector2) -> int:
 	var closest_id := -1
 	var closest_distance := INF
+	var queue_positions: Dictionary = HotelQueueProjection.build(session, CELL, FLOOR_HEIGHT).positions
 	# Match the two drawing passes. Equal-distance ties favor the foreground actor.
 	for sleepers: bool in [true, false]:
 		for actor: ActorState in session.actors.values():
 			if (_sleeping_room(actor) != null) != sleepers:
 				continue
-			var point := actor_screen_position(actor)
+			var point := _actor_screen_position(actor, queue_positions)
 			var distance := point.distance_squared_to(at)
 			if distance > closest_distance:
 				continue
-			if actor_sprite_rect(actor).grow(2 * zoom_factor).has_point(at):
+			if _sprite_rect(actor, point).grow(2 * zoom_factor).has_point(at):
 				closest_id = actor.id
 				closest_distance = distance
 	return closest_id
 
 func actor_wait_badge_rect(actor: ActorState) -> Rect2:
 	if actor.state not in WAITING_STATES:
+		return Rect2()
+	if HotelQueueProjection.position_for(session, actor, CELL, FLOOR_HEIGHT).is_finite():
 		return Rect2()
 	return _wait_badge_rect(actor_screen_position(actor), actor_sprite_rect(actor))
 
@@ -197,6 +212,7 @@ func _sleeping_room(actor: ActorState) -> RoomState:
 	return room if room != null and room.definition_id == &"bedroom" else null
 
 func _draw_simulation() -> void:
+	var queues := HotelQueueProjection.build(session, CELL, FLOOR_HEIGHT)
 	for lift in session.transport.lifts:
 		var cabin := Rect2(world_to_screen(Vector2((lift.column - 0.37) * CELL, -(lift.floor_position + 0.72) * FLOOR_HEIGHT)), Vector2(CELL * 0.74, FLOOR_HEIGHT * 0.65) * zoom_factor)
 		if not _in_view(cabin):
@@ -209,36 +225,38 @@ func _draw_simulation() -> void:
 		if room.dirty:
 			var box := room_rect(room.column, room.floor_index, room.definition().width)
 			_status_badge(box.position + Vector2(7, 29) * zoom_factor, "LIMPAR")
-		if not room.queue.members.is_empty():
-			var box := room_rect(room.column, room.floor_index, room.definition().width)
-			_status_badge(box.position + Vector2(7, 51) * zoom_factor, "Fila: %d" % room.queue.members.size())
+	for group: Dictionary in queues.groups:
+		var label := "Fila: %d" % group.count
+		var end := world_to_screen(group.header_world)
+		_status_badge(end - Vector2(0, _status_badge_size(label).y), label)
 	# Beds and their footboards precede people circulating in the foreground.
 	for draw_sleepers: bool in [true, false]:
 		for actor: ActorState in session.actors.values():
 			var sleeping_room := _sleeping_room(actor)
 			if (sleeping_room != null) == draw_sleepers:
-				_draw_actor(actor, sleeping_room)
+				_draw_actor(actor, sleeping_room, queues.positions)
 
-func _draw_actor(actor: ActorState, sleeping_room: RoomState) -> void:
-	var point := actor_screen_position(actor)
+func _draw_actor(actor: ActorState, sleeping_room: RoomState, queue_positions: Dictionary) -> void:
+	var point := _actor_screen_position(actor, queue_positions)
 	# Include the entire sprite, waiting badge and antialiased edge at every zoom.
 	if not _in_view(Rect2(point - Vector2(36, 60) * zoom_factor, Vector2(72, 88) * zoom_factor).grow(16)):
 		return
 	var service_id := _actor_service(actor)
 	var texture := HotelArt.character(actor, service_id)
 	var region := HotelArt.character_region(actor, session.tick_count, service_id)
-	var destination := actor_sprite_rect(actor)
-	var wait_badge := _wait_badge_rect(point, destination) if actor.state in WAITING_STATES else Rect2()
+	var destination := _sprite_rect(actor, point)
+	var show_wait_badge := actor.state in WAITING_STATES and not queue_positions.has(actor.id)
+	var wait_badge := _wait_badge_rect(point, destination) if show_wait_badge else Rect2()
 	if actor.target_x < actor.x and actor.state == &"walking":
 		destination.position.x += destination.size.x
 		destination.size.x = -destination.size.x
 	draw_texture_rect_region(texture, destination, region)
 	if sleeping_room != null and sleeping_room.level >= 3:
 		var bed := room_rect(sleeping_room.column, sleeping_room.floor_index, sleeping_room.definition().width).grow(-2 * zoom_factor)
-		var bed_texture := HotelArt.room(&"bedroom", sleeping_room.level)
+		var bed_texture := HotelArt.room_state(sleeping_room)
 		var front := HotelArt.SLEEP_FOOTBOARD
 		draw_texture_rect_region(bed_texture, Rect2(bed.position + bed.size * front.position, bed.size * front.size), Rect2(bed_texture.get_size() * front.position, bed_texture.get_size() * front.size))
-	if actor.state in WAITING_STATES:
+	if show_wait_badge:
 		_status_badge(wait_badge.position, "…")
 
 func _status_badge_size(label: String) -> Vector2:

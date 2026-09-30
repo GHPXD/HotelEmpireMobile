@@ -1,5 +1,33 @@
 # Indicadores de espera e seleção dos personagens
 
+## Posições por reserva
+
+`HotelQueueProjection` projeta filas registradas em coordenadas de mundo, sem
+alterar a posição física do ator ou a ordem de atendimento. Filas de salas seguem
+`room.queue.members`; lugares reservados para quem está caminhando permanecem
+na sequência. Elevadores mantêm a ordem relativa por andar dentro da fila global.
+As posições avançam da porta para o interior do hotel, inclusive nos dois extremos.
+
+Espaçamento máximo de 24px, comprimido quando o grupo excede a largura disponível.
+Portanto, filas grandes ainda podem sobrepor silhuetas, mas seus pontos são distintos.
+Um único contador por grupo fica acima dos personagens; o total das salas inclui
+reservas em trânsito. Entrada interpola durante os primeiros 0,4s de espera, usando
+o tempo autoritativo existente. Pausa congela essa transição. Nenhum relógio visual,
+RNG, mudança de fila ou campo adicional de save.
+
+A tabela é calculada uma vez por desenho ou clique. A consulta pública de uma
+posição percorre somente a fila correspondente. Desenho e seleção usam as mesmas
+coordenadas; personagens sem reserva mantêm a apresentação individual descrita
+abaixo. O perfil antigo de caminhada não mede o custo desta projeção.
+
+`ui_actor_presentation` inclui duas filas de 12 reservas, IDs em ordem inversa,
+uma reserva ainda caminhando, dez passageiros distribuídos em dois andares e
+duas funções da equipe. Verifica ordem, contadores, entrada, elevadores dos dois
+extremos, seleção real de 33 pessoas nos três zooms, separação do contador,
+equivalência de pixels com/sem descarte, snapshots e restauração das posições.
+
+## Indicador individual e seleção
+
 O indicador “…” usava deslocamento fixo que cobria parte do cabelo nas faixas
 de espera. Agora sua borda inferior fica quatro pixels de mundo acima do recorte
 desenhado, acompanhando altura, gesto e zoom. Tamanho e tipografia continuam

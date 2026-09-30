@@ -386,7 +386,71 @@ func run() -> void:
 	check(game.audio.enabled == old_audio, "audio restored")
 	for cue: StringName in HotelAudio.SOUNDS:
 		check(HotelAudio.SOUNDS[cue].get_length() > 0.1, "audio asset loads")
+	await housekeeping_art()
 	print(JSON.stringify({"suite": "ui_art", "failures": failures, "rooms": HotelArt.ROOMS.size(), "characters": HotelArt.CHARACTERS.size()}))
 	game.queue_free()
 	await process_frame
 	quit(1 if failures else 0)
+
+func housekeeping_art() -> void:
+	var session := HotelSession.new(612)
+	session.progression.completed.assign([&"first_stays", &"steady_service"])
+	session.economy.cash = 100000
+	session.hotel.add_floor()
+	var dirty_rooms: Array[RoomState] = []
+	for level in range(1, 4):
+		for floor_index in 2:
+			var room := session.hotel.build(HotelCatalog.room(&"bedroom"), 3 + level * 2, floor_index)
+			for upgrade_index in range(1, level):
+				check(session.upgrade_room(room.id).is_empty(), "housekeeping actual room upgrade")
+			room.dirty = floor_index == 0
+			var texture := HotelArt.room_state(room)
+			check(texture == HotelArt.DIRTY_BEDROOMS[level - 1] if room.dirty else texture == HotelArt.room(&"bedroom", level), "painting follows level and dirty state")
+			check(texture.get_size() == HotelArt.room(&"bedroom", level).get_size(), "dirty painting preserves source dimensions")
+			if room.dirty:
+				dirty_rooms.append(room)
+				var cleaner := session.spawn_guest()
+				cleaner.role = &"cleaner"
+				cleaner.state = &"cleaning"
+				cleaner.assignment = room.id
+				cleaner.x = room.center()
+				cleaner.timer = 0.05
+				room.cleaning_by = cleaner.id
+	var reception := session.hotel.build(HotelCatalog.room(&"reception"), 0, 0)
+	reception.dirty = true
+	check(HotelArt.room_state(reception) == HotelArt.room(&"reception"), "other room types retain their normal painting")
+	reception.dirty = false
+	session.speed = 0
+	var view := HotelView.new()
+	root.add_child(view)
+	view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	view.session = session
+	view.hotel = session.hotel
+	var before := SessionSnapshot.capture(session)
+	for zoom: float in [0.35, 0.9, 1.8]:
+		view.zoom_factor = zoom
+		view.queue_redraw()
+		for frame in 3:
+			await process_frame
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("res://.runtime/m7-housekeeping-%s.png" % zoom)
+		check(SessionSnapshot.capture(session) == before, "housekeeping render preserves state")
+	var path := "user://housekeeping-art-save.json"
+	check(SaveStore.save_session(session, path).is_empty(), "housekeeping save")
+	var restored := SaveStore.load_session(path)
+	check(restored.error.is_empty(), "housekeeping load")
+	if restored.error.is_empty():
+		for room: RoomState in dirty_rooms:
+			check(HotelArt.room_state(restored.session.hotel.by_id(room.id)) == HotelArt.room_state(room), "dirty room painting survives save load")
+	session.employees.step(session.actors, session.hotel, session.transport, 0.1)
+	check(session.employees.cleaned == 3, "real employee completion cleans all levels")
+	for room: RoomState in dirty_rooms:
+		check(not room.dirty and room.cleaning_by == -1, "employee resets dirty state")
+		check(HotelArt.room_state(room) == HotelArt.room(&"bedroom", room.level), "cleaning restores clean painting at same level")
+	view.queue_redraw()
+	for frame in 3:
+		await process_frame
+	await RenderingServer.frame_post_draw
+	root.get_texture().get_image().save_png("res://.runtime/m7-housekeeping-cleaned.png")
+	view.queue_free()
+	await process_frame
