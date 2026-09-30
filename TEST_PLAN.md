@@ -449,3 +449,9 @@ mantendo a proporção lógica 1440×900. Capturas portrait/hiring inspecionadas
 Seis suítes gráficas passaram: ui_management (12 casos/24 contratações),
 ui_content (30 retratos/36 ícones), ui_smoke, ui_resume, ui_new_game e ui_operations.
 Resultados de outro computador e playtest humano continuam pendentes.
+
+Pacote com limites de importação: revisão 451bbdc, árvore limpa; boot e smoke
+de 6120 ticks, 39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas.
+Seis combinações do executável extraído passaram, incluindo dois ícones da
+equipe, seis de construção e cinco retratos: docs/release/ui-texture-budget-matrix.json.
+ZIP, documentos e 67 PNGs auditados; kit de compatibilidade atualizado.
