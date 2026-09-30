@@ -338,3 +338,9 @@ entrega. A primeira execução parou numa fixture nova sem desbloqueio para N3;
 corrigida a fixture, as oito suítes gráficas restantes passaram em
 .runtime/housekeeping-verification, com timeout por processo. Sem alteração de
 economia, atendimento, transporte ou schema v7.
+
+Pacote de limpeza/filas (30/09/2026): revisão 090b8af, árvore limpa; boot e smoke
+de 6120 ticks aprovados. Seis casos em 1024×640, 1280×800 e 1600×900, com texto
+normal/ampliado, verificaram os três níveis de quarto e seleção de filas em três
+zooms. Matriz docs/release/housekeeping-fifo-matrix.json. ZIP e 51 PNGs auditados;
+kit externo atualizado. Compatibilidade em outra máquina permanece pendente.

@@ -26,6 +26,12 @@ duas funções da equipe. Verifica ordem, contadores, entrada, elevadores dos do
 extremos, seleção real de 33 pessoas nos três zooms, separação do contador,
 equivalência de pixels com/sem descarte, snapshots e restauração das posições.
 
+Captura inspecionada: `hotel-fifo-queues.png`. Incluída no pacote Windows da
+revisão 090b8af, árvore limpa, seis combinações locais de janela/texto aprovadas.
+O diagnóstico verifica seleção de 18 pessoas registradas em três zooms e leitura
+sem mutação. Matriz `../release/housekeeping-fifo-matrix.json`. Sem novo perfil
+de performance de filas; resultados antigos continuam restritos à caminhada.
+
 ## Indicador individual e seleção
 
 O indicador “…” usava deslocamento fixo que cobria parte do cabelo nas faixas

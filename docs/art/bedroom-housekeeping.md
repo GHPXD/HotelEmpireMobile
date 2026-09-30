@@ -25,3 +25,10 @@ real da limpeza nos três níveis. Capturas de comparação limpa/suja em
 `.runtime/m7-housekeeping-{0.35,0.9,1.8}.png` e após limpeza em
 `.runtime/m7-housekeeping-cleaned.png`. O diagnóstico exportado verifica as três
 pinturas e retorno à versão limpa.
+
+`ui_art`, `ui_culling` e `ui_actor_presentation` aprovados; capturas antes/depois
+inspecionadas e preservadas em `hotel-housekeeping.png` e
+`hotel-housekeeping-cleaned.png`. Pacote Windows da revisão 090b8af validado com
+árvore limpa, boot, smoke de 6120 ticks e seis casos locais de janela/texto. Cada
+caso verificou os três níveis; matriz `../release/housekeeping-fifo-matrix.json`.
+Os 51 PNGs e o ZIP foram auditados; kit externo atualizado.
