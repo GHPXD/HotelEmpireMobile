@@ -403,4 +403,9 @@ alpha, preço/nome nativos e snapshot preservado. Café/lounge bloqueados conser
 ícones e não entram em construção. Capturas normal/ampliada em 1024×640 inspecionadas:
 docs/art/hotel-build-icons.png e hotel-build-icons-large.png.
 Prompts, origem, hashes e limites em docs/art/build-icons.md e arquivos associados.
+
+Pacote de ícones: revisão 2f5bf1e, árvore limpa; boot e smoke de 6120 ticks,
+39 reservas, 42 refeições, 31 limpezas e caixa 2021, sem falhas. Os seis ícones
+foram verificados em cada combinação da matriz docs/release/build-icons-matrix.json.
+ZIP, documentos e 65 PNGs auditados; kit de compatibilidade atualizado.
 Resultados de outro computador e playtest humano continuam pendentes.
