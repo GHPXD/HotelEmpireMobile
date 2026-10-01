@@ -125,3 +125,5 @@ Pacote Windows: `powershell -File tools/build_windows.ps1` exporta, testa o
 executável e gera `builds/HotelEmpire-windows-x86_64.zip` com manifesto de revisão
 e hash. `tools/test_windows_package.ps1` valida seis combinações de janela/texto.
 Evidências e limites em [revisão de distribuição](docs/release/DISTRIBUTION_REVIEW.md).
+#   H o t e l E m p i r e M o b i l e  
+ 
