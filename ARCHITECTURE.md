@@ -250,6 +250,13 @@ Usar cálculo agregado e determinístico baseado em snapshot de:
 
 Timers de construção e upgrades usam tempo absoluto persistido.
 
+Na implementação atual da Sprint 5, ProgressClock é um relógio de progresso da
+aplicação: monotônico em execução, ausência por watermark no boot/resume e congelado
+durante suspensão. ConstructionService processa dois slots e uma fila paga por
+boundaries de deadline. HotelModel continua dono das salas concluídas. A aplicação
+persiste os dois módulos com SessionSnapshot no mesmo envelope, incluindo autosave
+pausado. O domínio não consulta OS/Time nem conhece os módulos globais.
+
 ## Rendering
 
 Preservar o modelo de renderização enxuto sempre que possível.

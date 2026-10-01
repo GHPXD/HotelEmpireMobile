@@ -2,6 +2,7 @@ extends "res://tests/mobile/render_harness.gd"
 ## Sends only screen touch/drag through Input and the viewport, never emits buttons.
 
 var game: AppRoot
+var progress_time: RefCounted
 
 func run() -> void:
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
@@ -10,6 +11,7 @@ func run() -> void:
 		print(JSON.stringify({"progress": "touch_flow", "dimensions": [dimensions.x, dimensions.y]}))
 		root.size = dimensions
 		game = preload("res://core/application/app_root.tscn").instantiate()
+		inject_progress_time()
 		game.controller.saves.path = "user://touch-%dx%d.json" % [dimensions.x, dimensions.y]
 		game.controller.saves.legacy_path = "user://no-legacy.json"
 		root.add_child(game)
@@ -39,6 +41,8 @@ func run() -> void:
 		session.economy.cash = 100000
 		await click(root, game.shell.nav_buttons[&"build"].get_global_rect().get_center())
 		await press_action(&"add_floor")
+		check(session.hotel.floors == 1 and game.controller.construction.jobs.size() == 1, "floor remains unavailable during paid construction")
+		await finish_construction()
 		check(session.hotel.floors == 2, "floor via touch")
 		await build_room(&"elevator", 15, 0)
 		await click(root, game.shell.nav_buttons[&"staff"].get_global_rect().get_center())
@@ -59,6 +63,8 @@ func run() -> void:
 		var cash := session.economy.cash
 		var cost := bedroom.next_upgrade().cost
 		await press_action(&"upgrade", {"id": bedroom.id})
+		check(bedroom.level == before_level and session.economy.cash == cash - cost, "upgrade paid once while old level operates")
+		await finish_construction()
 		check(bedroom.level == before_level + 1 and session.economy.cash == cash - cost, "upgrade exact cost through touch")
 		await capture("room-%dx%d" % [dimensions.x, dimensions.y])
 		game._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
@@ -160,12 +166,13 @@ func run() -> void:
 		game = null
 	finish("mobile_touch_management", {"dimensions": 5, "input": "InputEventScreenTouch/ScreenDrag via Input.parse_input_event"})
 
-func build_room(definition_id: StringName, column: int, floor_index: int) -> void:
+func build_room(definition_id: StringName, column: int, floor_index: int, wait_for_completion: bool = true) -> void:
 	await click(root, game.shell.nav_buttons[&"build"].get_global_rect().get_center())
 	await press_action(&"choose_build", {"definition": HotelCatalog.room(definition_id)})
 	var session := game.controller.session
 	var cash := session.economy.cash
 	var count := session.hotel.rooms.size()
+	var jobs_before := game.controller.construction.jobs.size()
 	var definition := HotelCatalog.room(definition_id)
 	if definition_id == &"reception":
 		game.view.zoom_factor = 1.8
@@ -188,8 +195,32 @@ func build_room(definition_id: StringName, column: int, floor_index: int) -> voi
 	await click(root, game.shell.nav_buttons[&"staff"].get_global_rect().get_center())
 	check(game.router.sheet == &"build_confirm" and game.view.pan == pan, "modal blocks navigation and world")
 	await press_action(&"confirm_build")
+	check(session.hotel.rooms.size() == count and session.economy.cash == cash - definition.build_cost and game.controller.construction.jobs.size() == jobs_before + 1, "confirmed touch pays once and reserves an unfinished room")
+	check(game.router.sheet == &"construction" and not game.shell.modal_blocker.visible, "touch opens construction progress without blocking hotel")
+	if not wait_for_completion:
+		return
+	await finish_construction()
 	check(session.hotel.rooms.size() == count + 1 and session.economy.cash == cash - definition.build_cost, "confirmed touch builds once")
 	check(session.hotel.rooms.back().column == column, "construction begins at tapped cell")
+
+func inject_progress_time() -> void:
+	progress_time = preload("res://tests/mobile/fake_progress_time.gd").new()
+	game.controller.progress_clock = progress_time.clock()
+	game.controller.saves.clock = progress_time.utc
+
+func finish_construction() -> void:
+	var cash := game.controller.session.economy.cash
+	var ticks := game.controller.session.tick_count
+	game.controller.enter_background()
+	progress_time.advance(4 * 3600 * 1000)
+	game.controller.resume()
+	check(game.controller.construction.jobs.is_empty() and game.controller.session.tick_count == ticks and game.controller.session.economy.cash == cash, "offline deadlines complete without simulation ticks or duplicate payments")
+	game._refresh()
+	if game.router.sheet == &"construction_return":
+		await press_action(&"construction_return_continue")
+	if game.router.sheet == &"construction":
+		game.router.close_sheet()
+	await frames()
 
 func press_action(action: StringName, arguments: Dictionary = {}) -> void:
 	await press_matching("mobile_action", action, arguments)
@@ -215,6 +246,8 @@ func press_matching(meta: String, value: Variant, arguments: Dictionary = {}) ->
 	check(false, "missing " + meta + " " + str(value))
 
 func press_button(button: Button) -> void:
+	# Newly rebuilt sheets need a layout pass before ScrollContainer can reveal a target.
+	await frames()
 	game.shell.sheet_scroll.ensure_control_visible(button)
 	await frames()
 	check(root.get_visible_rect().encloses(button.get_global_rect()), "touch target inside viewport")

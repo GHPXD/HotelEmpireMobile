@@ -93,11 +93,21 @@ static func restore(data: Variant) -> Dictionary:
 		return {"session": null, "error": "save.error.version"}
 	if data.app_state.has("onboarding") and not OnboardingService.valid(data.app_state.onboarding):
 		return {"session": null, "error": "save.error.invalid"}
+	for module: String in ["progress_clock", "construction"]:
+		if data.app_state.get(module) is Dictionary and _integer(data.app_state[module].get("version"), 2, 2147483647):
+			return {"session": null, "error": "save.error.version"}
+	var has_clock: bool = data.app_state.has("progress_clock")
+	if has_clock != data.app_state.has("construction") or (has_clock and not ProgressClock.valid(data.app_state.progress_clock)):
+		return {"session": null, "error": "save.error.invalid"}
 	var hotel := SessionSnapshot.restore(data.get("hotel"))
 	if not hotel.error.is_empty():
 		return {"session": null, "error": "save.error.invalid"}
 	if data.app_state.has("onboarding") and not data.app_state.onboarding.completed_at.is_empty() and float(data.app_state.onboarding.completed_at.back()) > hotel.session.time + SimulationRules.TIME_EPSILON:
 		return {"session": null, "error": "save.error.invalid"}
+	if has_clock:
+		var construction := ConstructionService.new(hotel.session.hotel)
+		if not construction.restore(data.app_state.construction, int(data.app_state.progress_clock.time_ms)):
+			return {"session": null, "error": "save.error.invalid"}
 	return {"session": hotel.session, "error": "", "saved_at_utc": int(timestamp), "app_state": data.app_state.duplicate(true)}
 
 static func _valid_envelope(data: Variant) -> bool:

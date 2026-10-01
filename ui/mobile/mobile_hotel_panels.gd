@@ -17,6 +17,9 @@ var sound_enabled: bool = true
 var haptics_enabled: bool = true
 var onboarding: OnboardingService
 var structure_key: String = ""
+var construction: ConstructionService
+var progress_clock: ProgressClock
+var return_construction: Array[Dictionary] = []
 
 func _init(presentation: MobileShell) -> void:
 	shell = presentation
@@ -28,12 +31,39 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 	shell.clear_sheet()
 	var title := "ui." + String(router.screen)
 	match router.sheet:
+		&"construction_return":
+			title = "construction.return_title"
+			var finished := 0
+			var refunded := 0
+			for event in return_construction:
+				if event.error.is_empty():
+					finished += 1
+				else:
+					refunded += 1
+			_text(tr("construction.return_finished") % finished)
+			if refunded > 0:
+				_text(tr("construction.return_refunded") % refunded)
+			_text(tr("construction.return_hint"))
+			_action("construction.return_continue", &"construction_return_continue")
+		&"construction":
+			title = "construction.title"
+			_construction(router.context_id)
+		&"construction_cancel_confirm":
+			title = "construction.cancel"
+			var job: Variant = construction.by_id(router.context_id)
+			if job != null:
+				_text(tr("construction.cancel_confirm") % [MobileLabels.construction_name(job), MobileLocale.number(int(job.cost))])
+				_action("ui.confirm", &"cancel_construction", {"id": router.context_id})
+			else:
+				_text(tr("construction.finished"))
 		&"build_confirm":
 			if blueprint == null:
 				shell.hide_sheet()
 				return
 			title = "ui.build"
 			_text(tr("ui.build_preview") % [tr("room." + String(blueprint.id) + ".name"), MobileLocale.number(blueprint.build_cost)])
+			_text(tr("construction.duration") % MobileLabels.duration(ConstructionService.RULES.build_ms(blueprint, session.hotel.rooms, construction.jobs)))
+			_text(tr("construction.purchase_hint"))
 			_action("ui.confirm", &"confirm_build", {}, HotelArt.build_icon(blueprint.id))
 		&"demolish_confirm":
 			title = "ui.demolish"
@@ -76,7 +106,7 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 				&"settings": _settings()
 				&"store": _text(tr("store.unavailable"))
 	shell.sheet_title.text = tr(title)
-	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm", &"dismiss_confirm"])
+	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm", &"dismiss_confirm", &"construction_cancel_confirm"])
 	structure_key = _structure()
 	refresh()
 
@@ -87,6 +117,9 @@ func _structure() -> String:
 	var key := "%d:%d:%s:%d:%s" % [session.actors.size() - session.guest_count(), session.hotel.rooms.size(), str(session.player_work.job.is_empty()), onboarding.stage if onboarding != null else -1, str(onboarding.skipped if onboarding != null else true)]
 	for order in session.player_work.orders:
 		key += ":o%d" % int(order.id)
+	if construction != null:
+		for job in construction.jobs:
+			key += ":c%d:%d" % [int(job.id), int(job.slot)]
 	for room in session.hotel.rooms:
 		key += ":%d:%s" % [room.id, str(room.dirty)]
 	for actor: ActorState in session.actors.values():
@@ -133,6 +166,7 @@ func _grid() -> GridContainer:
 	return grid
 
 func _build() -> void:
+	_projects()
 	var categories := _grid()
 	for category: StringName in [&"", &"reception", &"lodging", &"service", &"transport"]:
 		var button := shell.button(categories, "category." + ("all" if category.is_empty() else String(category)), func() -> void:
@@ -163,6 +197,7 @@ func _overview() -> void:
 	_link(&"operations", HotelArt.management_icon(&"operations"))
 	_link(&"finances", HotelArt.management_icon(&"finances"))
 	_link(&"reviews", HotelArt.management_icon(&"reviews"))
+	_projects()
 
 func _room(id: int) -> void:
 	var room := session.hotel.by_id(id)
@@ -188,7 +223,12 @@ func _room(id: int) -> void:
 		_work_button("repair", id, HotelArt.action_icon(&"repair"))
 		_text(tr("work.repair_cost") % MobileLocale.number(session.player_work.rules.repair_cost))
 	var next := room.next_upgrade()
-	if next != null:
+	var pending: Variant = construction.job_for_room(id)
+	if pending != null:
+		_inspect(&"construction", int(pending.id), tr("construction.view"), HotelArt.action_icon(&"upgrade"))
+		_live(func() -> String: return MobileLabels.construction_status(pending, progress_clock.now_ms()))
+		_text(tr("construction.upgrade_hint"))
+	elif next != null:
 		var upgrade := _action("ui.upgrade", &"upgrade", {"id": id}, HotelArt.action_icon(&"upgrade"))
 		upgrade.disabled = not session.progression.upgrade_error(room).is_empty()
 		_text(tr("upgrade.cost") % MobileLocale.number(next.cost))
@@ -213,7 +253,32 @@ func _room(id: int) -> void:
 					low = minf(low, delta)
 					high = maxf(high, delta)
 				_text(tr("tariff.range") % [percent, low, high])
-	_action("ui.demolish", &"request_demolish", {"id": id}, HotelArt.action_icon(&"demolish"))
+	_action("ui.demolish", &"request_demolish", {"id": id}, HotelArt.action_icon(&"demolish")).disabled = pending != null
+
+func _projects() -> void:
+	if construction == null or construction.jobs.is_empty():
+		return
+	_text(tr("construction.slots") % ConstructionService.RULES.slots)
+	for job in construction.jobs:
+		_inspect(&"construction", int(job.id), MobileLabels.construction_name(job), HotelArt.action_icon(&"add_floor") if job.kind == "floor" else HotelArt.build_icon(StringName(job.definition_id)))
+		_live(func() -> String: return MobileLabels.construction_status(job, progress_clock.now_ms()))
+
+func _construction(id: int) -> void:
+	var job: Variant = construction.by_id(id)
+	if job == null:
+		_text(tr("construction.finished"))
+		return
+	_text(MobileLabels.construction_name(job))
+	_live(func() -> String: return MobileLabels.construction_status(job, progress_clock.now_ms()))
+	_text(tr("construction.paid") % MobileLocale.number(int(job.cost)))
+	if job.kind == "upgrade":
+		_text(tr("construction.upgrade_hint"))
+	var progress := ProgressBar.new()
+	progress.custom_minimum_size.y = 16
+	progress.show_percentage = false
+	shell.sheet_content.add_child(progress)
+	updates.append(func() -> void: progress.value = 100.0 * clampf(1.0 - (int(job.end_ms) - progress_clock.now_ms()) / float(job.duration_ms), 0.0, 1.0) if int(job.slot) >= 0 else 0.0)
+	_action("construction.cancel", &"request_construction_cancel", {"id": id})
 
 func _actor(id: int) -> void:
 	var actor: ActorState = session.actors.get(id)

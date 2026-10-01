@@ -63,6 +63,8 @@ static func review(item: Dictionary, day_seconds: float) -> String:
 	return result
 
 static func transaction_reason(reason: String) -> String:
+	if reason.begins_with("ledger.construction."):
+		return TranslationServer.translate(reason)
 	var key := "other"
 	if reason.begins_with("Construção:"):
 		key = "construction"
@@ -85,3 +87,22 @@ static func transaction_reason(reason: String) -> String:
 			if reason == definition.display_name:
 				return TranslationServer.translate("room." + String(definition.id) + ".name")
 	return TranslationServer.translate("finance." + key)
+
+static func construction_name(job: Dictionary) -> String:
+	if job.kind == "floor":
+		return TranslationServer.translate("construction.floor") % int(job.floor_index)
+	var name := TranslationServer.translate("room." + String(job.definition_id) + ".name")
+	return TranslationServer.translate("construction.upgrade_name") % [name, int(job.target_level)] if job.kind == "upgrade" else name
+
+static func duration(milliseconds: int) -> String:
+	var seconds := ceili(maxi(0, milliseconds) / 1000.0)
+	if seconds < 60:
+		return TranslationServer.translate("construction.seconds") % seconds
+	if seconds < 3600:
+		return TranslationServer.translate("construction.minutes") % ceili(seconds / 60.0)
+	return TranslationServer.translate("construction.hours") % ceili(seconds / 3600.0)
+
+static func construction_status(job: Dictionary, now_ms: int) -> String:
+	if int(job.slot) < 0:
+		return TranslationServer.translate("construction.queued") % duration(int(job.duration_ms))
+	return TranslationServer.translate("construction.active") % [int(job.slot) + 1, duration(int(job.end_ms) - now_ms)]

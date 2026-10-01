@@ -12,9 +12,16 @@ Este changelog começa na separação da versão mobile. O histórico de desenvo
   capital pago uma vez, cancelamento com estorno e deadlines agregados. Upgrades e
   andares aguardam conclusão. Restore valida a fila sem alterar estado em caso de erro.
 - Núcleo de construção passou em 162 verificações; as 11 suítes de domínio
-  preservadas passaram. Ainda pendem integração, speedups, N4/N5, especializações
-  e settlement offline do hotel;
-  o fluxo de construção do produto continua no estado validado da Sprint 4.
+  preservadas passaram. GameController/save/interface agora integram obras pagas,
+  fila e retomada sem novos ticks ou pagamentos. A interface mostra terreno
+  reservado, prazo, reembolso confirmado e resumo de retorno. Save valida módulos
+  pareados e impede downgrade de versões futuras.
+- Testes de lifecycle e GUI cobrem compra/cancelamento/restart, slots, prazo exato,
+  traduções, texto ampliado e recuperação. Feedback longo e espaçamento adaptável
+  preservam os alvos de toque e a área segura de telas compactas com recortes.
+  Evidências da integração ficam em `docs/SPRINT5_INTEGRATION_VALIDATION.json`.
+- Ainda pendem speedups, N4/N5, especializações e settlement offline do hotel;
+  a Sprint 5 permanece em andamento, sem novo release mobile validado.
 
 ## 0.6.0-mobile — Equipe e delegação
 

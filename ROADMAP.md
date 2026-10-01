@@ -121,14 +121,19 @@ Saída: transição clara de trabalhador para gestor.
 
 ## Sprint 5 — Construção Mobile
 
-- timers;
-- fila;
-- slots;
-- construção offline;
-- upgrades temporizados;
-- N1–N5 quando aplicável;
-- especializações;
-- speedups.
+- [x] timers;
+- [x] fila;
+- [x] dois slots gratuitos;
+- [x] construção offline com reserva/pagamento persistido e resumo de retorno;
+- [x] upgrades temporizados mantendo operação no nível anterior;
+- [ ] N1–N5 quando aplicável;
+- [ ] especializações;
+- [ ] speedups.
+
+A integração de timers/fila/save/GUI tem evidência própria em
+`docs/SPRINT5_INTEGRATION_VALIDATION.json`. Ainda não conclui a sprint.
+Settlement econômico offline e seu resumo precisam de política/balanceamento antes
+do gate completo; snapshots de obra não concedem receita ou salários inventados.
 
 Saída: loop temporal mobile completo.
 

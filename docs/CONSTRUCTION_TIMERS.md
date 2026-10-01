@@ -1,10 +1,10 @@
 # Construção e progresso temporal — Sprint 5
 
-Sprint em implementação. `ProgressClock` e `ConstructionService` estão implementados
-e testados isoladamente, ainda sem integração ao GameController/save/interface.
+Sprint em implementação. `ProgressClock` e `ConstructionService` estão integrados
+ao GameController, ao envelope de save e à interface por toque.
 Speedups, N4/N5, especializações e settlement offline do hotel continuam pendentes.
-O fluxo do produto ainda usa a construção validada na Sprint 4; esta documentação
-não conclui a sprint.
+A aplicação usa a fila paga para construir, melhorar e adicionar andares;
+esta documentação não conclui a sprint.
 
 ## Relógio implementado
 
@@ -40,8 +40,8 @@ Essa proteção local não comprova hora confiável de servidor ou autenticidade
 
 `ConstructionService` pertence à aplicação e referencia o `HotelModel`. A simulação
 continua sendo dona das salas concluídas. `finish_build` coloca uma sala já paga;
-`build` permanece útil para autoria de estado e regressões de domínio. A integração
-do produto vai encaminhar construção/upgrades/andares ao serviço de obras.
+`build` permanece útil para autoria de estado e regressões de domínio. O produto
+encaminha construção/upgrades/andares ao serviço de obras na aplicação.
 
 Dois slots gratuitos processam até 12 investimentos no total, incluindo ativos.
 Os demais aguardam FIFO. Terreno é reservado ao aceitar; um elevador reserva seu
@@ -67,7 +67,40 @@ do grupo domain também passaram após a separação de colocação/cobrança e 
 Provas dos componentes ficam em `SPRINT5_COMPONENT_VALIDATION.json`; não substituem
 o gate de integração por toque, lifecycle e export da sprint completa.
 
-## Decisões para a integração pendente
+## Integração do produto
+
+GameController guarda os módulos `progress_clock` e `construction` junto do hotel
+em um envelope atômico. SaveService rejeita pares incompletos, referências/capital
+inválidos e versões futuras; perfis anteriores migram sem inventar obras.
+Autosave inclui os módulos atuais mesmo durante pausa da simulação. Boot e resume
+liquidam deadlines antes de persistir a retomada, sem reproduzir hóspedes ou salários.
+Completions que ocorrem antes de um comando inválido também recebem checkpoint.
+
+A confirmação informa custo e duração. O terreno reservado mostra a arte original
+com tratamento visual e estado de obra, sem virar uma sala operacional. Projetos
+exibem equipe/prazo ou fila; cancelamento pede confirmação do reembolso integral.
+O resumo de retorno apresenta conclusões já aplicadas, sem novo botão de recompensa.
+Upgrades mantêm o serviço anterior e bloqueiam outra melhoria/demolição simultânea.
+
+Os testes de aplicação cobrem restart, autosave pausado, callbacks em background,
+hooks duplicados, rollback, refund e módulos futuros. Os testes por toque cobrem
+fila, slots, confirmação/back, reserva reutilizada, deadline exato e app recriado
+em 320×568, 568×320 e 1280×800, com PT/ES/EN e texto ampliado. Capturas são do
+renderer Windows com viewports mobile; não equivalem a hardware Android/iOS.
+
+Feedback tem até duas linhas. Em tela estreita com recorte e texto ampliado, o
+espaçamento vertical adapta-se para preservar área segura e targets de 48 unidades.
+A cobertura anterior de shell recebeu prazos reais e uma mensagem longa, sem
+remover verificações de layout, localização ou lifecycle.
+
+Gate parcial da integração: 17 suítes mobile pelo gda estrito, 7.042 verificações,
+17 scripts compilados sem diagnostics, cinco suítes no renderer nativo, 2.314
+verificações renderizadas e 80 capturas. Logs/relatórios/capturas foram arquivados
+em `.runtime/sprint5-integration-final-evidence/`, com hashes no registro
+`SPRINT5_INTEGRATION_VALIDATION.json`. Nenhum teste intermediário dependeu do usuário.
+O registro não declara novo APK nem conclusão dos componentes ainda pendentes.
+
+## Decisões para os componentes pendentes
 
 - Dois slots simultâneos gratuitos e fila limitada, sem vender a capacidade base.
 - Primeiras obras de 10/20/30/60 segundos; early de 1–5 minutos, mid de 5–30 minutos.

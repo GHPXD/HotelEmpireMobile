@@ -57,10 +57,15 @@ O gate continua exigindo saída zero e ausência de erros/recursos retidos. O á
 aguarda a liberação exata de referências com limite, sem referência temporária
 retida pelo próprio polling assíncrono.
 
-A Sprint 5 em implementação acrescenta `progress_clock_test` e
-`construction_timer_test`, totalizando quinze entry points `*_test.gd` descobertos
-pelo grupo mobile. `construction_timer_cases` é helper de casos carregado em runtime.
-Esses componentes ainda aguardam integração e não concluem a cobertura da sprint.
+A Sprint 5 em implementação acrescenta `progress_clock_test`,
+`construction_timer_test`, `construction_lifecycle_test` e `construction_touch_test`,
+totalizando dezessete entry points `*_test.gd` descobertos pelo grupo mobile.
+`construction_timer_cases`, `construction_lifecycle_cases` e `fake_progress_time`
+são helpers. Prazos injetados percorrem a aplicação real sem esperas de horas.
+As suítes anteriores de onboarding/gestão/shell agora verificam pagamento inicial,
+indisponibilidade antes do prazo e conclusão antes de operar salas.
+Speedups e os demais componentes pendentes ainda precisam de cobertura própria;
+esses testes não concluem o gate da sprint.
 
 ## Próximas coberturas
 

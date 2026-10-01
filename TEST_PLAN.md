@@ -248,6 +248,14 @@ Estados:
 
 ## 13. Release gate
 
+A Sprint 5 usa relógios injetados para construção/background/restart em
+`construction_lifecycle_test` e eventos GUI em `construction_touch_test`.
+Os helpers avançam prazos mantendo a simulação congelada e verificam dinheiro,
+reservas, slots, limites temporais e counters no save. O renderer nativo cobre três
+formatos/idiomas e os testes de shell mantêm os seis formatos com recortes e texto
+ampliado. Provas parciais ficam em `docs/SPRINT5_INTEGRATION_VALIDATION.json`;
+o gate final ainda exige speedups, progressão N4/N5/especialização e offline econômico.
+
 Nenhum release sai se houver:
 
 - perda de save;

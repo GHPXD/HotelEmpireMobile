@@ -18,6 +18,8 @@ var application_focused: bool = true
 var panels: MobileHotelPanels
 var haptics := HapticService.new()
 var display_scale := MobileDisplayScale.new()
+var return_sheet: StringName = &""
+var return_context_id: int = -1
 
 func _ready() -> void:
 	_configure_display()
@@ -50,6 +52,9 @@ func _ready() -> void:
 	view.name = "HotelView"
 	view.hotel = controller.session.hotel
 	view.session = controller.session
+	view.construction = controller.construction
+	panels.construction = controller.construction
+	panels.progress_clock = controller.progress_clock
 	view.mobile_input = gestures
 	shell.world_slot.add_child(view)
 	view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -74,6 +79,16 @@ func _ready() -> void:
 	router.changed.connect(_route)
 	controller.simulation_advanced.connect(func() -> void: view.queue_redraw())
 	controller.saves.checkpoint_failed.connect(shell.set_message)
+	controller.construction_changed.connect(func(events: Array[Dictionary]) -> void:
+		view.queue_redraw()
+		for event in events:
+			if event.error.is_empty():
+				audio.play(&"upgrade" if event.kind == "upgrade" else &"build")
+				haptics.confirm()
+				shell.set_message("construction.finished")
+			else:
+				shell.set_message(event.error)
+		_refresh())
 	controller.player_work_changed.connect(func(kind: String, phase: String, result: String) -> void:
 		if result == "completed":
 			audio.play(&"build")
@@ -91,12 +106,25 @@ func _ready() -> void:
 		shell.set_message("ui.saved_recovery")
 	if controller.onboarding.active():
 		router.open_sheet(&"overview")
+	_show_construction_return()
 	_refresh()
 	remote_config.refresh()
 	analytics.record(&"app_open", {"load_status": controller.boot_status})
 	analytics.record(&"session_start")
 	controller.lifecycle_changed.connect(func(in_background: bool) -> void:
-		analytics.record(&"background" if in_background else &"resume"))
+		analytics.record(&"background" if in_background else &"resume")
+		if not in_background:
+			_show_construction_return())
+
+func _show_construction_return() -> void:
+	if controller.return_construction.is_empty():
+		return
+	if router.sheet != &"construction_return":
+		return_sheet = router.sheet
+		return_context_id = router.context_id
+	panels.return_construction = controller.return_construction.duplicate(true)
+	shell.set_message("construction.finished")
+	router.open_sheet(&"construction_return")
 
 func _configure_display() -> void:
 	display_scale.apply(get_window())
@@ -135,6 +163,10 @@ func _context_rect() -> Rect2:
 		var room := controller.session.hotel.by_id(router.context_id)
 		if room != null:
 			target = view.room_rect(room.column, room.floor_index, room.definition().width)
+	elif router.sheet == &"construction":
+		var job: Variant = controller.construction.by_id(router.context_id)
+		if job != null and job.kind != "floor":
+			target = view.room_rect(int(job.column), int(job.floor_index), HotelCatalog.room(StringName(job.definition_id)).width)
 	elif router.sheet in [&"actor", &"employee"]:
 		var actor: ActorState = controller.session.actors.get(router.context_id)
 		if actor != null:
@@ -210,17 +242,24 @@ func _world_tap(point: Vector2) -> void:
 		return
 	if view.blueprint != null:
 		preview_cell = view.cell_at(point)
-		var error := controller.session.hotel.build_error(view.blueprint, preview_cell.x, preview_cell.y)
+		var error := controller.construction.build_error(view.blueprint, preview_cell.x, preview_cell.y)
 		if not error.is_empty():
 			shell.set_message(MobileFeedback.key(error))
 			return
 		router.open_sheet(&"build_confirm")
 		return
+	var cell := view.cell_at(point)
+	for job in controller.construction.jobs:
+		if job.kind != "build":
+			continue
+		var definition := HotelCatalog.room(StringName(job.definition_id))
+		if cell.x >= int(job.column) and cell.x < int(job.column) + definition.width and (cell.y == int(job.floor_index) or definition.category == &"transport"):
+			router.open_sheet(&"construction", int(job.id))
+			return
 	var actor_id := view.actor_at_screen_position(point)
 	if actor_id >= 0:
 		router.open_sheet(&"actor", actor_id)
 		return
-	var cell := view.cell_at(point)
 	var room := controller.session.hotel.room_at(cell.x, cell.y)
 	view.selected = room.id if room != null else -1
 	view.queue_redraw()
@@ -278,6 +317,18 @@ func _command(action: StringName, arguments: Dictionary) -> void:
 			_route()
 		&"choose_build": _choose_build(arguments.definition)
 		&"confirm_build": _confirm_build()
+		&"construction_return_continue":
+			var unavailable := return_sheet in [&"construction", &"construction_cancel_confirm"] and controller.construction.by_id(return_context_id) == null
+			if not return_sheet.is_empty() and not unavailable:
+				router.open_sheet(return_sheet, return_context_id)
+			else:
+				router.close_sheet()
+		&"request_construction_cancel": router.open_sheet(&"construction_cancel_confirm", arguments.id)
+		&"cancel_construction":
+			var error := controller.cancel_construction(arguments.id)
+			_feedback(error, "construction.cancelled")
+			if error.is_empty():
+				router.close_sheet()
 		&"add_floor": _add_floor()
 		&"hire":
 			var traits: Array[StringName] = []
@@ -336,17 +387,16 @@ func _choose_build(definition: RoomDefinition) -> void:
 
 func _confirm_build() -> void:
 	var result := controller.build(view.blueprint, preview_cell.x, preview_cell.y)
-	if result.room != null:
-		view.selected = result.room.id
+	if result.job != null:
+		view.selected = -1
 		view.blueprint = null
-		audio.play(&"build")
 		haptics.confirm()
-		router.close_sheet()
-	_feedback(result.error, "ui.built")
+		router.open_sheet(&"construction", int(result.job.id))
+	_feedback(result.error, "construction.started")
 	_refresh()
 
 func _add_floor() -> void:
-	_feedback(controller.add_floor(), "ui.built")
+	_feedback(controller.add_floor(), "construction.started")
 	view.queue_redraw()
 	_refresh()
 
@@ -360,9 +410,8 @@ func _hire(definition: EmployeeDefinition, traits: Array[StringName] = []) -> vo
 
 func _upgrade(id: int) -> void:
 	var error := controller.upgrade(id)
-	_feedback(error, "ui.upgraded")
+	_feedback(error, "construction.started")
 	if error.is_empty():
-		audio.play(&"upgrade")
 		haptics.confirm()
 		_route()
 	_refresh()

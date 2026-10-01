@@ -1,0 +1,989 @@
+{
+  "scope": "Sprint 5 construction application/save/touch integration; not the complete sprint gate",
+  "generated_utc": "2026-10-01T12:51:42.318115+00:00",
+  "integration_status": "passed",
+  "sprint_status": "in_progress",
+  "base_revision": "6404d5a702bd69b5319d6fdc9b6282302e712bd9",
+  "sources": [
+    {
+      "path": "core/application/app_root.gd",
+      "sha256": "b71eb0791fb1e226d47627de0131ea516745e69592a6ffdc3069efcba7fa216a"
+    },
+    {
+      "path": "core/application/app_root.gd.uid",
+      "sha256": "32d6cd2888591556d4694f6777d7496392afb8da97b4bda32b68da359fccb51b"
+    },
+    {
+      "path": "core/application/construction_rules.gd",
+      "sha256": "c2b810d5648c4556eb950e781c9a3bfeb8be675ec26ea252661798dc7e3e8cfd"
+    },
+    {
+      "path": "core/application/construction_rules.gd.uid",
+      "sha256": "8cca2c99fec629ec5c734f855bf946690bf90ae2f4816e12fece2081149bb562"
+    },
+    {
+      "path": "core/application/construction_service.gd",
+      "sha256": "6542d81ac19c8bf6aee959c2f60ec1a467f6a9cba537d5659d8decb0ae4987a8"
+    },
+    {
+      "path": "core/application/construction_service.gd.uid",
+      "sha256": "f62d461646978b03126bbabb5e2e3a43cf6e9ee336c9c5f29dc570d64405bd21"
+    },
+    {
+      "path": "core/application/game_controller.gd",
+      "sha256": "63fc0732cdfa010c2396d08a14dd3c1a013d3369dcb9443b3be9603f42d60bea"
+    },
+    {
+      "path": "core/application/game_controller.gd.uid",
+      "sha256": "7e253a73dc1a21156a78a9400f599afdf0286823beeed69b32af07f1bd2893e5"
+    },
+    {
+      "path": "core/application/progress_clock.gd",
+      "sha256": "959b78d380b92950368e09d5736ffbeb76bc006f2dc84fab569973d098074361"
+    },
+    {
+      "path": "core/application/progress_clock.gd.uid",
+      "sha256": "5fd1081244e1cb6296f9de18a5e5087d2f40d54400ab2d4967fd37430ef3a685"
+    },
+    {
+      "path": "core/save/save_service.gd",
+      "sha256": "033153ea387f5643980fcc06039458c250defb02043b8a74e273e3adf51c35d4"
+    },
+    {
+      "path": "core/save/save_service.gd.uid",
+      "sha256": "f42bcf9736d3b337364702702286de5968cd203c40c223a474af33767b92e465"
+    },
+    {
+      "path": "data/construction_rules.tres",
+      "sha256": "73e0971011a54837929edbe6aae92486e810d9febb8fcce3182e5c287c307b59"
+    },
+    {
+      "path": "data/localization/mobile.json",
+      "sha256": "292b4deb94f08050092c6a79ae51473e05ce17a387c47c7371d86395ede59876"
+    },
+    {
+      "path": "hotel/construction/hotel_view.gd",
+      "sha256": "dd1295085117e0d82f108f4a493329f823b51cc9389d95cfa8defa6ac9d63d93"
+    },
+    {
+      "path": "hotel/construction/hotel_view.gd.uid",
+      "sha256": "8f2bfdb9ef607e33f580f605e0ee68a2fbf4f7329945446903a49b1471e2c329"
+    },
+    {
+      "path": "tests/mobile/construction_lifecycle_cases.gd",
+      "sha256": "58544d0cc3fdc80c80653638a0d4df12d68472708f590f658e3804ad5c4edaf7"
+    },
+    {
+      "path": "tests/mobile/construction_lifecycle_cases.gd.uid",
+      "sha256": "d90c94fbe66b5f5128cd87d51ef32bb96530064061c4614b5f31c422c2af85c9"
+    },
+    {
+      "path": "tests/mobile/construction_lifecycle_test.gd",
+      "sha256": "ffb3e33fe30a144af0c903bf8e62aefac08b0ae271fa632acc87bda70d3872d2"
+    },
+    {
+      "path": "tests/mobile/construction_lifecycle_test.gd.uid",
+      "sha256": "0c581dcc843b0801c34396beec7f8fdb3c768f3417336ffe6e8433ddc9c25bd0"
+    },
+    {
+      "path": "tests/mobile/construction_touch_test.gd",
+      "sha256": "bcf68bb9b423dfd9c1a3dd82728ef15f6072b2d8ed99365d6bdd30772e89d376"
+    },
+    {
+      "path": "tests/mobile/construction_touch_test.gd.uid",
+      "sha256": "d37bef1efd870b8a3b645cd05b9c372bd38d1c1880356da5d97de4f3ad626877"
+    },
+    {
+      "path": "tests/mobile/fake_progress_time.gd",
+      "sha256": "bbeda6494045f0e481eecf6bca2337e289060737f2535ca6bd8bcc4acc79b416"
+    },
+    {
+      "path": "tests/mobile/fake_progress_time.gd.uid",
+      "sha256": "624b80fc9abba54a26a5b95f34c6a321fbf5dcc41ec8774108bf9fe27087ad9e"
+    },
+    {
+      "path": "tests/mobile/onboarding_test.gd",
+      "sha256": "47c1e927a43221e9290904a66738722e0695dd7bf8e4bc79091cd3a2c22990f1"
+    },
+    {
+      "path": "tests/mobile/onboarding_test.gd.uid",
+      "sha256": "f6847193f158b556e78ea7fc26d85aba20a59c83a4ad9991e86bc47e43634ee8"
+    },
+    {
+      "path": "tests/mobile/onboarding_touch_test.gd",
+      "sha256": "ca4cecc49760389223e1339abc72e7e37ae8bcbc36d47b94d38ca3c191170422"
+    },
+    {
+      "path": "tests/mobile/onboarding_touch_test.gd.uid",
+      "sha256": "451b1b7b799fdeba0b5cfb3a2d0fb4db1ddff70029473392c0d1de36fe77f914"
+    },
+    {
+      "path": "tests/mobile/shell_layout_test.gd",
+      "sha256": "1ac4856fc701fa9f985198da5d2ec7e5339026b142983968d4c0c7a259ad39a9"
+    },
+    {
+      "path": "tests/mobile/shell_layout_test.gd.uid",
+      "sha256": "e3e1815d18a0ce93f792c58325c4718479a1e64b573735f7845b13cae8d798a1"
+    },
+    {
+      "path": "tests/mobile/staff_touch_test.gd",
+      "sha256": "b3d5fdd0e43d63eeabdac2cdf4477f9fbf20a7991eadcfc96f9c20a5cb954954"
+    },
+    {
+      "path": "tests/mobile/staff_touch_test.gd.uid",
+      "sha256": "74052777774c9d72b9df56e8c42263b8cbe6048b822c9717a119ecfff960f600"
+    },
+    {
+      "path": "tests/mobile/touch_management_test.gd",
+      "sha256": "5aa6a293b8340f22d8b12187903e6a7e3fe043f824554664dd232a37e26310b8"
+    },
+    {
+      "path": "tests/mobile/touch_management_test.gd.uid",
+      "sha256": "0da08022599fec305e5a9cd2ee5e0ae11a990b4040bb1dd7ec2bb556896ddf11"
+    },
+    {
+      "path": "ui/mobile/mobile_feedback.gd",
+      "sha256": "d1a9bbd2b8e582b28c39dd3b4e68d5af2bf477ef8028d2aa5f340fb705ad91a4"
+    },
+    {
+      "path": "ui/mobile/mobile_feedback.gd.uid",
+      "sha256": "a8aa940c4d0f93fb818b51c5e1fdc0c6b557cf8b5cdcba07e342ecba151f4ffc"
+    },
+    {
+      "path": "ui/mobile/mobile_hotel_panels.gd",
+      "sha256": "7cae2157aa1cc8c31040a5b6a425d6e31ea66eb06707b6f91612c9616abc6aa9"
+    },
+    {
+      "path": "ui/mobile/mobile_hotel_panels.gd.uid",
+      "sha256": "b1f6254c7654ea94c6f09b86340cd90bcaa76e50570ff2b8d2010188fdf06916"
+    },
+    {
+      "path": "ui/mobile/mobile_labels.gd",
+      "sha256": "c31771d5f8e9026d1d3e89ecbb2edac95c72b3c90eacfbbba06d276f9df27a28"
+    },
+    {
+      "path": "ui/mobile/mobile_labels.gd.uid",
+      "sha256": "3a8cdb54c6215569a9369067bc6afd5238ad3439a3e6a9b8e0709c5ca7b5c050"
+    },
+    {
+      "path": "ui/mobile/mobile_shell.gd",
+      "sha256": "a841d7cff9174854e2f7c7aab3b1ecd12d39449df3d1bb22d3dda263096a38eb"
+    },
+    {
+      "path": "ui/mobile/mobile_shell.gd.uid",
+      "sha256": "f380f115d1d6cd7246df2a676258bb51e538dcc131ee621ffba9172baf940f86"
+    }
+  ],
+  "headless": {
+    "suites": 17,
+    "checks": 7042,
+    "report": ".runtime/sprint5-integration-final-evidence/headless/report.json",
+    "report_sha256": "dabc1677fd56e66283f9f3e3ebf49b42d64cfa7f42f7dfccf3b1d9b1156c8080",
+    "steps": [
+      {
+        "suite": "audio_lifecycle_test",
+        "passed": true,
+        "duration_seconds": 1.546,
+        "summaries": [
+          {
+            "checks": 12,
+            "failures": 0,
+            "suite": "mobile_audio_lifecycle"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\audio_lifecycle_test.json",
+        "sha256": "4c3cb3b1abac4f899f87c9b2fb3f0c1e06a24d61255ec24915c367bed1655f19"
+      },
+      {
+        "suite": "construction_lifecycle_test",
+        "passed": true,
+        "duration_seconds": 1.625,
+        "summaries": [
+          {
+            "checks": 41,
+            "failures": 0,
+            "suite": "construction_lifecycle"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\construction_lifecycle_test.json",
+        "sha256": "d9dc20a39fde82172914c5081df0f586b69a98d9723d1a47fea7ce0b27698dd8"
+      },
+      {
+        "suite": "construction_timer_test",
+        "passed": true,
+        "duration_seconds": 1.438,
+        "summaries": [
+          {
+            "checks": 162,
+            "failures": 0,
+            "suite": "construction_timer"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\construction_timer_test.json",
+        "sha256": "e16188a32271a28aa5eb2bc3aebd940aa0c872cab9d1fa114da4ede0cd468928"
+      },
+      {
+        "suite": "construction_touch_test",
+        "passed": true,
+        "duration_seconds": 10.781,
+        "summaries": [
+          {
+            "checks": 255,
+            "dimensions": 3,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag through viewport",
+            "rendered": false,
+            "screenshots": [],
+            "suite": "construction_touch"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\construction_touch_test.json",
+        "sha256": "546a14dc7d318c20af009b1b822735d0e1802693809d91a319a25bf9c9f328bd"
+      },
+      {
+        "suite": "display_scale_test",
+        "passed": true,
+        "duration_seconds": 4.313,
+        "summaries": [
+          {
+            "cases": 5,
+            "checks": 75,
+            "densities": [
+              1,
+              2,
+              3
+            ],
+            "failures": 0,
+            "rendered": false,
+            "screenshots": [],
+            "suite": "mobile_display_scale"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\display_scale_test.json",
+        "sha256": "15d6c0ff9f9f097e57751c3cc88c7fe154811d4af1d418b065ce8d00f938517f"
+      },
+      {
+        "suite": "input_navigation_test",
+        "passed": true,
+        "duration_seconds": 1.218,
+        "summaries": [
+          {
+            "checks": 19,
+            "failures": 0,
+            "suite": "mobile_input_navigation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\input_navigation_test.json",
+        "sha256": "91a5c69c69f676e45efcaf672acf9d4702134304a9036c221c0fd1ad7a506902"
+      },
+      {
+        "suite": "onboarding_test",
+        "passed": true,
+        "duration_seconds": 1.782,
+        "summaries": [
+          {
+            "cash": 95,
+            "checks": 38,
+            "failures": 0,
+            "finished_at": 115.3,
+            "initial_stages": [
+              1,
+              2,
+              3
+            ],
+            "suite": "onboarding"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\onboarding_test.json",
+        "sha256": "9e16f92afad58bbfe02e2de972825f76137c59e39aa2a4dca8da7f413f8230a4"
+      },
+      {
+        "suite": "onboarding_touch_test",
+        "passed": true,
+        "duration_seconds": 12.515,
+        "summaries": [
+          {
+            "checks": 312,
+            "dimensions": 3,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag through viewport",
+            "rendered": false,
+            "screenshots": [],
+            "starting_cash": 2400,
+            "suite": "onboarding_touch"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\onboarding_touch_test.json",
+        "sha256": "7ed30b26a0b0b78df2823857ae38025ba7cf18379d260d0e7696aef628f3a1a3"
+      },
+      {
+        "suite": "platform_adapters_test",
+        "passed": true,
+        "duration_seconds": 1.219,
+        "summaries": [
+          {
+            "checks": 17,
+            "failures": 0,
+            "suite": "mobile_platform_adapters"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\platform_adapters_test.json",
+        "sha256": "e26015c913387f05434e821357a7b0ab5975e1d9ef393dcde7493da41d79269e"
+      },
+      {
+        "suite": "player_work_test",
+        "passed": true,
+        "duration_seconds": 4.656,
+        "summaries": [
+          {
+            "checks": 2862,
+            "failures": 0,
+            "phases": [
+              "checkin:travel",
+              "checkin:action",
+              "cleaning:travel",
+              "cleaning:action",
+              "repair:action",
+              "room_service:travel_source",
+              "room_service:prepare",
+              "room_service:travel_delivery",
+              "room_service:deliver",
+              "room_service:source_queue",
+              "repair:travel"
+            ],
+            "suite": "player_work"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\player_work_test.json",
+        "sha256": "6177b4ebff69f3f6f9e7cbfc9514ec1e94a284c3635c4d3e8bac8e3c7e12f26a"
+      },
+      {
+        "suite": "presentation_test",
+        "passed": true,
+        "duration_seconds": 1.469,
+        "summaries": [
+          {
+            "checks": 1031,
+            "failures": 0,
+            "suite": "mobile_presentation",
+            "translation_keys": 335
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\presentation_test.json",
+        "sha256": "b00028f683e95cbbae2a1366a4f0566ede300df28998dda39bbf8bd4d89b636d"
+      },
+      {
+        "suite": "progress_clock_test",
+        "passed": true,
+        "duration_seconds": 1.14,
+        "summaries": [
+          {
+            "checks": 35,
+            "failures": 0,
+            "suite": "progress_clock"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\progress_clock_test.json",
+        "sha256": "c4cd7b1e4efcab0c0d91671f86f122217c1f1fbc0a950a5970caca4411282428"
+      },
+      {
+        "suite": "save_lifecycle_test",
+        "passed": true,
+        "duration_seconds": 1.719,
+        "summaries": [
+          {
+            "checks": 33,
+            "failures": 0,
+            "suite": "mobile_save_lifecycle"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\save_lifecycle_test.json",
+        "sha256": "8db2c0a008b0123104093e87820a25b8b5092f25d7ee4d6c2833c65f36e1c4e8"
+      },
+      {
+        "suite": "shell_layout_test",
+        "passed": true,
+        "duration_seconds": 5.109,
+        "summaries": [
+          {
+            "checks": 366,
+            "failures": 0,
+            "rendered": false,
+            "screenshots": [],
+            "suite": "mobile_shell_layout"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\shell_layout_test.json",
+        "sha256": "23a9ee2d4f6c4d9f4b8861e82d9eafb1a6f2bb487cba7071faf1918c3a2ddc70"
+      },
+      {
+        "suite": "staff_automation_test",
+        "passed": true,
+        "duration_seconds": 15.093,
+        "summaries": [
+          {
+            "checks": 483,
+            "failures": 0,
+            "policies": [
+              {
+                "scenarios": [
+                  {
+                    "bookings": 21,
+                    "cash": 3504,
+                    "cleaned": 20,
+                    "delegated": false,
+                    "manual": 46,
+                    "manual_after_600": 24,
+                    "min_cash": 0,
+                    "reputation": 38.6398204869982
+                  },
+                  {
+                    "bookings": 21,
+                    "cash": 2456,
+                    "cleaned": 20,
+                    "delegated": true,
+                    "manual": 6,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 38.8325666058811
+                  }
+                ],
+                "seed": 1
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 23,
+                    "cash": 3560,
+                    "cleaned": 22,
+                    "delegated": false,
+                    "manual": 47,
+                    "manual_after_600": 26,
+                    "min_cash": 0,
+                    "reputation": 40.4978840833274
+                  },
+                  {
+                    "bookings": 21,
+                    "cash": 2370,
+                    "cleaned": 20,
+                    "delegated": true,
+                    "manual": 5,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 38.5661399091216
+                  }
+                ],
+                "seed": 17
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 22,
+                    "cash": 3504,
+                    "cleaned": 21,
+                    "delegated": false,
+                    "manual": 50,
+                    "manual_after_600": 25,
+                    "min_cash": 0,
+                    "reputation": 38.6643205214917
+                  },
+                  {
+                    "bookings": 20,
+                    "cash": 2373,
+                    "cleaned": 19,
+                    "delegated": true,
+                    "manual": 6,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 38.6059344218755
+                  }
+                ],
+                "seed": 123
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 22,
+                    "cash": 3532,
+                    "cleaned": 21,
+                    "delegated": false,
+                    "manual": 49,
+                    "manual_after_600": 24,
+                    "min_cash": 0,
+                    "reputation": 38.9425542431755
+                  },
+                  {
+                    "bookings": 21,
+                    "cash": 2456,
+                    "cleaned": 20,
+                    "delegated": true,
+                    "manual": 5,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 39.2918570456578
+                  }
+                ],
+                "seed": 9001
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 21,
+                    "cash": 3420,
+                    "cleaned": 20,
+                    "delegated": false,
+                    "manual": 50,
+                    "manual_after_600": 27,
+                    "min_cash": 0,
+                    "reputation": 41.0542292508527
+                  },
+                  {
+                    "bookings": 20,
+                    "cash": 2317,
+                    "cleaned": 19,
+                    "delegated": true,
+                    "manual": 7,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 37.3632464252929
+                  }
+                ],
+                "seed": 54321
+              }
+            ],
+            "suite": "staff_automation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\staff_automation_test.json",
+        "sha256": "d88c168d38372a09ce85fbb3856395b4740c39688d24452cfdf918919800250c"
+      },
+      {
+        "suite": "staff_touch_test",
+        "passed": true,
+        "duration_seconds": 10.25,
+        "summaries": [
+          {
+            "checks": 246,
+            "dimensions": 3,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag via viewport",
+            "rendered": false,
+            "screenshots": [],
+            "suite": "staff_touch"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\staff_touch_test.json",
+        "sha256": "3ccac13c7c3e70998f705fd839cac4252f3ca31a8e2cc09f01703de99f930dde"
+      },
+      {
+        "suite": "touch_management_test",
+        "passed": true,
+        "duration_seconds": 36.937,
+        "summaries": [
+          {
+            "checks": 1055,
+            "dimensions": 5,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag via Input.parse_input_event",
+            "rendered": false,
+            "screenshots": [],
+            "suite": "mobile_touch_management"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T124156Z-sprint5-integration-verified\\touch_management_test.json",
+        "sha256": "d1ca6cda20e2409536ec1efaf1d4b9e487d9459a3227a9e19c7e0dbda9735b9c"
+      }
+    ]
+  },
+  "static": {
+    "scripts": 17,
+    "diagnostics": [],
+    "raw_report": ".runtime/sprint5-integration-final-evidence/static.json",
+    "sha256": "2ae86ffa3d17359fd7a13c8a206bea7e959dd39f178d5bbca4a7892cf69e3aa0"
+  },
+  "native": {
+    "suites": 5,
+    "checks": 2314,
+    "capture_count": 80,
+    "runs": [
+      {
+        "suite": "mobile_shell_layout",
+        "checks": 384,
+        "captures": [
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-320x568-pt_BR.png",
+            "sha256": "357f8f847c84729fd5357731c1b06cf02c2398e279f44c61e384115b34a58de7"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-320x568-en.png",
+            "sha256": "7274431bc7a407540b326e364f1f8370c0af713ad5f1b02b516c24c3dc19dac5"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-320x568-es.png",
+            "sha256": "2359cb8d05e02a61f0ae57c0ace94dbfea52bdd5797d840353e6d6eb843e5628"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-568x320-pt_BR.png",
+            "sha256": "d14df58b256f2d9f1758cc6d676c3262918bbcb0f6b356399e07523f2c05266e"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-568x320-en.png",
+            "sha256": "1cb519e8851281c7483faafc96c3654dc4c1053c318bb3ac2c279e014902ce60"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-568x320-es.png",
+            "sha256": "50ebd4dd830d77b05c6423ac282c4865cec775cbde4c3a1811cd3c4757bc7a6c"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-360x780-pt_BR.png",
+            "sha256": "cb94580ba7429561fa175fdd82db444743eecc032235c25fe64eb03edcb09264"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-360x780-en.png",
+            "sha256": "11c13de1183aadfc2d71db84f3e7e4ad1731e249bdc962f41eaa7ba34ba4f0ec"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-360x780-es.png",
+            "sha256": "f4d61f55267485c8238cb0c9ef99f11f1a867d8c35b1db115b77f865f2b7b66f"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-844x390-pt_BR.png",
+            "sha256": "25946ebaccbe16e08a365a871c86ec192a353b8bd08c71d124c10597ce0c1832"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-844x390-en.png",
+            "sha256": "219f1a94cca159549bfc05447251de6f495ad6b676857c47f315151ed0cfeb9e"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-844x390-es.png",
+            "sha256": "8c988c1426c410b068a428dd4e92b0540a8b65355049070b51912b7621c3ee88"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-960x540-pt_BR.png",
+            "sha256": "2913108200e26013e0b04f75dc7f8c8fe2088180e513085897018390353be14f"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-960x540-en.png",
+            "sha256": "e3a04d73c4312eb85170cc79afd7ca0cc6010144fd5fa2da2c0a08afc04d63a6"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-960x540-es.png",
+            "sha256": "e6f29eadde8b2329a9eeba9c4fb75e8b4075c80b6aab71221647cf2fc9ac0e3d"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-1280x800-pt_BR.png",
+            "sha256": "ceb2a06bbd8650fd938e1b2e9f50c2468caf98dfbb2d77606749b7fae22f1a9f"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-1280x800-en.png",
+            "sha256": "3d71ae56d6194e49ee959f073812eca37cc85d2a0de95e5ea48e4369977ff003"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/mobile-1280x800-es.png",
+            "sha256": "2c91d33a7e1c66ef0fa5ee6cda4143519b698c5217ad568828881c6e6e0bf76d"
+          }
+        ],
+        "report": ".runtime/sprint5-integration-final-evidence/native/mobile_shell_layout/report.json",
+        "report_sha256": "2fddbc4598971f968a4368aab9b64422b42a7d54a0329e920883778bf7319153"
+      },
+      {
+        "suite": "construction_touch",
+        "checks": 267,
+        "captures": [
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-queued-320x568.png",
+            "sha256": "2e8c0188f83430b252d66b46e752c9fb4175da12ce18a0c09b7cc8880fb4985c"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-cancel-320x568.png",
+            "sha256": "e8ac96a3a75bb7f8caadd60d8f16324a6cd580b4f082e6dc80483cca2b6f1c28"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-active-320x568.png",
+            "sha256": "407726d6f8599d0abdd5731ed15595e0d2c60a99172cce6818458f937dd61053"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-return-320x568.png",
+            "sha256": "aec21d99ae01415b97059b8e1dc1be6e89dbd497e8f8a1ce38b73a52d9c27beb"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-queued-568x320.png",
+            "sha256": "59acfd7abff75243f7ecb1ae59e56800ceaa6b99ec180af0d89f5edee3f8688a"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-cancel-568x320.png",
+            "sha256": "6ff2674811011f0d34a4909c2fffb0701c94c9d4313728dfbef5254f3be29cf8"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-active-568x320.png",
+            "sha256": "8d09effe45eb3e30af43da7651b1b4a9b285dbff926fb3855a9afc4ddc5cd964"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-return-568x320.png",
+            "sha256": "40ee48b82a0e45d9c8baa779035a56a5dc352f8124a3762564f596c957ac7e72"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-queued-1280x800.png",
+            "sha256": "9357f11ad38cdea8f083ca72f062884cfa0ee62455f603e01912f8aa16658947"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-cancel-1280x800.png",
+            "sha256": "05300895e4c9e08de6fd05cc78698e042f73c6a586ad5da277a9672a99af8546"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-active-1280x800.png",
+            "sha256": "bacbedc7b733540c55cacb4476d2335a0b5f87f731f533c0ef6e1b324a5c48a8"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/construction_touch/mobile-construction-return-1280x800.png",
+            "sha256": "0c2a7e2afb41cffc0ef183fd7a9cabec869f5a338fcdf86710795c3d50007ee2"
+          }
+        ],
+        "report": ".runtime/sprint5-integration-final-evidence/native/construction_touch/report.json",
+        "report_sha256": "87a60e07d64b56a9c37b13d7cfd3f2d56f769dfd031de39a9f5dd6bae438e8dd"
+      },
+      {
+        "suite": "mobile_touch_management",
+        "checks": 1075,
+        "captures": [
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-room-320x568.png",
+            "sha256": "04eabdfcac040247c4393c2d563ba742a7283fcbd433522e015cefa79948b98e"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-finance-320x568.png",
+            "sha256": "69eb38916236f1f94ef4d2013a7e053af8796f869aa3d8808c65500181a398d4"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-reviews-320x568.png",
+            "sha256": "f91828d8a261eff013c1349f68ad841e6a534c8d4658f6c2c95a39e9f637bb70"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-settings-large-320x568.png",
+            "sha256": "c7bc81a5d3101a4e5823d9ec31e25cb0aa8ec4a77166fd4e4290ebb66eefb090"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-room-568x320.png",
+            "sha256": "b6dc4b1b6867d6121b63540bb6b6bc018156a77ecbff6387edabd3330432d839"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-finance-568x320.png",
+            "sha256": "0fcf8f4f4a8172c0e713137d8a2e597022a60ec32e562b45cf8d59f6fdcb73c8"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-reviews-568x320.png",
+            "sha256": "2fba05b201c4b067543853d142a367ee8db2b57fd99d4c2384a4d947022a53f5"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-settings-large-568x320.png",
+            "sha256": "46e8c79cd7ecb7751028777af689c5c1ee4707ef36fec9bcf47db652bb3bcf0f"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-room-360x780.png",
+            "sha256": "ee1d5e578c33fbe51a76cb1f3e0039e401c1eb6b9254f7dfac67e321ae428197"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-finance-360x780.png",
+            "sha256": "3ee74e3156af481d17f5849bd55fa90d98b6b67cfabc0cad1125f95e18e7488a"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-reviews-360x780.png",
+            "sha256": "bd726454f11dbaa0342cc81a4352f7b922f67ea37da4e776741ca5dc1ab0468f"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-settings-large-360x780.png",
+            "sha256": "41e958bb79b2baf77dc817e4a0946fa724f6f042da45351ef4da40a15d0b8ab3"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-room-844x390.png",
+            "sha256": "551b37670ca0c9aa36c12933e72cd44c9b0f962d0fe236ca3eece9214100a7c8"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-finance-844x390.png",
+            "sha256": "cbab64526acb34f76d5fb9b539de90da410f5a399ab84a4c5dd8e9f80b649f26"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-reviews-844x390.png",
+            "sha256": "3249e62a94ab5d9f66c986bc1c1f6b6890e1b9c7145fa375d585d17152eec1f4"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-settings-large-844x390.png",
+            "sha256": "29a99ff75885ba5e85550ef99cb4f56b4739d4d9c61a61c7a1b7515cf0055b4f"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-room-1280x800.png",
+            "sha256": "3fecaea1bbbc02485fbf497fb75879241314d0a8aaa224a39dfd43259fd53b40"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-finance-1280x800.png",
+            "sha256": "a400d3ae522675e0289f4f78d3da8d9dfba253721e709e25f65a9b0744174f2d"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-reviews-1280x800.png",
+            "sha256": "1f97f3c7556ebd9507243478942161b07ae79cd41e6a4a78ec65e7d4c3254f7b"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/mobile-settings-large-1280x800.png",
+            "sha256": "097170c28a9319e4e0267023386ba7ff9d157ef8e45f9b4265186fa60de30c4f"
+          }
+        ],
+        "report": ".runtime/sprint5-integration-final-evidence/native/mobile_touch_management/report.json",
+        "report_sha256": "77b385a86957a2629291206f1713fb0605c82b1d0c87fe7130f5930ed5ddd735"
+      },
+      {
+        "suite": "onboarding_touch",
+        "checks": 327,
+        "captures": [
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-start-320x568.png",
+            "sha256": "6a91ade35d532f3357959e82abcb7d09cb26ef6a804482ef2408b452c12061fe"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-checkin-320x568.png",
+            "sha256": "2c105cd95d6dbbeea7f7bcdee2084bf1d5480fe36d176e03ced97a70a4a14050"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-room-service-320x568.png",
+            "sha256": "828b6eb779b61866b81ac4ba812a68d0af22e4b94d8c9fa8c8f8c8eb8bc2af75"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-cleaning-320x568.png",
+            "sha256": "09aeef91b344326e282238f191dd257091219794b73bde01ea3a100ef220a3aa"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-done-320x568.png",
+            "sha256": "ffae035f4a43914b33ef4428054b2ba68f1176bb3a45e49ff96b38ad614328e3"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-start-568x320.png",
+            "sha256": "3475366d39e794b2e01a4408495209303e389f4741fb52be9ae336fcde12dd83"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-checkin-568x320.png",
+            "sha256": "8a47ac671c1b087d0dcbe291a6db424c1367ba8d01f78bf4cf7bf170dd23e214"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-room-service-568x320.png",
+            "sha256": "53b6f9fcff1310418e478c7a3b8aa4fb94afe01226c122c99b277574a8ecf7e2"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-cleaning-568x320.png",
+            "sha256": "477b08129b22b6af7ba89daacc14047655743ea1efe4cfb0e7a4929e0bb9e433"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-done-568x320.png",
+            "sha256": "993596ccd7b047d941508c16720009765198926b7b403754f4e4b10979ddab6b"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-start-1280x800.png",
+            "sha256": "1ec3ebf2be289dfd01592bb146db0e62f8967251e8c539c4e038918def246e3a"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-checkin-1280x800.png",
+            "sha256": "4eab10a569e1c274b26120ba785ba4c097ef20d56a5d042b06ffc1b8c7f3293e"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-room-service-1280x800.png",
+            "sha256": "acf9a5a6188c1303996039648aea5ec2f097f1b2b0a49a85e19ea1dfc6f2865c"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-cleaning-1280x800.png",
+            "sha256": "2b0edc113959bfceab0b9413e090f7686c270f54d9e677b36b8df148b778b716"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/mobile-intro-done-1280x800.png",
+            "sha256": "2191d5324f5e2df3c4939d675606b2ebfa92b652331a58f72d848a97425960f2"
+          }
+        ],
+        "report": ".runtime/sprint5-integration-final-evidence/native/onboarding_touch/report.json",
+        "report_sha256": "512190a7fb7381e08e5e5dbfbff6146f038cae19b0b625f58ab6125df8ec433d"
+      },
+      {
+        "suite": "staff_touch",
+        "checks": 261,
+        "captures": [
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-profiles-320x568.png",
+            "sha256": "c4c368c9d7b63a40551100f3049b9295e8375f9ed242ee9d55972f1d73757389"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-paused-320x568.png",
+            "sha256": "ec1fc2bc5fe480485b7f2e1991450c3c1aacd3b9ebf3eb4487ba35c937bdcbe4"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-level-320x568.png",
+            "sha256": "58b57dbf3d7fdb211cada83a48a9e2d31bc1173e26f039fc712e6ae41a426549"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-dismiss-320x568.png",
+            "sha256": "b3520e5f416af02ab8d1e1dbc4a12bc48f47b0f637ad76649400f0cb38b35d0e"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-departed-320x568.png",
+            "sha256": "b49da72a9b317448b58df53fbe51287cfeb2368206f01ef1ccb6b6f955451f96"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-profiles-568x320.png",
+            "sha256": "a8ed4a17d9db85a8d1cf87503c8f255adfcc27236245b7c99d2388aa2025569b"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-paused-568x320.png",
+            "sha256": "4a241b19e04443fb9fbdc9ab0df49ea28a2992679d755629b2d07626bd688a30"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-level-568x320.png",
+            "sha256": "51fd87dd6d96419e5ac7765d6dd71bc719c2d93e27c0ba2e84ad04b27ac59bed"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-dismiss-568x320.png",
+            "sha256": "5c3d1e020aabaa46ff5af583a846925c2802d6b66a89d9aafe5a59a6190435ba"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-departed-568x320.png",
+            "sha256": "70a6cc0f8c16126a10dcd97d0eab47881e38a116f1d0dc337381a7211c03ec1c"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-profiles-1280x800.png",
+            "sha256": "8db00d01b318012b2646b3ca2196faffdb4411d829c3e34740ab4f1a73b5361a"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-paused-1280x800.png",
+            "sha256": "53d8a0d57265e8d9cb5ecbbbb1d61468e422cfb1d2c98d1208be45544ebf275b"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-level-1280x800.png",
+            "sha256": "797633758dcbddb6ba5f3e16a7b804ea8e11d1eb16b564012228bffb1d9bb981"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-dismiss-1280x800.png",
+            "sha256": "21f15264ff02e521eb10e9e59cb8fe8226845c6b3e028666e9e7ddd3287aef6c"
+          },
+          {
+            "path": ".runtime/sprint5-integration-final-evidence/native/staff_touch/mobile-staff-departed-1280x800.png",
+            "sha256": "1c74b0e395f935b1a01842aa09432b80fdb8afba2a780f5ce37d2966b38c8e8d"
+          }
+        ],
+        "report": ".runtime/sprint5-integration-final-evidence/native/staff_touch/report.json",
+        "report_sha256": "cb97bbf7d52028e08b59f04c6d7bbe48a5564b3ad4b3d844b7f5b5738bc5ba9d"
+      }
+    ]
+  },
+  "validation_history": [
+    "The first lifecycle fixture used incorrect legacy prices and a wrong snapshot field. It was corrected to authored costs and the existing snapshot structure; strict 41-check suite passed.",
+    "Shell tests initially expected instant construction. They now assert paid unavailability, advance injected deadlines and verify completion before continuing existing checks.",
+    "Measured narrow cutout/large-type shell minimum overflowed by 11 pixels. Bounded feedback and adaptive spacing preserve 48-unit targets; all original bounds checks and new long-message checks pass.",
+    "Return summary initially discarded the originating sheet. Continuation now restores valid prior context; all original Android-back and room-filter assertions remain.",
+    "The touch harness tried scrolling before a newly rebuilt sheet had layout bounds. It now waits for layout before ensure_control_visible; all clipping, viewport and target checks remain."
+  ],
+  "limitations": [
+    "Native captures are Windows-host rendering with mobile viewport dimensions, not physical Android/iOS hardware.",
+    "No new APK/export/full stress-and-soak sprint gate is claimed by this integration report; validated release remains 0.6.0.",
+    "Construction absence does not settle hotel operating revenue, salaries or maintenance."
+  ],
+  "remaining_sprint_scope": [
+    "Persisted speedup inventory and actual consumption through touch",
+    "Meaningful N4/N5 progression and initial room specializations",
+    "Aggregate hotel offline income/cost policy and return summary",
+    "Full sprint regression, export and release documentation"
+  ]
+}

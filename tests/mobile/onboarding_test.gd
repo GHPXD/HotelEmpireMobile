@@ -4,6 +4,7 @@ extends SceneTree
 var failures: int = 0
 var checks: int = 0
 var stages: Array[int] = []
+var progress_time: RefCounted = preload("res://tests/mobile/fake_progress_time.gd").new()
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -14,8 +15,12 @@ func run() -> void:
 	check(FileAccess.file_exists(game.saves.path) and game.saves.app_state.onboarding.stage == 0, "profile initialized atomically before first command")
 	game.saves.app_state["future_module"] = {"owned": ["original_theme"], "count": 2}
 	game.guide_advanced.connect(func(stage: int) -> void: stages.append(stage))
-	check(game.build(HotelCatalog.room(&"reception"), 0, 0).room != null and game.onboarding.stage == 1, "guide advances after real reception")
-	check(game.build(HotelCatalog.room(&"bedroom"), 3, 0).room != null and game.onboarding.stage == 2, "guide advances after real bedroom")
+	check(game.build(HotelCatalog.room(&"reception"), 0, 0).job != null and game.onboarding.stage == 0, "guide waits for the actual reception, not purchase")
+	finish_construction(game, 10000)
+	check(game.onboarding.stage == 1, "guide advances after completed reception")
+	check(game.build(HotelCatalog.room(&"bedroom"), 3, 0).job != null and game.onboarding.stage == 1, "guide waits for completed bedroom")
+	finish_construction(game, 20000)
+	check(game.onboarding.stage == 2, "guide advances after real bedroom")
 	game.toggle_open()
 	check(game.onboarding.stage == 3, "open gate")
 	var session := game.session
@@ -39,7 +44,9 @@ func run() -> void:
 		if session.player_work.job.is_empty():
 			break
 	check(game.onboarding.stage == 4 and session.player_work.totals.checkins == 1 and session.economy.revenue == 140, "actual checkin advances guide once")
-	check(game.build(HotelCatalog.room(&"restaurant"), 5, 0).room != null and game.onboarding.stage == 5, "paid food construction")
+	check(game.build(HotelCatalog.room(&"restaurant"), 5, 0).job != null and game.onboarding.stage == 4, "paid food construction awaits deadline")
+	finish_construction(game, 30000)
+	check(game.onboarding.stage == 5, "completed food construction")
 	var order_id: int = -1
 	for index in 1200:
 		game.advance(session.rules.tick)
@@ -105,7 +112,17 @@ func _controller(id: String) -> GameController:
 	var saves := SaveService.new()
 	saves.path = "user://onboarding-" + id + ".json"
 	saves.legacy_path = "user://no-legacy-onboarding.json"
-	return GameController.new(saves)
+	saves.clock = progress_time.utc
+	return GameController.new(saves, progress_time.clock())
+
+func finish_construction(game: GameController, milliseconds: int) -> void:
+	var ticks := game.session.tick_count
+	var speed := game.session.speed
+	game.session.speed = 0
+	progress_time.advance(milliseconds)
+	game.advance(0.01)
+	check(game.construction.jobs.is_empty() and game.session.tick_count == ticks, "construction completes at deadline while simulation is paused")
+	game.session.speed = speed
 
 func check(condition: bool, message: String) -> void:
 	checks += 1

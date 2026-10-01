@@ -12,6 +12,7 @@ const FLOOR_HEIGHT: float = 108.0
 const WAITING_STATES: Array[StringName] = [&"lift_queue", &"checkin", &"service_queue"]
 var hotel: HotelModel
 var session: HotelSession
+var construction: ConstructionService
 var selected: int = -1
 var blueprint: RoomDefinition
 var fixed_preview: bool = false
@@ -80,11 +81,13 @@ func _draw() -> void:
 		_text(floor_rect.position + Vector2(-35, 25), (tr("ui.ground_floor") if mobile_input != null else "T") if level == 0 else str(level), Color("455d5c"), 16)
 	for room in hotel.rooms:
 		_draw_room(room)
+	if construction != null:
+		_draw_construction()
 	if session != null:
 		_draw_simulation()
 	if blueprint != null:
 		var cell := preview_cell if fixed_preview else cell_at(pointer)
-		var valid: bool = hotel.build_error(blueprint, cell.x, cell.y).is_empty()
+		var valid: bool = (construction.build_error(blueprint, cell.x, cell.y) if construction != null else hotel.build_error(blueprint, cell.x, cell.y)).is_empty()
 		var preview := room_rect(cell.x, cell.y, blueprint.width)
 		var tint := Color(0.1, 0.65, 0.36, 0.45) if valid else Color(0.9, 0.22, 0.2, 0.5)
 		draw_rect(preview, tint)
@@ -115,6 +118,21 @@ func _draw_room(room: RoomState) -> void:
 			_text(rectangle.position + Vector2(7, 17) * zoom_factor, room_name + (" " + tr("room.level_short") % room.level if room.level > 1 else ""), Color("fff1cc"), int(13 * zoom_factor))
 	if room.id == selected:
 		draw_rect(rectangle, Color("f9cd69"), false, 4)
+
+func _draw_construction() -> void:
+	for job in construction.jobs:
+		if job.kind != "build":
+			continue
+		var definition := HotelCatalog.room(StringName(job.definition_id))
+		for level in hotel.floors:
+			if definition.category != &"transport" and level != int(job.floor_index):
+				continue
+			var rectangle := room_rect(int(job.column), level, definition.width).grow(-2 * zoom_factor)
+			if not _in_view(rectangle):
+				continue
+			draw_texture_rect(HotelArt.room(definition.id), rectangle, false, Color(0.65, 0.8, 0.85, 0.45))
+			draw_rect(rectangle, Color("83afbb"), false, 2 * zoom_factor)
+			_status_badge(rectangle.position + Vector2(6, 6) * zoom_factor, tr("construction.badge_queued" if int(job.slot) < 0 else "construction.badge_active"))
 
 func _text(at: Vector2, value: String, color: Color, font_size: int) -> void:
 	draw_string(ThemeDB.fallback_font, at, value, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)

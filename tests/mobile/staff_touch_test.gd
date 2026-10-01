@@ -11,6 +11,7 @@ func run() -> void:
 		UIPreferences.save_large_text(scenario.large)
 		root.size = dimensions
 		game = preload("res://core/application/app_root.tscn").instantiate()
+		inject_progress_time()
 		game.controller.enable_onboarding = false
 		game.controller.saves.path = "user://staff-touch-%dx%d.json" % [dimensions.x, dimensions.y]
 		game.controller.saves.legacy_path = "user://staff-no-legacy.json"

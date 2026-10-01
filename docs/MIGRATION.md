@@ -106,7 +106,16 @@ Esse baseline antecede a fundação e a UX implementadas abaixo.
   matriz e dez execuções adicionais da regressão manual com encerramento limpo.
   Os 2.862 checks originais foram preservados no helper carregado em runtime.
 
-Próxima etapa: Sprint 5, construção/upgrades temporizados e offline. As limitações reais
+Sprint 5 em andamento: construção/upgrades/andares usam a fila de aplicação com dois
+slots gratuitos, timestamps, reservas e Cash pago uma vez. Save valida os módulos
+pareados; autosave pausado, background, restart e resume liquidam obras sem ticks
+adicionais. A UI por toque inclui reembolso confirmado, prazo/fila e resumo de retorno
+preservando o contexto anterior. Testes anteriores aguardam os deadlines reais com
+relógios injetados; não substituem conclusão por sala gratuita ou nova cobrança.
+
+Speedups, N4/N5, especializações e settlement econômico offline permanecem pendentes.
+O registro parcial é `SPRINT5_INTEGRATION_VALIDATION.json`; o release validado continua
+0.6.0-mobile até o gate integral da Sprint 5. As limitações reais
 de device/iOS/lojas continuam no Sprint 15; não são resolvidas por captures ou mocks.
 
 ## Objetivo

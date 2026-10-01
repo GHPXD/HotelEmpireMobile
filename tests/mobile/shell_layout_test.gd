@@ -5,6 +5,7 @@ var failures: int = 0
 var checks: int = 0
 var screenshots: Array[String] = []
 var game: AppRoot
+var progress_time: RefCounted
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -15,6 +16,9 @@ func run() -> void:
 	for dimensions in [Vector2i(320, 568), Vector2i(568, 320), Vector2i(360, 780), Vector2i(844, 390), Vector2i(960, 540), Vector2i(1280, 800)]:
 		root.size = dimensions
 		game = preload("res://core/application/app_root.tscn").instantiate()
+		progress_time = preload("res://tests/mobile/fake_progress_time.gd").new()
+		game.controller.progress_clock = progress_time.clock()
+		game.controller.saves.clock = progress_time.utc
 		game.controller.saves.path = "user://layout-%dx%d.json" % [dimensions.x, dimensions.y]
 		game.controller.saves.legacy_path = "user://no-legacy-layout.json"
 		root.add_child(game)
@@ -47,6 +51,11 @@ func run() -> void:
 		check(game.controller.session.hotel.rooms.is_empty(), "preview cannot spend cash")
 		game._confirm_build()
 		await frames(2)
+		check(game.controller.session.hotel.rooms.is_empty() and game.controller.construction.jobs.size() == 1 and game.controller.session.economy.cash == before_cash - 800, "confirmed construction checkpoints a paid pending job")
+		game.controller.enter_background()
+		progress_time.advance(10000)
+		game.controller.resume()
+		await frames(2)
 		check(game.controller.session.hotel.rooms.size() == 1 and game.controller.session.economy.cash < before_cash, "confirmed construction integrates domain/save")
 		check(not game.shell.modal_blocker.visible, "confirm releases overlay")
 		var origin := game.view.world_to_screen(Vector2.ZERO)
@@ -68,9 +77,11 @@ func run() -> void:
 				screenshots.append(ProjectSettings.globalize_path(path))
 		game._navigate(&"settings")
 		game._toggle_text()
+		game.shell.set_message("construction.purchase_hint")
 		await frames(3)
 		check(inside(Rect2(Vector2.ZERO, game.shell.size), game.shell.sheet.get_rect()), "large text sheet stays inside")
 		check_metric_words("large text " + str(dimensions))
+		check(inside(Rect2(Vector2.ZERO, game.shell.size), game.shell.body.get_rect()), "long feedback and enlarged type preserve shell bounds")
 		for button: Button in game.shell.nav_buttons.values():
 			check(inside(safe_rect, button.get_global_rect()), "large text navigation inside cutout safe area %s %s" % [dimensions, button.get_global_rect()])
 		game._toggle_text()

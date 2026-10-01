@@ -127,7 +127,12 @@ comparação de contratação, pausa/prioridade, supervisão por departamento e 
 física confirmada. Snapshot atual v9 migra versões anteriores.
 Evidências: [Sprint 4](docs/SPRINT4_VALIDATION.json), com 33 suítes aprovadas,
 4.499 verificações renderizadas, 113 capturas e APK Android debug 0.6.0.
-Próxima etapa: Sprint 5, timers/fila de construção, upgrades e conclusão offline.
+Sprint 5 em andamento: timers/fila, dois slots gratuitos, reserva de terreno,
+upgrades e conclusão offline estão integrados ao save e à UI por toque, com
+cancelamento confirmado e resumo de retorno. Ainda pendem speedups, N4/N5,
+especializações e cálculo econômico offline. A integração possui evidência própria
+em [Sprint 5 — integração](docs/SPRINT5_INTEGRATION_VALIDATION.json); não conclui
+o gate da sprint nem substitui o APK 0.6.0 validado.
 
 Executar regressões: `python tools/run_tests.py --group all --godot <executável>`.
 Renderização no host Windows: `tools/test_mobile_render.ps1 -GodotPath <executável>`.

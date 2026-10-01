@@ -16,6 +16,7 @@ func run() -> void:
 		UIPreferences.save_large_text(scenario.large)
 		root.size = dimensions
 		game = preload("res://core/application/app_root.tscn").instantiate()
+		inject_progress_time()
 		game.controller.saves.path = "user://intro-touch-%dx%d.json" % [dimensions.x, dimensions.y]
 		game.controller.saves.legacy_path = "user://intro-no-legacy.json"
 		root.add_child(game)
@@ -117,6 +118,8 @@ func guide_build(definition_id: StringName, column: int) -> void:
 	check(game.router.sheet == &"build_confirm" and game.controller.session.economy.cash == cash, "guided construction still needs confirmation")
 	await press_action(&"confirm_build")
 	check(game.controller.session.economy.cash == cash - HotelCatalog.room(definition_id).build_cost, "guided build uses exact Cash cost")
+	check(game.controller.construction.jobs.size() == 1 and game.controller.session.hotel.room_at(column, 0) == null, "guide purchase does not expose an unfinished service")
+	await finish_construction()
 
 func simulate_until(predicate: Callable, maximum_ticks: int) -> void:
 	for index in maximum_ticks:

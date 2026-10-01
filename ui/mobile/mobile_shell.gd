@@ -59,6 +59,9 @@ func _ready() -> void:
 	world_body.add_child(world_slot)
 	message = label(body, "ui.ready")
 	message.custom_minimum_size.y = 36
+	# Feedback must not push navigation outside the safe area on narrow screens.
+	message.max_lines_visible = 2
+	message.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	message.add_theme_font_size_override("font_size", 14)
 	navigation = GridContainer.new()
 	navigation.name = "BottomNavigation"
@@ -108,6 +111,8 @@ func _ready() -> void:
 func _layout() -> void:
 	if navigation == null:
 		return
+	# A 320px device with cutouts and large type has a tight vertical budget.
+	body.add_theme_constant_override("separation", 3 if size.x < 340 and size.y < 600 and theme.default_font_size > 16 else 6)
 	navigation.columns = 3 if size.x < 540 and size.x <= size.y else 5
 	top.columns = 1 if size.x < 340 and theme.default_font_size > 16 else (2 if size.x < 440 else 3)
 	actions.columns = 3
@@ -127,6 +132,7 @@ func _layout() -> void:
 		message.custom_minimum_size.y = 36
 		message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		message.clip_text = false
+		message.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		message.z_index = 0
 	for button: Button in nav_buttons.values():
 		button.add_theme_font_size_override("font_size", 18 if theme.default_font_size > 16 else 14)
