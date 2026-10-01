@@ -23,6 +23,8 @@ var modal_blocker: Control
 var nav_buttons: Dictionary = {}
 var body: VBoxContainer
 var actions: GridContainer
+var world_body: BoxContainer
+var sheet_title: Label
 
 func _ready() -> void:
 	theme = MobileTheme.create(UIPreferences.load_large_text())
@@ -42,12 +44,19 @@ func _ready() -> void:
 	open_button = button(actions, "ui.open", func() -> void: open_requested.emit())
 	pause_button = button(actions, "ui.pause", func() -> void: pause_requested.emit())
 	button(actions, "ui.settings", func() -> void: navigation_requested.emit(&"settings"))
+	world_body = BoxContainer.new()
+	world_body.name = "HotelAndContext"
+	world_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	world_body.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	body.add_child(world_body)
+	world_body.resized.connect(_layout)
 	world_slot = Control.new()
 	world_slot.name = "HotelWorld"
 	world_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	world_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	world_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	world_slot.custom_minimum_size = Vector2(0, 100)
-	body.add_child(world_slot)
+	world_body.add_child(world_slot)
 	message = label(body, "ui.ready")
 	message.custom_minimum_size.y = 36
 	message.add_theme_font_size_override("font_size", 14)
@@ -64,21 +73,32 @@ func _ready() -> void:
 	modal_blocker.name = "ModalBlocker"
 	modal_blocker.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	modal_blocker.mouse_filter = Control.MOUSE_FILTER_STOP
-	add_child(modal_blocker)
+	world_slot.add_child(modal_blocker)
 	modal_blocker.hide()
 	sheet = PanelContainer.new()
 	sheet.name = "ContextSheet"
 	sheet.mouse_filter = Control.MOUSE_FILTER_STOP
-	add_child(sheet)
+	world_body.add_child(sheet)
 	var sheet_layout := VBoxContainer.new()
 	sheet.add_child(sheet_layout)
-	button(sheet_layout, "ui.close", func() -> void: close_requested.emit())
+	var heading := HBoxContainer.new()
+	sheet_layout.add_child(heading)
+	sheet_title = label(heading, "")
+	sheet_title.autowrap_mode = TextServer.AUTOWRAP_OFF
+	sheet_title.clip_text = true
+	sheet_title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	sheet_title.add_theme_font_size_override("font_size", 18)
+	var close := button(heading, "ui.back", func() -> void: close_requested.emit())
+	close.size_flags_horizontal = Control.SIZE_SHRINK_END
+	close.custom_minimum_size.x = 90
 	sheet_scroll = ScrollContainer.new()
 	sheet_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	sheet_scroll.custom_minimum_size.y = 48
 	sheet_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	sheet_layout.add_child(sheet_scroll)
 	sheet_content = VBoxContainer.new()
 	sheet_content.name = "SheetContent"
+	sheet_content.mouse_filter = Control.MOUSE_FILTER_PASS
 	sheet_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	sheet_scroll.add_child(sheet_content)
 	sheet.hide()
@@ -88,18 +108,39 @@ func _ready() -> void:
 func _layout() -> void:
 	if navigation == null:
 		return
-	navigation.columns = 3 if size.x < 540 else 5
-	top.columns = 1 if size.x < 440 and theme.default_font_size > 16 else 3
-	actions.columns = 1 if size.x < 440 and theme.default_font_size > 16 else 3
+	navigation.columns = 3 if size.x < 540 and size.x <= size.y else 5
+	top.columns = 1 if size.x < 340 and theme.default_font_size > 16 else (2 if size.x < 440 else 3)
+	actions.columns = 3
+	var compact := size.y < 400 and size.x > size.y
+	if compact and message.get_parent() != world_slot:
+		message.reparent(world_slot)
+		message.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+		message.offset_bottom = 24
+		message.custom_minimum_size.y = 24
+		message.autowrap_mode = TextServer.AUTOWRAP_OFF
+		message.clip_text = true
+		message.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		message.z_index = 1
+	elif not compact and message.get_parent() != body:
+		message.reparent(body)
+		body.move_child(message, navigation.get_index())
+		message.custom_minimum_size.y = 36
+		message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		message.clip_text = false
+		message.z_index = 0
 	for button: Button in nav_buttons.values():
 		button.add_theme_font_size_override("font_size", 18 if theme.default_font_size > 16 else 14)
-	if size.x >= 1100:
-		sheet.position = Vector2(size.x - 360, 100)
-		sheet.size = Vector2(360, maxf(150, size.y - 180))
+	# Allocate context space alongside the world instead of covering the hotel.
+	world_body.vertical = size.x < 720 and size.x <= size.y
+	if not world_body.vertical:
+		sheet.custom_minimum_size = Vector2(clampf(size.x * 0.38, 240, 360), 0)
+		sheet.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		sheet.size_flags_horizontal = Control.SIZE_FILL
 	else:
-		var height := minf(maxf(180, size.y * 0.48), maxf(100, size.y - 130))
-		sheet.position = Vector2(0, size.y - navigation.size.y - message.size.y - height - 12)
-		sheet.size = Vector2(size.x, height)
+		var height := minf(maxf(180, world_body.size.y * 0.48), maxf(120, world_body.size.y - 106))
+		sheet.custom_minimum_size = Vector2(0, height)
+		sheet.size_flags_vertical = Control.SIZE_FILL
+		sheet.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 func refresh(session: HotelSession) -> void:
 	cash.text = tr("ui.cash") % MobileLocale.number(session.economy.cash)
@@ -124,13 +165,26 @@ func clear_sheet() -> void:
 	sheet_scroll.scroll_vertical = 0
 
 func show_sheet(modal: bool = false) -> void:
-	modal_blocker.visible = modal
+	_set_modal(modal)
 	sheet.show()
 	_layout()
 
 func hide_sheet() -> void:
 	sheet.hide()
-	modal_blocker.hide()
+	_set_modal(false)
+
+func _set_modal(enabled: bool) -> void:
+	modal_blocker.visible = enabled
+	if enabled:
+		world_slot.move_child(modal_blocker, -1)
+	for bar in [actions, navigation]:
+		for item: Button in bar.get_children():
+			if enabled and not item.has_meta("before_modal_disabled"):
+				item.set_meta("before_modal_disabled", item.disabled)
+				item.disabled = true
+			elif not enabled and item.has_meta("before_modal_disabled"):
+				item.disabled = item.get_meta("before_modal_disabled")
+				item.remove_meta("before_modal_disabled")
 
 func label(parent: Node, key: String) -> Label:
 	var item := Label.new()
@@ -151,6 +205,9 @@ func button(parent: Node, key: String, action: Callable, icon: Texture2D = null)
 	item.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	item.icon = icon
 	item.expand_icon = true
+	item.mouse_filter = Control.MOUSE_FILTER_PASS
+	item.clip_text = true
+	item.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	item.add_theme_constant_override("icon_max_width", 32)
 	item.pressed.connect(action)
 	parent.add_child(item)

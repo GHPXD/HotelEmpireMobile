@@ -3,6 +3,7 @@ extends SceneTree
 var failures: int = 0
 
 func _initialize() -> void:
+	MobileLocale.install("pt_BR")
 	var session := HotelSession.new(63)
 	var first_id: int = -1
 	for index in 25:
@@ -17,8 +18,8 @@ func _initialize() -> void:
 	var latest: Dictionary = session.guests.reviews.back()
 	check(latest.checked_in and latest.score == 85 and latest.meals == 0, "review copies actual departure facts")
 	var before := SessionSnapshot.capture(session)
-	var text := GuestReviewsPanel.describe(latest, session.rules.day_seconds)
-	check(text.contains("Consegui me hospedar") and text.contains("Refeições: 0"), "factual text follows record")
+	var text := MobileLabels.review(latest, session.rules.day_seconds)
+	check(text.contains("Conseguiu se hospedar") and text.contains("Refeições: 0"), "factual text follows record")
 	check(SessionSnapshot.capture(session) == before, "formatting never mutates RNG or state")
 	var restored := SessionSnapshot.restore(JSON.parse_string(JSON.stringify(before)))
 	check(restored.error.is_empty(), "review history loads")
@@ -89,7 +90,7 @@ func _test_visit_times() -> void:
 	session.tick(0.1)
 	var review: Dictionary = session.guests.reviews.back()
 	check(is_equal_approx(review.reception_seconds, 0.3) and is_equal_approx(review.service_queue_seconds, 0.2) and is_equal_approx(review.lift_queue_seconds, 0.3), "departure copies all accumulated visit times")
-	check(GuestReviewsPanel.describe(review, session.rules.day_seconds).contains("Filas de elevador: 0.3s"), "review prints measured wait")
+	check(MobileLabels.review(review, session.rules.day_seconds).contains("Filas de elevador: 0.3s"), "review prints measured wait")
 
 func _test_v6_history(before: Dictionary) -> void:
 	var loaded := SessionSnapshot.restore(before)
@@ -113,7 +114,7 @@ func _test_v6_history(before: Dictionary) -> void:
 	check(migrated.session.guests.reviews.back().reception_seconds == null, "existing reviews keep unknown times")
 	guest.state = &"exit"
 	migrated.session.tick(0.1)
-	check(GuestReviewsPanel.describe(migrated.session.guests.reviews.back(), migrated.session.rules.day_seconds).contains("não registrado"), "legacy departure never invents zero waits")
+	check(MobileLabels.review(migrated.session.guests.reviews.back(), migrated.session.rules.day_seconds).contains("não registrado"), "legacy departure never invents zero waits")
 	check(migrated.session.spawn_guest().lift_queue_seconds == 0, "new visitors have measured history after migration")
 	var invalid := SessionSnapshot.capture(migrated.session)
 	invalid.actors.back().lift_queue_seconds = -0.5

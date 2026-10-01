@@ -3,7 +3,7 @@ extends RefCounted
 ## One screen, at most one contextual sheet. No nested desktop windows.
 
 signal changed
-const SCREENS: Array[StringName] = [&"hotel", &"build", &"missions", &"staff", &"store", &"settings"]
+const SCREENS: Array[StringName] = [&"hotel", &"build", &"missions", &"staff", &"store", &"settings", &"operations", &"finances", &"reviews"]
 var screen: StringName = &"hotel"
 var sheet: StringName = &""
 var context_id: int = -1

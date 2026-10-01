@@ -93,6 +93,10 @@ func set_tariff(id: int, percent: int) -> String:
 	var error := session.set_room_tariff(id, percent)
 	return checkpoint(&"tariff") if error.is_empty() else error
 
+func configure_employee(id: int, destination: int) -> String:
+	var error := session.configure_employee(id, destination)
+	return checkpoint(&"assignment") if error.is_empty() else error
+
 func toggle_open() -> void:
 	session.opened = not session.opened
 	checkpoint(&"operation")

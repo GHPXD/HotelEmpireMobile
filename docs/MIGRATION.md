@@ -23,16 +23,15 @@ Auditoria técnica do Sprint 0:
   `.runtime/tests/20261001T043350Z-mobile-baseline/`.
 - Inventário: 82 PNGs, 54 sem size limit; RGBA estimado sem mipmaps de
   351.046.412 bytes. Runtime usa arte raster original via `HotelArt`.
-- Legado restante, explicitamente pendente do Sprint 2: `main.gd` registra
-  atalhos e cria `Window`/ConfirmationDialog; `HotelHUD` usa toolbar/sidebar;
-  `HotelView._gui_input` usa mouse, wheel e botão do meio; 19 testes `ui_*`
-  dependem do harness desktop. Não contam como cobertura mobile.
+- Legado identificado naquele baseline, resolvido no Sprint 2: `main.gd` registrava
+  atalhos e criava `Window`/ConfirmationDialog; `HotelHUD` usava toolbar/sidebar;
+  `HotelView._gui_input` usava mouse, wheel e botão do meio; 19 testes `ui_*`
+  dependiam do harness desktop e não contavam como cobertura mobile.
 
 Sprint 0 técnico concluído: regressão pós-reset também passou nas 17 suítes,
 sem failures/diagnostics (`.runtime/tests/20261001T043637Z-sprint0-regression/`).
 
-Próximo gate: Sprint 1 com AppRoot/GameController,
-SaveService/lifecycle, navegação, gestos, safe area e exports Android/iOS.
+Esse baseline antecede a fundação e a UX implementadas abaixo.
 
 ### Fundação implementada (Sprint 1)
 
@@ -52,13 +51,26 @@ SaveService/lifecycle, navegação, gestos, safe area e exports Android/iOS.
 - Gate local aprovado: 21 suítes, 128 verificações renderizadas e 12 capturas;
   detalhes/hashes em `docs/SPRINT1_VALIDATION.json`. APK reconstruído sem warnings.
 
-O shell ainda não substitui todas as telas/diagnósticos/assignments da gestão
-herdada. A remoção definitiva da apresentação desktop ocorre no Sprint 2 após
-portar essas capacidades e as verificações úteis de arte/culling.
+### Gestão por toque implementada (Sprint 2)
 
-Sprint 1 concluído para seu escopo local de fundação/configuração. Próxima etapa:
-Sprint 2, incluindo touch pela rota real de eventos de viewport, assignments,
-tarifas, diagnósticos, reviews e revisão do espaço do hotel com sheets abertas.
+- Removidos main desktop, HUD, panels Window, hotkeys, wheel/middle mouse,
+  release smoke desktop e os 19 testes ui_* após portar a cobertura útil.
+- MobileHotelPanels expõe construção/categorias, operações/filtros, tarifas,
+  upgrade, contratação/assignments, finanças, reviews, objetivos e preferências.
+  MobileLabels traduz dados reais e diagnósticos causais do domínio.
+- Construção e demolição exigem confirmação explícita. Pan/pinch/scroll/back
+  não gastam Cash; scroll iniciado sobre botão cancela sua ativação.
+- Contexto abaixo/lateral sem cobrir hotel; slots e alvos continuam visíveis.
+  Área de scroll e targets mínimos de 48 unidades, cutouts e texto ampliado.
+- Escala mobile pela densidade, com canvas stretch e toque em pixels físicos
+  verificados em 1x/2x/3x. Áudio libera stream em background; haptic é opcional.
+- Regressões úteis de arte, sprites, bagagem, hit tests e culling preservadas em
+  três suítes renderizadas independentes do harness desktop.
+- Evidências locais e hashes: `SPRINT2_VALIDATION.json`.
+
+Próximo gate: Sprint 3, onboarding e jogador operando recepção, limpeza,
+room service e reparos. As limitações reais de device/iOS/lojas continuam no
+Sprint 15; não são resolvidas por captures do host ou mocks.
 
 ## Objetivo
 
@@ -94,7 +106,7 @@ Preservar regressões de:
 - stress;
 - tariffs quando ainda úteis ao balanceamento.
 
-## 2. Substituir
+## 2. Substituído nos Sprints 1–2
 
 ### Input
 
@@ -191,18 +203,18 @@ Testes de UI baseados em:
 - desktop Window;
 - resoluções desktop específicas;
 
-devem ser substituídos, não considerados cobertura mobile.
+foram substituídos pelas suítes mobile da matriz. Captures técnicos de arte
+preservam regressões de renderização, sem serem usados como prova de aparelho.
 
 ## 7. Export
 
-Remover preset Windows quando a migração de build começar.
-
-Adicionar:
+Preset Windows removido; presets configurados:
 
 - Android;
 - iOS.
 
-Configurar depois de definir orientação e pipeline de signing.
+Android debug arm64 exportado; iOS preparado para toolchain macOS. Signing de
+produção, build iOS e QA de OS/lojas permanecem gates do Sprint 15.
 
 ## 8. Strings
 

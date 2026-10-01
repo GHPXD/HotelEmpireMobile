@@ -32,3 +32,11 @@ func toggle() -> void:
 	var config := ConfigFile.new()
 	config.set_value("audio", "enabled", enabled)
 	config.save("user://audio.cfg")
+
+func suspend() -> void:
+	if player != null:
+		player.stop()
+		player.stream = null
+
+func _exit_tree() -> void:
+	suspend()

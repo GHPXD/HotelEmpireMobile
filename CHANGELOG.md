@@ -2,6 +2,27 @@
 
 Este changelog começa na separação da versão mobile. O histórico de desenvolvimento e validação do protótipo desktop permanece no repositório original de PC.
 
+## 0.4.0-mobile — Gestão por toque
+
+- Gestão herdada portada para sheets Control: categorias de construção,
+  operações/filtros, tarifas, upgrades, contratação, assignments, finanças,
+  diagnósticos, reviews, objetivos e preferências.
+- Construção e demolição por confirmação explícita, com cancelamento por back.
+  Gestos de pan/pinch/scroll e drag iniciado sobre botão não gastam Cash.
+- Removidos main/HUD/panels desktop, hotkeys, wheel/middle mouse e 19 testes de UI
+  antigos após portar sua cobertura útil. Domínio e migrations preservados.
+- Contexto abaixo/lateral sem cobrir o hotel; slot da prévia e seleção continuam
+  visíveis. Layout de 320x568 a tablet, PT-BR/EN/ES, cutouts e texto ampliado.
+- Escala pela densidade do OS, targets e scroll de 48 unidades, navegação de uma
+  linha em landscape curto e feedback compacto para preservar a área de contexto.
+- Idioma, som, texto e haptic persistidos sem apagar outras preferências.
+  Áudio libera stream/playback em background; feedback háptico é opcional.
+- Regressões de sprites, poses, âncoras, bagagem, hit targets e culling portadas;
+  fluxo de gestão usa ScreenTouch/ScreenDrag pela GUI real do viewport.
+- Evidências e hashes em `docs/SPRINT2_VALIDATION.json`; APK Android debug 0.4.0.
+  Operação manual/onboarding é Sprint 3. SDKs, aparelhos, iOS e signing de produção
+  continuam pendentes do escopo seguinte e do release gate.
+
 ## 0.3.0-mobile — Fundação Mobile
 
 - AppRoot substitui o entry point desktop; GameController mantém a sessão e o fixed tick.

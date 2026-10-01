@@ -13,12 +13,18 @@ const LEGACY_ERRORS: Dictionary = {
 	"Caixa insuficiente para contratar.": "error.cash",
 	"Caixa insuficiente para o andar.": "error.cash",
 	"Caixa insuficiente para melhorar.": "error.cash",
+	"Caixa insuficiente para a melhoria.": "error.cash",
 	"Limite de 40 andares atingido.": "error.floor_limit",
 	"Sala em uso. Aguarde a liberação.": "error.room_busy",
+	"Um funcionário está a caminho. Aguarde sua chegada.": "error.room_busy",
+	"Há alguém usando ou indo para esta sala.": "error.room_busy",
+	"Aguarde todos descerem antes de remover o elevador.": "error.lift_busy",
+	"Esta recepção já possui um recepcionista.": "error.reception_assigned",
+	"Andar inexistente ou sem acesso por elevador.": "error.floor_access",
 }
 
 static func key(error: String) -> String:
-	if error.begins_with("save.error."):
+	if error.begins_with("save.error.") or error.begins_with("error."):
 		return error
 	if error.begins_with("Conclua o objetivo:") or error == "Conteúdo indisponível.":
 		return "error.locked"

@@ -50,6 +50,12 @@ Cobrir:
 
 ## 3. Touch
 
+Cobertura local implementada: `touch_management_test` injeta ScreenTouch/ScreenDrag
+via `Input.parse_input_event` e GUI do viewport, incluindo scroll, construção com
+confirmação, receita real, assignments, tarifas, upgrade, demolição, preferências
+e cancelamento por back. Não emite sinais de botão para simular uma aprovação.
+Emulação de touchscreen do Input habilita o scroll nativo do Godot no host de QA.
+
 Cobrir em dispositivo:
 
 - tap em sala;
@@ -75,7 +81,13 @@ Matriz mínima:
 - camera cutout;
 - gesture bar;
 - safe area;
-- landscape e portrait enquanto a decisão de orientação estiver aberta.
+- landscape e portrait, ambos suportados.
+
+`shell_layout_test` cobre seis dimensões de 320x568 a 1280x800, três idiomas,
+texto ampliado, safe area e mundo/painel sem sobreposição. `display_scale_test`
+cobre canvas stretch real em densidades 1x/2x/3x e toques em coordenadas físicas.
+Executar capturas no host com `tools/test.ps1 -Visual`; cada suíte tem user://
+isolado e falha em diagnostics, leaks, timeout ou asserções.
 
 Não considerar resolução de desktop como evidência de qualidade mobile.
 
@@ -182,6 +194,11 @@ Cobrir:
 ## 12. Regressão visual
 
 Usar screenshots mobile por estado importante, não screenshots de desktop.
+
+Os testes `art_render`, `culling_render` e `actor_presentation_render` preservam
+verificações de pixels, sprites, âncoras, bagagens, hit targets e equivalência de
+culling da arte original. Sua viewport técnica de 1600x900 compara renderização;
+não representa um aparelho. Capturas de produto vêm das suítes shell, touch e escala.
 
 Estados:
 

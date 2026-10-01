@@ -3,6 +3,7 @@ extends SceneTree
 var failures: int = 0
 
 func _initialize() -> void:
+	MobileLocale.install("pt_BR")
 	var session := HotelSession.new()
 	var empty := HotelAnalytics.summary(session)
 	check(empty.beds == 0 and empty.occupancy == 0 and empty.happiness == 0, "empty hotel has finite zero metrics")
@@ -66,7 +67,7 @@ func _initialize() -> void:
 	session.actors[guest.id] = guest
 	var elevator_metrics: Dictionary = HotelAnalytics.rooms(session, &"transport")[0].lift_metrics
 	check(elevator_metrics.current_max == 8 and elevator_metrics.boarded == 0, "current unserved wait is separate from boarding history")
-	check(UILabels.elevator(elevator_metrics).contains("Sem embarques"), "no history does not imply zero wait")
+	check(MobileLabels.elevator(elevator_metrics).contains(TranslationServer.translate("lift.no_history")), "no history does not imply zero wait")
 	# Exercise real boarding and delivery rather than setting historical counters.
 	passenger.target_floor = 1
 	session.transport.step(session.actors, session.rules.tick)
@@ -76,7 +77,7 @@ func _initialize() -> void:
 	for tick in 80:
 		session.transport.step(session.actors, session.rules.tick)
 	check(HotelAnalytics.elevator(session, session.transport.lifts[0]).delivered == 1, "completed passenger trip exposed")
-	check(UILabels.state(&"riding") == "No elevador" and UILabels.role(&"guest") == "Hóspede", "player labels translated")
+	check(TranslationServer.translate("state.riding") == "No elevador" and MobileLabels.actor_name(guest).begins_with("Visitante"), "player labels translated")
 	var path: String = "user://preferences-test.cfg"
 	check(UIPreferences.save_large_text(true, path) == OK and UIPreferences.load_large_text(path), "text preference roundtrip")
 	check(UIPreferences.save_large_text(false, path) == OK and not UIPreferences.load_large_text(path), "normal text preference roundtrip")

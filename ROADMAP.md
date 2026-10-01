@@ -60,18 +60,22 @@ O shell inicial é um protótipo integrado; paridade total da UI herdada é Spri
 
 ## Sprint 2 — UX Touch-First
 
-- tap;
-- drag;
-- pinch;
-- seleção contextual;
-- HUD mobile;
-- bottom navigation;
-- bottom sheets;
-- remoção da dependência de janelas/atalhos desktop;
-- layout celular/tablet;
-- feedback háptico quando adequado.
+- [x] tap, drag e pinch pela rota de eventos GUI/viewport;
+- [x] seleção contextual de sala, hóspede e funcionário;
+- [x] HUD e bottom navigation responsivos;
+- [x] sheets de gestão: construção, operações, tarifas, upgrade, finanças, reviews e missões;
+- [x] contratação e assignments por toque com checkpoint;
+- [x] confirmação de construção/demolição e cancelamento por back sem gasto;
+- [x] scroll/pan/modal sem comandos acidentais, inclusive drag iniciado sobre botão;
+- [x] remoção de main, HUD, Window, hotkeys e harness/testes desktop;
+- [x] layout celular/tablet, cutouts, texto ampliado, três idiomas e densidades 1x/2x/3x;
+- [x] feedback háptico opcional, áudio suspenso em background e preferências persistidas;
+- [x] verificações úteis de pixels, sprites, bagagens, hit targets e culling portadas;
+- [x] 28 suítes aprovadas, 3.992 verificações renderizadas, 83 capturas e APK de debug reconstruído: `docs/SPRINT2_VALIDATION.json`.
 
-Saída: core gameplay completo por toque.
+Saída: core gameplay herdado completo por toque. Operação manual/onboarding
+entram no Sprint 3. Ergonomia, vibração física, rotação/safe area do OS e QA
+Android/iOS em aparelho continuam gates do Sprint 15.
 
 ## Sprint 3 — O jogador trabalha no hotel
 

@@ -4,13 +4,14 @@ param(
     [switch]$Stress,
     [switch]$Soak,
     [switch]$Tariffs,
-    [ValidateRange(1, 3600)][int]$SuiteTimeoutSeconds = 120
+    [ValidateRange(1, 3600)][int]$SuiteTimeoutSeconds = 180
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
 $runtimeRoot = Join-Path $projectRoot '.runtime'
 New-Item -ItemType Directory -Force -Path $runtimeRoot | Out-Null
 $previousAppData = $env:APPDATA
+$suiteDataRoot = Join-Path $runtimeRoot ('native-tests/' + [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ'))
 $suiteResults = [Collections.Generic.List[object]]::new()
 $reportPath = Join-Path $runtimeRoot 'test-run-report.json'
 $report = [ordered]@{
@@ -29,8 +30,11 @@ function Invoke-TestEngine([string]$Name, [string[]]$GodotArguments, [string]$Lo
     $suiteResults.Add($step)
     $timer = [Diagnostics.Stopwatch]::StartNew()
     try {
+		$env:APPDATA = Join-Path $suiteDataRoot ($Name.Replace('/', '-'))
+		New-Item -ItemType Directory -Force -Path $env:APPDATA | Out-Null
         $quoted = $GodotArguments | ForEach-Object { '"' + $_ + '"' }
-        $process = Start-Process -FilePath $GodotPath -ArgumentList $quoted -WindowStyle Hidden -PassThru
+        $stderrLog = $Log + '.stderr'
+        $process = Start-Process -FilePath $GodotPath -ArgumentList $quoted -RedirectStandardError $stderrLog -WindowStyle Hidden -PassThru
         if (-not $process.WaitForExit($SuiteTimeoutSeconds * 1000)) {
             $process.Kill()
             $step.status = 'timeout'
@@ -41,8 +45,9 @@ function Invoke-TestEngine([string]$Name, [string[]]$GodotArguments, [string]$Lo
         $step.logSha256 = (Get-FileHash -LiteralPath $Log -Algorithm SHA256).Hash.ToLowerInvariant()
         $step.summaries = @(Get-Content -LiteralPath $Log | Where-Object { $_ -match '^\{' } | ForEach-Object { $_ | ConvertFrom-Json })
         Get-Content -LiteralPath $Log | Select-String -Pattern '^\{|^\[SAVE\]' | ForEach-Object { $_.Line }
-        if ($process.ExitCode -ne 0 -or (Select-String -LiteralPath $Log -Pattern 'SCRIPT ERROR:|^ERROR:|leaked at exit|resources still in use' -Quiet)) { throw "Suite failed: $Name. Inspect $Log" }
+        if ($process.ExitCode -ne 0 -or (Select-String -LiteralPath @($Log, $stderrLog) -Pattern 'SCRIPT ERROR:|^ERROR:|leaked at exit|resources still in use' -Quiet)) { throw "Suite failed: $Name. Inspect $Log" }
         if ($Name -ne 'import' -and -not @($step.summaries | Where-Object { $_.suite }).Count) { throw "Missing suite summary: $Name" }
+        if (@($step.summaries | Where-Object { $_.suite -and $_.failures -ne 0 }).Count) { throw "Failed assertions: $Name" }
         $step.status = 'passed'
     } catch {
         if ($step.status -ne 'timeout') { $step.status = 'failed' }
@@ -63,11 +68,13 @@ try {
     if ($Stress) { $suites += @('save_multiseed_test', 'stress_test', 'admission_equivalence_test') }
     if ($Soak) { $suites += @('long_run_test') }
     if ($Tariffs) { $suites += @('departure_observer_test', 'tariff_scenarios') }
-    if ($Visual) { $suites += @('ui_smoke', 'ui_resume', 'ui_management', 'ui_action_icons', 'ui_management_icons', 'ui_session_icons', 'ui_preferences_icons', 'ui_progression', 'ui_content', 'ui_operations', 'ui_reviews', 'ui_art', 'ui_culling', 'ui_actor_presentation', 'ui_new_game', 'ui_exit', 'ui_help', 'ui_recovery', 'ui_checkin_diagnostics') }
+    $mobileSuites = @(Get-ChildItem -LiteralPath (Join-Path $projectRoot 'tests/mobile') -Filter '*_test.gd' -File | Sort-Object Name | ForEach-Object { 'mobile/' + $_.BaseName })
+    $suites += $mobileSuites
+    if ($Visual) { $suites += @('mobile/art_render', 'mobile/culling_render', 'mobile/actor_presentation_render') }
     foreach ($suite in $suites) {
-        $testLog = Join-Path $runtimeRoot ($suite + '.log')
+        $testLog = Join-Path $runtimeRoot ($suite.Replace('/', '-') + '.log')
         $arguments = @('--path', $projectRoot, '--script', ('res://tests/' + $suite + '.gd'), '--log-file', $testLog)
-        if ($suite -notlike 'ui_*') { $arguments += '--headless' }
+        if ($suite -notlike '*_render' -and (-not $Visual -or $suite -notin @('mobile/shell_layout_test', 'mobile/touch_management_test', 'mobile/display_scale_test'))) { $arguments += '--headless' }
         Invoke-TestEngine $suite $arguments $testLog
     }
     $report.status = 'passed'

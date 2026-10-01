@@ -12,7 +12,7 @@ func _initialize() -> void:
 func run() -> void:
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	root.content_scale_size = Vector2i.ZERO
-	for dimensions in [Vector2i(360, 780), Vector2i(844, 390), Vector2i(960, 540), Vector2i(1280, 800)]:
+	for dimensions in [Vector2i(320, 568), Vector2i(568, 320), Vector2i(360, 780), Vector2i(844, 390), Vector2i(960, 540), Vector2i(1280, 800)]:
 		root.size = dimensions
 		game = preload("res://core/application/app_root.tscn").instantiate()
 		game.controller.saves.path = "user://layout-%dx%d.json" % [dimensions.x, dimensions.y]
@@ -28,12 +28,13 @@ func run() -> void:
 		await frames(5)
 		var safe_rect := Rect2(20, 12, dimensions.x - 40, dimensions.y - 30)
 		for button: Button in game.shell.nav_buttons.values():
-			check(inside(safe_rect, button.get_global_rect()), "navigation inside cutout safe area")
+			check(inside(safe_rect, button.get_global_rect()), "navigation inside cutout safe area %s %s" % [dimensions, button.get_global_rect()])
 			check(button.size.y >= 48, "navigation target height")
 		check(game.view.size.y >= 100, "hotel remains visible")
 		game._navigate(&"build")
 		await frames(3)
 		check(game.shell.sheet.visible and game.shell.sheet_scroll.size.y > 0, "scrollable build sheet")
+		check(game.view.size.y >= 100 and not game.view.get_global_rect().intersects(game.shell.sheet.get_global_rect()), "hotel remains visible without context overlap")
 		check(inside(Rect2(Vector2.ZERO, game.shell.size), game.shell.sheet.get_rect()), "sheet fits shell")
 		game._choose_build(HotelCatalog.room(&"reception"))
 		await frames(2)
@@ -58,6 +59,7 @@ func run() -> void:
 			game._refresh()
 			check(not game.shell.cash.text.begins_with("ui."), "localized metrics " + locale)
 			check(game.shell.nav_buttons[&"build"].text == TranslationServer.translate("ui.build"), "locale change updates navigation " + locale)
+			check_metric_words(locale + " " + str(dimensions))
 			if DisplayServer.get_name() != "headless":
 				await RenderingServer.frame_post_draw
 				var path := "user://mobile-%dx%d-%s.png" % [dimensions.x, dimensions.y, locale]
@@ -68,6 +70,9 @@ func run() -> void:
 		game._toggle_text()
 		await frames(3)
 		check(inside(Rect2(Vector2.ZERO, game.shell.size), game.shell.sheet.get_rect()), "large text sheet stays inside")
+		check_metric_words("large text " + str(dimensions))
+		for button: Button in game.shell.nav_buttons.values():
+			check(inside(safe_rect, button.get_global_rect()), "large text navigation inside cutout safe area %s %s" % [dimensions, button.get_global_rect()])
 		game._toggle_text()
 		game.controller.enter_background()
 		var tick_count := game.controller.session.tick_count
@@ -82,6 +87,8 @@ func run() -> void:
 		current_scene = null
 		await frames(3)
 		game = null
+	# The audio server releases stopped playback on its own mixer thread.
+	await create_timer(0.12).timeout
 	print(JSON.stringify({"suite": "mobile_shell_layout", "checks": checks, "failures": failures, "screenshots": screenshots, "rendered": DisplayServer.get_name() != "headless"}))
 	print("MOBILE_TEST_COMPLETE")
 	quit(1 if failures else 0)
@@ -92,6 +99,13 @@ func frames(count: int) -> void:
 
 func inside(outer: Rect2, inner: Rect2) -> bool:
 	return outer.grow(1).encloses(inner)
+
+func check_metric_words(context: String) -> void:
+	for label: Label in [game.shell.cash, game.shell.reputation, game.shell.guests]:
+		var font := label.get_theme_font("font")
+		var font_size := label.get_theme_font_size("font_size")
+		for word: String in label.text.split(" ", false):
+			check(font.get_string_size(word, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x <= label.size.x, "HUD does not split a word " + context + " " + word)
 
 func touch(index: int, position: Vector2, pressed: bool) -> InputEventScreenTouch:
 	var event := InputEventScreenTouch.new()

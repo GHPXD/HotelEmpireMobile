@@ -34,14 +34,30 @@ ao envelope sem misturar Gems com HotelEconomy.
 
 ## Orientação
 
-A escolha será feita pelo agente após protótipos automatizados de landscape e
-portrait, incluindo telefones estreitos e tablets. Medidas de layout e screenshots
-são evidência de legibilidade/área disponível, não um playtest em aparelho real.
-Arquitetura responsiva deve permitir adaptação posterior sem reescrever o domínio.
+O produto mantém portrait e landscape por sensor, com adaptação de layout.
+Portrait permite operação com uma mão; landscape e tablets oferecem contexto
+lateral e mais largura para o hotel. A matriz local inclui 320x568, 568x320,
+360x780, 844x390, 960x540 e 1280x800, cutouts, PT-BR/EN/ES e texto ampliado.
+Não impor orientação única antes da avaliação final em aparelho no Sprint 15.
 
-Protótipos do Sprint 1 foram renderizados em 360x780, 844x390, 960x540 e 1280x800,
-com cutouts e PT-BR/EN/ES. Landscape oferece largura para hotel horizontal; portrait
-mantém a navegação operável, mas usa duas linhas e reduz leitura dos andares.
-Tablet usa contexto lateral. O Sprint 2 deve reposicionar a câmera ao abrir sheets
-para preservar contexto visível. Orientação final continua pendente dessa revisão;
-sensor nas duas orientações permanece habilitado durante os protótipos.
+Em portrait estreito a navegação usa duas linhas. Em landscape sempre usa uma,
+inclusive quando cutouts deixam menos de 540 unidades de largura. Em landscape
+curto o feedback ocupa o topo do world, preservando espaço para hotel e contexto.
+O scroll tem área mínima de 48 unidades; cabeçalho longo não pode consumir essa área.
+
+A câmera inicial usa zoom mínimo de 0,8 e mostra o início do terreno no celular.
+Pan alcança as demais colunas. A confirmação mantém coordenadas do slot original;
+abrir contexto reposiciona a câmera apenas quando o alvo sai da área visível.
+Arrastar conteúdo cancela ativação do botão e não move o hotel. Haptic leve de
+construção/upgrade é opcional e persiste; som para em background.
+
+A escala usa densidade do OS e preserva targets de 48 unidades lógicas, em vez de
+reduzir a viewport de referência inteira para caber no celular. Foram verificadas
+densidades 1x/2x/3x com canvas stretch e toques em coordenadas físicas.
+API: [múltiplas resoluções no Godot](https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html).
+Android declara VIBRATE para a API de feedback:
+[Input.vibrate_handheld](https://docs.godotengine.org/en/4.6/classes/class_input.html#class-input-method-vibrate-handheld).
+
+Capturas e eventos locais comprovam layout e roteamento no renderer do host.
+Efeito háptico físico, ergonomia, rotação/notch reportados pelo OS e performance
+em Android/iOS continuam sendo gates próprios do Sprint 15.

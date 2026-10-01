@@ -1,0 +1,299 @@
+class_name MobileHotelPanels
+extends RefCounted
+## Builds contextual views from domain state. All mutations are semantic commands.
+
+signal command_requested(action: StringName, arguments: Dictionary)
+signal navigation_requested(destination: StringName)
+signal sheet_requested(kind: StringName, id: int)
+signal presentation_changed
+
+var shell: MobileShell
+var session: HotelSession
+var build_category: StringName = &""
+var room_status: int = 0
+var room_floor: int = -1
+var updates: Array[Callable] = []
+var sound_enabled: bool = true
+var haptics_enabled: bool = true
+
+func _init(presentation: MobileShell) -> void:
+	shell = presentation
+
+func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) -> void:
+	session = value
+	updates.clear()
+	shell.clear_sheet()
+	var title := "ui." + String(router.screen)
+	match router.sheet:
+		&"build_confirm":
+			if blueprint == null:
+				shell.hide_sheet()
+				return
+			title = "ui.build"
+			_text(tr("ui.build_preview") % [tr("room." + String(blueprint.id) + ".name"), MobileLocale.number(blueprint.build_cost)])
+			_action("ui.confirm", &"confirm_build", {}, HotelArt.build_icon(blueprint.id))
+		&"demolish_confirm":
+			title = "ui.demolish"
+			_text(tr("ui.demolish_confirm"))
+			_action("ui.confirm", &"demolish", {"id": router.context_id}, HotelArt.action_icon(&"demolish"))
+		&"room":
+			title = "ui.room"
+			_room(router.context_id)
+		&"actor":
+			title = "ui.guest"
+			_actor(router.context_id)
+		&"employee":
+			title = "ui.staff"
+			_employee(router.context_id)
+		&"overview":
+			title = "ui.hotel"
+			_overview()
+		_:
+			match router.screen:
+				&"hotel":
+					shell.hide_sheet()
+					return
+				&"build": _build()
+				&"staff": _staff()
+				&"operations": _operations()
+				&"finances": _finances()
+				&"reviews": _reviews()
+				&"missions": _missions()
+				&"settings": _settings()
+				&"store": _text(tr("store.unavailable"))
+	shell.sheet_title.text = tr(title)
+	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm"])
+	refresh()
+
+func refresh() -> void:
+	for update in updates:
+		update.call()
+
+func _text(value: String) -> Label:
+	var label := shell.label(shell.sheet_content, "")
+	label.text = value
+	return label
+
+func _live(projection: Callable) -> Label:
+	var label := _text("")
+	updates.append(func() -> void: label.text = projection.call())
+	return label
+
+func _action(key: String, action: StringName, arguments: Dictionary = {}, icon: Texture2D = null, parent: Node = null) -> Button:
+	var button := shell.button(parent if parent != null else shell.sheet_content, key, func() -> void: command_requested.emit(action, arguments), icon)
+	button.set_meta("mobile_action", action)
+	button.set_meta("arguments", arguments)
+	return button
+
+func _link(destination: StringName, icon: Texture2D = null) -> void:
+	var button := shell.button(shell.sheet_content, "ui." + String(destination), func() -> void: navigation_requested.emit(destination), icon)
+	button.set_meta("destination", destination)
+
+func _inspect(kind: StringName, id: int, value: String, icon: Texture2D = null) -> void:
+	var button := shell.button(shell.sheet_content, "", func() -> void: sheet_requested.emit(kind, id), icon)
+	button.text = value
+	button.set_meta("inspect_kind", kind)
+	button.set_meta("inspect_id", id)
+
+func _grid() -> GridContainer:
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.mouse_filter = Control.MOUSE_FILTER_PASS
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	shell.sheet_content.add_child(grid)
+	return grid
+
+func _build() -> void:
+	var categories := _grid()
+	for category: StringName in [&"", &"reception", &"lodging", &"service", &"transport"]:
+		var button := shell.button(categories, "category." + ("all" if category.is_empty() else String(category)), func() -> void:
+			build_category = category
+			presentation_changed.emit())
+		button.disabled = build_category == category
+	for definition: RoomDefinition in HotelCatalog.ROOMS:
+		if not build_category.is_empty() and definition.category != build_category:
+			continue
+		var button := _action("room." + String(definition.id) + ".name", &"choose_build", {"definition": definition}, HotelArt.build_icon(definition.id))
+		var locked := session.progression.build_error(definition)
+		button.disabled = not locked.is_empty()
+		_text(tr("build.cost") % [MobileLocale.number(definition.build_cost), definition.width])
+		if button.disabled:
+			_text(tr("error.locked"))
+	_action("ui.floor", &"add_floor", {}, HotelArt.action_icon(&"add_floor")).text = tr("ui.floor") % MobileLocale.number(HotelModel.FLOOR_COST)
+
+func _overview() -> void:
+	_live(func() -> String:
+		var stats := HotelAnalytics.summary(session)
+		return tr("hotel.summary") % [roundi(stats.occupancy), stats.dirty, stats.room_queue + stats.lift_queue])
+	_link(&"operations", HotelArt.management_icon(&"operations"))
+	_link(&"finances", HotelArt.management_icon(&"finances"))
+	_link(&"reviews", HotelArt.management_icon(&"reviews"))
+
+func _room(id: int) -> void:
+	var room := session.hotel.by_id(id)
+	if room == null:
+		_text(tr("error.command"))
+		return
+	_live(func() -> String:
+		return tr("ui.room_details") % [MobileLabels.room_name(room), room.level, room.capacity(), MobileLocale.number(room.income)])
+	if room.definition().category == &"reception":
+		_live(func() -> String: return MobileLabels.checkin(session, room))
+		_link(&"staff", HotelArt.staff_icon(&"receptionist"))
+	elif room.definition().category == &"transport":
+		_live(func() -> String: return MobileLabels.elevator(HotelAnalytics.elevator(session, session.transport.lift_by_id(room.id))))
+	else:
+		_live(func() -> String: return tr("room.operation") % [room.queue.members.size(), tr("room.dirty" if room.dirty else "room.clean"), tr("room.busy" if room.busy() else "room.free")])
+	var next := room.next_upgrade()
+	if next != null:
+		var upgrade := _action("ui.upgrade", &"upgrade", {"id": id}, HotelArt.action_icon(&"upgrade"))
+		upgrade.disabled = not session.progression.upgrade_error(room).is_empty()
+		_text(tr("upgrade.cost") % MobileLocale.number(next.cost))
+		if upgrade.disabled:
+			_text(tr("error.locked"))
+	else:
+		_text(tr("room.max_level"))
+	if room.definition().category in [&"lodging", &"service"]:
+		_live(func() -> String: return tr("tariff.current") % [room.price_percent, MobileLocale.number(room.price())])
+		var tariffs := _grid()
+		for percent: int in [75, 100, 125]:
+			var button := _action("", &"tariff", {"id": id, "percent": percent}, null, tariffs)
+			button.text = "%d%%" % percent
+			button.disabled = percent == room.price_percent
+		if room.definition().category == &"lodging":
+			_text(tr("tariff.effect"))
+			for percent: int in [75, 100, 125]:
+				var low: float = INF
+				var high: float = -INF
+				for profile: GuestArchetype in HotelCatalog.GUESTS:
+					var delta := room.lodging_value_delta(profile, percent)
+					low = minf(low, delta)
+					high = maxf(high, delta)
+				_text(tr("tariff.range") % [percent, low, high])
+	_action("ui.demolish", &"request_demolish", {"id": id}, HotelArt.action_icon(&"demolish"))
+
+func _actor(id: int) -> void:
+	var actor: ActorState = session.actors.get(id)
+	if actor == null:
+		_text(tr("actor.departed"))
+		return
+	_portrait(actor)
+	_text(MobileLabels.actor_name(actor))
+	_live(func() -> String:
+		return MobileLabels.actor_details(actor, session.hotel) if session.actors.has(id) else tr("actor.departed"))
+	if actor.role != &"guest":
+		_inspect(&"employee", id, tr("staff.assign"), HotelArt.staff_icon(actor.role))
+
+func _staff() -> void:
+	for definition: EmployeeDefinition in HotelSession.EMPLOYEES:
+		var hire := _action("ui.hire", &"hire", {"definition": definition}, HotelArt.staff_icon(definition.id))
+		hire.text = tr("staff.hire_role") % tr("staff." + String(definition.id) + ".name")
+		_text(tr("staff.costs") % [MobileLocale.number(definition.hire_cost), MobileLocale.number(definition.salary)])
+	var count := 0
+	for actor: ActorState in session.actors.values():
+		if actor.role == &"guest":
+			continue
+		count += 1
+		_inspect(&"employee", actor.id, MobileLabels.actor_name(actor), HotelArt.staff_icon(actor.role))
+	if count == 0:
+		_text(tr("staff.empty"))
+
+func _employee(id: int) -> void:
+	var actor: ActorState = session.actors.get(id)
+	if actor == null:
+		_text(tr("error.command"))
+		return
+	_portrait(actor)
+	_text(MobileLabels.actor_name(actor))
+	_live(func() -> String: return MobileLabels.actor_details(actor, session.hotel))
+	_text(tr("staff.assignment_hint"))
+	var selected := actor.preferred_room if actor.role == &"receptionist" else actor.preferred_floor
+	var auto := _action("staff.auto", &"assign", {"id": id, "destination": -1})
+	auto.disabled = selected == -1
+	if actor.role == &"receptionist":
+		for room: RoomState in session.hotel.rooms:
+			if room.definition().category == &"reception":
+				var button := _action("", &"assign", {"id": id, "destination": room.id}, HotelArt.build_icon(&"reception"))
+				button.text = MobileLabels.room_name(room)
+				button.disabled = selected == room.id
+	else:
+		for floor_index in session.hotel.floors:
+			var button := _action("", &"assign", {"id": id, "destination": floor_index})
+			button.text = tr("staff.floor") % floor_index
+			button.disabled = selected == floor_index
+
+func _operations() -> void:
+	var filters := _grid()
+	for status in 4:
+		var button := shell.button(filters, "filter.status_%d" % status, func() -> void:
+			room_status = status
+			presentation_changed.emit())
+		button.disabled = status == room_status
+		button.set_meta("room_status", status)
+	var floors := _grid()
+	for floor_index in range(-1, session.hotel.floors):
+		var button := shell.button(floors, "", func() -> void:
+			room_floor = floor_index
+			presentation_changed.emit())
+		button.text = tr("filter.all_floors") if floor_index < 0 else tr("staff.floor") % floor_index
+		button.disabled = floor_index == room_floor
+	var rows := HotelAnalytics.rooms(session, &"", room_floor, room_status)
+	if rows.is_empty():
+		_text(tr("filter.empty"))
+	for row: Dictionary in rows:
+		var room := session.hotel.by_id(row.id)
+		_inspect(&"room", room.id, MobileLabels.room_name(room), HotelArt.build_icon(room.definition_id))
+		_live(func() -> String:
+			if room.definition().category == &"reception":
+				return MobileLabels.checkin(session, room)
+			if room.definition().category == &"transport":
+				return MobileLabels.elevator(HotelAnalytics.elevator(session, session.transport.lift_by_id(room.id)))
+			return tr("room.operation") % [room.queue.members.size(), tr("room.dirty" if room.dirty else "room.clean"), tr("room.busy" if room.busy() else "room.free")])
+
+func _finances() -> void:
+	_live(func() -> String:
+		var costs := session.recurring_costs()
+		return tr("finance.daily") % [MobileLocale.number(costs.maintenance), MobileLocale.number(costs.salaries), MobileLocale.number(costs.total)])
+	_live(func() -> String:
+		var economy := session.economy
+		return tr("finance.total") % [MobileLocale.number(economy.revenue), MobileLocale.number(economy.expenses), MobileLocale.number(economy.profit()), MobileLocale.number(economy.capital_spent)])
+	_text(tr("finance.hint"))
+	_text(tr("finance.transactions"))
+	for index in range(maxi(0, session.economy.ledger.size() - 10), session.economy.ledger.size()):
+		var item: Dictionary = session.economy.ledger[index]
+		_text(tr("finance.transaction") % [MobileLocale.number(item.amount), MobileLabels.transaction_reason(item.reason)])
+
+func _reviews() -> void:
+	_text(tr("review.hint"))
+	if session.guests.reviews.is_empty():
+		_text(tr("review.empty"))
+	for index in range(session.guests.reviews.size() - 1, -1, -1):
+		_text(MobileLabels.review(session.guests.reviews[index], session.rules.day_seconds))
+
+func _missions() -> void:
+	for objective in HotelProgression.OBJECTIVES:
+		_text(tr("objective." + String(objective.id)))
+		if session.progression.completed.has(objective.id):
+			_text(tr("ui.objective_completed"))
+		else:
+			for metric: String in objective.requirements:
+				_live(func() -> String: return tr("ui.objective_progress") % [tr("metric." + metric), int(session.progression_metrics().get(metric, 0)), int(objective.requirements[metric])])
+
+func _settings() -> void:
+	_action("ui.large_text_on" if UIPreferences.load_large_text() else "ui.large_text_off", &"large_text", {}, HotelArt.preference_icon(&"text_size"))
+	_action("ui.sound_on" if sound_enabled else "ui.sound_off", &"sound", {}, HotelArt.preference_icon(&"sound_on" if sound_enabled else &"sound_off"))
+	_action("ui.haptics_on" if haptics_enabled else "ui.haptics_off", &"haptics")
+	_text(tr("ui.language"))
+	for locale: String in ["pt_BR", "en", "es"]:
+		var button := _action("language." + locale, &"locale", {"locale": locale})
+		button.disabled = TranslationServer.get_locale() == locale
+
+func _portrait(actor: ActorState) -> void:
+	var picture := TextureRect.new()
+	picture.name = "ActorPortrait"
+	picture.custom_minimum_size = Vector2(72, 72)
+	picture.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	picture.texture = HotelArt.portrait(actor)
+	shell.sheet_content.add_child(picture)

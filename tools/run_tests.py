@@ -30,7 +30,7 @@ def main():
     if not gda:
         parser.error('gda is required; set PATH to its executable')
     groups = {'domain': DOMAIN, 'stress': STRESS, 'studies': STUDIES,
-              'mobile': sorted(p.stem for p in (ROOT / 'tests/mobile').glob('*.gd'))}
+              'mobile': sorted(p.stem for p in (ROOT / 'tests/mobile').glob('*_test.gd'))}
     suites = args.suite or ([s for group in groups.values() for s in group] if args.group == 'all' else groups[args.group])
     if not suites:
         parser.error('No suites selected')

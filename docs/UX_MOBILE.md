@@ -20,6 +20,14 @@ Critério de decisão:
 
 A orientação final não deve ser escolhida apenas por convenção de mercado.
 
+Implementado no Sprint 2: ambas as orientações por sensor. Contexto abaixo do
+hotel em portrait estreito e lateral em landscape/tablets, sem sobrepor o world.
+Navegação horizontal mantém uma linha mesmo no celular de 568x320; portrait
+estreito usa duas. Feedback compacto libera altura em landscape curto. Targets
+e scroll preservam 48 unidades lógicas com densidade 1x/2x/3x. O slot da prévia
+não muda quando o sheet redimensiona o world; o alvo selecionado continua visível.
+Evidências: `SPRINT2_VALIDATION.json`; ergonomia em aparelho é gate do Sprint 15.
+
 ## 3. Navegação
 
 Estrutura base proposta:

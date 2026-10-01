@@ -15,9 +15,15 @@ var analytics := AnalyticsService.new()
 var remote_config := RemoteConfigService.new()
 var application_paused: bool = false
 var application_focused: bool = true
+var panels: MobileHotelPanels
+var haptics := HapticService.new()
+var display_scale := MobileDisplayScale.new()
 
 func _ready() -> void:
-	MobileLocale.install()
+	_configure_display()
+	get_window().size_changed.connect(_configure_display)
+	MobileLocale.install(UIPreferences.load_locale())
+	haptics.load_preference()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	safe_area = MobileSafeArea.new()
 	safe_area.name = "SafeArea"
@@ -25,6 +31,11 @@ func _ready() -> void:
 	shell = MobileShell.new()
 	shell.name = "MobileShell"
 	safe_area.add_child(shell)
+	panels = MobileHotelPanels.new(shell)
+	panels.command_requested.connect(_command)
+	panels.navigation_requested.connect(_navigate)
+	panels.sheet_requested.connect(func(kind: StringName, id: int) -> void: router.open_sheet(kind, id))
+	panels.presentation_changed.connect(_route)
 	audio = HotelAudio.new()
 	add_child(audio)
 	var error := controller.boot()
@@ -42,6 +53,7 @@ func _ready() -> void:
 	shell.world_slot.add_child(view)
 	view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	view.resized.connect(_fit_initial_camera, CONNECT_ONE_SHOT)
+	view.resized.connect(_focus_context)
 	gestures.tapped.connect(_world_tap)
 	gestures.panned.connect(func(delta: Vector2) -> void:
 		view.pan += delta
@@ -72,9 +84,48 @@ func _ready() -> void:
 	controller.lifecycle_changed.connect(func(in_background: bool) -> void:
 		analytics.record(&"background" if in_background else &"resume"))
 
+func _configure_display() -> void:
+	display_scale.apply(get_window())
+
 func _fit_initial_camera() -> void:
-	view.zoom_factor = clampf((view.size.x - 40) / (HotelModel.COLUMNS * HotelView.CELL), 0.35, 1.0)
+	view.zoom_factor = clampf((view.size.x - 40) / (HotelModel.COLUMNS * HotelView.CELL), 0.8, 1.0)
+	view.pan = Vector2.ZERO
+	if view.size.x < 720:
+		# Start with the reception end of the plot at a readable touch scale.
+		view.pan.x = 5 * HotelView.CELL * view.zoom_factor
+	if view.size.y < 200:
+		view.pan.y = view.size.y / 2 - (view.origin().y - HotelView.FLOOR_HEIGHT * view.zoom_factor / 2)
 	view.queue_redraw()
+
+func _focus_context() -> void:
+	if view == null:
+		return
+	var target := _context_rect()
+	var top_margin := 36.0 if view.size.y >= 180 else (24.0 if shell.message.get_parent() == shell.world_slot else 4.0)
+	var viewport := Rect2(Vector2(16, top_margin), view.size - Vector2(32, top_margin + 4))
+	if not target.has_area() or not viewport.has_area() or viewport.encloses(target):
+		return
+	# Fit the entire selected room even after a pinch or a compact sheet resize.
+	var fit := minf(viewport.size.x / target.size.x, viewport.size.y / target.size.y)
+	if fit < 1.0:
+		view.zoom_factor = clampf(view.zoom_factor * fit, 0.35, 1.8)
+		target = _context_rect()
+	view.pan += viewport.get_center() - target.get_center()
+	view.queue_redraw()
+
+func _context_rect() -> Rect2:
+	var target := Rect2()
+	if router.sheet == &"build_confirm" and view.blueprint != null:
+		target = view.room_rect(preview_cell.x, preview_cell.y, view.blueprint.width)
+	elif router.sheet == &"room":
+		var room := controller.session.hotel.by_id(router.context_id)
+		if room != null:
+			target = view.room_rect(room.column, room.floor_index, room.definition().width)
+	elif router.sheet in [&"actor", &"employee"]:
+		var actor: ActorState = controller.session.actors.get(router.context_id)
+		if actor != null:
+			target = view.actor_sprite_rect(actor)
+	return target
 
 func _process(delta: float) -> void:
 	if controller.session == null or controller.background:
@@ -101,8 +152,11 @@ func _notification(what: int) -> void:
 		shell.refresh_locale()
 		_refresh()
 		_route()
+		if view != null:
+			view.queue_redraw()
 	elif what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		gestures.reset()
+		audio.suspend()
 		controller.enter_background()
 	elif what == NOTIFICATION_APPLICATION_RESUMED or what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		if not application_paused and application_focused:
@@ -112,6 +166,7 @@ func _notification(what: int) -> void:
 	elif what == NOTIFICATION_WM_GO_BACK_REQUEST:
 		_back()
 	elif what == NOTIFICATION_WM_CLOSE_REQUEST:
+		audio.suspend()
 		controller.enter_background()
 		get_tree().quit()
 
@@ -120,6 +175,8 @@ func _navigate(destination: StringName) -> void:
 	view.blueprint = null
 	view.queue_redraw()
 	router.navigate(destination)
+	if destination == &"hotel":
+		router.open_sheet(&"overview")
 
 func _back() -> void:
 	gestures.reset()
@@ -128,8 +185,11 @@ func _back() -> void:
 	if view != null and view.blueprint != null:
 		view.blueprint = null
 		view.queue_redraw()
-		shell.set_message("ui.ready")
-	# Root Android back keeps the hotel available; OS Home remains the exit path.
+		shell.set_message("ui.build_cancelled")
+		return
+	if OS.get_name() == "Android":
+		controller.enter_background()
+		get_tree().quit()
 
 func _world_tap(point: Vector2) -> void:
 	if shell.modal_blocker.visible:
@@ -164,57 +224,61 @@ func _pinch(factor: float, old_focus: Vector2, focus: Vector2) -> void:
 func _refresh() -> void:
 	if shell != null and controller.session != null:
 		shell.refresh(controller.session)
+		if panels != null:
+			panels.refresh()
 
 func _route() -> void:
+	if panels == null or view == null:
+		return
 	gestures.reset()
-	shell.clear_sheet()
-	if router.sheet == &"build_confirm":
-		shell.label(shell.sheet_content, "").text = tr("ui.build_preview") % [tr("room." + String(view.blueprint.id) + ".name"), MobileLocale.number(view.blueprint.build_cost)]
-		shell.button(shell.sheet_content, "ui.confirm", _confirm_build, HotelArt.build_icon(view.blueprint.id))
-		shell.show_sheet(true)
-		return
-	if router.sheet == &"room":
-		_show_room(router.context_id)
-		return
-	if router.sheet == &"actor":
-		var actor: ActorState = controller.session.actors.get(router.context_id)
-		if actor == null:
-			router.close_sheet()
-			return
-		shell.label(shell.sheet_content, "").text = tr("ui.guest_details") % [actor.display_name, roundi(actor.happiness), roundi(actor.age)]
-		shell.show_sheet()
-		return
-	match router.screen:
-		&"hotel":
-			shell.hide_sheet()
-		&"build":
-			for definition in HotelCatalog.ROOMS:
-				var button := shell.button(shell.sheet_content, "room." + String(definition.id) + ".name", _choose_build.bind(definition), HotelArt.build_icon(definition.id))
-				button.text += "  " + MobileLocale.number(definition.build_cost)
-				button.disabled = not controller.session.progression.build_error(definition).is_empty()
-			shell.button(shell.sheet_content, "ui.floor", _add_floor, HotelArt.action_icon(&"add_floor")).text = tr("ui.floor") % MobileLocale.number(HotelModel.FLOOR_COST)
-			shell.show_sheet()
-		&"staff":
-			for definition in HotelSession.EMPLOYEES:
-				shell.button(shell.sheet_content, "ui.hire", _hire.bind(definition), HotelArt.staff_icon(definition.id)).text = tr("ui.hire") % [tr("staff." + String(definition.id) + ".name"), MobileLocale.number(definition.hire_cost)]
-				shell.label(shell.sheet_content, "").text = tr("ui.salary") % MobileLocale.number(definition.salary)
-			shell.show_sheet()
-		&"missions":
-			for objective in HotelProgression.OBJECTIVES:
-				if controller.session.progression.completed.has(objective.id):
-					shell.label(shell.sheet_content, "ui.objective_completed")
-				else:
-					for metric: String in objective.requirements:
-						shell.label(shell.sheet_content, "").text = tr("ui.objective_progress") % [tr("metric." + metric), int(controller.session.progression_metrics().get(metric, 0)), int(objective.requirements[metric])]
-					break
-				shell.show_sheet()
-		&"store":
-			shell.label(shell.sheet_content, "store.unavailable")
-			shell.show_sheet()
-		&"settings":
-			shell.button(shell.sheet_content, "ui.large_text", _toggle_text, HotelArt.preference_icon(&"text_size"))
-			shell.button(shell.sheet_content, "ui.sound", audio.toggle, HotelArt.preference_icon(&"sound_on" if audio.enabled else &"sound_off"))
-			shell.show_sheet()
+	view.fixed_preview = router.sheet == &"build_confirm" and view.blueprint != null
+	view.preview_cell = preview_cell
+	panels.sound_enabled = audio.enabled
+	panels.haptics_enabled = haptics.enabled
+	panels.show(controller.session, router, view.blueprint)
+	_focus_context.call_deferred()
+	view.queue_redraw()
+
+func _command(action: StringName, arguments: Dictionary) -> void:
+	match action:
+		&"choose_build": _choose_build(arguments.definition)
+		&"confirm_build": _confirm_build()
+		&"add_floor": _add_floor()
+		&"hire": _hire(arguments.definition)
+		&"upgrade": _upgrade(arguments.id)
+		&"tariff":
+			_feedback(controller.set_tariff(arguments.id, arguments.percent), "tariff.saved")
+			_route()
+		&"assign":
+			_feedback(controller.configure_employee(arguments.id, arguments.destination), "staff.assigned")
+			_route()
+		&"request_demolish": router.open_sheet(&"demolish_confirm", arguments.id)
+		&"demolish":
+			var error := controller.demolish(arguments.id)
+			_feedback(error, "ui.demolished")
+			if error.is_empty():
+				view.selected = -1
+				router.close_sheet()
+			view.queue_redraw()
+		&"large_text": _toggle_text()
+		&"sound":
+			audio.toggle()
+			_route()
+		&"haptics":
+			if haptics.toggle() != OK:
+				shell.set_message("save.error.write")
+			_route()
+		&"locale":
+			if UIPreferences.save_value("locale", arguments.locale) != OK:
+				shell.set_message("save.error.write")
+				return
+			MobileLocale.install(arguments.locale)
+			_route()
+	_refresh()
+
+func _exit_tree() -> void:
+	if panels != null:
+		panels.updates.clear()
 
 func _choose_build(definition: RoomDefinition) -> void:
 	router.navigate(&"hotel")
@@ -228,6 +292,7 @@ func _confirm_build() -> void:
 		view.selected = result.room.id
 		view.blueprint = null
 		audio.play(&"build")
+		haptics.confirm()
 		router.close_sheet()
 	_feedback(result.error, "ui.built")
 	_refresh()
@@ -239,23 +304,15 @@ func _add_floor() -> void:
 
 func _hire(definition: EmployeeDefinition) -> void:
 	_feedback(controller.hire(definition), "ui.hired")
+	_route()
 	_refresh()
-
-func _show_room(id: int) -> void:
-	var room := controller.session.hotel.by_id(id)
-	if room == null:
-		router.close_sheet()
-		return
-	shell.label(shell.sheet_content, "").text = tr("ui.room_details") % [tr("room." + String(room.definition_id) + ".name"), room.level, room.capacity(), MobileLocale.number(room.income)]
-	var upgrade := shell.button(shell.sheet_content, "ui.upgrade", _upgrade.bind(id), HotelArt.action_icon(&"upgrade"))
-	upgrade.disabled = room.next_upgrade() == null or not controller.session.progression.upgrade_error(room).is_empty()
-	shell.show_sheet()
 
 func _upgrade(id: int) -> void:
 	var error := controller.upgrade(id)
 	_feedback(error, "ui.upgraded")
 	if error.is_empty():
 		audio.play(&"upgrade")
+		haptics.confirm()
 		_route()
 	_refresh()
 
@@ -266,6 +323,7 @@ func _toggle_text() -> void:
 		return
 	shell.theme = MobileTheme.create(enabled)
 	shell._layout()
+	_route()
 
 func _feedback(error: String, success: String) -> void:
 	shell.set_message(success if error.is_empty() else MobileFeedback.key(error))

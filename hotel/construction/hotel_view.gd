@@ -14,12 +14,12 @@ var hotel: HotelModel
 var session: HotelSession
 var selected: int = -1
 var blueprint: RoomDefinition
+var fixed_preview: bool = false
+var preview_cell := Vector2i(-1, -1)
 var zoom_factor: float = 1.0
 var pan: Vector2 = Vector2.ZERO
 var pointer: Vector2 = Vector2(-1000, -1000)
-var drag: bool = false
-var hovered_cell := Vector2i(-1, -1)
-var mobile_input: MobileInputController
+var mobile_input := MobileInputController.new()
 # Reference switch for visual equivalence tests and profiling.
 var cull_offscreen: bool = true
 
@@ -44,39 +44,20 @@ func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	resized.connect(queue_redraw)
+	mobile_input.tapped.connect(_tap)
 
 func _gui_input(event: InputEvent) -> void:
-	if mobile_input != null:
-		if mobile_input.handle(event):
-			accept_event()
-		return
-	if event is InputEventMouseMotion:
-		pointer = event.position
-		if drag:
-			pan += event.relative
-		hovered_cell = cell_at(pointer)
-		queue_redraw()
-	if event is InputEventMouseButton:
-		pointer = event.position
-		if event.button_index == MOUSE_BUTTON_MIDDLE:
-			drag = event.pressed
-		if not event.pressed:
+	if mobile_input.handle(event):
+		accept_event()
+
+func _tap(point: Vector2) -> void:
+	if blueprint == null and session != null:
+		var actor_id := actor_at_screen_position(point)
+		if actor_id >= 0:
+			actor_clicked.emit(actor_id)
 			return
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if blueprint == null and session != null:
-				var actor_id := actor_at_screen_position(pointer)
-				if actor_id >= 0:
-					actor_clicked.emit(actor_id)
-					return
-			var cell := cell_at(pointer)
-			cell_clicked.emit(cell.x, cell.y)
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			cancelled.emit()
-		elif event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
-			var previous: Vector2 = (pointer - origin()) / zoom_factor
-			zoom_factor = clampf(zoom_factor * (1.1 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 1.0 / 1.1), 0.35, 1.8)
-			pan += pointer - world_to_screen(previous)
-			queue_redraw()
+	var cell := cell_at(point)
+	cell_clicked.emit(cell.x, cell.y)
 
 func _draw() -> void:
 	draw_texture_rect(HotelArt.CITY, Rect2(Vector2.ZERO, size), false)
@@ -102,16 +83,17 @@ func _draw() -> void:
 	if session != null:
 		_draw_simulation()
 	if blueprint != null:
-		var cell := cell_at(pointer)
+		var cell := preview_cell if fixed_preview else cell_at(pointer)
 		var valid: bool = hotel.build_error(blueprint, cell.x, cell.y).is_empty()
 		var preview := room_rect(cell.x, cell.y, blueprint.width)
 		var tint := Color(0.1, 0.65, 0.36, 0.45) if valid else Color(0.9, 0.22, 0.2, 0.5)
 		draw_rect(preview, tint)
 		draw_rect(preview, tint.lightened(0.2), false, 3)
-		_text(preview.position + Vector2(8, 22), "+" if valid else "×", Color.WHITE, 20)
-	_text(Vector2(22, 30), tr("ui.world_title") if mobile_input != null else "SEU HOTEL, UM ANDAR DE CADA VEZ", Color("55716e"), 14)
-	draw_rect(Rect2(12, size.y - 46, minf(610, size.x - 24), 34), Color(0.06, 0.14, 0.14, 0.86))
-	_text(Vector2(22, size.y - 22), tr("ui.gesture_hint") if mobile_input != null else "Scroll: zoom   •   Botão do meio: mover   •   Clique direito / Esc: cancelar", Color("f1f5e9"), 14)
+		draw_texture_rect(HotelArt.room(blueprint.id), preview, false, Color(1, 1, 1, 0.55))
+	if size.y >= 180:
+		_text(Vector2(22, 30), tr("app.title"), Color("55716e"), 14)
+		draw_rect(Rect2(12, size.y - 46, minf(610, size.x - 24), 34), Color(0.06, 0.14, 0.14, 0.86))
+		draw_string(ThemeDB.fallback_font, Vector2(22, size.y - 22), tr("ui.gesture_short"), HORIZONTAL_ALIGNMENT_LEFT, size.x - 44, 14, Color("f1f5e9"))
 
 func _draw_room(room: RoomState) -> void:
 	var definition := room.definition()
@@ -130,7 +112,7 @@ func _draw_room(room: RoomState) -> void:
 		if zoom_factor >= 0.65:
 			draw_rect(Rect2(rectangle.position, Vector2(rectangle.size.x, 22 * zoom_factor)), Color(0.06, 0.14, 0.14, 0.88))
 			var room_name := tr("room." + String(definition.id) + ".name") if mobile_input != null else definition.display_name
-			_text(rectangle.position + Vector2(7, 17) * zoom_factor, room_name + (" N%d" % room.level if room.level > 1 else ""), Color("fff1cc"), int(13 * zoom_factor))
+			_text(rectangle.position + Vector2(7, 17) * zoom_factor, room_name + (" " + tr("room.level_short") % room.level if room.level > 1 else ""), Color("fff1cc"), int(13 * zoom_factor))
 	if room.id == selected:
 		draw_rect(rectangle, Color("f9cd69"), false, 4)
 
@@ -186,6 +168,11 @@ func _sprite_rect(actor: ActorState, point: Vector2) -> Rect2:
 	return Rect2(point + Vector2(0, 17 * zoom_factor) - anchor * scale, region.size * scale)
 
 func actor_at_screen_position(at: Vector2) -> int:
+	# Exact sprite hits win; nearby taps use a minimum 48-unit target as fallback.
+	var exact := _actor_hit(at, false)
+	return exact if exact >= 0 else _actor_hit(at, true)
+
+func _actor_hit(at: Vector2, expanded: bool) -> int:
 	var closest_id := -1
 	var closest_distance := INF
 	var queue_positions: Dictionary = HotelQueueProjection.build(session, CELL, FLOOR_HEIGHT).positions
@@ -198,7 +185,11 @@ func actor_at_screen_position(at: Vector2) -> int:
 			var distance := point.distance_squared_to(at)
 			if distance > closest_distance:
 				continue
-			if _sprite_rect(actor, point).grow(2 * zoom_factor).has_point(at):
+			var hit := _sprite_rect(actor, point).grow(2 * zoom_factor)
+			if expanded:
+				var target_size := hit.size.max(Vector2(48, 48))
+				hit = Rect2(hit.get_center() - target_size / 2, target_size)
+			if hit.has_point(at):
 				closest_id = actor.id
 				closest_distance = distance
 	return closest_id
@@ -211,7 +202,7 @@ func actor_wait_badge_rect(actor: ActorState) -> Rect2:
 	return _wait_badge_rect(actor_screen_position(actor), actor_sprite_rect(actor))
 
 func _wait_badge_rect(point: Vector2, sprite: Rect2) -> Rect2:
-	var size_hint := _status_badge_size("…")
+	var size_hint := _status_badge_size(tr("ui.wait"))
 	return Rect2(Vector2(point.x - size_hint.x / 2, sprite.position.y - 4 * zoom_factor - size_hint.y), size_hint)
 
 func _sleeping_room(actor: ActorState) -> RoomState:
@@ -233,9 +224,9 @@ func _draw_simulation() -> void:
 	for room in hotel.rooms:
 		if room.dirty:
 			var box := room_rect(room.column, room.floor_index, room.definition().width)
-			_status_badge(box.position + Vector2(7, 29) * zoom_factor, tr("ui.clean") if mobile_input != null else "LIMPAR")
+			_status_badge(box.position + Vector2(7, 29) * zoom_factor, tr("ui.clean"))
 	for group: Dictionary in queues.groups:
-		var label := "Fila: %d" % group.count
+		var label := tr("ui.queue") % group.count
 		var end := world_to_screen(group.header_world)
 		_status_badge(end - Vector2(0, _status_badge_size(label).y), label)
 	# Beds and their footboards precede people circulating in the foreground.
@@ -266,7 +257,7 @@ func _draw_actor(actor: ActorState, sleeping_room: RoomState, queue_positions: D
 		var front := HotelArt.SLEEP_FOOTBOARD
 		draw_texture_rect_region(bed_texture, Rect2(bed.position + bed.size * front.position, bed.size * front.size), Rect2(bed_texture.get_size() * front.position, bed_texture.get_size() * front.size))
 	if show_wait_badge:
-		_status_badge(wait_badge.position, "…")
+		_status_badge(wait_badge.position, tr("ui.wait"))
 
 func _status_badge_size(label: String) -> Vector2:
 	var font_size := maxi(9, int(12 * zoom_factor))

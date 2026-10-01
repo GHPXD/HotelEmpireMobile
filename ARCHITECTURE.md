@@ -20,6 +20,9 @@ Simulation Domain
 
 Serviços de plataforma ficam ao lado do domínio:
 
+A árvore inclui serviços previstos para as próximas sprints. Ads/IAP, entitlements
+e offline ainda não estão implementados nesta entrega de fundação/UX.
+
 ```
 AppRoot
 ├── GameController
@@ -84,13 +87,26 @@ Responsável por:
 - safe areas;
 - tablets.
 
-A camada atual baseada em `Window`, teclado e mouse será substituída.
+A apresentação herdada baseada em `Window`, teclado e mouse foi removida no Sprint 2.
 
 Implementação da fundação: `core/application/app_root.tscn` é a cena principal.
 `AppRoot` conecta `GameController`, `SaveService`, `ScreenRouter`, gestos,
 `MobileSafeArea`, `MobileShell`, áudio e providers de analytics/config.
-O `main.gd` desktop permanece apenas para portar verificações antigas no Sprint 2;
-não é mais entry point nem é incluído no export mobile.
+`MobileHotelPanels` constrói as telas de gestão e emite comandos sem alterar a
+sessão. `MobileLabels` traduz projeções causais de check-in, elevador, hóspedes e
+reviews; `HotelAnalytics` permanece uma projeção somente de leitura. `AppRoot`
+encaminha construção, upgrade, tarifa, contratação, assignment e demolição ao
+controller, que faz checkpoint após o comando. Confirmações são sheets Control.
+
+`MobileDisplayScale` converte resolução física/densidade em unidades lógicas no
+Android/iOS antes de criar a interface. `MobileSafeArea` converte os insets físicos
+nessa mesma escala. Targets têm altura mínima de 48 unidades; contexto fica abaixo
+do hotel em portrait e ao lado em landscape/tablet. Câmera preserva o slot da prévia
+e mantém o alvo contextual visível quando o painel muda a área do hotel.
+
+`HapticService` adapta a vibração opcional do dispositivo. Preferências de idioma,
+texto, som e vibração são persistidas separadamente sem apagar outras preferências.
+`HotelAudio` libera playback e stream ao suspender o app ou remover a cena.
 
 ### Platform
 
@@ -107,7 +123,7 @@ Integrações que não podem contaminar o domínio:
 
 ## Input
 
-`HotelView` deixa de interpretar diretamente o dispositivo.
+`HotelView` encaminha eventos ao controlador de gestos mobile.
 
 ```
 InputEvent
