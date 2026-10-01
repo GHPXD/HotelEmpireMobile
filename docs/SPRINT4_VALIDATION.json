@@ -69,7 +69,9 @@
     "static": {
       "path": ".runtime/sprint4-final-verified/sprint4-static-validation.json",
       "sha256": "0aaaa067357b9a88c292aaae3d8f22cd47737d11b5d4d014667c07bd9c471c35",
-      "scripts": 27
+      "scripts": 27,
+      "raw_evidence": ".runtime/sprint4-final-verified/static-raw-results.json",
+      "raw_sha256": "a663720018f1e531d8b0cabcbfc7960d93470c96b7c17e8c755b8d402a310074"
     },
     "shutdown_verification": {
       "path": ".runtime/sprint4-final-verified/player-shutdown-report.json",
