@@ -2,6 +2,15 @@
 
 Este changelog começa na separação da versão mobile. O histórico de desenvolvimento e validação do protótipo desktop permanece no repositório original de PC.
 
+## Em andamento — Sprint 5
+
+- ProgressClock adiciona tempo monotônico para deadlines e ausência persistida,
+  com proteção de rollback, watermark e resume idempotente. Checkpoint durante
+  background preserva o intervalo a ser liquidado no retorno.
+- Componente isolado passou em 35 verificações determinísticas pelo gda estrito.
+  Ainda pendem integração, fila/slots, obras/upgrades, speedups e settlement offline;
+  o fluxo de construção do produto continua no estado validado da Sprint 4.
+
 ## 0.6.0-mobile — Equipe e delegação
 
 - Recepcionista e camareiro ganham XP somente por tarefas concluídas, níveis 1–5,
