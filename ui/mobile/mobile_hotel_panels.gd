@@ -20,6 +20,9 @@ var structure_key: String = ""
 var construction: ConstructionService
 var progress_clock: ProgressClock
 var return_construction: Array[Dictionary] = []
+var inventory: PlayerInventory
+var speedup_item: StringName = &""
+var speedup_operation_id: int = 0
 
 func _init(presentation: MobileShell) -> void:
 	shell = presentation
@@ -31,6 +34,9 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 	shell.clear_sheet()
 	var title := "ui." + String(router.screen)
 	match router.sheet:
+		&"speedup_confirm":
+			title = "speedup.title"
+			_speedup_confirmation(router.context_id)
 		&"construction_return":
 			title = "construction.return_title"
 			var finished := 0
@@ -106,7 +112,7 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 				&"settings": _settings()
 				&"store": _text(tr("store.unavailable"))
 	shell.sheet_title.text = tr(title)
-	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm", &"dismiss_confirm", &"construction_cancel_confirm"])
+	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm", &"dismiss_confirm", &"construction_cancel_confirm", &"speedup_confirm"])
 	structure_key = _structure()
 	refresh()
 
@@ -115,6 +121,8 @@ func needs_rebuild() -> bool:
 
 func _structure() -> String:
 	var key := "%d:%d:%s:%d:%s" % [session.actors.size() - session.guest_count(), session.hotel.rooms.size(), str(session.player_work.job.is_empty()), onboarding.stage if onboarding != null else -1, str(onboarding.skipped if onboarding != null else true)]
+	if inventory != null:
+		key += ":i%d" % inventory.revision
 	for order in session.player_work.orders:
 		key += ":o%d" % int(order.id)
 	if construction != null:
@@ -279,6 +287,47 @@ func _construction(id: int) -> void:
 	shell.sheet_content.add_child(progress)
 	updates.append(func() -> void: progress.value = 100.0 * clampf(1.0 - (int(job.end_ms) - progress_clock.now_ms()) / float(job.duration_ms), 0.0, 1.0) if int(job.slot) >= 0 else 0.0)
 	_action("construction.cancel", &"request_construction_cancel", {"id": id})
+	_speedups(job)
+
+func _speedups(job: Dictionary) -> void:
+	if inventory == null:
+		return
+	_text(tr("speedup.title"))
+	_text(tr("speedup.optional_hint"))
+	for item in PlayerInventory.DEFINITIONS:
+		var button := _action("", &"request_speedup", {"id": int(job.id), "item": item.id}, HotelArt.action_icon(&"speedup"))
+		button.text = tr("speedup.stock") % [MobileLabels.duration(item.seconds * 1000), inventory.quantity(item.id)]
+		button.disabled = int(job.slot) < 0 or inventory.quantity(item.id) == 0
+	if int(job.slot) < 0:
+		_text(tr("speedup.error.queued"))
+
+func _speedup_confirmation(id: int) -> void:
+	var job: Variant = construction.by_id(id)
+	var item := PlayerInventory.definition(speedup_item)
+	if job == null:
+		_text(tr("construction.finished"))
+		_text(tr("speedup.not_spent"))
+		return
+	if item == null:
+		_text(tr("speedup.error.invalid"))
+		return
+	_text(MobileLabels.construction_name(job))
+	_text(tr("speedup.confirm") % MobileLabels.duration(item.seconds * 1000))
+	_live(func() -> String:
+		var remaining := maxi(0, int(job.end_ms) - progress_clock.now_ms())
+		var reduction := mini(item.seconds * 1000, remaining)
+		return tr("speedup.reduction") % [MobileLabels.duration(reduction), MobileLabels.duration(remaining - reduction)])
+	_text(tr("speedup.remainder_hint"))
+	_text(tr("speedup.available") % inventory.quantity(item.id))
+	var button := _action("", &"use_speedup", {"id": id, "item": item.id, "operation_id": speedup_operation_id}, HotelArt.action_icon(&"speedup"))
+	button.text = tr("speedup.use") % MobileLabels.duration(item.seconds * 1000)
+	var reason := _text("")
+	updates.append(func() -> void:
+		var error := inventory.spend_error(item.id, speedup_operation_id)
+		if error.is_empty():
+			error = construction.acceleration_error(id, item.seconds * 1000, progress_clock.now_ms())
+		button.disabled = not error.is_empty()
+		reason.text = tr(error) if not error.is_empty() else "")
 
 func _actor(id: int) -> void:
 	var actor: ActorState = session.actors.get(id)

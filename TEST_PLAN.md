@@ -254,7 +254,15 @@ Os helpers avançam prazos mantendo a simulação congelada e verificam dinheiro
 reservas, slots, limites temporais e counters no save. O renderer nativo cobre três
 formatos/idiomas e os testes de shell mantêm os seis formatos com recortes e texto
 ampliado. Provas parciais ficam em `docs/SPRINT5_INTEGRATION_VALIDATION.json`;
-o gate final ainda exige speedups, progressão N4/N5/especialização e offline econômico.
+o gate final ainda exige progressão N4/N5/especialização e offline econômico.
+
+Speedups têm `speedup_test` e `speedup_touch_test`: IDs repetidos, estoque, snapshot,
+falha de storage/retry, queued/empty/expired, back, redução parcial, lifecycle no
+commit e restart um milissegundo antes do novo deadline. O guia por toque verifica
+concessão persistida única. O renderer cobre recortes, fonte ampliada, três idiomas,
+alpha/import e controles legíveis a 32/48 unidades. O harness espera liberação
+exata dos WAVs com timeout; não suprime mensagens de leak. Provas parciais ficam
+em `docs/SPRINT5_SPEEDUP_VALIDATION.json`.
 
 Nenhum release sai se houver:
 

@@ -85,17 +85,24 @@ func run() -> void:
 		await press_action(&"guide_next")
 		await press_action(&"hire", {"definition": HotelSession.EMPLOYEES[0]})
 		check(game.controller.onboarding.stage == 9 and not game.controller.onboarding.active(), "touch delegation completes all guide facts")
+		check(game.controller.inventory.quantity(&"15m") == 1 and game.controller.inventory.claimed(&"tutorial"), "physical tutorial grants exactly one free fifteen-minute item")
 		check(session.economy.cash == 2400 + session.economy.revenue - session.economy.expenses - session.economy.capital_spent and session.economy.cash >= 0, "mobile profile remains solvent without injected money")
 		check(game.shell.sheet_content.find_children("*", "Button", true, false).filter(func(button: Button) -> bool: return button.get_meta("inspect_kind", &"") == &"employee").size() == 1, "player excluded from employee list")
 		await hotel_overview()
 		await capture("intro-done-%dx%d" % [dimensions.x, dimensions.y])
 		var restored := SaveService.restore(AtomicJSONStore.read(game.controller.saves.path).data)
 		check(restored.error.is_empty() and restored.app_state.onboarding.stage == 9 and restored.session.player_work.totals.delivered == 1, "touch flow saved completed guide and physical work")
+		check(_saved_tutorial(restored.app_state.player_inventory), "touch tutorial reward persists and cannot be granted twice")
 		game.queue_free()
 		current_scene = null
 		await frames(4)
 		game = null
 	finish("onboarding_touch", {"dimensions": 3, "input": "InputEventScreenTouch/ScreenDrag through viewport", "starting_cash": 2400})
+
+func _saved_tutorial(data: Dictionary) -> bool:
+	# Keep probe references out of the coroutine that shuts down the SceneTree.
+	var inventory := PlayerInventory.new()
+	return inventory.restore(data) and inventory.quantity(&"15m") == 1 and not inventory.claim_reward(&"tutorial")
 
 func hotel_overview() -> void:
 	await click(root, game.shell.nav_buttons[&"hotel"].get_global_rect().get_center())

@@ -55,6 +55,7 @@ func _ready() -> void:
 	view.construction = controller.construction
 	panels.construction = controller.construction
 	panels.progress_clock = controller.progress_clock
+	panels.inventory = controller.inventory
 	view.mobile_input = gestures
 	shell.world_slot.add_child(view)
 	view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -79,6 +80,8 @@ func _ready() -> void:
 	router.changed.connect(_route)
 	controller.simulation_advanced.connect(func() -> void: view.queue_redraw())
 	controller.saves.checkpoint_failed.connect(shell.set_message)
+	controller.speedup_used.connect(func(item_id: StringName, applied_ms: int) -> void:
+		analytics.record(&"speedup_used", {"kind": String(item_id), "duration_seconds": applied_ms / 1000.0}))
 	controller.construction_changed.connect(func(events: Array[Dictionary]) -> void:
 		view.queue_redraw()
 		for event in events:
@@ -163,7 +166,7 @@ func _context_rect() -> Rect2:
 		var room := controller.session.hotel.by_id(router.context_id)
 		if room != null:
 			target = view.room_rect(room.column, room.floor_index, room.definition().width)
-	elif router.sheet == &"construction":
+	elif router.sheet in [&"construction", &"construction_cancel_confirm", &"speedup_confirm"]:
 		var job: Variant = controller.construction.by_id(router.context_id)
 		if job != null and job.kind != "floor":
 			target = view.room_rect(int(job.column), int(job.floor_index), HotelCatalog.room(StringName(job.definition_id)).width)
@@ -296,6 +299,8 @@ func _route() -> void:
 	view.queue_redraw()
 
 func _command(action: StringName, arguments: Dictionary) -> void:
+	if controller.transaction_active():
+		return
 	match action:
 		&"player_work":
 			_feedback(controller.start_player_work(arguments.kind, arguments.id), "work.result.started")
@@ -317,8 +322,25 @@ func _command(action: StringName, arguments: Dictionary) -> void:
 			_route()
 		&"choose_build": _choose_build(arguments.definition)
 		&"confirm_build": _confirm_build()
+		&"request_speedup":
+			panels.speedup_item = arguments.item
+			panels.speedup_operation_id = controller.inventory.next_operation_id()
+			router.open_sheet(&"speedup_confirm", arguments.id)
+		&"use_speedup":
+			var error := controller.use_speedup(arguments.id, arguments.item, arguments.operation_id)
+			_feedback(error, "speedup.applied")
+			if error.is_empty():
+				if controller.construction.by_id(arguments.id) != null:
+					haptics.confirm()
+					router.open_sheet(&"construction", arguments.id)
+				elif controller.onboarding.active():
+					router.open_sheet(&"overview")
+				else:
+					router.close_sheet()
+			else:
+				_route()
 		&"construction_return_continue":
-			var unavailable := return_sheet in [&"construction", &"construction_cancel_confirm"] and controller.construction.by_id(return_context_id) == null
+			var unavailable := return_sheet in [&"construction", &"construction_cancel_confirm", &"speedup_confirm"] and controller.construction.by_id(return_context_id) == null
 			if not return_sheet.is_empty() and not unavailable:
 				router.open_sheet(return_sheet, return_context_id)
 			else:

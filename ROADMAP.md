@@ -128,10 +128,14 @@ Saída: transição clara de trabalhador para gestor.
 - [x] upgrades temporizados mantendo operação no nível anterior;
 - [ ] N1–N5 quando aplicável;
 - [ ] especializações;
-- [ ] speedups.
+- [x] speedups gratuitos em inventário global, consumo confirmado e persistência atômica.
 
 A integração de timers/fila/save/GUI tem evidência própria em
 `docs/SPRINT5_INTEGRATION_VALIDATION.json`. Ainda não conclui a sprint.
+Speedups têm evidência própria em `docs/SPRINT5_SPEEDUP_VALIDATION.json` e contrato
+em `docs/PLAYER_INVENTORY.md`. O inventário mínimo foi antecipado do Sprint 6 por
+dependência das obras; Gems, Empire Points e seus sources/sinks permanecem naquele
+sprint, e providers de rewarded/IAP continuam no Sprint 7.
 Settlement econômico offline e seu resumo precisam de política/balanceamento antes
 do gate completo; snapshots de obra não concedem receita ou salários inventados.
 

@@ -10,6 +10,8 @@ func _initialize() -> void:
 	check(analytics.pending.size() == 1, "unconfigured analytics cannot block/lose gameplay")
 	check(not analytics.record(&"app_open", {"email": "private@example.invalid"}), "PII field rejected")
 	check(not analytics.record(&"unknown"), "unknown schema event rejected")
+	check(analytics.record(&"speedup_used", {"kind": "5m", "duration_seconds": 20.0}), "speedup telemetry uses bounded public item and actual reduction")
+	check(not analytics.record(&"speedup_used", {"receipt": "private"}), "speedup telemetry rejects purchase receipts")
 	for count in 200:
 		analytics.record(&"resume")
 	check(analytics.pending.size() == AnalyticsService.MAX_PENDING, "offline queue has memory bound")

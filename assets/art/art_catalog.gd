@@ -74,6 +74,7 @@ const ACTION_ICONS: Dictionary = {
 	&"demolish": preload("res://assets/art/icons/demolish.png"),
 	&"repair": preload("res://assets/art/icons/repair.png"),
 	&"room_service": preload("res://assets/art/icons/room-service.png"),
+	&"speedup": preload("res://assets/art/icons/speedup.png"),
 }
 
 static func action_icon(action: StringName) -> Texture2D:

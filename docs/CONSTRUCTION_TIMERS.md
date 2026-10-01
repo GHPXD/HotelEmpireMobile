@@ -102,6 +102,12 @@ O registro não declara novo APK nem conclusão dos componentes ainda pendentes.
 
 ## Decisões para os componentes pendentes
 
+Speedups estão integrados: itens Resources de 5m/15m/1h, estoque global e concessões
+gratuitas únicas, confirmação com redução efetiva e consumo persistido antes de
+aplicar. Obras na fila, item vazio, back e alvo concluído não gastam. Redução parcial
+e deadline encurtado sobrevivem a restart, sem novos ticks/cobranças. Contrato em
+`PLAYER_INVENTORY.md`, evidência parcial em `SPRINT5_SPEEDUP_VALIDATION.json`.
+
 - Dois slots simultâneos gratuitos e fila limitada, sem vender a capacidade base.
 - Primeiras obras de 10/20/30/60 segundos; early de 1–5 minutos, mid de 5–30 minutos.
   Até quatro horas somente em investimento relevante. Dados ficam em Resources.

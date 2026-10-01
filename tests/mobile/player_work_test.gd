@@ -11,4 +11,5 @@ func _run() -> void:
 	cases = null
 	print(JSON.stringify(result))
 	print("MOBILE_TEST_COMPLETE")
-	quit(1 if result.failures else 0)
+	# Release this call's result and dynamic script frame before engine teardown.
+	quit.call_deferred(1 if result.failures else 0)

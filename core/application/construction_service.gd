@@ -100,20 +100,55 @@ func advance(now_ms: int, game_time: float) -> Array[Dictionary]:
 				candidate = job
 		if candidate.is_empty():
 			break
-		var event := _complete(candidate)
-		jobs.erase(candidate)
-		if event.error.is_empty():
-			completed += 1
-		else:
-			cancelled += 1
-			hotel.economy.refund_capital(int(candidate.cost), "ledger.construction.refund_invalidated", game_time)
+		var event := _finish(candidate, game_time)
 		events.append(event)
-		_events.append(event)
-		if _events.size() > RULES.queue_limit * 4:
-			_events.pop_front()
 		_start_pending(int(candidate.end_ms))
 	last_ms = now_ms
 	return events
+
+func acceleration_error(job_id: int, milliseconds: int, now_ms: int) -> String:
+	if not _valid_now(now_ms) or milliseconds <= 0:
+		return "speedup.error.invalid"
+	var job: Variant = by_id(job_id)
+	if job == null or (int(job.slot) >= 0 and int(job.end_ms) <= now_ms):
+		return "construction.error.missing"
+	if int(job.slot) < 0:
+		return "speedup.error.queued"
+	if int(job.end_ms) - now_ms > milliseconds and int(job.duration_ms) - milliseconds < 1000:
+		return "speedup.error.invalid"
+	return ""
+
+func accelerate(job_id: int, milliseconds: int, now_ms: int, game_time: float) -> Dictionary:
+	var error := acceleration_error(job_id, milliseconds, now_ms)
+	if not error.is_empty():
+		return {"error": error, "applied_ms": 0}
+	# Caller settles overdue boundaries first and owns the stock transaction.
+	var job: Dictionary = by_id(job_id)
+	var applied := mini(milliseconds, int(job.end_ms) - now_ms)
+	if applied == int(job.end_ms) - now_ms:
+		var event := _finish(job, game_time)
+		_start_pending(now_ms)
+		last_ms = now_ms
+		if not event.error.is_empty():
+			return {"error": event.error, "applied_ms": 0}
+	else:
+		job.end_ms = int(job.end_ms) - applied
+		job.duration_ms = int(job.duration_ms) - applied
+	last_ms = now_ms
+	return {"error": "", "applied_ms": applied}
+
+func _finish(job: Dictionary, game_time: float) -> Dictionary:
+	var event := _complete(job)
+	jobs.erase(job)
+	if event.error.is_empty():
+		completed += 1
+	else:
+		cancelled += 1
+		hotel.economy.refund_capital(int(job.cost), "ledger.construction.refund_invalidated", game_time)
+	_events.append(event)
+	if _events.size() > RULES.queue_limit * 4:
+		_events.pop_front()
+	return event
 
 func _start_pending(at_ms: int) -> void:
 	for slot in RULES.slots:

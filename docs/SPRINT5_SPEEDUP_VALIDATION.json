@@ -1,0 +1,1333 @@
+{
+  "scope": "Sprint 5 persisted speedup inventory and actual touch consumption; partial sprint gate",
+  "generated_utc": "2026-10-01T14:09:55.226380+00:00",
+  "component_status": "passed",
+  "sprint_status": "in_progress",
+  "base_revision": "911811090e0045d206c48d7a0b35f0bddbd55c19",
+  "source_hash_policy": "sha256 hashes UTF-8 text with LF line endings (Git canonical), raw binary PNG; tested_working_copy_sha256 records actual working bytes used by the engine.",
+  "sources": [
+    {
+      "path": "assets/art/art_catalog.gd",
+      "sha256": "6bc8822d2541460ec01af86dececbc850b674f140573967f43613f8af379c791",
+      "tested_working_copy_sha256": "f21adcb41b5e9cafdef9d2a0edcde3cf629219c7a30ad750d86552e6b6385fbb"
+    },
+    {
+      "path": "assets/art/art_catalog.gd.uid",
+      "sha256": "efe577c725883a8088c463930c3947f5b65da1b4ade0e9de4774ea8cb6f480ee",
+      "tested_working_copy_sha256": "efe577c725883a8088c463930c3947f5b65da1b4ade0e9de4774ea8cb6f480ee"
+    },
+    {
+      "path": "assets/art/icons/speedup.png",
+      "sha256": "96fe4a479d6a67f1404acfc54b88e4ea2eea5599c411a6fd1fcad6e6e18d16dc",
+      "tested_working_copy_sha256": "96fe4a479d6a67f1404acfc54b88e4ea2eea5599c411a6fd1fcad6e6e18d16dc"
+    },
+    {
+      "path": "assets/art/icons/speedup.png.import",
+      "sha256": "5444d8ea0e1162748d021d67b10a1d40783b3ade219544853a1926dc44e9f931",
+      "tested_working_copy_sha256": "5444d8ea0e1162748d021d67b10a1d40783b3ade219544853a1926dc44e9f931"
+    },
+    {
+      "path": "assets/art/sprint5-generation.json",
+      "sha256": "1554a45878f48140657e7bf2a315578db89e256cdd6de9994b07ee1503ee1b61",
+      "tested_working_copy_sha256": "1554a45878f48140657e7bf2a315578db89e256cdd6de9994b07ee1503ee1b61"
+    },
+    {
+      "path": "core/application/analytics_service.gd",
+      "sha256": "ab1550e1bef123dfd9c58c4578292294bc8a705b70e2b8c20b8cf8f6dc3047f7",
+      "tested_working_copy_sha256": "ab1550e1bef123dfd9c58c4578292294bc8a705b70e2b8c20b8cf8f6dc3047f7"
+    },
+    {
+      "path": "core/application/analytics_service.gd.uid",
+      "sha256": "9e563d66cb99d877c97a9a29befcb4ae9fa76debe33111079a84900679719b7a",
+      "tested_working_copy_sha256": "9e563d66cb99d877c97a9a29befcb4ae9fa76debe33111079a84900679719b7a"
+    },
+    {
+      "path": "core/application/app_root.gd",
+      "sha256": "85fc634bfc4862f26b37f546d5618aaeb21d92f9017724f6244cc8ab43f9aa2c",
+      "tested_working_copy_sha256": "643f5c8f18f1ca110a2ecef69bdcd0d7dae326d6278d895065151f81d76006f5"
+    },
+    {
+      "path": "core/application/app_root.gd.uid",
+      "sha256": "32d6cd2888591556d4694f6777d7496392afb8da97b4bda32b68da359fccb51b",
+      "tested_working_copy_sha256": "32d6cd2888591556d4694f6777d7496392afb8da97b4bda32b68da359fccb51b"
+    },
+    {
+      "path": "core/application/app_root.tscn",
+      "sha256": "e30ae4089a736bfc60e59f405df31b921588ee547d7fcdc7b1403cec6d7dce09",
+      "tested_working_copy_sha256": "e30ae4089a736bfc60e59f405df31b921588ee547d7fcdc7b1403cec6d7dce09"
+    },
+    {
+      "path": "core/application/construction_rules.gd",
+      "sha256": "c2b810d5648c4556eb950e781c9a3bfeb8be675ec26ea252661798dc7e3e8cfd",
+      "tested_working_copy_sha256": "c2b810d5648c4556eb950e781c9a3bfeb8be675ec26ea252661798dc7e3e8cfd"
+    },
+    {
+      "path": "core/application/construction_rules.gd.uid",
+      "sha256": "8cca2c99fec629ec5c734f855bf946690bf90ae2f4816e12fece2081149bb562",
+      "tested_working_copy_sha256": "8cca2c99fec629ec5c734f855bf946690bf90ae2f4816e12fece2081149bb562"
+    },
+    {
+      "path": "core/application/construction_service.gd",
+      "sha256": "e49ebd4840fbdb075b4c86b87ffae86f0b6e8a02bd1c54dec385f1ed33ef5646",
+      "tested_working_copy_sha256": "e49ebd4840fbdb075b4c86b87ffae86f0b6e8a02bd1c54dec385f1ed33ef5646"
+    },
+    {
+      "path": "core/application/construction_service.gd.uid",
+      "sha256": "f62d461646978b03126bbabb5e2e3a43cf6e9ee336c9c5f29dc570d64405bd21",
+      "tested_working_copy_sha256": "f62d461646978b03126bbabb5e2e3a43cf6e9ee336c9c5f29dc570d64405bd21"
+    },
+    {
+      "path": "core/application/construction_speedup_plan.gd",
+      "sha256": "efa07b4ae3972375447c5806928d7a53cd72f7a2fc5d58fc7faf868bc638e9a2",
+      "tested_working_copy_sha256": "efa07b4ae3972375447c5806928d7a53cd72f7a2fc5d58fc7faf868bc638e9a2"
+    },
+    {
+      "path": "core/application/construction_speedup_plan.gd.uid",
+      "sha256": "b793cf7b0997f931dd84aab614f094d57df4c1a746c2fe13bbad8db90dada24e",
+      "tested_working_copy_sha256": "b793cf7b0997f931dd84aab614f094d57df4c1a746c2fe13bbad8db90dada24e"
+    },
+    {
+      "path": "core/application/game_controller.gd",
+      "sha256": "2b79dd809e67da18686ddc8a0cc90346e32c7863eb230af8cd4b2017e6644a09",
+      "tested_working_copy_sha256": "2b79dd809e67da18686ddc8a0cc90346e32c7863eb230af8cd4b2017e6644a09"
+    },
+    {
+      "path": "core/application/game_controller.gd.uid",
+      "sha256": "7e253a73dc1a21156a78a9400f599afdf0286823beeed69b32af07f1bd2893e5",
+      "tested_working_copy_sha256": "7e253a73dc1a21156a78a9400f599afdf0286823beeed69b32af07f1bd2893e5"
+    },
+    {
+      "path": "core/application/onboarding_service.gd",
+      "sha256": "f91d347063f9a9bef40ba520f5c9dae3a95c97dbe8e0db66fdd12ea51be596e1",
+      "tested_working_copy_sha256": "f91d347063f9a9bef40ba520f5c9dae3a95c97dbe8e0db66fdd12ea51be596e1"
+    },
+    {
+      "path": "core/application/onboarding_service.gd.uid",
+      "sha256": "8621ea655c12b9a766701f5da4b3bb35da65ed6a136fe7f384fa3170f047179b",
+      "tested_working_copy_sha256": "8621ea655c12b9a766701f5da4b3bb35da65ed6a136fe7f384fa3170f047179b"
+    },
+    {
+      "path": "core/application/progress_clock.gd",
+      "sha256": "959b78d380b92950368e09d5736ffbeb76bc006f2dc84fab569973d098074361",
+      "tested_working_copy_sha256": "959b78d380b92950368e09d5736ffbeb76bc006f2dc84fab569973d098074361"
+    },
+    {
+      "path": "core/application/progress_clock.gd.uid",
+      "sha256": "5fd1081244e1cb6296f9de18a5e5087d2f40d54400ab2d4967fd37430ef3a685",
+      "tested_working_copy_sha256": "5fd1081244e1cb6296f9de18a5e5087d2f40d54400ab2d4967fd37430ef3a685"
+    },
+    {
+      "path": "core/economy/player_inventory.gd",
+      "sha256": "f83a6ae1b23ec49586bd8d090a2c5154b220c8322980d134ba4e485540778ff1",
+      "tested_working_copy_sha256": "f83a6ae1b23ec49586bd8d090a2c5154b220c8322980d134ba4e485540778ff1"
+    },
+    {
+      "path": "core/economy/player_inventory.gd.uid",
+      "sha256": "ec853a9ffac531cf399908625b9dcadd6e59dfdb98b3a4d71c3a09fd41ac31e1",
+      "tested_working_copy_sha256": "ec853a9ffac531cf399908625b9dcadd6e59dfdb98b3a4d71c3a09fd41ac31e1"
+    },
+    {
+      "path": "core/economy/speedup_definition.gd",
+      "sha256": "9c10d3449e1f987cff25e3dcff543dbc953cdbaad89397efc575c2f33ee5bae1",
+      "tested_working_copy_sha256": "9c10d3449e1f987cff25e3dcff543dbc953cdbaad89397efc575c2f33ee5bae1"
+    },
+    {
+      "path": "core/economy/speedup_definition.gd.uid",
+      "sha256": "4ae9051c6d68fad6cc1567644ec9dbad536aa68471567ecf5ddb29146bdb2b16",
+      "tested_working_copy_sha256": "4ae9051c6d68fad6cc1567644ec9dbad536aa68471567ecf5ddb29146bdb2b16"
+    },
+    {
+      "path": "core/economy/speedup_rules.gd",
+      "sha256": "5000eccd3129786b55d5e1450acf909f3ada75570992841852a4300d425ec56a",
+      "tested_working_copy_sha256": "5000eccd3129786b55d5e1450acf909f3ada75570992841852a4300d425ec56a"
+    },
+    {
+      "path": "core/economy/speedup_rules.gd.uid",
+      "sha256": "c102bd903dfdf22e121aa87a96366ab1b1e3f191b089086cb7c8a027a4c03e5e",
+      "tested_working_copy_sha256": "c102bd903dfdf22e121aa87a96366ab1b1e3f191b089086cb7c8a027a4c03e5e"
+    },
+    {
+      "path": "core/game/hotel_session.gd",
+      "sha256": "6a14b412418c4ef0bad07f8fdd50a1093c56eaaef074a2688ae8654fa1edd390",
+      "tested_working_copy_sha256": "ff52a51e37c94179bb97b60dc0081a75d0868c2e67fc94cd67a16d372f313135"
+    },
+    {
+      "path": "core/game/hotel_session.gd.uid",
+      "sha256": "5d54f1988befe64b8ad455d7d9d1ac36aacdb315694d4d46cfba3a7048e7e9c4",
+      "tested_working_copy_sha256": "5d54f1988befe64b8ad455d7d9d1ac36aacdb315694d4d46cfba3a7048e7e9c4"
+    },
+    {
+      "path": "core/save/save_service.gd",
+      "sha256": "f4abbc68109f17f111464590decbfebae2d4721f8e4597a86f96ca03a8ab12f2",
+      "tested_working_copy_sha256": "f4abbc68109f17f111464590decbfebae2d4721f8e4597a86f96ca03a8ab12f2"
+    },
+    {
+      "path": "core/save/save_service.gd.uid",
+      "sha256": "f42bcf9736d3b337364702702286de5968cd203c40c223a474af33767b92e465",
+      "tested_working_copy_sha256": "f42bcf9736d3b337364702702286de5968cd203c40c223a474af33767b92e465"
+    },
+    {
+      "path": "core/save/session_snapshot.gd",
+      "sha256": "8c4b6a285170fa3c648eecfe2a78433deca261ff88b855c03dbcda3a9b725826",
+      "tested_working_copy_sha256": "1440f76798261a00a80570a0627f50617193695b71d87ae070648e46d6ead6f1"
+    },
+    {
+      "path": "core/save/session_snapshot.gd.uid",
+      "sha256": "f3e38eb43a914c7f8dd9ba565e6a2b43695383306529233261e342cd8cd2d59b",
+      "tested_working_copy_sha256": "f3e38eb43a914c7f8dd9ba565e6a2b43695383306529233261e342cd8cd2d59b"
+    },
+    {
+      "path": "data/construction_rules.tres",
+      "sha256": "73e0971011a54837929edbe6aae92486e810d9febb8fcce3182e5c287c307b59",
+      "tested_working_copy_sha256": "73e0971011a54837929edbe6aae92486e810d9febb8fcce3182e5c287c307b59"
+    },
+    {
+      "path": "data/localization/mobile.json",
+      "sha256": "54fd4dd2dded0af3ac76ddc8ebc305117681516330242759bcf72b0c49a9a23a",
+      "tested_working_copy_sha256": "c129dbe425d46a68977d2c7fac13205ede1a879b65e65162efa92dc205773fe0"
+    },
+    {
+      "path": "data/speedup_rules.tres",
+      "sha256": "9667e0a44b110172799ae9e7760324cb4818e4e06926e9cdda60bad67c5384e0",
+      "tested_working_copy_sha256": "9667e0a44b110172799ae9e7760324cb4818e4e06926e9cdda60bad67c5384e0"
+    },
+    {
+      "path": "data/speedups/15m.tres",
+      "sha256": "e74caef57d77e182658252de325f9fdba3e3d8acc3bda178b8ab869a59d414c7",
+      "tested_working_copy_sha256": "e74caef57d77e182658252de325f9fdba3e3d8acc3bda178b8ab869a59d414c7"
+    },
+    {
+      "path": "data/speedups/1h.tres",
+      "sha256": "e8672f9cde1fcfc7ddd1bf67819ec40ef8af5d187412ddb6df0e5bd74e88c7a4",
+      "tested_working_copy_sha256": "e8672f9cde1fcfc7ddd1bf67819ec40ef8af5d187412ddb6df0e5bd74e88c7a4"
+    },
+    {
+      "path": "data/speedups/5m.tres",
+      "sha256": "fc1184ecfc3e0ae8dff82a06af0a0844364f07bf9dfce7ce0c89129eb5209ffb",
+      "tested_working_copy_sha256": "fc1184ecfc3e0ae8dff82a06af0a0844364f07bf9dfce7ce0c89129eb5209ffb"
+    },
+    {
+      "path": "hotel/hotel/hotel_model.gd",
+      "sha256": "d4581fa3efeaa1d451ce238ff76d657b7664e8e25123592572cd920d2b6517a8",
+      "tested_working_copy_sha256": "d4581fa3efeaa1d451ce238ff76d657b7664e8e25123592572cd920d2b6517a8"
+    },
+    {
+      "path": "hotel/hotel/hotel_model.gd.uid",
+      "sha256": "f98c1315d143f1bb3b23fa7a6dc20482de21cd1abfa2e10f963e8e56cdfe18f9",
+      "tested_working_copy_sha256": "f98c1315d143f1bb3b23fa7a6dc20482de21cd1abfa2e10f963e8e56cdfe18f9"
+    },
+    {
+      "path": "project.godot",
+      "sha256": "68c08c444896b3e18125a2587686027e1aaeb10bc4508f99ad7428498d806a6a",
+      "tested_working_copy_sha256": "68c08c444896b3e18125a2587686027e1aaeb10bc4508f99ad7428498d806a6a"
+    },
+    {
+      "path": "tests/mobile/onboarding_test.gd",
+      "sha256": "6de889495243042faaf9bfc788a919c6502aa6647f13e4a2803b58289e393827",
+      "tested_working_copy_sha256": "6de889495243042faaf9bfc788a919c6502aa6647f13e4a2803b58289e393827"
+    },
+    {
+      "path": "tests/mobile/onboarding_test.gd.uid",
+      "sha256": "f6847193f158b556e78ea7fc26d85aba20a59c83a4ad9991e86bc47e43634ee8",
+      "tested_working_copy_sha256": "f6847193f158b556e78ea7fc26d85aba20a59c83a4ad9991e86bc47e43634ee8"
+    },
+    {
+      "path": "tests/mobile/onboarding_touch_test.gd",
+      "sha256": "cf1dad946441fd53798d9e5fc0633ab8546c4166e93e262e1365a482beac389c",
+      "tested_working_copy_sha256": "cf1dad946441fd53798d9e5fc0633ab8546c4166e93e262e1365a482beac389c"
+    },
+    {
+      "path": "tests/mobile/onboarding_touch_test.gd.uid",
+      "sha256": "451b1b7b799fdeba0b5cfb3a2d0fb4db1ddff70029473392c0d1de36fe77f914",
+      "tested_working_copy_sha256": "451b1b7b799fdeba0b5cfb3a2d0fb4db1ddff70029473392c0d1de36fe77f914"
+    },
+    {
+      "path": "tests/mobile/platform_adapters_test.gd",
+      "sha256": "fea2101a8207f19ec8f5065b30e090e4dd9431bfb0f4421b62db59ae38443a3f",
+      "tested_working_copy_sha256": "fea2101a8207f19ec8f5065b30e090e4dd9431bfb0f4421b62db59ae38443a3f"
+    },
+    {
+      "path": "tests/mobile/platform_adapters_test.gd.uid",
+      "sha256": "e6a26319f7d031ae9dda988b623d9417003c2f8a0d63a5999645a3ab0dd068b4",
+      "tested_working_copy_sha256": "e6a26319f7d031ae9dda988b623d9417003c2f8a0d63a5999645a3ab0dd068b4"
+    },
+    {
+      "path": "tests/mobile/player_work_test.gd",
+      "sha256": "a11ae51a31a75b82c5c266fc543e15063e60bdcb2933cd0ca5b9b6ccac838ba7",
+      "tested_working_copy_sha256": "de165962c0b55a3ad0e9914f6e62c8c8a3e0d6f9aaad116d788415169c9fb618"
+    },
+    {
+      "path": "tests/mobile/player_work_test.gd.uid",
+      "sha256": "5eb3247be7bef742f76da33465ac5eac8653f5c038556b9d9e6004046a89f44c",
+      "tested_working_copy_sha256": "5eb3247be7bef742f76da33465ac5eac8653f5c038556b9d9e6004046a89f44c"
+    },
+    {
+      "path": "tests/mobile/render_harness.gd",
+      "sha256": "e81ac4bae00e02c705a1e319a234f99107ab87fb97685cd08c9fddb56f693f35",
+      "tested_working_copy_sha256": "e81ac4bae00e02c705a1e319a234f99107ab87fb97685cd08c9fddb56f693f35"
+    },
+    {
+      "path": "tests/mobile/render_harness.gd.uid",
+      "sha256": "cf6ddd018e8b951e05c144776e967ed6628d0b7d358e31c51bcff80a5b8a3abe",
+      "tested_working_copy_sha256": "cf6ddd018e8b951e05c144776e967ed6628d0b7d358e31c51bcff80a5b8a3abe"
+    },
+    {
+      "path": "tests/mobile/speedup_cases.gd",
+      "sha256": "4e0243320f4b25b1d42577d2d2d67822a5852ad91bf3de183c7fc2150a90e996",
+      "tested_working_copy_sha256": "4e0243320f4b25b1d42577d2d2d67822a5852ad91bf3de183c7fc2150a90e996"
+    },
+    {
+      "path": "tests/mobile/speedup_cases.gd.uid",
+      "sha256": "6050a061d4d38a1436fc78054706d43056a8582f2f7fc5731169667886a74983",
+      "tested_working_copy_sha256": "6050a061d4d38a1436fc78054706d43056a8582f2f7fc5731169667886a74983"
+    },
+    {
+      "path": "tests/mobile/speedup_fault_writer.gd",
+      "sha256": "23a138f3d54b304ae089804435c1b85dff107de1f8994ff02cf76001e3a984ca",
+      "tested_working_copy_sha256": "23a138f3d54b304ae089804435c1b85dff107de1f8994ff02cf76001e3a984ca"
+    },
+    {
+      "path": "tests/mobile/speedup_fault_writer.gd.uid",
+      "sha256": "bfd66ca2ac34fc248a37cd255558c7d14b1efcd37f724849683d9d6ed1a835c6",
+      "tested_working_copy_sha256": "bfd66ca2ac34fc248a37cd255558c7d14b1efcd37f724849683d9d6ed1a835c6"
+    },
+    {
+      "path": "tests/mobile/speedup_test.gd",
+      "sha256": "fe3c3a82cf84b01f654daebdfee41442cb6f674eb22371cbb231ef0ee7093f18",
+      "tested_working_copy_sha256": "fe3c3a82cf84b01f654daebdfee41442cb6f674eb22371cbb231ef0ee7093f18"
+    },
+    {
+      "path": "tests/mobile/speedup_test.gd.uid",
+      "sha256": "554f40c454ee7c17d2f0db7eefd72b535226b7e96f7b10c04cfc2b29c0268cab",
+      "tested_working_copy_sha256": "554f40c454ee7c17d2f0db7eefd72b535226b7e96f7b10c04cfc2b29c0268cab"
+    },
+    {
+      "path": "tests/mobile/speedup_touch_test.gd",
+      "sha256": "952d4724dd7f7789482282f7c0e67296463f560b7872da084e984fc8b6ccd2cb",
+      "tested_working_copy_sha256": "952d4724dd7f7789482282f7c0e67296463f560b7872da084e984fc8b6ccd2cb"
+    },
+    {
+      "path": "tests/mobile/speedup_touch_test.gd.uid",
+      "sha256": "5717aa579e8e8af1195521c20ea84eb7fd47bac29be9ad80250ec3c1b2897154",
+      "tested_working_copy_sha256": "5717aa579e8e8af1195521c20ea84eb7fd47bac29be9ad80250ec3c1b2897154"
+    },
+    {
+      "path": "ui/mobile/mobile_feedback.gd",
+      "sha256": "62d2b66cf3b5e36a5105b63f075a2fc4e8f7e660042aa2d0f213191182a2fed2",
+      "tested_working_copy_sha256": "62d2b66cf3b5e36a5105b63f075a2fc4e8f7e660042aa2d0f213191182a2fed2"
+    },
+    {
+      "path": "ui/mobile/mobile_feedback.gd.uid",
+      "sha256": "a8aa940c4d0f93fb818b51c5e1fdc0c6b557cf8b5cdcba07e342ecba151f4ffc",
+      "tested_working_copy_sha256": "a8aa940c4d0f93fb818b51c5e1fdc0c6b557cf8b5cdcba07e342ecba151f4ffc"
+    },
+    {
+      "path": "ui/mobile/mobile_hotel_panels.gd",
+      "sha256": "3e3a77f46063d0ee8c7d679961fd83817204ce4f3cb42815b4ea0d12c55a2ee9",
+      "tested_working_copy_sha256": "ae66989567d2bbe79c61953657a4825d5ae853f7234d569f0c5567f3c85f3f1b"
+    },
+    {
+      "path": "ui/mobile/mobile_hotel_panels.gd.uid",
+      "sha256": "b1f6254c7654ea94c6f09b86340cd90bcaa76e50570ff2b8d2010188fdf06916",
+      "tested_working_copy_sha256": "b1f6254c7654ea94c6f09b86340cd90bcaa76e50570ff2b8d2010188fdf06916"
+    }
+  ],
+  "headless_mobile": {
+    "suites": 19,
+    "report": ".runtime/sprint5-speedup-final-evidence/mobile/report.json",
+    "report_sha256": "98dfed5c8fd09ab8cf544bd24eca9b1122621b48d54fed4e6aba3931b93aa470",
+    "steps": [
+      {
+        "suite": "audio_lifecycle_test",
+        "passed": true,
+        "duration_seconds": 1.719,
+        "summaries": [
+          {
+            "checks": 12,
+            "failures": 0,
+            "suite": "mobile_audio_lifecycle"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\audio_lifecycle_test.json",
+        "sha256": "9486a20d5959821104efa7e4aab512b196702307bf6c7cc2c010e478a02cf12f",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/audio_lifecycle_test.json",
+        "archived_sha256": "9486a20d5959821104efa7e4aab512b196702307bf6c7cc2c010e478a02cf12f"
+      },
+      {
+        "suite": "construction_lifecycle_test",
+        "passed": true,
+        "duration_seconds": 1.89,
+        "summaries": [
+          {
+            "checks": 41,
+            "failures": 0,
+            "suite": "construction_lifecycle"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\construction_lifecycle_test.json",
+        "sha256": "15a704efa5d801cac2e31831bb38f311f7041bb54d258ce2a555e4fd3adaa9d4",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/construction_lifecycle_test.json",
+        "archived_sha256": "15a704efa5d801cac2e31831bb38f311f7041bb54d258ce2a555e4fd3adaa9d4"
+      },
+      {
+        "suite": "construction_timer_test",
+        "passed": true,
+        "duration_seconds": 1.578,
+        "summaries": [
+          {
+            "checks": 162,
+            "failures": 0,
+            "suite": "construction_timer"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\construction_timer_test.json",
+        "sha256": "2fad7ccf3b26ce7ae3ff7b6bd7f0022968d5f863f6292164d1eb3fec1b92cae7",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/construction_timer_test.json",
+        "archived_sha256": "2fad7ccf3b26ce7ae3ff7b6bd7f0022968d5f863f6292164d1eb3fec1b92cae7"
+      },
+      {
+        "suite": "construction_touch_test",
+        "passed": true,
+        "duration_seconds": 12.734,
+        "summaries": [
+          {
+            "checks": 258,
+            "dimensions": 3,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag through viewport",
+            "rendered": false,
+            "screenshots": [],
+            "suite": "construction_touch"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\construction_touch_test.json",
+        "sha256": "7263edc4c7b8dfaa75bcaab272e6180a59064b238279b78042ddc83c1a5441c5",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/construction_touch_test.json",
+        "archived_sha256": "7263edc4c7b8dfaa75bcaab272e6180a59064b238279b78042ddc83c1a5441c5"
+      },
+      {
+        "suite": "display_scale_test",
+        "passed": true,
+        "duration_seconds": 4.688,
+        "summaries": [
+          {
+            "cases": 5,
+            "checks": 78,
+            "densities": [
+              1,
+              2,
+              3
+            ],
+            "failures": 0,
+            "rendered": false,
+            "screenshots": [],
+            "suite": "mobile_display_scale"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\display_scale_test.json",
+        "sha256": "84abdd965109fd5c87010c0470ba8c3d91b9994fa41df1e56920f0a9743e67c7",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/display_scale_test.json",
+        "archived_sha256": "84abdd965109fd5c87010c0470ba8c3d91b9994fa41df1e56920f0a9743e67c7"
+      },
+      {
+        "suite": "input_navigation_test",
+        "passed": true,
+        "duration_seconds": 1.328,
+        "summaries": [
+          {
+            "checks": 19,
+            "failures": 0,
+            "suite": "mobile_input_navigation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\input_navigation_test.json",
+        "sha256": "13071b889ac9d6e8bdfab339d887b9537c45cb20b11d5fd75a80f0dcb48f15ec",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/input_navigation_test.json",
+        "archived_sha256": "13071b889ac9d6e8bdfab339d887b9537c45cb20b11d5fd75a80f0dcb48f15ec"
+      },
+      {
+        "suite": "onboarding_test",
+        "passed": true,
+        "duration_seconds": 1.828,
+        "summaries": [
+          {
+            "cash": 95,
+            "checks": 40,
+            "failures": 0,
+            "finished_at": 115.3,
+            "initial_stages": [
+              1,
+              2,
+              3
+            ],
+            "suite": "onboarding"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\onboarding_test.json",
+        "sha256": "c5454fc3eb12bfbe0bc61793ea4f4d2c3309c3533436465dc45d77884d38f134",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/onboarding_test.json",
+        "archived_sha256": "c5454fc3eb12bfbe0bc61793ea4f4d2c3309c3533436465dc45d77884d38f134"
+      },
+      {
+        "suite": "onboarding_touch_test",
+        "passed": true,
+        "duration_seconds": 13.984,
+        "summaries": [
+          {
+            "checks": 321,
+            "dimensions": 3,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag through viewport",
+            "rendered": false,
+            "screenshots": [],
+            "starting_cash": 2400,
+            "suite": "onboarding_touch"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\onboarding_touch_test.json",
+        "sha256": "3a5fda43e18189c322b2b84743bc870e38961a8b1eda663613cb6fd5862aaac9",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/onboarding_touch_test.json",
+        "archived_sha256": "3a5fda43e18189c322b2b84743bc870e38961a8b1eda663613cb6fd5862aaac9"
+      },
+      {
+        "suite": "platform_adapters_test",
+        "passed": true,
+        "duration_seconds": 1.203,
+        "summaries": [
+          {
+            "checks": 19,
+            "failures": 0,
+            "suite": "mobile_platform_adapters"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\platform_adapters_test.json",
+        "sha256": "09eb1723da8c9ceae5f59d82d7eed39e07cca93098843ee2049520bc8d5917b4",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/platform_adapters_test.json",
+        "archived_sha256": "09eb1723da8c9ceae5f59d82d7eed39e07cca93098843ee2049520bc8d5917b4"
+      },
+      {
+        "suite": "player_work_test",
+        "passed": true,
+        "duration_seconds": 4.547,
+        "summaries": [
+          {
+            "checks": 2862,
+            "failures": 0,
+            "phases": [
+              "checkin:travel",
+              "checkin:action",
+              "cleaning:travel",
+              "cleaning:action",
+              "repair:action",
+              "room_service:travel_source",
+              "room_service:prepare",
+              "room_service:travel_delivery",
+              "room_service:deliver",
+              "room_service:source_queue",
+              "repair:travel"
+            ],
+            "suite": "player_work"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\player_work_test.json",
+        "sha256": "77f2e96ebe71a240805a2ca0a60df1cbd10f17f0b857f70ca7c3abf96cf5f316",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/player_work_test.json",
+        "archived_sha256": "77f2e96ebe71a240805a2ca0a60df1cbd10f17f0b857f70ca7c3abf96cf5f316"
+      },
+      {
+        "suite": "presentation_test",
+        "passed": true,
+        "duration_seconds": 1.422,
+        "summaries": [
+          {
+            "checks": 1079,
+            "failures": 0,
+            "suite": "mobile_presentation",
+            "translation_keys": 351
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\presentation_test.json",
+        "sha256": "cd0a5c29075321aa52eaa8b5948908582e8984456a3c7eb84670ad96d2822038",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/presentation_test.json",
+        "archived_sha256": "cd0a5c29075321aa52eaa8b5948908582e8984456a3c7eb84670ad96d2822038"
+      },
+      {
+        "suite": "progress_clock_test",
+        "passed": true,
+        "duration_seconds": 1.125,
+        "summaries": [
+          {
+            "checks": 35,
+            "failures": 0,
+            "suite": "progress_clock"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\progress_clock_test.json",
+        "sha256": "607073129ae8334d53ad269945ef3e2fa0b91f5e5ee2ca8c3d0aec2fb5df975a",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/progress_clock_test.json",
+        "archived_sha256": "607073129ae8334d53ad269945ef3e2fa0b91f5e5ee2ca8c3d0aec2fb5df975a"
+      },
+      {
+        "suite": "save_lifecycle_test",
+        "passed": true,
+        "duration_seconds": 1.687,
+        "summaries": [
+          {
+            "checks": 33,
+            "failures": 0,
+            "suite": "mobile_save_lifecycle"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\save_lifecycle_test.json",
+        "sha256": "fd2c1a915fe5cd637f5411db67af89ed2825837e056a5a045e8d3dfece1569b0",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/save_lifecycle_test.json",
+        "archived_sha256": "fd2c1a915fe5cd637f5411db67af89ed2825837e056a5a045e8d3dfece1569b0"
+      },
+      {
+        "suite": "shell_layout_test",
+        "passed": true,
+        "duration_seconds": 5.297,
+        "summaries": [
+          {
+            "checks": 366,
+            "failures": 0,
+            "rendered": false,
+            "screenshots": [],
+            "suite": "mobile_shell_layout"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\shell_layout_test.json",
+        "sha256": "731d646d3f423d464b45a43dc66a69cbc8f76a96d9074c16d2a7544424379daf",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/shell_layout_test.json",
+        "archived_sha256": "731d646d3f423d464b45a43dc66a69cbc8f76a96d9074c16d2a7544424379daf"
+      },
+      {
+        "suite": "speedup_test",
+        "passed": true,
+        "duration_seconds": 1.656,
+        "summaries": [
+          {
+            "checks": 97,
+            "failures": 0,
+            "suite": "speedup"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\speedup_test.json",
+        "sha256": "2e1a6098df0b2065d17f092f0a4cca977ae6c1b14e478120527549100e7a0d93",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/speedup_test.json",
+        "archived_sha256": "2e1a6098df0b2065d17f092f0a4cca977ae6c1b14e478120527549100e7a0d93"
+      },
+      {
+        "suite": "speedup_touch_test",
+        "passed": true,
+        "duration_seconds": 14.797,
+        "summaries": [
+          {
+            "checks": 547,
+            "dimensions": 3,
+            "failures": 0,
+            "input": "InputEventScreenTouch through viewport",
+            "profiles": 6,
+            "rendered": false,
+            "screenshots": [],
+            "suite": "speedup_touch"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\speedup_touch_test.json",
+        "sha256": "c60de8ca32aa637e378697d0ba6f7dcaef213ecea09f0adc9b37aab0235a514b",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/speedup_touch_test.json",
+        "archived_sha256": "c60de8ca32aa637e378697d0ba6f7dcaef213ecea09f0adc9b37aab0235a514b"
+      },
+      {
+        "suite": "staff_automation_test",
+        "passed": true,
+        "duration_seconds": 15.719,
+        "summaries": [
+          {
+            "checks": 483,
+            "failures": 0,
+            "policies": [
+              {
+                "scenarios": [
+                  {
+                    "bookings": 21,
+                    "cash": 3504,
+                    "cleaned": 20,
+                    "delegated": false,
+                    "manual": 46,
+                    "manual_after_600": 24,
+                    "min_cash": 0,
+                    "reputation": 38.6398204869982
+                  },
+                  {
+                    "bookings": 21,
+                    "cash": 2456,
+                    "cleaned": 20,
+                    "delegated": true,
+                    "manual": 6,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 38.8325666058811
+                  }
+                ],
+                "seed": 1
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 23,
+                    "cash": 3560,
+                    "cleaned": 22,
+                    "delegated": false,
+                    "manual": 47,
+                    "manual_after_600": 26,
+                    "min_cash": 0,
+                    "reputation": 40.4978840833274
+                  },
+                  {
+                    "bookings": 21,
+                    "cash": 2370,
+                    "cleaned": 20,
+                    "delegated": true,
+                    "manual": 5,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 38.5661399091216
+                  }
+                ],
+                "seed": 17
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 22,
+                    "cash": 3504,
+                    "cleaned": 21,
+                    "delegated": false,
+                    "manual": 50,
+                    "manual_after_600": 25,
+                    "min_cash": 0,
+                    "reputation": 38.6643205214917
+                  },
+                  {
+                    "bookings": 20,
+                    "cash": 2373,
+                    "cleaned": 19,
+                    "delegated": true,
+                    "manual": 6,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 38.6059344218755
+                  }
+                ],
+                "seed": 123
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 22,
+                    "cash": 3532,
+                    "cleaned": 21,
+                    "delegated": false,
+                    "manual": 49,
+                    "manual_after_600": 24,
+                    "min_cash": 0,
+                    "reputation": 38.9425542431755
+                  },
+                  {
+                    "bookings": 21,
+                    "cash": 2456,
+                    "cleaned": 20,
+                    "delegated": true,
+                    "manual": 5,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 39.2918570456578
+                  }
+                ],
+                "seed": 9001
+              },
+              {
+                "scenarios": [
+                  {
+                    "bookings": 21,
+                    "cash": 3420,
+                    "cleaned": 20,
+                    "delegated": false,
+                    "manual": 50,
+                    "manual_after_600": 27,
+                    "min_cash": 0,
+                    "reputation": 41.0542292508527
+                  },
+                  {
+                    "bookings": 20,
+                    "cash": 2317,
+                    "cleaned": 19,
+                    "delegated": true,
+                    "manual": 7,
+                    "manual_after_600": 0,
+                    "min_cash": 0,
+                    "reputation": 37.3632464252929
+                  }
+                ],
+                "seed": 54321
+              }
+            ],
+            "suite": "staff_automation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\staff_automation_test.json",
+        "sha256": "5c5a2ee61a5083a9447a0888aba8d154d9756322b5bf06429920902353f56840",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/staff_automation_test.json",
+        "archived_sha256": "5c5a2ee61a5083a9447a0888aba8d154d9756322b5bf06429920902353f56840"
+      },
+      {
+        "suite": "staff_touch_test",
+        "passed": true,
+        "duration_seconds": 11.406,
+        "summaries": [
+          {
+            "checks": 249,
+            "dimensions": 3,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag via viewport",
+            "rendered": false,
+            "screenshots": [],
+            "suite": "staff_touch"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\staff_touch_test.json",
+        "sha256": "1755854e49260d908fc49c6e9cbee3b6f429217120555d5f521d6e8f6234dd63",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/staff_touch_test.json",
+        "archived_sha256": "1755854e49260d908fc49c6e9cbee3b6f429217120555d5f521d6e8f6234dd63"
+      },
+      {
+        "suite": "touch_management_test",
+        "passed": true,
+        "duration_seconds": 42.937,
+        "summaries": [
+          {
+            "checks": 1058,
+            "dimensions": 5,
+            "failures": 0,
+            "input": "InputEventScreenTouch/ScreenDrag via Input.parse_input_event",
+            "rendered": false,
+            "screenshots": [],
+            "suite": "mobile_touch_management"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135639Z-sprint5-speedup-verified\\touch_management_test.json",
+        "sha256": "195bfb746b0208a19883eef8528fcbcb13da2a2353ef1debcc08537778f71858",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/mobile/touch_management_test.json",
+        "archived_sha256": "195bfb746b0208a19883eef8528fcbcb13da2a2353ef1debcc08537778f71858"
+      }
+    ],
+    "effective_checks": 7771,
+    "final_ui_recheck": {
+      "suites": 2,
+      "report": ".runtime/sprint5-speedup-final-evidence/final-ui-recheck/report.json",
+      "report_sha256": "42633fc04bab31f57f3f2ede8a5394074f680bc4b85b03c9d870b27e0ebed622",
+      "steps": [
+        {
+          "suite": "speedup_touch_test",
+          "passed": true,
+          "duration_seconds": 15.157,
+          "summaries": [
+            {
+              "checks": 559,
+              "dimensions": 3,
+              "failures": 0,
+              "input": "InputEventScreenTouch through viewport",
+              "profiles": 6,
+              "rendered": false,
+              "screenshots": [],
+              "suite": "speedup_touch"
+            }
+          ],
+          "evidence": ".runtime\\tests\\20261001T140539Z-sprint5-speedup-confirm-label-verified\\speedup_touch_test.json",
+          "sha256": "4be261e5b04635c18f762263ade090b743aaa61467013e4d72d5be54d1769e27",
+          "archived_evidence": ".runtime/sprint5-speedup-final-evidence/final-ui-recheck/speedup_touch_test.json",
+          "archived_sha256": "4be261e5b04635c18f762263ade090b743aaa61467013e4d72d5be54d1769e27"
+        },
+        {
+          "suite": "presentation_test",
+          "passed": true,
+          "duration_seconds": 1.438,
+          "summaries": [
+            {
+              "checks": 1079,
+              "failures": 0,
+              "suite": "mobile_presentation",
+              "translation_keys": 351
+            }
+          ],
+          "evidence": ".runtime\\tests\\20261001T140539Z-sprint5-speedup-confirm-label-verified\\presentation_test.json",
+          "sha256": "c7d3f6fad3600709c52ec0b6712c4b8cb76ca52cfcbd7314e88216a7f9694d33",
+          "archived_evidence": ".runtime/sprint5-speedup-final-evidence/final-ui-recheck/presentation_test.json",
+          "archived_sha256": "c7d3f6fad3600709c52ec0b6712c4b8cb76ca52cfcbd7314e88216a7f9694d33"
+        }
+      ]
+    },
+    "recheck_scope": "Final UX changes only the speedup confirmation action label; speedup_touch and presentation rerun after the full 19-suite gate. Counts replace those two base summaries, rather than double-counting."
+  },
+  "preserved_domain": {
+    "suites": 11,
+    "report": ".runtime/sprint5-speedup-final-evidence/domain/report.json",
+    "report_sha256": "1b4f51956cee3614259c0ee8fb2cff3a9ab7ed6c9837d8c9af63e3b733abaf7a",
+    "steps": [
+      {
+        "suite": "foundation_test",
+        "passed": true,
+        "duration_seconds": 1.563,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "foundation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\foundation_test.json",
+        "sha256": "3438b35d1e9f7639d0bc085ec648ca9bacd112f5520ded00eea4e3a4d639e663",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/foundation_test.json",
+        "archived_sha256": "3438b35d1e9f7639d0bc085ec648ca9bacd112f5520ded00eea4e3a4d639e663"
+      },
+      {
+        "suite": "construction_test",
+        "passed": true,
+        "duration_seconds": 1.39,
+        "summaries": [
+          {
+            "checks": 16,
+            "failures": 0,
+            "suite": "construction"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\construction_test.json",
+        "sha256": "94502b3d1a398f787c9923cdd151ef06fabc2abacbce7603b2de8c54c9fcee9b",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/construction_test.json",
+        "archived_sha256": "94502b3d1a398f787c9923cdd151ef06fabc2abacbce7603b2de8c54c9fcee9b"
+      },
+      {
+        "suite": "simulation_test",
+        "passed": true,
+        "duration_seconds": 1.735,
+        "summaries": [
+          {
+            "cleaned": 1,
+            "failures": 0,
+            "lift_delivered": 5,
+            "meals": 2,
+            "revenue": 196,
+            "suite": "simulation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\simulation_test.json",
+        "sha256": "a1c6528272c1d9bf6b431b7b3ae70801fcc7c39f6ce92bc21da4350c4cc636e0",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/simulation_test.json",
+        "archived_sha256": "a1c6528272c1d9bf6b431b7b3ae70801fcc7c39f6ce92bc21da4350c4cc636e0"
+      },
+      {
+        "suite": "save_test",
+        "passed": true,
+        "duration_seconds": 2.328,
+        "summaries": [
+          {
+            "completed": 24,
+            "failures": 0,
+            "suite": "save"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\save_test.json",
+        "sha256": "155727eeab00bef3605bc03639bbb7db8b08fb3a1430d52e7b5463fc5f9646e2",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/save_test.json",
+        "archived_sha256": "155727eeab00bef3605bc03639bbb7db8b08fb3a1430d52e7b5463fc5f9646e2"
+      },
+      {
+        "suite": "management_test",
+        "passed": true,
+        "duration_seconds": 2.157,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "management",
+            "transport_base_ticks": 279,
+            "transport_upgraded_ticks": 125
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\management_test.json",
+        "sha256": "d7f579efd7ffac002d1baa799f914e660a98fa3a19a40acaf85ddd824efd462c",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/management_test.json",
+        "archived_sha256": "d7f579efd7ffac002d1baa799f914e660a98fa3a19a40acaf85ddd824efd462c"
+      },
+      {
+        "suite": "lodging_value_test",
+        "passed": true,
+        "duration_seconds": 1.719,
+        "summaries": [
+          {
+            "cases": 11,
+            "failures": 0,
+            "suite": "lodging_value"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\lodging_value_test.json",
+        "sha256": "7472834d8dac4a9eec1e999ced95b9b6bbd37a49a7d85aede1162d319a925ae1",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/lodging_value_test.json",
+        "archived_sha256": "7472834d8dac4a9eec1e999ced95b9b6bbd37a49a7d85aede1162d319a925ae1"
+      },
+      {
+        "suite": "reviews_test",
+        "passed": true,
+        "duration_seconds": 1.484,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "reviews"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\reviews_test.json",
+        "sha256": "214fdf5535f4074c21ef45401784fd8cc7ebaec4d61f81ce7b0d4f41f2813aca",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/reviews_test.json",
+        "archived_sha256": "214fdf5535f4074c21ef45401784fd8cc7ebaec4d61f81ce7b0d4f41f2813aca"
+      },
+      {
+        "suite": "progression_test",
+        "passed": true,
+        "duration_seconds": 3.125,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "progression"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\progression_test.json",
+        "sha256": "81dd3f49186e35e7a2f380dbde9d68b713c3ae26a65fb276029682b4b1f6bb75",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/progression_test.json",
+        "archived_sha256": "81dd3f49186e35e7a2f380dbde9d68b713c3ae26a65fb276029682b4b1f6bb75"
+      },
+      {
+        "suite": "content_test",
+        "passed": true,
+        "duration_seconds": 6.391,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "content"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\content_test.json",
+        "sha256": "1b9e96556b1ac899b0cc73b7fb015e256c3440cfa40f69251dfc98e8e77a2063",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/content_test.json",
+        "archived_sha256": "1b9e96556b1ac899b0cc73b7fb015e256c3440cfa40f69251dfc98e8e77a2063"
+      },
+      {
+        "suite": "analytics_test",
+        "passed": true,
+        "duration_seconds": 1.453,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "analytics"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\analytics_test.json",
+        "sha256": "b9d8eaed760ec76e080e36fa17cc4c983179eb431ec34b152a0e5a4445cf320b",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/analytics_test.json",
+        "archived_sha256": "b9d8eaed760ec76e080e36fa17cc4c983179eb431ec34b152a0e5a4445cf320b"
+      },
+      {
+        "suite": "checkin_diagnostics_test",
+        "passed": true,
+        "duration_seconds": 1.515,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "checkin_diagnostics"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T135638Z-sprint5-speedup-domain-verified\\checkin_diagnostics_test.json",
+        "sha256": "1cb949520e161c78304126c84f735a568a5d35f4b13ce18261382ecaeba84a22",
+        "archived_evidence": ".runtime/sprint5-speedup-final-evidence/domain/checkin_diagnostics_test.json",
+        "archived_sha256": "1cb949520e161c78304126c84f735a568a5d35f4b13ce18261382ecaeba84a22"
+      }
+    ]
+  },
+  "static": {
+    "unique_scripts": 21,
+    "diagnostics": [],
+    "raw_reports": [
+      {
+        "path": ".runtime/sprint5-speedup-final-evidence/sprint5-speedup-static-verified.json",
+        "sha256": "fe4fd5ffaf30c30a40436254f06ee4d7ca0b778824e30e3df2d9bfb8811fa332",
+        "scripts": 21
+      },
+      {
+        "path": ".runtime/sprint5-speedup-final-evidence/sprint5-speedup-static-confirm-label.json",
+        "sha256": "14925e76755850705c997f696f8f02a346ebbb170dad827bf8fd895e66c71584",
+        "scripts": 2
+      }
+    ]
+  },
+  "native": {
+    "suites": 3,
+    "checks": 1189,
+    "capture_count": 51,
+    "runs": [
+      {
+        "suite": "speedup_touch",
+        "checks": 583,
+        "report": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/report.json",
+        "report_sha256": "a95763a63c0f03a943ea3b6f68045c0dd8c30bdc6f58a0d069ec11b3e82fd8ed",
+        "captures": [
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-queued-320x568.png",
+            "sha256": "3787633a640a71e041bb26a6038ae082ab1c26c08224763f57ea17e7e0497a60"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-confirm-320x568.png",
+            "sha256": "18c5d106c7bef6819b76a81e9f30809c39c0e2ce0ad2088bae2f150f189efd47"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-expired-320x568.png",
+            "sha256": "b2e0ddb5bbe83ed109b295bf3f83ee350e75e9754d99f5a40b85052a21584b27"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-save-error-320x568.png",
+            "sha256": "3276910ab646842769382dccf5617366eb7b84ed99c1448a3e1d70dee5fd041d"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-complete-320x568.png",
+            "sha256": "3c92d6731424a2281315c18412f0a34227d6f9cc4fc56aa2af4b6a973af786f2"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-partial-confirm-320x568.png",
+            "sha256": "4e855bf9f2543cdca29d370a8dbf5385f4e046725b166383dbaaa577a25abe52"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-partial-320x568.png",
+            "sha256": "5030b6084e395fabf9c15b27ead17984033136b6eeb6ad3bd8bfe15f603df4e4"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-restarted-320x568.png",
+            "sha256": "bce8436746146007e8b7aaaac074b56c9b93038e0a3966aa75d4c4b15d5ff87d"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-queued-568x320.png",
+            "sha256": "0ff989d8d1a129edb3694c5d3132a9e6c9192a09b449196f9ace1e604807d10d"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-confirm-568x320.png",
+            "sha256": "89ce7cf4ffb7ac1945124ab18b08dabb2a4b05344d1f736d13aa02f3db9abac8"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-expired-568x320.png",
+            "sha256": "dd303746f0db66f277d7a532f3f9ff0137d167021f412253a129ff72b764bf36"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-save-error-568x320.png",
+            "sha256": "21db479c3a2508f97afce445f8dc601f75c1c3b7ebd15a657e50e1a3081684d1"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-complete-568x320.png",
+            "sha256": "ca7c721eef2e9558b9ce3fbaf5d905ba46ae4f29ac00cec0bc15e09e1adbb59c"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-partial-confirm-568x320.png",
+            "sha256": "08b389d9177f5e631650b656e088be44d910087ae8ae6d8b86a206d84b087f87"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-partial-568x320.png",
+            "sha256": "56b5fe195ce1f125ab26c490b0be3e2fa77d47da213c3c3b1191a975ca85feda"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-restarted-568x320.png",
+            "sha256": "e208f104e1b4db84694373221ab6fb1d1dd7db9470d3955208ac179d7d018b4c"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-queued-1280x800.png",
+            "sha256": "ae534700c277ba1705a32b94810ab5839fa5e0c149623f9dc97ba3ab0010d3c8"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-confirm-1280x800.png",
+            "sha256": "44746c36a1b75385f3fb126bc8449e56f4ffa9883aa8b69763d0d3c137dce795"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-expired-1280x800.png",
+            "sha256": "87292d1a14d9e09b70ac0e10f3369d1ad4c8816bc4b476cf723ec708ab7e7917"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-save-error-1280x800.png",
+            "sha256": "4540bba51bd9ae457b5582f59eb344ef6946fcba594eb947050c5e0c2dc10560"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-complete-1280x800.png",
+            "sha256": "577e2a2b3c7f3915374f97bc14d2246ce541fd67b99c97a49f05dd0a435fba6e"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-partial-confirm-1280x800.png",
+            "sha256": "1502402c9be6f43210e851182193223a3f85c8fd65accf162757d02bd088f226"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-partial-1280x800.png",
+            "sha256": "b4e8cbe85ff67b0e3aad9d6561b8a0df2d6e7c4660c9c02daaa038bc15eff8b8"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/speedup_touch/mobile-speedup-restarted-1280x800.png",
+            "sha256": "46e8e9735d9e17359eb8787a84537d2ef1dbdac49b1fcc362d5832e092cd1d94"
+          }
+        ]
+      },
+      {
+        "suite": "onboarding_touch",
+        "checks": 336,
+        "report": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/report.json",
+        "report_sha256": "7901575285813f65e38bb0c9479a2d7da77e26ff7532232b25ce881bd5f29c5a",
+        "captures": [
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-start-320x568.png",
+            "sha256": "6a91ade35d532f3357959e82abcb7d09cb26ef6a804482ef2408b452c12061fe"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-checkin-320x568.png",
+            "sha256": "2c105cd95d6dbbeea7f7bcdee2084bf1d5480fe36d176e03ced97a70a4a14050"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-room-service-320x568.png",
+            "sha256": "828b6eb779b61866b81ac4ba812a68d0af22e4b94d8c9fa8c8f8c8eb8bc2af75"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-cleaning-320x568.png",
+            "sha256": "09aeef91b344326e282238f191dd257091219794b73bde01ea3a100ef220a3aa"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-done-320x568.png",
+            "sha256": "ffae035f4a43914b33ef4428054b2ba68f1176bb3a45e49ff96b38ad614328e3"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-start-568x320.png",
+            "sha256": "3475366d39e794b2e01a4408495209303e389f4741fb52be9ae336fcde12dd83"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-checkin-568x320.png",
+            "sha256": "8a47ac671c1b087d0dcbe291a6db424c1367ba8d01f78bf4cf7bf170dd23e214"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-room-service-568x320.png",
+            "sha256": "53b6f9fcff1310418e478c7a3b8aa4fb94afe01226c122c99b277574a8ecf7e2"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-cleaning-568x320.png",
+            "sha256": "477b08129b22b6af7ba89daacc14047655743ea1efe4cfb0e7a4929e0bb9e433"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-done-568x320.png",
+            "sha256": "993596ccd7b047d941508c16720009765198926b7b403754f4e4b10979ddab6b"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-start-1280x800.png",
+            "sha256": "1ec3ebf2be289dfd01592bb146db0e62f8967251e8c539c4e038918def246e3a"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-checkin-1280x800.png",
+            "sha256": "4eab10a569e1c274b26120ba785ba4c097ef20d56a5d042b06ffc1b8c7f3293e"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-room-service-1280x800.png",
+            "sha256": "acf9a5a6188c1303996039648aea5ec2f097f1b2b0a49a85e19ea1dfc6f2865c"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-cleaning-1280x800.png",
+            "sha256": "2b0edc113959bfceab0b9413e090f7686c270f54d9e677b36b8df148b778b716"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/onboarding_touch/mobile-intro-done-1280x800.png",
+            "sha256": "2191d5324f5e2df3c4939d675606b2ebfa92b652331a58f72d848a97425960f2"
+          }
+        ]
+      },
+      {
+        "suite": "construction_touch",
+        "checks": 270,
+        "report": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/report.json",
+        "report_sha256": "f9c3eece0d48d9b5839beafa209b05c56bbdc343af30a2cf1e2a79f697d8a44e",
+        "captures": [
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-queued-320x568.png",
+            "sha256": "1bf0ca5b5f57113dfb0e59e1990f8a98bcf5e2bfb30ddc08981ed6dcb81300b3"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-cancel-320x568.png",
+            "sha256": "e8ac96a3a75bb7f8caadd60d8f16324a6cd580b4f082e6dc80483cca2b6f1c28"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-active-320x568.png",
+            "sha256": "b90697676e851aa0a0711930491488021dd8dc11d707ee6d8ad0ab4dd87f4974"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-return-320x568.png",
+            "sha256": "aec21d99ae01415b97059b8e1dc1be6e89dbd497e8f8a1ce38b73a52d9c27beb"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-queued-568x320.png",
+            "sha256": "e5eadc4a880fb5a0476930d2e454a39971c2f4d38a50305f62e1d40fed3b3a2b"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-cancel-568x320.png",
+            "sha256": "6ff2674811011f0d34a4909c2fffb0701c94c9d4313728dfbef5254f3be29cf8"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-active-568x320.png",
+            "sha256": "adfd84d69659161e2dbccd0d1151bdd3694f4b98144de2f4454e79264a048d1e"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-return-568x320.png",
+            "sha256": "40ee48b82a0e45d9c8baa779035a56a5dc352f8124a3762564f596c957ac7e72"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-queued-1280x800.png",
+            "sha256": "fc33543d6d91bd1db0719fe79909683c5db92c4775629e881022ff4f0cfa3aa2"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-cancel-1280x800.png",
+            "sha256": "05300895e4c9e08de6fd05cc78698e042f73c6a586ad5da277a9672a99af8546"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-active-1280x800.png",
+            "sha256": "1636bfb6f1efb0a441154985d4fb5cccd9af692599c0380f950194da59bfa954"
+          },
+          {
+            "path": ".runtime/sprint5-speedup-final-evidence/native/construction_touch/mobile-construction-return-1280x800.png",
+            "sha256": "0c2a7e2afb41cffc0ef183fd7a9cabec869f5a338fcdf86710795c3d50007ee2"
+          }
+        ]
+      }
+    ]
+  },
+  "art": {
+    "metadata": "assets/art/sprint5-generation.json",
+    "tool": "image_gen.imagegen",
+    "mode": "text_to_image",
+    "source_sha256": "96fe4a479d6a67f1404acfc54b88e4ea2eea5599c411a6fd1fcad6e6e18d16dc",
+    "ui_units": 32,
+    "runtime_import_maximum": 256
+  },
+  "validation_history": [
+    "JSON counts initially preserved floats, causing exact stock snapshot mismatch. Restore now canonicalizes validated quantities to integers; all atomic malformed-state assertions remain.",
+    "The original analytics call used an event/properties outside the local schema. speedup_used now uses accepted kind/duration_seconds; real touch checks one event and privacy-field rejection remains.",
+    "Spanish stock wording exceeded the measured landscape/large-type button width. A shorter units label preserves explicit duration and quantity; no-ellipsis checks pass.",
+    "Headless onboarding finished all assertions but reported deferred WAV playback references at exit. The shared harness waits for original per-cue reference counts with a two-second bound and assertions; zero-leak strict gate remains.",
+    "The preserved 2862-case work suite showed an intermittent Windows engine shutdown access violation. Deferred quit releases the dynamic invocation frame before teardown; the complete suite and full mobile gate pass without dropping cases.",
+    "Native review added explicit item duration to the final confirmation button, so the selected consumable remains visible after scroll. Targeted touch/presentation/static/native rechecks pass after this final UX change."
+  ],
+  "limitations": [
+    "Native renderer evidence comes from Windows-host mobile viewports, not physical Android/iOS devices.",
+    "Only authored welcome/tutorial grants are delivered; no IAP or rewarded SDK delivery is claimed.",
+    "Local save invariants do not authenticate store receipts or trusted server time.",
+    "No new APK/export/full stress-and-soak sprint gate is claimed; last validated debug release remains 0.6.0.",
+    "Construction absence does not settle hotel operating revenue, salaries or maintenance."
+  ],
+  "remaining_sprint_scope": [
+    "Meaningful N4/N5 progression and initial room specializations",
+    "Aggregate hotel offline income/cost policy and return summary",
+    "Full sprint regression, export and release documentation"
+  ]
+}

@@ -48,6 +48,12 @@ Analytics observa o jogo; não controla o domínio.
 
 Campos devem usar reason/source bem definidos.
 
+Implementado no componente de speedups da Sprint 5: `speedup_used` é emitido após
+consumo durável, com `kind` (ID público) e `duration_seconds` (redução real).
+Back, erro de storage e callback duplicado não geram outro consumo/evento. O contrato
+local rejeita recibos e campos fora do schema e conserva a fila limitada quando
+provider está indisponível; envio a um SDK real permanece nos gates de integração.
+
 ### Ads
 
 - rewarded_offer_viewed;

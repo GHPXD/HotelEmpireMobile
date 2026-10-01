@@ -8,6 +8,14 @@ Contrato completo preservado em [MOBILE_MIGRATION_BRIEF](MOBILE_MIGRATION_BRIEF.
 Decisões: [MOBILE_DECISIONS](MOBILE_DECISIONS.md). Classificação dos testes:
 [TEST_MIGRATION_MATRIX](TEST_MIGRATION_MATRIX.md).
 
+Sprint 5 em andamento: timers/fila/save/toque já têm evidência de integração.
+Speedups acrescentam inventário global mínimo, concessões gratuitas únicas e consumo
+atômico antes da aplicação, com confirmação, erro/retry e restart validados pelo
+agente. Contrato em [PLAYER_INVENTORY](PLAYER_INVENTORY.md) e provas em
+`SPRINT5_SPEEDUP_VALIDATION.json`. Essa dependência foi antecipada do Sprint 6;
+Gems/Empire Points continuam naquele sprint, e providers rewarded/IAP no Sprint 7.
+N4/N5, especializações, economia offline e gate completo da Sprint 5 ainda pendem.
+
 Auditoria técnica do Sprint 0:
 
 - Partida na `main`, revision `608b02c`, sem alterações locais anteriores.

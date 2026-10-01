@@ -16,6 +16,8 @@ var app_state: Dictionary = {}
 var write_blocked: bool = false
 var last_error: String = ""
 var autosave_elapsed: float = 0.0
+## Injectable only at the persistence boundary, e.g. deterministic storage faults.
+var writer: Callable = AtomicJSONStore.write
 
 func boot() -> Dictionary:
 	write_blocked = false
@@ -54,18 +56,23 @@ func _failed(error_key: String) -> Dictionary:
 	last_error = error_key
 	return {"session": null, "error": error_key, "status": "failed", "saved_at_utc": 0}
 
-func checkpoint(session: HotelSession, reason: StringName = &"autosave") -> String:
+func checkpoint(session: HotelSession, reason: StringName = &"autosave", modules: Variant = null, publish: bool = true) -> String:
 	if write_blocked:
 		return last_error
+	if modules != null and not modules is Dictionary:
+		return "save.error.invalid"
 	var timestamp: int = clock.call()
 	var envelope := {"format": "hotel_empire_mobile", "version": VERSION,
 		"saved_at_utc": timestamp, "hotel": SessionSnapshot.capture(session),
-		"app_state": app_state.duplicate(true)}
-	last_error = AtomicJSONStore.write(envelope, path, _valid_envelope)
+		"app_state": app_state.duplicate(true) if modules == null else modules.duplicate(true)}
+	last_error = writer.call(envelope, path, _valid_envelope)
 	if last_error.is_empty():
 		last_saved_utc = timestamp
 		autosave_elapsed = 0.0
-		checkpoint_completed.emit(reason)
+		if modules != null:
+			app_state = modules.duplicate(true)
+		if publish:
+			checkpoint_completed.emit(reason)
 	else:
 		checkpoint_failed.emit(last_error)
 	return last_error
@@ -93,10 +100,15 @@ static func restore(data: Variant) -> Dictionary:
 		return {"session": null, "error": "save.error.version"}
 	if data.app_state.has("onboarding") and not OnboardingService.valid(data.app_state.onboarding):
 		return {"session": null, "error": "save.error.invalid"}
-	for module: String in ["progress_clock", "construction"]:
+	for module: String in ["progress_clock", "construction", "player_inventory"]:
 		if data.app_state.get(module) is Dictionary and _integer(data.app_state[module].get("version"), 2, 2147483647):
 			return {"session": null, "error": "save.error.version"}
 	var has_clock: bool = data.app_state.has("progress_clock")
+	if data.app_state.has("player_inventory"):
+		if not PlayerInventory.valid(data.app_state.player_inventory):
+			return {"session": null, "error": "save.error.invalid"}
+		if data.app_state.player_inventory.grants.has("tutorial") and (not data.app_state.has("onboarding") or int(data.app_state.onboarding.stage) != OnboardingService.STEPS.size()):
+			return {"session": null, "error": "save.error.invalid"}
 	if has_clock != data.app_state.has("construction") or (has_clock and not ProgressClock.valid(data.app_state.progress_clock)):
 		return {"session": null, "error": "save.error.invalid"}
 	var hotel := SessionSnapshot.restore(data.get("hotel"))

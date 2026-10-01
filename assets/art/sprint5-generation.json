@@ -1,0 +1,25 @@
+{
+  "scope": "Sprint 5 original speedup raster icon",
+  "tool": "image_gen.imagegen",
+  "mode": "text_to_image",
+  "transparent_background": true,
+  "asset_count": 1,
+  "reference_review": ["assets/art/icons/upgrade.png", "assets/art/icons/repair.png"],
+  "assets": [
+    {
+      "path": "assets/art/icons/speedup.png",
+      "original_output": "C:/Users/GHPXD/.codex/generated_images/01a0f5b8-52c0-7081-938b-7fb81efdc5ab/exec-ff83d4bf-34d7-41de-ab6c-5b9752c7b4c1.png",
+      "sha256": "96fe4a479d6a67f1404acfc54b88e4ea2eea5599c411a6fd1fcad6e6e18d16dc",
+      "source_width": 1241,
+      "source_height": 1268,
+      "source_bytes": 1746994,
+      "source_format": "PNG RGBA",
+      "processing": "Original tool output copied unchanged; Godot runtime import applies size limit.",
+      "runtime_import": {"size_limit": 256, "compression": "lossless", "mipmaps": true, "fix_alpha_border": true, "cache_bytes_on_host": 114610},
+      "ui_units": 32,
+      "prompt": "Create ONE original production raster UI icon for the Hotel Empire mobile tycoon game: a construction speedup consumable. Transparent background, isolated object, no lettering, no numerals, no text, no UI frame, no montage. A distinctive small concierge hourglass in polished warm aged brass with curved sculptural uprights and a dark emerald enamel crosspiece, clear glass containing bright amber sand visibly flowing rapidly, mounted on a compact walnut wood foot. A small emerald leather ribbon sweeps behind the right side to suggest fast progress while keeping the hourglass silhouette bold and instantly readable at 32px. The artistic direction is elegant storybook painted game art, richly brushed gold highlights, subtly textured walnut and green enamel, warm light from upper left, dimensional soft shading integrated in the object, strong clean outer silhouette. Slight front three-quarter view, centered composition with the object taking roughly 80 percent of the canvas and generous alpha padding. Match the warm brass, emerald green and crafted wood palette of the project's existing hotel management icons; do not look like an emoji, stock clip art, a generic flat library glyph, a logo, a photorealistic product photograph or an app template. A single intentionally art-directed detailed handcrafted object designed specifically for a sophisticated hotel game. True alpha transparency outside the object; no black or checkered baked backdrop, no ground plane, no detached drop shadow.",
+      "review": "Native captures at 32 units in phone portrait, phone landscape and tablet; alpha corners and visible center asserted in speedup_touch_test.",
+      "evidence": "docs/SPRINT5_SPEEDUP_VALIDATION.json"
+    }
+  ]
+}

@@ -64,7 +64,12 @@ totalizando dezessete entry points `*_test.gd` descobertos pelo grupo mobile.
 são helpers. Prazos injetados percorrem a aplicação real sem esperas de horas.
 As suítes anteriores de onboarding/gestão/shell agora verificam pagamento inicial,
 indisponibilidade antes do prazo e conclusão antes de operar salas.
-Speedups e os demais componentes pendentes ainda precisam de cobertura própria;
+`speedup_test` e `speedup_touch_test` acrescentam inventário/consumo transacional,
+callback repetido, storage failure, redução completa/parcial, lifecycle, stock GUI,
+back, alvo vencido e restart. Há dezenove entry points após esse componente.
+`speedup_cases` e `speedup_fault_writer` são helpers. O guia físico ganhou assertions
+de recompensa única; o harness verifica referências WAV liberadas antes do shutdown.
+N4/N5, especializações e offline econômico ainda precisam de cobertura própria;
 esses testes não concluem o gate da sprint.
 
 ## Próximas coberturas

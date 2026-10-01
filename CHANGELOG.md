@@ -20,7 +20,20 @@ Este changelog começa na separação da versão mobile. O histórico de desenvo
   traduções, texto ampliado e recuperação. Feedback longo e espaçamento adaptável
   preservam os alvos de toque e a área segura de telas compactas com recortes.
   Evidências da integração ficam em `docs/SPRINT5_INTEGRATION_VALIDATION.json`.
-- Ainda pendem speedups, N4/N5, especializações e settlement offline do hotel;
+- Speedups de 5m/15m/1h usam inventário global separado do Caixa, com concessões
+  gratuitas únicas de boas-vindas/tutorial. Consumo confirmado reduz somente prazo
+  de obra ativa; snapshot candidato é persistido antes de alterar o hotel vivo.
+  Falha de gravação preserva item/obra; callbacks repetidos não gastam novamente.
+- UI informa estoque, redução real, prazo restante e descarte do excedente, com
+  ícone original individual de ampulheta a 32 unidades. Alvo já concluído, fila,
+  back e estoque vazio não consomem itens. Telemetria registra a redução efetiva.
+- Cleanup de testes aguarda a liberação exata dos WAVs pelo mixer, com limite e
+  assertions; trabalho físico encerra após liberar o frame de execução. Gates
+  continuam reprovando leaks/erros/saída não zero. Provas de speedups ficam em
+  `docs/SPRINT5_SPEEDUP_VALIDATION.json`.
+- Gate parcial de speedups: 19 suítes mobile/7.771 verificações, 11 suítes de domínio
+  preservadas, 21 scripts sem diagnostics e 1.189 verificações nativas/51 capturas.
+- Ainda pendem N4/N5, especializações e settlement offline do hotel;
   a Sprint 5 permanece em andamento, sem novo release mobile validado.
 
 ## 0.6.0-mobile — Equipe e delegação

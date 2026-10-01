@@ -231,7 +231,7 @@ futura válida bloqueia downgrade. Save após recovery preserva backup válido.
 `GameController` executa autosave mesmo com speed zero e para em background.
 O nome interno `Hotel Empire` permanece estável para preservar o diretório de saves.
 
-Ainda pendente: módulos premium, entitlements, timers e settlement offline. Não
+Ainda pendente: módulos premium, entitlements e settlement econômico offline. Não
 considerar `app_state` vazio como implementação desses sistemas.
 
 ## Offline progress
@@ -256,6 +256,15 @@ durante suspensão. ConstructionService processa dois slots e uma fila paga por
 boundaries de deadline. HotelModel continua dono das salas concluídas. A aplicação
 persiste os dois módulos com SessionSnapshot no mesmo envelope, incluindo autosave
 pausado. O domínio não consulta OS/Time nem conhece os módulos globais.
+
+PlayerInventory é estado global da aplicação, separado de HotelEconomy e dos
+Resources de speedup. Snapshot v1 guarda concessões, gastos e IDs monotônicos.
+ConstructionSpeedupPlan prepara um envelope futuro validado; GameController o
+persiste antes de consumir o item/aplicar a redução, conservando referências de
+sessão/atores. Reentrada e ticks ficam bloqueados durante o commit; hooks de
+lifecycle são diferidos. Observadores recebem somente o estado aplicado e durável.
+Detalhes e limites ficam em `docs/PLAYER_INVENTORY.md`. Gems/Empire Points, recibos
+autenticados e entitlements continuam dependências dos Sprints 6–7.
 
 ## Rendering
 

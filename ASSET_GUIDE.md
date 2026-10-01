@@ -22,6 +22,16 @@ sem mipmaps; runtime de ícone usa o tamanho de UI. Prompts e proveniência em
 O jogador reutiliza uniformes/poses originais do trabalho apropriado, identificado
 como Você/Tú/You; arte específica adicional de uniformes entra no Sprint 12.
 
+Sprint 5 adiciona `assets/art/icons/speedup.png`, uma ampulheta original de latão,
+esmeralda e madeira, gerada individualmente pelo tool built-in `image_gen` com alpha.
+Fonte RGBA 1241×1268, 1.746.994 bytes; import lossless com limite de 256 px, mipmaps e
+fix alpha border. Textura importada ocupa 114.610 bytes no cache deste host; RGBA
+com mipmaps fica abaixo de 350 KB estimados, sem equivaler a medição em aparelho.
+HotelArt a apresenta a 32 unidades na ficha e confirmação de speedup. O teste nativo
+verifica transparência dos quatro cantos, conteúdo central e dimensões de runtime;
+capturas a 32 unidades foram revistas. Prompt exato, origem e SHA-256 ficam em
+`assets/art/sprint5-generation.json`; evidência em `docs/SPRINT5_SPEEDUP_VALIDATION.json`.
+
 ## Problema atual
 
 A base herdada contém dezenas de texturas grandes e muitas ainda sem limite de resolução no import. Isso não deve ser levado para Android/iOS sem budget explícito.

@@ -78,9 +78,11 @@ func run() -> void:
 			break
 	check(game.onboarding.stage == 8 and session.hotel.rooms[1].condition == 100, "repair completion")
 	check(game.hire(HotelSession.EMPLOYEES[0]).is_empty() and game.onboarding.stage == 9 and not game.onboarding.active(), "first delegation finishes guide")
+	check(game.inventory.claimed(&"tutorial") and game.inventory.quantity(&"15m") == 1, "completed physical tutorial grants a global speedup once")
 	check(session.economy.cash == 2400 + session.economy.revenue - session.economy.expenses - session.economy.capital_spent, "real mobile cash flow")
 	var reloaded := _controller("new")
 	check(reloaded.boot().is_empty() and reloaded.onboarding.stage == 9 and reloaded.session.player_work.totals.delivered == 1, "completed guide survives reload")
+	check(reloaded.inventory.quantity(&"15m") == 1 and not reloaded.inventory.claim_reward(&"tutorial"), "guide reward survives restart without duplication")
 	check(reloaded.saves.app_state.future_module.count == 2, "module updates preserve other application state")
 	check(reloaded.onboarding.completed_at.size() == 9, "one timestamp per fact")
 	var old := _controller("old")

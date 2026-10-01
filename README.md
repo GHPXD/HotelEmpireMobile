@@ -100,6 +100,8 @@ Hotel Pass, temporadas complexas e sistemas avançados de LiveOps só entram ap�
 - [UX Mobile](docs/UX_MOBILE.md)
 - [Trabalho e onboarding](docs/PLAYER_WORK.md)
 - [Equipe e automação](docs/STAFF_AUTOMATION.md)
+- [Construção e timers](docs/CONSTRUCTION_TIMERS.md)
+- [Inventário e speedups](docs/PLAYER_INVENTORY.md)
 - [Analytics e LiveOps](docs/ANALYTICS_LIVEOPS.md)
 - [Testes e Release Mobile](docs/TEST_RELEASE_MOBILE.md)
 - [Migração](docs/MIGRATION.md)
@@ -129,10 +131,12 @@ Evidências: [Sprint 4](docs/SPRINT4_VALIDATION.json), com 33 suítes aprovadas,
 4.499 verificações renderizadas, 113 capturas e APK Android debug 0.6.0.
 Sprint 5 em andamento: timers/fila, dois slots gratuitos, reserva de terreno,
 upgrades e conclusão offline estão integrados ao save e à UI por toque, com
-cancelamento confirmado e resumo de retorno. Ainda pendem speedups, N4/N5,
-especializações e cálculo econômico offline. A integração possui evidência própria
+cancelamento confirmado e resumo de retorno. Speedups gratuitos têm estoque global,
+confirmação e consumo persistido antes da aplicação, incluindo falha/retry e restart.
+Ainda pendem N4/N5, especializações e cálculo econômico offline. A integração possui evidência própria
 em [Sprint 5 — integração](docs/SPRINT5_INTEGRATION_VALIDATION.json); não conclui
 o gate da sprint nem substitui o APK 0.6.0 validado.
+Evidências de [speedups](docs/SPRINT5_SPEEDUP_VALIDATION.json) complementam a integração.
 
 Executar regressões: `python tools/run_tests.py --group all --godot <executável>`.
 Renderização no host Windows: `tools/test_mobile_render.ps1 -GodotPath <executável>`.
