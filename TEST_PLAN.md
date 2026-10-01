@@ -4,6 +4,12 @@
 
 A migração não deve trocar profundidade por regressões. Testes de domínio permanecem como rede de segurança enquanto UI, input e serviços de plataforma são reconstruídos.
 
+Classificação detalhada: [TEST_MIGRATION_MATRIX](docs/TEST_MIGRATION_MATRIX.md).
+Executor portátil: `python tools/run_tests.py --group all --godot <executável>`.
+Relatórios completos e dados isolados ficam em `.runtime/tests/`.
+Validações intermediárias são automatizadas e conduzidas pelo agente; avaliação do
+usuário somente no Sprint 15. Registrar limitações reais de hardware/toolchains.
+
 ## 1. Domínio
 
 Preservar e ampliar cobertura de:

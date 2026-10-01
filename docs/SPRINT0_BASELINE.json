@@ -1,0 +1,254 @@
+{
+  "revision": "608b02c85f0cc47ca70303f81a690f51941e02f9",
+  "dirty": true,
+  "group": "all",
+  "started_utc": "20261001T043350Z",
+  "status": "passed",
+  "steps": [
+    {
+      "suite": "foundation_test",
+      "passed": true,
+      "duration_seconds": 1.344,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "foundation"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\foundation_test.json",
+      "sha256": "fc0b153988afa10a0ef63e4696603bf4794b63d2ffd4501ba34d18f3188b2c87"
+    },
+    {
+      "suite": "construction_test",
+      "passed": true,
+      "duration_seconds": 1.282,
+      "summaries": [
+        {
+          "checks": 16,
+          "failures": 0,
+          "suite": "construction"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\construction_test.json",
+      "sha256": "b19567aa915eeab921a2ab283b3e054fec74bffe930d79f81899425a169962a8"
+    },
+    {
+      "suite": "simulation_test",
+      "passed": true,
+      "duration_seconds": 1.344,
+      "summaries": [
+        {
+          "cleaned": 1,
+          "failures": 0,
+          "lift_delivered": 5,
+          "meals": 2,
+          "revenue": 196,
+          "suite": "simulation"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\simulation_test.json",
+      "sha256": "742c73d6471e7fd7bca517e12be66d3c2a89f31bba4cc6c23b3a026ac7c3d015"
+    },
+    {
+      "suite": "save_test",
+      "passed": true,
+      "duration_seconds": 1.843,
+      "summaries": [
+        {
+          "completed": 25,
+          "failures": 0,
+          "suite": "save"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\save_test.json",
+      "sha256": "a8130669d6711af100178ed1b525c3da0d2ea7a0f9715bab9225265f72442cbe"
+    },
+    {
+      "suite": "management_test",
+      "passed": true,
+      "duration_seconds": 1.563,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "management",
+          "transport_base_ticks": 279,
+          "transport_upgraded_ticks": 125
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\management_test.json",
+      "sha256": "321790028c09e96c8143c2328ff8c8cf4eb0095b04a4196a275ef88dc398a6e7"
+    },
+    {
+      "suite": "lodging_value_test",
+      "passed": true,
+      "duration_seconds": 1.546,
+      "summaries": [
+        {
+          "cases": 11,
+          "failures": 0,
+          "suite": "lodging_value"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\lodging_value_test.json",
+      "sha256": "324a722a38df835e01cc1e0cbeba2ee45e40b61e0742c67c945aece5312794b5"
+    },
+    {
+      "suite": "reviews_test",
+      "passed": true,
+      "duration_seconds": 1.391,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "reviews"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\reviews_test.json",
+      "sha256": "118476c61adfb2374e6bf17d12c08ac9638f6c9966a373db7b2fefcda6aaec4c"
+    },
+    {
+      "suite": "progression_test",
+      "passed": true,
+      "duration_seconds": 2.438,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "progression"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\progression_test.json",
+      "sha256": "c0a74dfc3cfa5a82ff846f018f9b5caf89a8f76a120f52880d05f25a2480eee3"
+    },
+    {
+      "suite": "content_test",
+      "passed": true,
+      "duration_seconds": 4.422,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "content"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\content_test.json",
+      "sha256": "33b22cc2afc9599d10e81cb2f84184e48dd410b5e44b5669871730b8f815b0e0"
+    },
+    {
+      "suite": "analytics_test",
+      "passed": true,
+      "duration_seconds": 1.391,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "analytics"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\analytics_test.json",
+      "sha256": "e324433260613237ecce2296838e71a96ead98533d6a54a5869c06b3faedfe96"
+    },
+    {
+      "suite": "checkin_diagnostics_test",
+      "passed": true,
+      "duration_seconds": 1.406,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "checkin_diagnostics"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\checkin_diagnostics_test.json",
+      "sha256": "a4b5d762a57e450a730b5fbd302457d1f9d432b1cca697e024d1567fcf2798b8"
+    },
+    {
+      "suite": "save_multiseed_test",
+      "passed": true,
+      "duration_seconds": 6.484,
+      "summaries": [
+        {
+          "checkpoints": 20,
+          "failures": 0,
+          "states": [
+            "working",
+            "idle",
+            "walking",
+            "checkin",
+            "lift_queue",
+            "using",
+            "riding",
+            "cleaning"
+          ],
+          "suite": "save_multiseed"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\save_multiseed_test.json",
+      "sha256": "22accb470c6c96d62a96280feacaacbfd38c7693cde94a26deedfbd6b3069f92"
+    },
+    {
+      "suite": "stress_test",
+      "passed": true,
+      "duration_seconds": 9.094,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "stress"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\stress_test.json",
+      "sha256": "51d304b984409e72a38657ee9c6eefffc41866faaede7affbce1a9c0c674b629"
+    },
+    {
+      "suite": "admission_equivalence_test",
+      "passed": true,
+      "duration_seconds": 11.844,
+      "summaries": [
+        {
+          "failures": 0,
+          "seeds": 3,
+          "suite": "admission_equivalence"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\admission_equivalence_test.json",
+      "sha256": "d0ba807450e066f82e0c450c3d38581e24413c335757ae847ac04899c83357da"
+    },
+    {
+      "suite": "long_run_test",
+      "passed": true,
+      "duration_seconds": 23.984,
+      "summaries": [
+        {
+          "failures": 0,
+          "scenarios": 6,
+          "suite": "long_run"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\long_run_test.json",
+      "sha256": "8cdbbbd40ebc6c98729a988c994a102e2bd85cb4ec865cdd73f046bc5689b7ae"
+    },
+    {
+      "suite": "departure_observer_test",
+      "passed": true,
+      "duration_seconds": 1.406,
+      "summaries": [
+        {
+          "failures": 0,
+          "suite": "departure_observer"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\departure_observer_test.json",
+      "sha256": "63890c4a7eee5e9705041b78c8d7e79d575baa923ae5a8c888957dd9b0c68b53"
+    },
+    {
+      "suite": "tariff_scenarios",
+      "passed": true,
+      "duration_seconds": 70.375,
+      "summaries": [
+        {
+          "failures": 0,
+          "scenarios": 18,
+          "suite": "tariff_scenarios"
+        }
+      ],
+      "evidence": ".runtime\\tests\\20261001T043350Z-mobile-baseline\\tariff_scenarios.json",
+      "sha256": "93d38f321496f77d60b4ed3128b4948e26e4c685d9e25e410df42c4e3ed3caa8"
+    }
+  ],
+  "completed_utc": "2026-10-01T01:36:15.449714-03:00"
+}

@@ -2,17 +2,36 @@
 
 Este roadmap organiza a transformação do protótipo herdado em produto mobile.
 
+O contrato de execução completo está em [MOBILE_MIGRATION_BRIEF](docs/MOBILE_MIGRATION_BRIEF.md).
+São 16 etapas, numeradas de 0 a 15. O objetivo continua sendo a migração integral.
+Reorganizações por dependências devem ser registradas aqui, sem reduzir escopo.
+O agente executa testes e validações intermediárias; o usuário testa no Sprint 15.
+Mocks e testes headless não substituem evidência de SDKs, lojas e aparelhos reais.
+
+### Gates de execução
+
+- Sprint 0: baseline de domínio/stress/estudos, inventário e remoção do pipeline desktop.
+- Sprints 1–2: aplicação mobile, persistência/lifecycle, gestos e core loop por touch.
+- Sprints 3–6: operação manual, automação, timers/offline e economia global separada.
+- Sprints 7–13: monetização opcional, retenção, hotel vivo, planejamento, império, cosméticos e telemetria.
+- Sprints 14–15: medição/otimização, integrações reais e release verificável.
+
+PlayerEconomy e clock podem ganhar contratos antes dos Sprints 5–6 quando necessários
+para timers/save; isso não conclui antecipadamente suas integrações de produto.
+
 ## Sprint 0 — Reset Mobile
 
-Objetivo: remover o legado documental de desktop e estabelecer contratos mobile.
+Objetivo: remover o pipeline desktop e estabelecer baseline técnica mobile.
 
 - [x] auditoria do repositório;
 - [x] nova documentação mobile;
-- [ ] remover pipeline/referências técnicas exclusivamente desktop quando a migração de código iniciar;
-- [ ] classificar testes em domínio, desktop-obsoleto e mobile-novo;
-- [ ] estabelecer baseline antes da primeira refatoração.
+- [x] remover scripts de distribuição/pacote/compatibilidade Windows e preset desktop;
+- [x] classificar testes em domínio, desktop-obsoleto e mobile-novo (`docs/TEST_MIGRATION_MATRIX.md`);
+- [x] inventariar assets com referências, imports e estimativa de memória (`tools/audit_mobile_assets.py`);
+- [x] estabelecer baseline antes da primeira refatoração (17 suítes; `docs/SPRINT0_BASELINE.json`);
+- [x] regressão pós-reset: mesmas 17 suítes aprovadas, sem diagnostics.
 
-Saída: repo documentalmente mobile-first.
+Saída: pipeline desktop removido, ferramentas de domínio preservadas e baseline verificada.
 
 ## Sprint 1 — Fundação Mobile
 

@@ -4,6 +4,16 @@
 
 A direção visual pode reutilizar a identidade existente, mas o pipeline passa a ser orientado a memória, pacote e carregamento mobile.
 
+Arte final deve ser original e específica do Hotel Empire. Não usar emojis,
+Unicode como ícone, icon packs, ícones de sistema, stock art ou placeholders.
+Criar cada novo ícone individualmente, comparar com a arte existente, exportar
+PNG transparente, configurar o import e revisar em tamanho real de UI.
+Atlas só para empacotamento de peças aprovadas; não para improvisar ícones em lote.
+
+Inventário reproduzível: `python tools/audit_mobile_assets.py`.
+Baseline: 82 PNGs, 54 sem size limit, 117.038.521 bytes de fonte e
+351.046.412 bytes de RGBA estimado sem mipmaps. Não é medição de VRAM em aparelho.
+
 ## Problema atual
 
 A base herdada contém dezenas de texturas grandes e muitas ainda sem limite de resolução no import. Isso não deve ser levado para Android/iOS sem budget explícito.
