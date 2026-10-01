@@ -3,9 +3,9 @@ extends RefCounted
 ## Application owns paid jobs. Model owns completed rooms. Advance visits job
 ## boundaries, so a long absence costs O(queue length), never simulation ticks.
 
-const VERSION: int = 1
+const VERSION: int = 2
 const RULES: ConstructionRules = preload("res://data/construction_rules.tres")
-const JOB_FIELDS: Array[String] = ["id", "kind", "definition_id", "column", "floor_index", "room_id", "target_level", "cost", "duration_ms", "accepted_ms", "start_ms", "end_ms", "slot"]
+const JOB_FIELDS: Array[String] = ["id", "kind", "definition_id", "column", "floor_index", "room_id", "target_level", "specialization_id", "cost", "duration_ms", "accepted_ms", "start_ms", "end_ms", "slot"]
 var hotel: HotelModel
 var jobs: Array[Dictionary] = []
 var next_id: int = 1
@@ -74,14 +74,29 @@ func enqueue_floor(now_ms: int, game_time: float) -> Dictionary:
 		return {"job": null, "error": "Limite de 40 andares atingido."}
 	return _enqueue("floor", "", -1, target, -1, 0, HotelModel.FLOOR_COST, RULES.floor_ms(target), now_ms, game_time)
 
-func _enqueue(kind: String, definition_id: String, column: int, floor_index: int, room_id: int, target_level: int, cost: int, duration_ms: int, now_ms: int, game_time: float) -> Dictionary:
+func enqueue_specialization(room_id: int, specialization_id: StringName, now_ms: int, game_time: float) -> Dictionary:
+	if not _valid_now(now_ms):
+		return {"job": null, "error": "save.error.invalid"}
+	advance(now_ms, game_time)
+	var room := hotel.by_id(room_id)
+	if room == null:
+		return {"job": null, "error": "specialization.error.invalid"}
+	if job_for_room(room_id) != null:
+		return {"job": null, "error": "construction.error.upgrading"}
+	var error := room.specialization_error(specialization_id, hotel.progression)
+	if not error.is_empty():
+		return {"job": null, "error": error}
+	var option := room.specialization(specialization_id)
+	return _enqueue("specialize", String(room.definition_id), room.column, room.floor_index, room.id, room.level, option.cost, option.construction_seconds * 1000, now_ms, game_time, String(option.id))
+
+func _enqueue(kind: String, definition_id: String, column: int, floor_index: int, room_id: int, target_level: int, cost: int, duration_ms: int, now_ms: int, game_time: float, specialization_id: String = "") -> Dictionary:
 	if jobs.size() >= RULES.queue_limit:
 		return {"job": null, "error": "construction.error.queue_full"}
 	if now_ms < last_ms or now_ms > ProgressClock.MAX_TIMESTAMP_MS - duration_ms:
 		return {"job": null, "error": "save.error.invalid"}
 	if not hotel.economy.purchase(cost, "ledger.construction." + kind, game_time):
 		return {"job": null, "error": "Caixa insuficiente."}
-	var job := {"id": next_id, "kind": kind, "definition_id": definition_id, "column": column, "floor_index": floor_index, "room_id": room_id, "target_level": target_level, "cost": cost, "duration_ms": duration_ms, "accepted_ms": now_ms, "start_ms": -1, "end_ms": -1, "slot": -1}
+	var job := {"id": next_id, "kind": kind, "definition_id": definition_id, "column": column, "floor_index": floor_index, "room_id": room_id, "target_level": target_level, "specialization_id": specialization_id, "cost": cost, "duration_ms": duration_ms, "accepted_ms": now_ms, "start_ms": -1, "end_ms": -1, "slot": -1}
 	next_id += 1
 	jobs.append(job)
 	last_ms = now_ms
@@ -188,6 +203,13 @@ func _complete(job: Dictionary) -> Dictionary:
 				hotel.changed.emit()
 			else:
 				error = "construction.error.invalidated"
+		"specialize":
+			var room := hotel.by_id(room_id)
+			if room != null and room.level == int(job.target_level) and room.definition_id == StringName(job.definition_id) and room.specialization_error(StringName(job.specialization_id), hotel.progression).is_empty():
+				room.specialization_id = StringName(job.specialization_id)
+				hotel.changed.emit()
+			else:
+				error = "construction.error.invalidated"
 		_:
 			error = "construction.error.invalidated"
 	return {"id": job.id, "kind": job.kind, "room_id": room_id, "error": error}
@@ -219,7 +241,7 @@ func by_id(job_id: int) -> Variant:
 
 func job_for_room(room_id: int) -> Variant:
 	for job in jobs:
-		if job.kind == "upgrade" and int(job.room_id) == room_id:
+		if job.kind in ["upgrade", "specialize"] and int(job.room_id) == room_id:
 			return job
 	return null
 
@@ -227,8 +249,17 @@ func snapshot() -> Dictionary:
 	return {"version": VERSION, "next_id": next_id, "completed": completed, "cancelled": cancelled, "last_ms": last_ms, "jobs": jobs.duplicate(true)}
 
 func restore(data: Variant, now_ms: int) -> bool:
-	if not data is Dictionary or data.size() != 6 or not _integer(data.get("version"), VERSION, VERSION):
+	if not data is Dictionary or data.size() != 6 or not _integer(data.get("version"), 1, VERSION):
 		return false
+	if int(data.version) == 1:
+		data = data.duplicate(true)
+		if not data.get("jobs") is Array:
+			return false
+		for old: Variant in data.jobs:
+			if not old is Dictionary or old.size() != JOB_FIELDS.size() - 1 or old.has("specialization_id"):
+				return false
+			old["specialization_id"] = ""
+		data.version = VERSION
 	if not _integer(data.get("next_id"), 1, 2147483647) or not _integer(data.get("completed"), 0, 2147483646) or not _integer(data.get("cancelled"), 0, 2147483646):
 		return false
 	if not _integer(data.get("last_ms"), 0, now_ms) or now_ms > ProgressClock.MAX_TIMESTAMP_MS or not data.get("jobs") is Array or data.jobs.size() > RULES.queue_limit:
@@ -247,7 +278,9 @@ func restore(data: Variant, now_ms: int) -> bool:
 		for field in JOB_FIELDS:
 			if not value.has(field):
 				return false
-		if not value.kind is String or value.kind not in ["build", "upgrade", "floor"] or not value.definition_id is String:
+		if not value.kind is String or value.kind not in ["build", "upgrade", "floor", "specialize"] or not value.definition_id is String or not value.specialization_id is String:
+			return false
+		if value.kind != "specialize" and value.specialization_id != "":
 			return false
 		if not _integer(value.id, previous_id + 1, int(data.next_id) - 1) or not _integer(value.cost, 0, 1000000000) or not _integer(value.duration_ms, 1000, RULES.maximum_seconds * 1000):
 			return false
@@ -286,7 +319,11 @@ func restore(data: Variant, now_ms: int) -> bool:
 						return false
 			else:
 				var room := hotel.by_id(int(value.room_id))
-				if room == null or room.id in upgrade_rooms or room.definition_id != definition.id or room.column != int(value.column) or room.floor_index != int(value.floor_index) or room.level + 1 != int(value.target_level) or room.next_upgrade() == null:
+				if room == null or room.id in upgrade_rooms or room.definition_id != definition.id or room.column != int(value.column) or room.floor_index != int(value.floor_index):
+					return false
+				if value.kind == "upgrade" and (room.level + 1 != int(value.target_level) or room.next_upgrade() == null or not hotel.progression.upgrade_error(room).is_empty()):
+					return false
+				if value.kind == "specialize" and (room.level != int(value.target_level) or not room.specialization_error(StringName(value.specialization_id), hotel.progression).is_empty()):
 					return false
 				upgrade_rooms.append(room.id)
 		total_cost += int(value.cost)

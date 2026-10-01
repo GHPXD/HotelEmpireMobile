@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomSpecialization" load_steps=2 format=3]
+[ext_resource type="Script" path="res://hotel/rooms/room_specialization.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"comfort"
+cost = 550
+price_delta = 10
+maintenance_delta = 4
+satisfaction_delta = 4.0
+stay_multiplier = 1.15
+profile_preference = {&"balanced": 4.0, &"business": 2.0, &"leisure": 8.0}

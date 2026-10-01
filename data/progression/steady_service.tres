@@ -9,5 +9,5 @@ display_name = "Operação completa"
 description = "Combine hospedagem, alimentação e limpeza para melhorar a infraestrutura."
 prerequisite = &"first_stays"
 requirements = {"bookings": 10, "meals": 5, "cleaned": 5}
-unlocks = Array[StringName]([&"restaurant_3", &"elevator_3"])
-reward_text = "Libera N3 de bistrôs e elevadores."
+unlocks = Array[StringName]([&"restaurant_3", &"elevator_3", &"bedroom_4", &"reception_4", &"restaurant_4"])
+reward_text = "Libera N3 de bistrôs/elevadores e N4 de quartos, recepções e bistrôs."

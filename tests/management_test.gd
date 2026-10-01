@@ -23,7 +23,7 @@ func _test_upgrades() -> void:
 		var definition := room.definition()
 		var original_capacity: int = definition.capacity
 		var original_price: int = definition.price
-		for level in [2, 3]:
+		for level in range(2, definition.upgrades.size() + 2):
 			var next := room.next_upgrade()
 			var cash: int = session.economy.cash
 			var capital: int = session.economy.capital_spent
@@ -271,4 +271,4 @@ func check(condition: bool, message: String) -> void:
 		push_error(message)
 
 func _unlock_management(session: HotelSession) -> void:
-	session.progression.evaluate({"bookings": 10, "meals": 5, "cleaned": 5})
+	session.progression.evaluate({"bookings": 10, "meals": 5, "cleaned": 5, "completed": 20, "reputation": 65})

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://progression/upgrades/upgrade_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+cost = 1300
+maintenance_bonus = 14
+duration_multiplier = 0.4
+satisfaction_bonus = 2.0

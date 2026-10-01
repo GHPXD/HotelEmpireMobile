@@ -16,4 +16,5 @@ extends Resource
 @export var relief: float = 60.0
 @export var color: Color = Color.WHITE
 @export var upgrades: Array[UpgradeDefinition] = []
+@export var specializations: Array[RoomSpecialization] = []
 @export var required_objective: StringName

@@ -114,14 +114,19 @@ func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transpo
 		employee_completed.emit(staff)
 
 func available_bed(actor: ActorState, hotel: HotelModel, transport: TransportSystem) -> RoomState:
+	var best: RoomState
+	var best_preference := -INF
 	for room in hotel.rooms:
 		var definition := room.definition()
 		if definition.category != &"lodging" or room.dirty or room.occupant >= 0 or room.cleaning_by >= 0 or room.repairing_by >= 0:
 			continue
 		if actor.money < room.price() or not transport.accessible(actor.floor_index, room.floor_index):
 			continue
-		return room
-	return null
+		var preference := room.audience_preference(actor.archetype())
+		if preference > best_preference:
+			best = room
+			best_preference = preference
+	return best
 
 func admit(actor: ActorState, hotel: HotelModel, transport: TransportSystem, time: float, quality_bonus: int = 0) -> bool:
 	var reception := hotel.by_id(actor.target_room)
@@ -133,7 +138,8 @@ func admit(actor: ActorState, hotel: HotelModel, transport: TransportSystem, tim
 	room.occupant = actor.id
 	actor.bedroom = room.id
 	actor.checked_in = true
-	actor.happiness = clampf(actor.happiness + room.lodging_value_delta(actor.archetype()) + quality_bonus + room.cleaning_quality_bonus, 0, 100)
+	actor.lodging_stay_multiplier = room.stay_multiplier()
+	actor.happiness = clampf(actor.happiness + room.lodging_value_delta(actor.archetype()) + room.arrival_bonus(actor.archetype()) + reception.satisfaction_bonus() + quality_bonus + room.cleaning_quality_bonus, 0, 100)
 	room.cleaning_quality_bonus = 0
 	actor.money -= room.price()
 	room.income += room.price()
@@ -147,7 +153,7 @@ func admit(actor: ActorState, hotel: HotelModel, transport: TransportSystem, tim
 	return true
 
 func _choose(actor: ActorState, hotel: HotelModel, transport: TransportSystem) -> void:
-	if actor.age + SimulationRules.TIME_EPSILON >= rules.stay_seconds * actor.archetype().stay_multiplier or actor.happiness <= 10:
+	if actor.age + SimulationRules.TIME_EPSILON >= rules.stay_seconds * actor.archetype().stay_multiplier * actor.lodging_stay_multiplier or actor.happiness <= 10:
 		_release_room(actor, hotel)
 		actor.travel_to(-0.8, 0, &"exit")
 		return

@@ -24,6 +24,8 @@ const LEGACY_ERRORS: Dictionary = {
 }
 
 static func key(error: String) -> String:
+	if error.begins_with("specialization.error."):
+		return error
 	if error.begins_with("construction.error."):
 		return error
 	if error.begins_with("speedup.error."):

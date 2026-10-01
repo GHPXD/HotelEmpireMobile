@@ -93,6 +93,8 @@ static func restore(data: Variant) -> Dictionary:
 		return {"session": null, "error": "save.error.invalid"}
 	if data.version != VERSION:
 		return {"session": null, "error": "save.error.version"}
+	if data.get("hotel") is Dictionary and _integer(data.hotel.get("version"), SessionSnapshot.VERSION + 1, 2147483647):
+		return {"session": null, "error": "save.error.version"}
 	var timestamp: Variant = data.get("saved_at_utc")
 	if not _integer(timestamp, 0, 253402300799) or not data.get("app_state") is Dictionary or not _primitive(data.app_state):
 		return {"session": null, "error": "save.error.invalid"}
@@ -101,7 +103,8 @@ static func restore(data: Variant) -> Dictionary:
 	if data.app_state.has("onboarding") and not OnboardingService.valid(data.app_state.onboarding):
 		return {"session": null, "error": "save.error.invalid"}
 	for module: String in ["progress_clock", "construction", "player_inventory"]:
-		if data.app_state.get(module) is Dictionary and _integer(data.app_state[module].get("version"), 2, 2147483647):
+		var maximum_version := ConstructionService.VERSION if module == "construction" else 1
+		if data.app_state.get(module) is Dictionary and _integer(data.app_state[module].get("version"), maximum_version + 1, 2147483647):
 			return {"session": null, "error": "save.error.version"}
 	var has_clock: bool = data.app_state.has("progress_clock")
 	if data.app_state.has("player_inventory"):

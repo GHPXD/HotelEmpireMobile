@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=7 format=3]
 [ext_resource type="Script" path="res://hotel/rooms/room_definition.gd" id="1"]
 [ext_resource type="Script" path="res://progression/upgrades/upgrade_definition.gd" id="upgrade_script"]
 [ext_resource type="Resource" path="res://data/upgrades/reception_2.tres" id="u2"]
 [ext_resource type="Resource" path="res://data/upgrades/reception_3.tres" id="u3"]
+[ext_resource type="Resource" path="res://data/upgrades/reception_4.tres" id="u4"]
+[ext_resource type="Resource" path="res://data/upgrades/reception_5.tres" id="u5"]
 [resource]
 script = ExtResource("1")
 id = &"reception"
@@ -15,4 +17,4 @@ capacity = 1
 service_duration = 4.0
 price = 0
 color = Color(0.3, 0.63, 0.6, 1)
-upgrades = Array[ExtResource("upgrade_script")]([ExtResource("u2"), ExtResource("u3")])
+upgrades = Array[ExtResource("upgrade_script")]([ExtResource("u2"), ExtResource("u3"), ExtResource("u4"), ExtResource("u5")])

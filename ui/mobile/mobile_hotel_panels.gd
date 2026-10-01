@@ -23,6 +23,7 @@ var return_construction: Array[Dictionary] = []
 var inventory: PlayerInventory
 var speedup_item: StringName = &""
 var speedup_operation_id: int = 0
+var specialization_item: StringName = &""
 
 func _init(presentation: MobileShell) -> void:
 	shell = presentation
@@ -34,6 +35,12 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 	shell.clear_sheet()
 	var title := "ui." + String(router.screen)
 	match router.sheet:
+		&"room_specializations":
+			title = "specialization.title"
+			_specializations(router.context_id)
+		&"specialization_confirm":
+			title = "specialization.confirm_title"
+			_specialization_confirmation(router.context_id)
 		&"speedup_confirm":
 			title = "speedup.title"
 			_speedup_confirmation(router.context_id)
@@ -112,7 +119,7 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 				&"settings": _settings()
 				&"store": _text(tr("store.unavailable"))
 	shell.sheet_title.text = tr(title)
-	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm", &"dismiss_confirm", &"construction_cancel_confirm", &"speedup_confirm"])
+	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm", &"dismiss_confirm", &"construction_cancel_confirm", &"speedup_confirm", &"specialization_confirm"])
 	structure_key = _structure()
 	refresh()
 
@@ -121,6 +128,7 @@ func needs_rebuild() -> bool:
 
 func _structure() -> String:
 	var key := "%d:%d:%s:%d:%s" % [session.actors.size() - session.guest_count(), session.hotel.rooms.size(), str(session.player_work.job.is_empty()), onboarding.stage if onboarding != null else -1, str(onboarding.skipped if onboarding != null else true)]
+	key += ":p%d" % session.progression.completed.size()
 	if inventory != null:
 		key += ":i%d" % inventory.revision
 	for order in session.player_work.orders:
@@ -129,7 +137,7 @@ func _structure() -> String:
 		for job in construction.jobs:
 			key += ":c%d:%d" % [int(job.id), int(job.slot)]
 	for room in session.hotel.rooms:
-		key += ":%d:%s" % [room.id, str(room.dirty)]
+		key += ":%d:%s:%d:%s" % [room.id, str(room.dirty), room.level, String(room.specialization_id)]
 	for actor: ActorState in session.actors.values():
 		if actor.employee != null:
 			key += ":e%d:%s:%s:%s" % [actor.id, str(actor.employee.duty_enabled), str(actor.employee.priority), str(actor.employee.dismiss_requested)]
@@ -240,10 +248,15 @@ func _room(id: int) -> void:
 		var upgrade := _action("ui.upgrade", &"upgrade", {"id": id}, HotelArt.action_icon(&"upgrade"))
 		upgrade.disabled = not session.progression.upgrade_error(room).is_empty()
 		_text(tr("upgrade.cost") % MobileLocale.number(next.cost))
+		_text(tr("construction.duration") % MobileLabels.duration(ConstructionService.RULES.upgrade_ms(room.level + 1)))
+		_text(MobileLabels.room_comparison(room, room.level + 1, room.specialization_id))
 		if upgrade.disabled:
-			_text(tr("error.locked"))
+			_text(_upgrade_requirement(room))
 	else:
 		_text(tr("room.max_level"))
+	if not room.definition().specializations.is_empty():
+		_live(func() -> String: return tr("specialization.current") % tr("specialization.neutral" if room.specialization_id.is_empty() else "specialization." + String(room.specialization_id) + ".name"))
+		_inspect(&"room_specializations", id, tr("specialization.title"), HotelArt.build_icon(room.definition_id))
 	if room.definition().category in [&"lodging", &"service"]:
 		_live(func() -> String: return tr("tariff.current") % [room.price_percent, MobileLocale.number(room.price())])
 		var tariffs := _grid()
@@ -263,6 +276,65 @@ func _room(id: int) -> void:
 				_text(tr("tariff.range") % [percent, low, high])
 	_action("ui.demolish", &"request_demolish", {"id": id}, HotelArt.action_icon(&"demolish")).disabled = pending != null
 
+func _upgrade_requirement(room: RoomState) -> String:
+	var unlock := StringName("%s_%d" % [room.definition_id, room.level + 1])
+	for objective in HotelProgression.OBJECTIVES:
+		if objective.unlocks.has(unlock) and not session.progression.completed.has(objective.id):
+			return tr("upgrade.requirement") % tr("objective." + String(objective.id))
+	return tr("error.locked")
+
+func _specializations(id: int) -> void:
+	var room := session.hotel.by_id(id)
+	if room == null or room.definition().specializations.is_empty():
+		_text(tr("specialization.error.invalid"))
+		return
+	_text(MobileLabels.room_name(room))
+	_text(tr("specialization.hint"))
+	var pending: Variant = construction.job_for_room(id)
+	if pending != null:
+		_inspect(&"construction", int(pending.id), tr("construction.view"), HotelArt.action_icon(&"upgrade"))
+		_text(tr("construction.upgrade_hint"))
+	for option in room.definition().specializations:
+		var name_key := "specialization." + String(option.id)
+		var button := _action("", &"request_specialization", {"id": id, "specialization": option.id}, HotelArt.build_icon(room.definition_id))
+		button.text = tr("specialization.choose") % tr(name_key + ".name")
+		var reason := _text("")
+		updates.append(func() -> void:
+			var error := room.specialization_error(option.id, session.progression)
+			if pending != null:
+				error = "construction.error.upgrading"
+			elif error.is_empty() and session.economy.cash < option.cost:
+				error = "error.cash"
+			button.disabled = not error.is_empty()
+			reason.text = tr(error) if not error.is_empty() else "")
+		_text(tr(name_key + ".effect"))
+		_text(tr("specialization.cost") % [MobileLocale.number(option.cost), MobileLabels.duration(option.construction_seconds * 1000)])
+		_text(MobileLabels.room_comparison(room, room.level, option.id))
+
+func _specialization_confirmation(id: int) -> void:
+	var room := session.hotel.by_id(id)
+	var option := room.specialization(specialization_item) if room != null else null
+	if option == null:
+		_text(tr("specialization.error.invalid"))
+		return
+	_text(MobileLabels.room_name(room))
+	_text(tr("specialization." + String(option.id) + ".name"))
+	_text(tr("specialization." + String(option.id) + ".effect"))
+	_text(tr("specialization.cost") % [MobileLocale.number(option.cost), MobileLabels.duration(option.construction_seconds * 1000)])
+	_text(MobileLabels.room_comparison(room, room.level, option.id))
+	_text(tr("specialization.contract_hint"))
+	var button := _action("", &"specialize", {"id": id, "specialization": option.id}, HotelArt.build_icon(room.definition_id))
+	button.text = tr("specialization.confirm") % tr("specialization." + String(option.id) + ".name")
+	var reason := _text("")
+	updates.append(func() -> void:
+		var error := room.specialization_error(option.id, session.progression)
+		if construction.job_for_room(id) != null:
+			error = "construction.error.upgrading"
+		elif error.is_empty() and session.economy.cash < option.cost:
+			error = "error.cash"
+		button.disabled = not error.is_empty()
+		reason.text = tr(error) if not error.is_empty() else "")
+
 func _projects() -> void:
 	if construction == null or construction.jobs.is_empty():
 		return
@@ -279,7 +351,7 @@ func _construction(id: int) -> void:
 	_text(MobileLabels.construction_name(job))
 	_live(func() -> String: return MobileLabels.construction_status(job, progress_clock.now_ms()))
 	_text(tr("construction.paid") % MobileLocale.number(int(job.cost)))
-	if job.kind == "upgrade":
+	if job.kind in ["upgrade", "specialize"]:
 		_text(tr("construction.upgrade_hint"))
 	var progress := ProgressBar.new()
 	progress.custom_minimum_size.y = 16

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoomSpecialization" load_steps=2 format=3]
+[ext_resource type="Script" path="res://hotel/rooms/room_specialization.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"executive"
+cost = 650
+price_delta = 30
+maintenance_delta = 6
+stay_multiplier = 0.9
+profile_preference = {&"balanced": -2.0, &"business": 12.0, &"leisure": -4.0}
+admission_satisfaction = {&"balanced": -2.0, &"business": 4.0, &"leisure": -4.0}
+expected_condition = 90
+expectation_penalty = 8.0

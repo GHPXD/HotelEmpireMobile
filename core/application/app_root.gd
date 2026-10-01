@@ -86,7 +86,7 @@ func _ready() -> void:
 		view.queue_redraw()
 		for event in events:
 			if event.error.is_empty():
-				audio.play(&"upgrade" if event.kind == "upgrade" else &"build")
+				audio.play(&"upgrade" if event.kind in ["upgrade", "specialize"] else &"build")
 				haptics.confirm()
 				shell.set_message("construction.finished")
 			else:
@@ -162,7 +162,7 @@ func _context_rect() -> Rect2:
 	var target := Rect2()
 	if router.sheet == &"build_confirm" and view.blueprint != null:
 		target = view.room_rect(preview_cell.x, preview_cell.y, view.blueprint.width)
-	elif router.sheet == &"room":
+	elif router.sheet in [&"room", &"room_specializations", &"specialization_confirm"]:
 		var room := controller.session.hotel.by_id(router.context_id)
 		if room != null:
 			target = view.room_rect(room.column, room.floor_index, room.definition().width)
@@ -326,6 +326,17 @@ func _command(action: StringName, arguments: Dictionary) -> void:
 			panels.speedup_item = arguments.item
 			panels.speedup_operation_id = controller.inventory.next_operation_id()
 			router.open_sheet(&"speedup_confirm", arguments.id)
+		&"request_specialization":
+			panels.specialization_item = arguments.specialization
+			router.open_sheet(&"specialization_confirm", arguments.id)
+		&"specialize":
+			var error := controller.specialize(arguments.id, arguments.specialization)
+			_feedback(error, "construction.started")
+			if error.is_empty():
+				haptics.confirm()
+				router.open_sheet(&"construction", int(controller.construction.job_for_room(arguments.id).id))
+			else:
+				_route()
 		&"use_speedup":
 			var error := controller.use_speedup(arguments.id, arguments.item, arguments.operation_id)
 			_feedback(error, "speedup.applied")

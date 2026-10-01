@@ -9,4 +9,5 @@ display_name = "Hotel de referência"
 description = "Conclua vinte visitas e alcance reputação 65 após completar a operação."
 prerequisite = &"steady_service"
 requirements = {"completed": 20, "reputation": 65}
-reward_text = "Conquista o título Hotel de referência, sem bônus financeiro."
+unlocks = Array[StringName]([&"bedroom_5", &"reception_5", &"restaurant_5"])
+reward_text = "Conquista o título Hotel de referência e libera N5 de quartos, recepções e bistrôs."

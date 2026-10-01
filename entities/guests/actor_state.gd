@@ -25,6 +25,8 @@ var happiness: float = 85.0
 var money: int = 320
 var bedroom: int = -1
 var checked_in: bool = false
+## Contracted at admission; a later renovation cannot rewrite an existing stay.
+var lodging_stay_multiplier: float = 1.0
 var needs: Dictionary = {"hunger": 30.0, "energy": 25.0, "entertainment": 10.0, "comfort": 10.0}
 var utility_scores: Dictionary = {}
 var meals: int = 0

@@ -1,11 +1,11 @@
 class_name SessionSnapshot
 extends RefCounted
-## Schema v9 adds bounded staff progression, delegation and cleaning quality.
+## Schema v10 adds room positioning and immutable contracted stay duration.
 
-const VERSION: int = 9
+const VERSION: int = 10
 const WAIT_FIELDS: Array[String] = ActorState.WAIT_FIELDS
-const ROOM_FIELDS: Array[String] = ["id", "definition_id", "column", "floor_index", "occupant", "dirty", "dirty_since", "cleaning_quality_bonus", "cleaning_by", "repairing_by", "condition", "income", "level", "price_percent"]
-const ACTOR_FIELDS: Array[String] = ["id", "role", "display_name", "state", "x", "floor_index", "target_x", "target_floor", "target_room", "destination_state", "elevator_id", "timer", "age", "waiting", "happiness", "money", "bedroom", "checked_in", "meals", "sleeps", "speed", "skill", "assignment", "workload", "agreed_price", "preferred_room", "preferred_floor", "archetype_id", "service_uses", "reception_seconds", "lift_queue_seconds", "service_queue_seconds"]
+const ROOM_FIELDS: Array[String] = ["id", "definition_id", "column", "floor_index", "occupant", "dirty", "dirty_since", "cleaning_quality_bonus", "cleaning_by", "repairing_by", "condition", "income", "level", "price_percent", "specialization_id"]
+const ACTOR_FIELDS: Array[String] = ["id", "role", "display_name", "state", "x", "floor_index", "target_x", "target_floor", "target_room", "destination_state", "elevator_id", "timer", "age", "waiting", "happiness", "money", "bedroom", "checked_in", "lodging_stay_multiplier", "meals", "sleeps", "speed", "skill", "assignment", "workload", "agreed_price", "preferred_room", "preferred_floor", "archetype_id", "service_uses", "reception_seconds", "lift_queue_seconds", "service_queue_seconds"]
 const LIFT_FIELDS: Array[String] = ["room_id", "column", "capacity", "floor_position", "target_floor", "door_timer", "boarded", "delivered", "wait_total", "wait_max", "busy_seconds"]
 const SESSION_FIELDS: Array[String] = ["next_actor_id", "time", "tick_count", "arrival_timer", "day", "opened", "speed"]
 const ECONOMY_FIELDS: Array[String] = ["cash", "revenue", "expenses", "capital_spent"]
@@ -97,6 +97,19 @@ static func restore(data: Variant) -> Dictionary:
 				return _error("Agente inválido.")
 			actor_data["employee"] = EmployeeProgress.new().snapshot() if actor_data.get("role") in ["receptionist", "cleaner"] else null
 		data["dismissed"] = 0
+		data.version = 9
+	if data is Dictionary and data.get("version") == 9:
+		data = data.duplicate(true)
+		if not data.get("rooms") is Array or not data.get("actors") is Array:
+			return _error("Salas ou hóspedes inválidos.")
+		for room_data: Variant in data.rooms:
+			if not room_data is Dictionary:
+				return _error("Sala inválida.")
+			room_data["specialization_id"] = ""
+		for actor_data: Variant in data.actors:
+			if not actor_data is Dictionary:
+				return _error("Agente inválido.")
+			actor_data["lodging_stay_multiplier"] = 1.0
 		data.version = VERSION
 	if not data is Dictionary or data.get("version") != VERSION:
 		return _error("Versão de save desconhecida ou formato inválido.")
@@ -132,6 +145,10 @@ static func restore(data: Variant) -> Dictionary:
 			return _error("Sala desconhecida ou ID inválido.")
 		if room.level < 1 or room.level > room.definition().upgrades.size() + 1:
 			return _error("Nível de sala inválido.")
+		if not room.specialization_id.is_empty():
+			var option := room.specialization()
+			if option == null or room.level < option.minimum_level or not session.progression.completed.has(option.required_objective):
+				return _error("Especialização de sala sem desbloqueio.")
 		if room.condition < 0 or room.condition > 100 or room.repairing_by < -1 or room.repairing_by == 0 or room.cleaning_by < -1 or room.cleaning_by == 0:
 			return _error("Condição ou reserva de sala inválida.")
 		if room.dirty_since < -1 or room.dirty_since > session.time or (not room.dirty and room.dirty_since != -1) or room.cleaning_quality_bonus < 0 or room.cleaning_quality_bonus > EmployeeProgress.RULES.thresholds.size() - 1 + EmployeeProgress.RULES.quality_bonus:
@@ -171,6 +188,8 @@ static func restore(data: Variant) -> Dictionary:
 			return _error("Saída de funcionário inválida.")
 		if actor.archetype() == null or actor.service_uses < actor.meals or actor.service_uses < 0:
 			return _error("Perfil ou contagem de serviços inválida.")
+		if actor.lodging_stay_multiplier < 0.85 or actor.lodging_stay_multiplier > 1.15 or ((actor.role != &"guest" or not actor.checked_in) and actor.lodging_stay_multiplier != 1.0):
+			return _error("Duração contratada da estadia inválida.")
 		for field: String in WAIT_FIELDS:
 			var seconds: float = actor.get(field)
 			if seconds != -1.0 and (seconds < 0 or seconds > 100000000):
@@ -235,11 +254,11 @@ static func restore(data: Variant) -> Dictionary:
 	if legacy:
 		session.progression.evaluate(session.progression_metrics())
 	for room in session.hotel.rooms:
-		if room.level == 3:
-			# Check the entitlement to the installed level, without mutating the room.
+		# Validate every installed tier, retaining only the historical N3 legacy grant.
+		for installed in range(3, room.level + 1):
 			var previous := RoomState.new()
 			previous.definition_id = room.definition_id
-			previous.level = 2
+			previous.level = installed - 1
 			if not session.progression.upgrade_error(previous).is_empty():
 				return _error("Nível de sala sem desbloqueio.")
 	return {"session": session, "error": ""}

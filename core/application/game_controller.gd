@@ -258,25 +258,37 @@ func set_guide_skipped(skipped: bool) -> String:
 	return checkpoint(&"onboarding")
 
 func build(definition: RoomDefinition, column: int, floor_index: int) -> Dictionary:
+	return _accept_construction(&"build", {"definition": definition, "column": column, "floor_index": floor_index}, &"construction")
+
+func _accept_construction(kind: StringName, arguments: Dictionary, reason: StringName) -> Dictionary:
 	if _speedup_busy:
 		return {"job": null, "error": "speedup.error.busy"}
 	if session == null:
 		return {"job": null, "error": "error.command"}
 	_advance_construction()
-	var result := construction.enqueue_build(definition, column, floor_index, progress_clock.now_ms(), session.time)
-	if result.error.is_empty():
-		result.error = checkpoint(&"construction")
+	var now_ms := progress_clock.now_ms()
+	_store_modules()
+	_speedup_busy = true
+	var plan := ConstructionPurchasePlan.prepare(session, construction, kind, arguments, now_ms)
+	if not plan.error.is_empty():
+		_end_speedup_transaction()
+		return {"job": null, "error": plan.error}
+	var modules := saves.app_state.duplicate(true)
+	modules["construction"] = plan.construction.snapshot()
+	last_error = saves.checkpoint(plan.session, reason, modules, false)
+	if not last_error.is_empty():
+		var error := last_error
+		_end_speedup_transaction()
+		return {"job": null, "error": error}
+	var applied := ConstructionPurchasePlan.apply(construction, kind, arguments, now_ms, session.time)
+	assert(applied.error.is_empty(), "Validated construction purchase diverged from its durable plan")
+	_end_speedup_transaction()
+	saves.checkpoint_completed.emit(reason)
 	construction_changed.emit(construction.take_events())
-	return result
+	return applied
 
 func add_floor() -> String:
-	if _speedup_busy:
-		return "speedup.error.busy"
-	_advance_construction()
-	var result := construction.enqueue_floor(progress_clock.now_ms(), session.time)
-	var error: String = result.error
-	construction_changed.emit(construction.take_events())
-	return checkpoint(&"floor") if error.is_empty() else error
+	return _accept_construction(&"floor", {}, &"floor").error
 
 func hire(definition: EmployeeDefinition, traits: Array[StringName] = []) -> String:
 	if _speedup_busy:
@@ -285,13 +297,7 @@ func hire(definition: EmployeeDefinition, traits: Array[StringName] = []) -> Str
 	return checkpoint(&"staff") if error.is_empty() else error
 
 func upgrade(id: int) -> String:
-	if _speedup_busy:
-		return "speedup.error.busy"
-	_advance_construction()
-	var result := construction.enqueue_upgrade(id, progress_clock.now_ms(), session.time)
-	var error: String = result.error
-	construction_changed.emit(construction.take_events())
-	return checkpoint(&"upgrade") if error.is_empty() else error
+	return _accept_construction(&"upgrade", {"id": id}, &"upgrade").error
 
 func cancel_construction(id: int) -> String:
 	if _speedup_busy:
@@ -300,6 +306,9 @@ func cancel_construction(id: int) -> String:
 	var error := construction.cancel(id, progress_clock.now_ms(), session.time)
 	construction_changed.emit(construction.take_events())
 	return checkpoint(&"construction_cancelled") if error.is_empty() else error
+
+func specialize(id: int, specialization_id: StringName) -> String:
+	return _accept_construction(&"specialize", {"id": id, "specialization": specialization_id}, &"specialization").error
 
 func demolish(id: int) -> String:
 	if _speedup_busy:

@@ -99,14 +99,15 @@ func _save_validation() -> void:
 		bad.app_state.erase(module)
 		check(SaveService.restore(bad).error == "save.error.invalid", "missing paired module rejected: " + module)
 		bad = valid.duplicate(true)
-		bad.app_state[module].version = 2
+		var future_version := ConstructionService.VERSION + 1 if module == "construction" else ProgressClock.VERSION + 1
+		bad.app_state[module].version = future_version
 		check(SaveService.restore(bad).error == "save.error.version", "future module cannot be downgraded: " + module)
 		var file := FileAccess.open(game.saves.path, FileAccess.WRITE)
 		file.store_string(JSON.stringify(bad))
 		file.close()
 		var failed := controller("validation")
 		check(failed.boot() == "save.error.version" and failed.session == null and failed.saves.write_blocked, "future primary blocks fallback and gameplay")
-		check(failed.checkpoint() == "save.error.invalid" and AtomicJSONStore.read(game.saves.path).data.app_state[module].version == 2, "future profile is preserved untouched")
+		check(failed.checkpoint() == "save.error.invalid" and AtomicJSONStore.read(game.saves.path).data.app_state[module].version == future_version, "future profile is preserved untouched")
 	for mutation: String in ["deadline", "geometry", "capital", "last_ms"]:
 		var bad := valid.duplicate(true)
 		match mutation:

@@ -92,7 +92,28 @@ static func construction_name(job: Dictionary) -> String:
 	if job.kind == "floor":
 		return TranslationServer.translate("construction.floor") % int(job.floor_index)
 	var name := TranslationServer.translate("room." + String(job.definition_id) + ".name")
+	if job.kind == "specialize":
+		return TranslationServer.translate("specialization.job") % TranslationServer.translate("specialization." + String(job.specialization_id) + ".name")
 	return TranslationServer.translate("construction.upgrade_name") % [name, int(job.target_level)] if job.kind == "upgrade" else name
+
+static func room_comparison(room: RoomState, target_level: int, specialization_id: StringName) -> String:
+	var future := RoomState.new()
+	future.definition_id = room.definition_id
+	future.level = target_level
+	future.price_percent = room.price_percent
+	future.specialization_id = specialization_id
+	future.condition = room.condition
+	var text := TranslationServer.translate("upgrade.maintenance_comparison") % [MobileLocale.number(room.maintenance()), MobileLocale.number(future.maintenance())]
+	if room.definition().price > 0:
+		text = TranslationServer.translate("upgrade.price_comparison") % [MobileLocale.number(room.price()), MobileLocale.number(future.price()), room.price_percent] + "\n" + text
+	if room.capacity() != future.capacity():
+		text += "\n" + TranslationServer.translate("upgrade.capacity_comparison") % [room.capacity(), future.capacity()]
+	if room.definition().category in [&"reception", &"service"]:
+		text += "\n" + TranslationServer.translate("upgrade.duration_comparison") % [room.duration(), future.duration()]
+	text += "\n" + TranslationServer.translate("upgrade.quality_comparison") % [room.satisfaction_bonus(), future.satisfaction_bonus()]
+	if not is_equal_approx(room.stay_multiplier(), future.stay_multiplier()):
+		text += "\n" + TranslationServer.translate("specialization.stay_comparison") % [roundi(room.stay_multiplier() * 100), roundi(future.stay_multiplier() * 100)]
+	return text
 
 static func duration(milliseconds: int) -> String:
 	var seconds := ceili(maxi(0, milliseconds) / 1000.0)
