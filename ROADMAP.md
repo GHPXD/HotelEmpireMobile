@@ -79,15 +79,24 @@ Android/iOS em aparelho continuam gates do Sprint 15.
 
 ## Sprint 3 — O jogador trabalha no hotel
 
-- onboarding;
-- recepção/check-in manual;
-- limpeza manual;
-- room service simples;
-- reparo simples;
-- primeiros objetivos;
-- ações curtas, sem minigames longos.
+- [x] guia não bloqueante, versionado e retomável por fatos do hotel;
+- [x] perfil mobile novo com 2.400 Cash, sem reduzir patrimônio de saves existentes;
+- [x] jogador físico: caminhada, elevadores e uma tarefa por vez, sem salário;
+- [x] recepção manual FIFO usando a mesma admissão e cobrança dos funcionários;
+- [x] limpeza manual com reserva exclusiva e contagem agregada dos objetivos;
+- [x] room service: pedido real, capacidade/FIFO de preparação, preço acordado e entrega;
+- [x] desgaste por uso, eficiência até 20% mais lenta e reparo com custo operacional;
+- [x] cancelamento libera reservas sem cobrança/benefício e preserva passageiro embarcado;
+- [x] snapshot v8 e migração v1–v7; checkpoints de início/transição/conclusão/background;
+- [x] ações de 1,5–3 segundos no alvo, feedback, controles prioritários e tradução;
+- [x] ícones raster individuais originais para reparo/room service, com import de 128 px;
+- [x] gate final: 31 suítes, 4.274 verificações renderizadas, 98 capturas + revisão dos ícones e APK 0.5.0 reconstruído (`docs/SPRINT3_VALIDATION.json`).
 
-Saída: early game ativo e pessoal.
+Implementação: [PLAYER_WORK](docs/PLAYER_WORK.md). Cinco sementes sob política
+guiada: primeira hospedagem em 3,5–3,7 segundos e contratação em 96–135,5 segundos.
+Isso mede a política simulada; ergonomia humana permanece no Sprint 15.
+
+Saída: early game ativo e pessoal, mantendo intervenção após contratar.
 
 ## Sprint 4 — Equipe e Automação
 

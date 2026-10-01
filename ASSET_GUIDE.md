@@ -14,6 +14,14 @@ Inventário reproduzível: `python tools/audit_mobile_assets.py`.
 Baseline: 82 PNGs, 54 sem size limit, 117.038.521 bytes de fonte e
 351.046.412 bytes de RGBA estimado sem mipmaps. Não é medição de VRAM em aparelho.
 
+Sprint 3 adiciona `assets/art/icons/repair.png` e `room-service.png`, gerados
+individualmente com o tool built-in `image_gen`, em PNG transparente, seguindo
+madeira/latão/esmeralda da arte existente. Fontes preservadas, import a 128 px,
+sem mipmaps; runtime de ícone usa o tamanho de UI. Prompts e proveniência em
+`assets/art/sprint3-generation.json`. Não alteram as peças raster anteriores.
+O jogador reutiliza uniformes/poses originais do trabalho apropriado, identificado
+como Você/Tú/You; arte específica adicional de uniformes entra no Sprint 12.
+
 ## Problema atual
 
 A base herdada contém dezenas de texturas grandes e muitas ainda sem limite de resolução no import. Isso não deve ser levado para Android/iOS sem budget explícito.

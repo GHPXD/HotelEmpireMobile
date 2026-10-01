@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-01",
+  "assets": {
+    "repair": "assets/art/icons/repair.png",
+    "room_service": "assets/art/icons/room-service.png"
+  },
+  "prompts": {
+    "repair": "Use case: stylized-concept. Asset type: one original individual raster icon for a hand-painted luxury hotel management game UI. Primary request: a compact hotel maintenance toolkit: warm polished wooden tool caddy, a single chunky antique brass adjustable spanner visibly rising from it, dark emerald leather handle. Style: painterly illustrated game inventory object with warm gold highlights, rich brown wood and deep emerald accents, softly modeled thick contours, same visual family as a hotel check-in clipboard with antique brass key. Composition: centered three-quarter view, recognizable silhouette at 32px, square canvas, generous 10% transparent padding, isolated single object. Actual transparent background. No text, no letters, no logos, no watermark, no border/badge/circle, no emoji, no flat vector glyph, no sprite sheet. Do not include clipboard or key.",
+    "room_service": "Use case: stylized-concept. Asset type: one original individual raster icon for a hand-painted luxury hotel management game UI. Primary request: a room-service tray: chunky polished antique brass round tray supporting one domed cloche with a round golden knob, folded deep emerald napkin peeking on one side. Style: painterly illustrated game inventory object with warm gold highlights, soft thick contours, same visual family as a hotel check-in clipboard with antique brass key. Composition: centered three-quarter view, recognizable domed silhouette at 32px, square canvas, generous 10% transparent padding, isolated single object. Actual transparent background. No text, no letters, no logos, no watermark, no border/badge/circle, no emoji, no flat vector glyph, no sprite sheet. Do not include clipboard or key."
+  },
+  "reference": "Existing individually painted hotel icons; no generated atlas. Alpha preserved. Import limited to 128px."
+}

@@ -8,6 +8,8 @@ var floor_index: int
 var occupant: int = -1
 var dirty: bool = false
 var cleaning_by: int = -1
+var repairing_by: int = -1
+var condition: int = 100
 var users: Array[int] = []
 var queue := ServiceQueue.new()
 var income: int = 0
@@ -38,7 +40,11 @@ func maintenance() -> int:
 	return definition().maintenance + (upgrade().maintenance_bonus if upgrade() != null else 0)
 
 func duration() -> float:
-	return definition().service_duration * (upgrade().duration_multiplier if upgrade() != null else 1.0)
+	var work_rules: PlayerWorkRules = preload("res://data/player_work.tres")
+	return definition().service_duration * (upgrade().duration_multiplier if upgrade() != null else 1.0) * (1.0 + (100 - condition) / 100.0 * work_rules.maximum_slowdown)
+
+func wear(amount: int) -> void:
+	condition = clampi(condition - amount, 0, 100)
 
 func speed_multiplier() -> float:
 	return upgrade().speed_multiplier if upgrade() != null else 1.0
@@ -53,4 +59,4 @@ func center() -> float:
 	return float(column) + float(definition().width) / 2.0
 
 func busy() -> bool:
-	return occupant >= 0 or cleaning_by >= 0 or not users.is_empty() or not queue.members.is_empty()
+	return occupant >= 0 or cleaning_by >= 0 or repairing_by >= 0 or not users.is_empty() or not queue.members.is_empty()

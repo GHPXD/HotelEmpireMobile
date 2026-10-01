@@ -32,6 +32,7 @@ func _ready() -> void:
 	shell.name = "MobileShell"
 	safe_area.add_child(shell)
 	panels = MobileHotelPanels.new(shell)
+	panels.onboarding = controller.onboarding
 	panels.command_requested.connect(_command)
 	panels.navigation_requested.connect(_navigate)
 	panels.sheet_requested.connect(func(kind: StringName, id: int) -> void: router.open_sheet(kind, id))
@@ -73,10 +74,20 @@ func _ready() -> void:
 	router.changed.connect(_route)
 	controller.simulation_advanced.connect(func() -> void: view.queue_redraw())
 	controller.saves.checkpoint_failed.connect(shell.set_message)
+	controller.player_work_changed.connect(func(kind: String, phase: String, result: String) -> void:
+		if result == "completed":
+			audio.play(&"build")
+			haptics.confirm()
+		var key := "work.result." + result
+		shell.set_message(key if TranslationServer.translate(key) != key else "work.error." + result)
+		analytics.record(&"manual_work", {"kind": kind, "phase": phase, "result": result}))
+	controller.guide_advanced.connect(func(stage: int) -> void: analytics.record(&"tutorial_progress", {"stage": stage}))
 	get_tree().auto_accept_quit = false
 	get_tree().quit_on_go_back = false
 	if controller.boot_status == "recovered":
 		shell.set_message("ui.saved_recovery")
+	if controller.onboarding.active():
+		router.open_sheet(&"overview")
 	_refresh()
 	remote_config.refresh()
 	analytics.record(&"app_open", {"load_status": controller.boot_status})
@@ -225,7 +236,10 @@ func _refresh() -> void:
 	if shell != null and controller.session != null:
 		shell.refresh(controller.session)
 		if panels != null:
-			panels.refresh()
+			if panels.needs_rebuild():
+				_route()
+			else:
+				panels.refresh()
 
 func _route() -> void:
 	if panels == null or view == null:
@@ -241,6 +255,24 @@ func _route() -> void:
 
 func _command(action: StringName, arguments: Dictionary) -> void:
 	match action:
+		&"player_work":
+			_feedback(controller.start_player_work(arguments.kind, arguments.id), "work.result.started")
+			_route()
+		&"room_service":
+			_feedback(controller.start_room_service(arguments.order_id), "work.result.started")
+			_route()
+		&"player_cancel":
+			_feedback(controller.cancel_player_work(), "work.result.cancelled")
+			_route()
+		&"player_return":
+			_feedback(controller.return_player(), "work.returning")
+		&"guide_next": _guide_next()
+		&"guide_skip":
+			_feedback(controller.set_guide_skipped(true), "guide.skipped")
+			_route()
+		&"guide_resume":
+			controller.set_guide_skipped(false)
+			_route()
 		&"choose_build": _choose_build(arguments.definition)
 		&"confirm_build": _confirm_build()
 		&"add_floor": _add_floor()
@@ -327,3 +359,29 @@ func _toggle_text() -> void:
 
 func _feedback(error: String, success: String) -> void:
 	shell.set_message(success if error.is_empty() else MobileFeedback.key(error))
+
+func _guide_next() -> void:
+	var step := controller.onboarding.step_id()
+	var session := controller.session
+	match step:
+		"reception": _choose_build(HotelCatalog.room(&"reception"))
+		"bedroom": _choose_build(HotelCatalog.room(&"bedroom"))
+		"food": _choose_build(HotelCatalog.room(&"restaurant"))
+		"open":
+			if not session.opened:
+				controller.toggle_open()
+			_refresh()
+		"checkin":
+			var room := OnboardingService.first_room(session, &"reception")
+			if room != null:
+				router.open_sheet(&"room", room.id)
+		"room_service": router.open_sheet(&"overview")
+		"cleaning", "repair":
+			var target := OnboardingService.first_room(session, &"lodging")
+			for room in session.hotel.rooms:
+				if (step == "cleaning" and room.dirty) or (step == "repair" and room.condition < 100 and room.definition().category != &"transport"):
+					target = room
+					break
+			if target != null:
+				router.open_sheet(&"room", target.id)
+		"hire": _navigate(&"staff")

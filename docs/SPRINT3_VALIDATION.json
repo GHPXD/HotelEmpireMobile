@@ -1,0 +1,1013 @@
+{
+  "scope": "Sprint 3 local player-work/onboarding validation; device and store release gates remain Sprint 15",
+  "generated_utc": "2026-10-01T08:13:12.443905+00:00",
+  "status": "passed",
+  "source": {
+    "base_revision": "08bad93d55ef1adb88a3817890a266706e1eeff4",
+    "dirty": true,
+    "manifest_file_count": 420,
+    "manifest_sha256": "260bd93897370f90c5946498779380c2654c41db4e9a0a5a8da55344b9bd1cc6",
+    "manifest_evidence": ".runtime/sprint3-verified/source-manifest.tsv",
+    "manifest_algorithm": "sorted Git-listed existing runtime/assets/test/tool paths, UTF-8 path TAB SHA256 LF; documentation excluded"
+  },
+  "engine": {
+    "path": "C:\\Program Files (x86)\\Godot\\Godot_v4.7.2-stable_win64.exe",
+    "sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+    "version": "4.7.2.stable.official.ed1daf0bf"
+  },
+  "effective_suites": 31,
+  "coverage": {
+    "preserved_domain_stress_studies": 17,
+    "mobile_logic_and_gui": 11,
+    "additional_native_render_suites": 3,
+    "rendered_checks": 4274,
+    "captures": 98,
+    "product_captures": 58,
+    "technical_art_captures": 40,
+    "additional_icon_review_captures": 1,
+    "logical_dimensions": [
+      [
+        320,
+        568
+      ],
+      [
+        568,
+        320
+      ],
+      [
+        360,
+        780
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        960,
+        540
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "densities": [
+      1,
+      2,
+      3
+    ],
+    "locales": [
+      "pt_BR",
+      "en",
+      "es"
+    ],
+    "translation_keys": 269,
+    "onboarding_touch_dimensions": [
+      [
+        320,
+        568
+      ],
+      [
+        568,
+        320
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "work_snapshot_version": 8,
+    "onboarding_module_version": 1,
+    "input": "ScreenTouch/ScreenDrag via Input.parse_input_event and viewport GUI; native touchscreen emulation for ScrollContainer",
+    "technical_art_viewport": [
+      1600,
+      900
+    ]
+  },
+  "runs": {
+    "full_native": {
+      "path": ".runtime/sprint3-verified/full-native-report.json",
+      "sha256": "ec12eb8e81b0b0acef86b99193fedff5418d2467bcf1aa9f665edcd981bddbde",
+      "started_utc": "2026-10-01T08:01:26.5228525Z",
+      "completed_utc": "2026-10-01T08:09:27.9202539Z",
+      "note": "31 executable suites passed; logs archived to protect evidence from subsequent runner invocations."
+    },
+    "static": {
+      "path": ".runtime/sprint3-static-validation.json",
+      "sha256": "1852aa917021918b8f780c6f35ece7ba953f3d57ab3327330ad8643c92245616",
+      "valid": true,
+      "scripts": 24
+    }
+  },
+  "suites": [
+    {
+      "name": "foundation_test",
+      "passed": true,
+      "duration_seconds": 0.3686447,
+      "evidence": ".runtime/sprint3-verified/foundation_test.log",
+      "sha256": "592f70e5ab581cffaf7e87daae9faa55b74b09f8774fafa3fcf717e7da65f174",
+      "summary": {
+        "failures": 0,
+        "suite": "foundation"
+      }
+    },
+    {
+      "name": "construction_test",
+      "passed": true,
+      "duration_seconds": 0.3775204,
+      "evidence": ".runtime/sprint3-verified/construction_test.log",
+      "sha256": "eb4ca9abfc203d283ca6ad0d502a05e4759100d156d7a88aa6c935452c8897fe",
+      "summary": {
+        "checks": 16,
+        "failures": 0,
+        "suite": "construction"
+      }
+    },
+    {
+      "name": "simulation_test",
+      "passed": true,
+      "duration_seconds": 0.5024104,
+      "evidence": ".runtime/sprint3-verified/simulation_test.log",
+      "sha256": "afc56e08d1469fff8238271bb1a603c6b519a066ece86604605fd57ca8deb723",
+      "summary": {
+        "cleaned": 1,
+        "failures": 0,
+        "lift_delivered": 5,
+        "meals": 2,
+        "revenue": 196,
+        "suite": "simulation"
+      }
+    },
+    {
+      "name": "save_test",
+      "passed": true,
+      "duration_seconds": 1.0893002,
+      "evidence": ".runtime/sprint3-verified/save_test.log",
+      "sha256": "1a43388941fc05456840f5fb06e1636faa80df9f76dfa21a09f9ddd23a03c8b9",
+      "summary": {
+        "completed": 24,
+        "failures": 0,
+        "suite": "save"
+      }
+    },
+    {
+      "name": "management_test",
+      "passed": true,
+      "duration_seconds": 0.6907088,
+      "evidence": ".runtime/sprint3-verified/management_test.log",
+      "sha256": "dd4976503ccfbcaef6649f29192e197bb31df0a248a35769f1b4071a8160a14d",
+      "summary": {
+        "failures": 0,
+        "suite": "management",
+        "transport_base_ticks": 279,
+        "transport_upgraded_ticks": 125
+      }
+    },
+    {
+      "name": "lodging_value_test",
+      "passed": true,
+      "duration_seconds": 0.6238816,
+      "evidence": ".runtime/sprint3-verified/lodging_value_test.log",
+      "sha256": "d625db8a46556b65988efb792cc44dfce64f76d9a9483ee94d36460254f90ff2",
+      "summary": {
+        "cases": 11,
+        "failures": 0,
+        "suite": "lodging_value"
+      }
+    },
+    {
+      "name": "reviews_test",
+      "passed": true,
+      "duration_seconds": 0.5364236,
+      "evidence": ".runtime/sprint3-verified/reviews_test.log",
+      "sha256": "1c0904890f8709fceb33c5d48ff963d86aa58ad0ddac654916be92e3695d38a9",
+      "summary": {
+        "failures": 0,
+        "suite": "reviews"
+      }
+    },
+    {
+      "name": "progression_test",
+      "passed": true,
+      "duration_seconds": 1.8509297,
+      "evidence": ".runtime/sprint3-verified/progression_test.log",
+      "sha256": "437a55fe2525bc9c5214b4db03a336fe2eea53f2b8bb6d2f586f03b721ad58af",
+      "summary": {
+        "failures": 0,
+        "suite": "progression"
+      }
+    },
+    {
+      "name": "content_test",
+      "passed": true,
+      "duration_seconds": 4.7928114,
+      "evidence": ".runtime/sprint3-verified/content_test.log",
+      "sha256": "7ca367b28f1fe63187f4474577e56bf7a4a9ab6f8e01b953de1661b9ee143885",
+      "summary": {
+        "failures": 0,
+        "suite": "content"
+      }
+    },
+    {
+      "name": "analytics_test",
+      "passed": true,
+      "duration_seconds": 0.4997715,
+      "evidence": ".runtime/sprint3-verified/analytics_test.log",
+      "sha256": "a66a5665c5f0b3fa2372e90e7193a017caac950e2532dd1033e73b26268837ae",
+      "summary": {
+        "failures": 0,
+        "suite": "analytics"
+      }
+    },
+    {
+      "name": "checkin_diagnostics_test",
+      "passed": true,
+      "duration_seconds": 0.532163,
+      "evidence": ".runtime/sprint3-verified/checkin_diagnostics_test.log",
+      "sha256": "9d3922e2135d83718170d2e158434e95fef03dbedb25ac03da64f4739d185cc6",
+      "summary": {
+        "failures": 0,
+        "suite": "checkin_diagnostics"
+      }
+    },
+    {
+      "name": "save_multiseed_test",
+      "passed": true,
+      "duration_seconds": 7.4350717,
+      "evidence": ".runtime/sprint3-verified/save_multiseed_test.log",
+      "sha256": "f5dce6acebfd15250b66c37b4a873f660538277321aafb3fb4414d218ac2f00b",
+      "summary": {
+        "checkpoints": 20,
+        "failures": 0,
+        "states": [
+          "working",
+          "idle",
+          "walking",
+          "checkin",
+          "lift_queue",
+          "using",
+          "riding",
+          "cleaning"
+        ],
+        "suite": "save_multiseed"
+      }
+    },
+    {
+      "name": "stress_test",
+      "passed": true,
+      "duration_seconds": 9.5794671,
+      "evidence": ".runtime/sprint3-verified/stress_test.log",
+      "sha256": "54ff3c1aec1287e79ed344d6d5501a6f6b36ff5d3f3053d8e9c44241a53a5e39",
+      "summary": {
+        "failures": 0,
+        "suite": "stress"
+      }
+    },
+    {
+      "name": "admission_equivalence_test",
+      "passed": true,
+      "duration_seconds": 11.3225925,
+      "evidence": ".runtime/sprint3-verified/admission_equivalence_test.log",
+      "sha256": "d9e1d22285cc7ee18a76bc64c94099b8aa13c779d9b2d57d0f137c1f6f86b8f0",
+      "summary": {
+        "failures": 0,
+        "seeds": 3,
+        "suite": "admission_equivalence"
+      }
+    },
+    {
+      "name": "long_run_test",
+      "passed": true,
+      "duration_seconds": 30.1075266,
+      "evidence": ".runtime/sprint3-verified/long_run_test.log",
+      "sha256": "551b52890b400e4e15d59e65702d0fdd951613cc6d5429c01bcd3e00c0e15641",
+      "summary": {
+        "failures": 0,
+        "scenarios": 6,
+        "suite": "long_run"
+      }
+    },
+    {
+      "name": "departure_observer_test",
+      "passed": true,
+      "duration_seconds": 0.4362553,
+      "evidence": ".runtime/sprint3-verified/departure_observer_test.log",
+      "sha256": "2dcad4e393db7ef71d3dc7fb56dc129be2bdcf1fab03c0a215e12362b9cd4f33",
+      "summary": {
+        "failures": 0,
+        "suite": "departure_observer"
+      }
+    },
+    {
+      "name": "tariff_scenarios",
+      "passed": true,
+      "duration_seconds": 90.3735168,
+      "evidence": ".runtime/sprint3-verified/tariff_scenarios.log",
+      "sha256": "e1e0c0df60aebbef0d2f6071aa1dac73c45857149d591c06062e2e2e0cc85c68",
+      "summary": {
+        "failures": 0,
+        "scenarios": 18,
+        "suite": "tariff_scenarios"
+      }
+    },
+    {
+      "name": "mobile/audio_lifecycle_test",
+      "passed": true,
+      "duration_seconds": 0.7220517,
+      "evidence": ".runtime/sprint3-verified/mobile-audio_lifecycle_test.log",
+      "sha256": "900852cf651689d8afab07b591513cc378fce3228a117d7171967be1b2b4d64a",
+      "summary": {
+        "checks": 12,
+        "failures": 0,
+        "suite": "mobile_audio_lifecycle"
+      }
+    },
+    {
+      "name": "mobile/display_scale_test",
+      "passed": true,
+      "duration_seconds": 9.6174585,
+      "evidence": ".runtime/sprint3-verified/mobile-display_scale_test.log",
+      "sha256": "2b7fd2b1a8c542d7070db7dc24108cbfe1d7f41e0b04605f5c390f25f62887bc",
+      "summary": {
+        "cases": 5,
+        "checks": 80,
+        "densities": [
+          1,
+          2,
+          3
+        ],
+        "failures": 0,
+        "rendered": true,
+        "suite": "mobile_display_scale"
+      }
+    },
+    {
+      "name": "mobile/input_navigation_test",
+      "passed": true,
+      "duration_seconds": 0.3897776,
+      "evidence": ".runtime/sprint3-verified/mobile-input_navigation_test.log",
+      "sha256": "d2e766f1b600b93aaa25e33844a5717f67f2a56fa69ffff34fbea9dd6e6e1005",
+      "summary": {
+        "checks": 19,
+        "failures": 0,
+        "suite": "mobile_input_navigation"
+      }
+    },
+    {
+      "name": "mobile/onboarding_test",
+      "passed": true,
+      "duration_seconds": 0.8736139,
+      "evidence": ".runtime/sprint3-verified/mobile-onboarding_test.log",
+      "sha256": "a36b2ddc5f8786e63c358ec203e8abed3147b14938ac4042feeaa5ca6d37e36e",
+      "summary": {
+        "cash": 95,
+        "checks": 32,
+        "failures": 0,
+        "finished_at": 115.3,
+        "initial_stages": [
+          1,
+          2,
+          3
+        ],
+        "suite": "onboarding"
+      }
+    },
+    {
+      "name": "mobile/onboarding_touch_test",
+      "passed": true,
+      "duration_seconds": 36.4248158,
+      "evidence": ".runtime/sprint3-verified/mobile-onboarding_touch_test.log",
+      "sha256": "e667f7d41d3eb60821e28c9ff575396c37df5c97a47901acc3217957b745ddcd",
+      "summary": {
+        "checks": 282,
+        "dimensions": 3,
+        "failures": 0,
+        "input": "InputEventScreenTouch/ScreenDrag through viewport",
+        "rendered": true,
+        "starting_cash": 2400,
+        "suite": "onboarding_touch"
+      }
+    },
+    {
+      "name": "mobile/platform_adapters_test",
+      "passed": true,
+      "duration_seconds": 0.384346,
+      "evidence": ".runtime/sprint3-verified/mobile-platform_adapters_test.log",
+      "sha256": "e75e71c9c020c3f1ab00dbb3c12f613078bd81828b5d8e602d4a971c78dd65d4",
+      "summary": {
+        "checks": 17,
+        "failures": 0,
+        "suite": "mobile_platform_adapters"
+      }
+    },
+    {
+      "name": "mobile/player_work_test",
+      "passed": true,
+      "duration_seconds": 3.5675025,
+      "evidence": ".runtime/sprint3-verified/mobile-player_work_test.log",
+      "sha256": "86bc2d298eb0a921e7f2a1b48a796dc882ad3d8ee6a977bb22a9c0d284329715",
+      "summary": {
+        "checks": 2862,
+        "failures": 0,
+        "phases": [
+          "checkin:travel",
+          "checkin:action",
+          "cleaning:travel",
+          "cleaning:action",
+          "repair:action",
+          "room_service:travel_source",
+          "room_service:prepare",
+          "room_service:travel_delivery",
+          "room_service:deliver",
+          "room_service:source_queue",
+          "repair:travel"
+        ],
+        "suite": "player_work"
+      }
+    },
+    {
+      "name": "mobile/presentation_test",
+      "passed": true,
+      "duration_seconds": 0.4954039,
+      "evidence": ".runtime/sprint3-verified/mobile-presentation_test.log",
+      "sha256": "f5e7046ed8a951ca5b54c0be4e6a9e2a4812dc4fb982b1c9a3e8572511e5a3d3",
+      "summary": {
+        "checks": 833,
+        "failures": 0,
+        "suite": "mobile_presentation",
+        "translation_keys": 269
+      }
+    },
+    {
+      "name": "mobile/save_lifecycle_test",
+      "passed": true,
+      "duration_seconds": 0.5908531,
+      "evidence": ".runtime/sprint3-verified/mobile-save_lifecycle_test.log",
+      "sha256": "eb9d09bc1ccc43644655c0ba3ecf7c53596f6a13eb657582f8d72e38074e2e1a",
+      "summary": {
+        "checks": 33,
+        "failures": 0,
+        "suite": "mobile_save_lifecycle"
+      }
+    },
+    {
+      "name": "mobile/shell_layout_test",
+      "passed": true,
+      "duration_seconds": 12.231805,
+      "evidence": ".runtime/sprint3-verified/mobile-shell_layout_test.log",
+      "sha256": "a3cebefc1722c250a649bb2aefdbbaf7e6be0f3e6dcded8e6b7310580a6c2faa",
+      "summary": {
+        "checks": 372,
+        "failures": 0,
+        "rendered": true,
+        "suite": "mobile_shell_layout"
+      }
+    },
+    {
+      "name": "mobile/touch_management_test",
+      "passed": true,
+      "duration_seconds": 127.2106747,
+      "evidence": ".runtime/sprint3-verified/mobile-touch_management_test.log",
+      "sha256": "2e30ed5ce89ce0714c49f94bf26a1a03e1ab800c52dc69f777128c9129b75ffa",
+      "summary": {
+        "checks": 905,
+        "dimensions": 5,
+        "failures": 0,
+        "input": "InputEventScreenTouch/ScreenDrag via Input.parse_input_event",
+        "rendered": true,
+        "suite": "mobile_touch_management"
+      }
+    },
+    {
+      "name": "mobile/art_render",
+      "passed": true,
+      "duration_seconds": 32.4413128,
+      "evidence": ".runtime/sprint3-verified/mobile-art_render.log",
+      "sha256": "0d7e4aaaa6baf704ea8684b4f4e2eb7dcf5f1ee761aee3c664427d56b749be00",
+      "summary": {
+        "characters": 30,
+        "checks": 1244,
+        "failures": 0,
+        "rendered": true,
+        "rooms": 6,
+        "sleep_beds_verified": 6,
+        "sleep_pixel_samples": 24,
+        "suite": "mobile_art_render"
+      }
+    },
+    {
+      "name": "mobile/culling_render",
+      "passed": true,
+      "duration_seconds": 4.6780831,
+      "evidence": ".runtime/sprint3-verified/mobile-culling_render.log",
+      "sha256": "36360baf4d6a6a7e8a0e0082fc17e548a301fa702921e184a81fcf9c64dfde67",
+      "summary": {
+        "camera_cases": 11,
+        "checks": 26,
+        "failures": 0,
+        "rendered": true,
+        "suite": "mobile_culling_render"
+      }
+    },
+    {
+      "name": "mobile/actor_presentation_render",
+      "passed": true,
+      "duration_seconds": 83.0523036,
+      "evidence": ".runtime/sprint3-verified/mobile-actor_presentation_render.log",
+      "sha256": "074f5a992970d030036d26acd4fc2ec7317b92795ab2266a490a55cbf92b251f",
+      "summary": {
+        "checks": 1365,
+        "failures": 0,
+        "phases": 4,
+        "rendered": true,
+        "suite": "mobile_actor_presentation_render",
+        "waiting_contexts": 11,
+        "zooms": 3
+      }
+    }
+  ],
+  "captures": [
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-display_scale_test/Godot/app_userdata/Hotel Empire/mobile-density-360-1x.png",
+      "sha256": "132f06cd460881729bb9732bb534b08b2020be4fc9035b20991a1b5c268a05ed"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-display_scale_test/Godot/app_userdata/Hotel Empire/mobile-density-360-2x.png",
+      "sha256": "f9760581bf75a6205d092f1283ea88e3e247836c12a3663cf55f3b917db0c0f4"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-display_scale_test/Godot/app_userdata/Hotel Empire/mobile-density-360-3x.png",
+      "sha256": "35816f468f93264fc8ac903cb510abd9714e5ee294c42b4896467957f99d8934"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-display_scale_test/Godot/app_userdata/Hotel Empire/mobile-density-844-2x.png",
+      "sha256": "c20bfa518cf1a8b641484d8c67ed505f2dffe2ec4a87a6d6cfd4ba65c3217a0e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-display_scale_test/Godot/app_userdata/Hotel Empire/mobile-density-1280-1x.png",
+      "sha256": "a1132f821438a5ecace2743c4f76fb1dfae5abb02eeeac2816e06a5b58c04569"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-start-320x568.png",
+      "sha256": "6a91ade35d532f3357959e82abcb7d09cb26ef6a804482ef2408b452c12061fe"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-checkin-320x568.png",
+      "sha256": "130b21cf4dd6362870d95214034d836f4c812ab7443e622c4721d39c3216be51"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-room-service-320x568.png",
+      "sha256": "703b35efb504f112da8b7a34a58ee6da2b7aeb6dbb82b09d0877f1cc15cb9fb2"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-cleaning-320x568.png",
+      "sha256": "1c316e9336918ed1055e2d65290997e465f4ff3ec5107b23a573e45b18f71fa0"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-done-320x568.png",
+      "sha256": "ffae035f4a43914b33ef4428054b2ba68f1176bb3a45e49ff96b38ad614328e3"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-start-568x320.png",
+      "sha256": "3475366d39e794b2e01a4408495209303e389f4741fb52be9ae336fcde12dd83"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-checkin-568x320.png",
+      "sha256": "16efdf5e33ea8c0e705e8ecbf4e31176f7216272b303662481a46c2b10eb0e1e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-room-service-568x320.png",
+      "sha256": "762fa160d93d5b451b54c1fc295b5fb6d866bc161f9712d635c18cb3f4955ba9"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-cleaning-568x320.png",
+      "sha256": "43c0449a06493839de126725549334756066a57b144da6a53fd5fd33d5ffb823"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-done-568x320.png",
+      "sha256": "993596ccd7b047d941508c16720009765198926b7b403754f4e4b10979ddab6b"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-start-1280x800.png",
+      "sha256": "1ec3ebf2be289dfd01592bb146db0e62f8967251e8c539c4e038918def246e3a"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-checkin-1280x800.png",
+      "sha256": "877a72cddba34a9227492c2d410976905aafe4e3b7bbca3975e50b7dda6fd1b7"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-room-service-1280x800.png",
+      "sha256": "c96c4dc87ea0718cd93a64dab0e7ee68c3c0d1c49178027c32791a57734b6f33"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-cleaning-1280x800.png",
+      "sha256": "dd386abc2380b8edfb573a8121731a7457edbd84d3d4bde01d04e4ab5f6863e3"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-onboarding_touch_test/Godot/app_userdata/Hotel Empire/mobile-intro-done-1280x800.png",
+      "sha256": "3538ca18f861a7bab10323e587d54860668b21963e305244667fde56f9e0f2e9"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-320x568-pt_BR.png",
+      "sha256": "844acd897e7ec1e23908b781a09b547473e2d214db8cf7b30f9d9a8461b71608"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-320x568-en.png",
+      "sha256": "aedecb97a77c848a0f0070dae1a15b3edf0bbb91b3a561a23107ef42839e4466"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-320x568-es.png",
+      "sha256": "f3b28f982b7eed98a5a7780433914cbc2a4843590d342d6e769132b910fd2732"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-568x320-pt_BR.png",
+      "sha256": "b57f527d7d524c0ebaa2df12b3f1d40e06ac9f6dda7e702c6ed7f07585f82f2e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-568x320-en.png",
+      "sha256": "9ac6e2c515b4c2e37df8d12fff8ff8c94d169331c143f57e9f2b79cd55582660"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-568x320-es.png",
+      "sha256": "7f2b6462091fad909fa7dfa72520e5b167190161bbb8e15de4086bf01d5731dd"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-360x780-pt_BR.png",
+      "sha256": "4fc90b4154168886cced3b80103875d04e7b2a05fd68c44fe73404f95f6fbbd0"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-360x780-en.png",
+      "sha256": "a1a01900f7e9d3a72a0960d86c04aad9fc503bccfc1b113c7077dd1605e93dde"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-360x780-es.png",
+      "sha256": "3e5af4fb89bdf9153f51457b2d91a45b63ba86354bcb5f0799e2fbaf95c5dbd6"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-844x390-pt_BR.png",
+      "sha256": "f4f4d6815693e08681e084688e7b7e40140a79a89f66bcf4ec8090dab28dacfb"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-844x390-en.png",
+      "sha256": "4c7c3c74cc20d14ad117b796283b1722e5687fe369c588d1755b227f4ccb0849"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-844x390-es.png",
+      "sha256": "284d6243bf3cda96783093f3ec5a5a22c0b83678fe101d7a3d94b5d63942b7f2"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-960x540-pt_BR.png",
+      "sha256": "113c7f84c56b324e2f7ef2c8746be15eceed5b6e56fae3f9e11ee6e0933a6e4f"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-960x540-en.png",
+      "sha256": "3ff0fa35cdcde59ecd1e03fbcdf9f2438a890421ae5cf535ea2b727eac283ed4"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-960x540-es.png",
+      "sha256": "80c64515f0a534110502c11740e3f910b6bdcc7682ea7da09903a4be4c61002e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-1280x800-pt_BR.png",
+      "sha256": "9b2ebbfa02e517a16f99164c31e5a926383dfa2727adb0bda32f5bf4b3f4740e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-1280x800-en.png",
+      "sha256": "3d565fbde6083beb06e5c82c1b706bcb9b3dd3e2c70cddabecd2f342d8187c7d"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-shell_layout_test/Godot/app_userdata/Hotel Empire/mobile-1280x800-es.png",
+      "sha256": "727b7ec9d5a0c959df21d4fbee2105d6acdef565c7aef63665b94839318fbc94"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-room-320x568.png",
+      "sha256": "7a338eee407b3630682bbca38b9b40fd039a1bedcd872130f62f76195435f7cc"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-finance-320x568.png",
+      "sha256": "3a5cd83d254fc2d814af4dcfd750c00cbf08de18be1ee42dfaa89274ed52a680"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-reviews-320x568.png",
+      "sha256": "89e11ddbbeb1d62b8492491adb00778e77d55663fd3c27af5de982fdeeb171a3"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-settings-large-320x568.png",
+      "sha256": "a6ce33ef339f6de01c10d829bb14fc9702ebf511bffd0faaed5c4ae153bfe092"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-room-568x320.png",
+      "sha256": "351fe840cbb7e690ba177121f3c8534d9402ca5e23e34426ad297cd95c6c3eb1"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-finance-568x320.png",
+      "sha256": "fbb8ec2447a07e2eeaa0f9e29ab2e52c8d25e4ddfe467171044b747a83ac3aa3"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-reviews-568x320.png",
+      "sha256": "920986603112b88d2d1b6befa3dda1eb3efa1c47bc90799422384d8600b8aab5"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-settings-large-568x320.png",
+      "sha256": "46e8c79cd7ecb7751028777af689c5c1ee4707ef36fec9bcf47db652bb3bcf0f"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-room-360x780.png",
+      "sha256": "57a2ab9c3123420568e97af6e0ed8fbc6d35b4163d01d24df902eb97b070453c"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-finance-360x780.png",
+      "sha256": "d8ab06e7dffa5b6a94db12fe975962abdc3331bdc7d7e8a137da847a79581439"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-reviews-360x780.png",
+      "sha256": "f2c94c416538e02bcbdbc714930891f91a71b06ea68ab0db48530956795bd81e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-settings-large-360x780.png",
+      "sha256": "41e958bb79b2baf77dc817e4a0946fa724f6f042da45351ef4da40a15d0b8ab3"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-room-844x390.png",
+      "sha256": "a7d4d59eeb6d927ecc5650c141b4e2795d1dafe75a65cf3a38abc9f880826cce"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-finance-844x390.png",
+      "sha256": "dfed8a2c0d0b7c2d83c9dfc5d94603455032e8334d2451a716d25cfa7726fb03"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-reviews-844x390.png",
+      "sha256": "59c496ed96107f3d4920232eab6fed2f2fdab3093e2b436d47061305ad4401c3"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-settings-large-844x390.png",
+      "sha256": "29a99ff75885ba5e85550ef99cb4f56b4739d4d9c61a61c7a1b7515cf0055b4f"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-room-1280x800.png",
+      "sha256": "b70198fa87930b5c04d0753a962cadb52b820fbe755e8cbb7f74a27601d5732a"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-finance-1280x800.png",
+      "sha256": "229aafc03167e8529711687e334b70a56f904ad803361ea76e99337ba57434de"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-reviews-1280x800.png",
+      "sha256": "2aeeeb3b8f7a6aea11bc1b25c4f1211b38cc4139506fc124e8a237fac2c605c9"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-touch_management_test/Godot/app_userdata/Hotel Empire/mobile-settings-large-1280x800.png",
+      "sha256": "0d721d1bbb97098de35601f1d5682384456babacf72a9a989881ba291d1e3e9e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-art-0.35.png",
+      "sha256": "9f20f633200758dc20e662bc6f00cb4f274f03e4ad0c4aa972beb2188c89c46f"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-art-0.90.png",
+      "sha256": "fdf685ea1d2d8e7c3b569351292e27ad24a9247c31cba15877f005fd09c29c41"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-art-1.80.png",
+      "sha256": "91530ce9ae421b904f88f60c83a45885643d9b270a6b60473f97f1ff4fd398cd"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-cafe-frame-0.png",
+      "sha256": "91530ce9ae421b904f88f60c83a45885643d9b270a6b60473f97f1ff4fd398cd"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-cafe-frame-1.png",
+      "sha256": "99335f5433ab2c7a151e8b5e9a2c62bfda4c0884c1188fcb64fc5a67b20eb815"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-cafe-frame-2.png",
+      "sha256": "005f4a968c2243ec6a7d8186976ff0e256eec9fafbc29e0d3836b7e9a0e5fca0"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-cafe-frame-3.png",
+      "sha256": "66d812ea30ed6df154f83b2be8fd02b1fd3283a681122068e2a4afb5aa636c0b"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-dining-frame-0.png",
+      "sha256": "cc77b25c75b68a5be434cb4fa3de80ccf5e3415c195c49cd0e5e27f400c5f730"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-dining-frame-1.png",
+      "sha256": "6de05c0cf417a3ff02e5dbbfdde72c0a1f04fca3116e7147dddef88c90f71eb0"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-dining-frame-2.png",
+      "sha256": "9499a36b2d92ddad0697ef037adcef6bf36662730384e971ae364b5bf36be6ac"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-dining-frame-3.png",
+      "sha256": "1911e054ffbdcfe42d3c09aed315ab0b0de1db2becbdf4deb17f13735a9781ea"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-reading-frame-0.png",
+      "sha256": "91530ce9ae421b904f88f60c83a45885643d9b270a6b60473f97f1ff4fd398cd"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-reading-frame-1.png",
+      "sha256": "aed9bb672e6c3575f973325d3548040f3b96b33eeffd53895fbe1d2f7c0c2796"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-reading-frame-2.png",
+      "sha256": "66d812ea30ed6df154f83b2be8fd02b1fd3283a681122068e2a4afb5aa636c0b"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-reading-frame-3.png",
+      "sha256": "2a9bc9434ec54f89b937b84c70dd709abe15517d6c70a0229bca79a8efcb1df4"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-staff-idle-frame-0.png",
+      "sha256": "5635d9d89b7ef7390c0937fcd5e4b1bd9073199d2303440a9b79c26f88070903"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-staff-idle-frame-1.png",
+      "sha256": "d4b21708190674bb2e648c2235ad13c00acc69b6989c817b06ad2c4baaa33acb"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-staff-idle-frame-2.png",
+      "sha256": "03c392ab90772e816f78018266436a74ba149b800c35e245604733098e038125"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-staff-idle-frame-3.png",
+      "sha256": "eb79dadceccdf7e87f9d664a9425f72431010c3a8bc6ce26a0e99b3623e90a8d"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-sleeping-loop-frame-0.png",
+      "sha256": "32b74b8b0cc64397df496fe6323e2f76aaede9f9075ee4c7a8ffa7efa8ed8616"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-sleeping-loop-frame-1.png",
+      "sha256": "54d457c7e2f79eba647a8f0c81c97993db9eca512d72cf478b55ebe0d5155846"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-sleeping-loop-frame-2.png",
+      "sha256": "25f87d5380de77ae0d12b0c6f3356eda4025c62ec3e5a56dc301b688403f0f2f"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-sleeping-loop-frame-3.png",
+      "sha256": "b648376bbeeef4f2e6612b452dacca0ee6ac33c29ff8a6d8dddf79720ce3544d"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-housekeeping-0.35.png",
+      "sha256": "45648c39af95bba91533e58c1ae58fa734ec15edf7fd9cb5a96cd20a0155b194"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-housekeeping-0.9.png",
+      "sha256": "4c5057d35a6d7f9979fe3223b65754f25c33c3345998b205f217b0544d883f93"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-housekeeping-1.8.png",
+      "sha256": "80ca00b2e94637e233ee1ad2ab63a79a18027c53bbeaa5a2d2c710f1b9297a0f"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-art_render/Godot/app_userdata/Hotel Empire/m7-housekeeping-cleaned.png",
+      "sha256": "53c6c05bf14e9a2eeaa0e2081ed3080395760340887d8645c9da68ae1e18e242"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-queue-presentation-0.png",
+      "sha256": "9ad07160d048983e36323929486c6605a0e253ceebd09125c73b834c3b60e372"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-queue-presentation-1.png",
+      "sha256": "67e060a47fb67e90d02bfdd8482439f878843e9e66213b8d41b1f871d7b5235e"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-queue-presentation-2.png",
+      "sha256": "114e48cf669d7a6cfd054405e06a5098825f1d1a6fea13a91631519993343784"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-queue-presentation-3.png",
+      "sha256": "5803fbe38b3403fe2a9245adba712001aa802c9cf9f56ec0ab8edd1b9d09e424"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-fifo-queue-0.35.png",
+      "sha256": "9f17d2c1c08fb3134005abad1c155db0d582fc359c9ebfc40f16cd587ad48483"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-fifo-queue-0.9.png",
+      "sha256": "92311b1634a59984396ca9fb1cadc65fe5cc3721adc241d3833cb02d8ef5785c"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-fifo-queue-1.8.png",
+      "sha256": "f56008fe6e7661cf883cbd1ba07965befdba6ff3caadfec031bcd7d39e9f09b8"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-travel-balanced--1.png",
+      "sha256": "1211e3aae772a15796ba1ba97631699d7058209756ade91fd8b67890366f6f13"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-travel-balanced-1.png",
+      "sha256": "0a4e25279fc18015e17f530d19e89501e5560569379790a4a614cd539b02c16b"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-travel-business--1.png",
+      "sha256": "6612df431d8fc4aba7f3aee931dbfd10a90540d492bf6d21c9eadc065b9deeca"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-travel-business-1.png",
+      "sha256": "3dba4af85ea3c7f628281a615262c3bf6127b2b6ffe52f3b0c0edc7079ae8681"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-travel-leisure--1.png",
+      "sha256": "d86767e24b2a968bbbc615cc03786691e5aa0c60008d42db7ae9e90d0bee3fa7"
+    },
+    {
+      "path": ".runtime/native-tests/20261001T080126Z/mobile-actor_presentation_render/Godot/app_userdata/Hotel Empire/m7-travel-leisure-1.png",
+      "sha256": "720e1d718e841d65c1c6807070365b9d2faeafd165353b92ad8a80d7808e6834"
+    }
+  ],
+  "icon_review": {
+    "path": ".runtime/sprint3-verified/sprint3-icon-review.log",
+    "sha256": "0ebeb1dcbafd4ca09338f92945e1d06fd08b2bce763abde941f0b24215f41f48",
+    "icons": [
+      {
+        "action": "repair",
+        "alpha": 2,
+        "height": 128,
+        "icon_max_width": 32,
+        "width": 128
+      },
+      {
+        "action": "room_service",
+        "alpha": 2,
+        "height": 128,
+        "icon_max_width": 32,
+        "width": 128
+      }
+    ],
+    "capture": {
+      "path": ".runtime/sprint3-icon-review/Godot/app_userdata/Hotel Empire/sprint3-icon-review.png",
+      "sha256": "dc8ab90f5464126c2b0e3ce7cc0bc706135440b92c3c5c1f4241f2371ab28203"
+    },
+    "generation": "built-in image_gen; individual original PNGs; assets/art/sprint3-generation.json"
+  },
+  "pacing": {
+    "starting_cash": 2400,
+    "policy": "Build reception/bedroom, open; check in FIFO head; build restaurant after first booking; deliver first eligible order; clean after departure, repair, hire when affordable; at most a second manual checkin while waiting.",
+    "seeds": [
+      {
+        "seed": 1,
+        "first_booking_seconds": 3.6,
+        "solo_to_hire_seconds": 105.7,
+        "cash_after_hire": 67
+      },
+      {
+        "seed": 17,
+        "first_booking_seconds": 3.7,
+        "solo_to_hire_seconds": 111.8,
+        "cash_after_hire": 207
+      },
+      {
+        "seed": 123,
+        "first_booking_seconds": 3.7,
+        "solo_to_hire_seconds": 96.0,
+        "cash_after_hire": 39
+      },
+      {
+        "seed": 9001,
+        "first_booking_seconds": 3.5,
+        "solo_to_hire_seconds": 109.7,
+        "cash_after_hire": 207
+      },
+      {
+        "seed": 54321,
+        "first_booking_seconds": 3.5,
+        "solo_to_hire_seconds": 135.5,
+        "cash_after_hire": 199
+      }
+    ],
+    "application_guide_seconds": 115.3,
+    "application_cash_after_hire": 95,
+    "limitations": "Deterministic policy measurements; not proof of human comprehension, enjoyment or retention."
+  },
+  "android_debug": {
+    "path": "builds/android/HotelEmpireMobile.apk",
+    "sha256": "d83e2648dc6ec0d8f3248fc731555d2dd97a04c39b3b5b549e5501892a838b24",
+    "bytes": 116414832,
+    "package": "com.ghpxd.hotelempiremobile",
+    "version": "0.5.0",
+    "version_code": 3,
+    "architecture": "arm64-v8a",
+    "min_sdk": 24,
+    "target_sdk": 36,
+    "vibrate_permission": true,
+    "export_warnings": [],
+    "manifest_evidence": ".runtime/sprint3-android-manifest.txt",
+    "manifest_sha256": "4f2424811cd1d164ed602095882b652afe0e5c540256273a950e301636793030",
+    "export_evidence": ".runtime/sprint3-android-export.json",
+    "export_sha256": "08bf58b7b531a7b3567b864d2030959f8edfe2d2934a252021dfcf6f1f91f9da",
+    "legacy_and_test_entries": []
+  },
+  "release_gates_pending": [
+    "Android device/AVD installation and actual OS kill/resume/rotation/cutouts/haptic",
+    "iOS macOS/Xcode/template/Team ID build and device QA",
+    "Store sandbox IAP/ads/restore and production signing",
+    "Device RAM/VRAM, boot/frame time and battery across tiers",
+    "User evaluation only at Sprint 15"
+  ],
+  "next_sprint": "4: employee XP/levels/traits, delegation and supervision"
+}

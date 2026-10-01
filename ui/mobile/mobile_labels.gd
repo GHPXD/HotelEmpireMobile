@@ -3,6 +3,8 @@ extends RefCounted
 ## Localized read-only descriptions of simulation facts.
 
 static func actor_name(actor: ActorState) -> String:
+	if actor.role == &"player":
+		return TranslationServer.translate("work.you")
 	if actor.role == &"guest":
 		return TranslationServer.translate("actor.guest") % actor.id
 	return TranslationServer.translate("staff." + String(actor.role) + ".name") + " #%d" % actor.id
@@ -26,7 +28,21 @@ static func actor_details(actor: ActorState, hotel: HotelModel) -> String:
 	return text
 
 static func checkin(session: HotelSession, room: RoomState) -> String:
+	if session.player_work.job.get("kind") == "checkin" and session.player_work.job.get("target_room") == room.id:
+		return TranslationServer.translate("work.manual_checkin")
 	return TranslationServer.translate("checkin." + CheckinDiagnostics.reason(session, room))
+
+static func player_work(session: HotelSession) -> String:
+	var work := session.player_work
+	if work.job.is_empty():
+		return TranslationServer.translate("work.returning") if work.busy(session) else TranslationServer.translate("work.idle")
+	var room := session.hotel.by_id(int(work.job.target_room))
+	var text := TranslationServer.translate("work.status") % [TranslationServer.translate("work." + String(work.job.kind)), TranslationServer.translate("work.phase." + String(work.job.phase)), room_name(room) if room != null else ""]
+	if work.job.phase in ["action", "prepare", "deliver"]:
+		text += "\n" + TranslationServer.translate("work.remaining") % float(work.job.remaining)
+	if work.job.kind == "room_service":
+		text += "\n" + TranslationServer.translate("work.delivery_price") % MobileLocale.number(int(work.job.price))
+	return text
 
 static func elevator(metrics: Dictionary) -> String:
 	var text := TranslationServer.translate("lift.current") % [metrics.passengers, metrics.capacity, metrics.queue, roundi(metrics.current_max)]
@@ -60,6 +76,10 @@ static func transaction_reason(reason: String) -> String:
 		key = "salaries"
 	elif reason == "Hospedagem":
 		key = "lodging"
+	elif reason == "Reparo simples":
+		key = "repair"
+	elif reason == "Room service":
+		key = "room_service"
 	else:
 		for definition: RoomDefinition in HotelCatalog.ROOMS:
 			if reason == definition.display_name:

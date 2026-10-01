@@ -5,6 +5,8 @@ extends RefCounted
 signal session_changed
 signal simulation_advanced
 signal lifecycle_changed(background: bool)
+signal player_work_changed(kind: String, phase: String, result: String)
+signal guide_advanced(stage: int)
 
 var session: HotelSession
 var saves: SaveService
@@ -12,6 +14,8 @@ var background: bool = false
 var accumulator: float = 0.0
 var boot_status: String = ""
 var last_error: String = ""
+var onboarding := OnboardingService.new()
+var enable_onboarding: bool = true
 
 func _init(save_service: SaveService = null) -> void:
 	saves = save_service if save_service != null else SaveService.new()
@@ -22,9 +26,16 @@ func boot() -> String:
 	last_error = result.error
 	if last_error.is_empty():
 		session = result.session
+		if saves.app_state.has("onboarding"):
+			onboarding.restore(saves.app_state.onboarding)
+		elif boot_status == "new" and enable_onboarding:
+			session.economy.cash = session.player_work.rules.mobile_starting_cash
+			onboarding.start()
 		background = false
 		accumulator = 0.0
 		session_changed.emit()
+		if boot_status == "new" and enable_onboarding:
+			checkpoint(&"profile_created")
 	return last_error
 
 func advance(delta: float) -> void:
@@ -33,10 +44,18 @@ func advance(delta: float) -> void:
 	# Preserve the fixed tick and cap catch-up after a delayed foreground frame.
 	accumulator += minf(delta, 0.25) * session.speed
 	var advanced := false
+	var work_revision: int = session.player_work.revision
+	var work_kind: String = session.player_work.job.get("kind", "")
 	while accumulator + SimulationRules.TIME_EPSILON >= session.rules.tick:
 		session.tick(session.rules.tick)
 		accumulator = maxf(0.0, accumulator - session.rules.tick)
 		advanced = true
+	if session.player_work.revision != work_revision:
+		checkpoint(&"player_work_transition")
+		player_work_changed.emit(work_kind, session.player_work.job.get("phase", ""), session.player_work.last_result)
+	elif onboarding.observe(session):
+		guide_advanced.emit(onboarding.stage)
+		checkpoint(&"onboarding")
 	saves.advance_autosave(delta, session)
 	if advanced:
 		simulation_advanced.emit()
@@ -61,8 +80,42 @@ func resume() -> void:
 func checkpoint(reason: StringName = &"command") -> String:
 	if session == null:
 		return "save.error.invalid"
+	if onboarding.observe(session):
+		guide_advanced.emit(onboarding.stage)
+	if onboarding.enabled:
+		saves.app_state["onboarding"] = onboarding.snapshot()
 	last_error = saves.checkpoint(session, reason)
 	return last_error
+
+func start_player_work(kind: String, target_id: int) -> String:
+	var error := session.player_work.start(session, kind, target_id)
+	if not error.is_empty():
+		return "work.error." + error
+	player_work_changed.emit(kind, "travel", "started")
+	return checkpoint(&"player_work_start")
+
+func start_room_service(order_id: int) -> String:
+	var error := session.player_work.start_order(session, order_id)
+	if not error.is_empty():
+		return "work.error." + error
+	player_work_changed.emit("room_service", "travel_source", "started")
+	return checkpoint(&"player_work_start")
+
+func cancel_player_work() -> String:
+	var kind: String = session.player_work.job.get("kind", "")
+	if not session.player_work.cancel(session):
+		return "work.error.no_task"
+	player_work_changed.emit(kind, "", "cancelled")
+	return checkpoint(&"player_work_cancel")
+
+func return_player() -> String:
+	var error := session.player_work.return_to_lobby(session)
+	return checkpoint(&"player_return") if error.is_empty() else "work.error." + error
+
+func set_guide_skipped(skipped: bool) -> String:
+	onboarding.start()
+	onboarding.skipped = skipped
+	return checkpoint(&"onboarding")
 
 func build(definition: RoomDefinition, column: int, floor_index: int) -> Dictionary:
 	if session == null:

@@ -98,6 +98,22 @@ reviews; `HotelAnalytics` permanece uma projeção somente de leitura. `AppRoot`
 encaminha construção, upgrade, tarifa, contratação, assignment e demolição ao
 controller, que faz checkpoint após o comando. Confirmações são sheets Control.
 
+Sprint 3: `PlayerWorkSystem` pertence à `HotelSession`. Seu `ActorState` com role
+`player` usa `TransportSystem`, ocupa uma tarefa e reserva sala/capacidade de
+preparação. `EmployeeSystem` processa apenas roles de funcionários. Admissão é
+compartilhada em `GuestSystem.admit`; a UI não possui autoridade sobre cobranças.
+`RoomState.condition` degrada por uso; reparo consome materiais como despesa.
+`PlayerWorkSnapshot` valida dono, fase, passageiros, referências e reservas no
+snapshot de domínio v8; migrations v1–v7 deixam instalações antigas intactas.
+
+`OnboardingService` pertence ao `GameController` e acompanha fatos concluídos.
+Seu módulo v1 fica em `SaveService.app_state`, preservando outros módulos. Perfis
+novos recebem o orçamento mobile e checkpoint inicial; existentes preservam Cash
+e têm guia opcional. Transições/conclusões de trabalho e etapas fazem checkpoint.
+Background suspende todos os timers ativos; construção/offline agregado é Sprint 5.
+Analytics local inclui `manual_work` e `tutorial_progress`, com fila limitada,
+propriedades permitidas e provider indisponível; schema completo é Sprint 13.
+
 `MobileDisplayScale` converte resolução física/densidade em unidades lógicas no
 Android/iOS antes de criar a interface. `MobileSafeArea` converte os insets físicos
 nessa mesma escala. Targets têm altura mínima de 48 unidades; contexto fica abaixo

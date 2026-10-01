@@ -15,12 +15,15 @@ var room_floor: int = -1
 var updates: Array[Callable] = []
 var sound_enabled: bool = true
 var haptics_enabled: bool = true
+var onboarding: OnboardingService
+var structure_key: String = ""
 
 func _init(presentation: MobileShell) -> void:
 	shell = presentation
 
 func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) -> void:
 	session = value
+	structure_key = _structure()
 	updates.clear()
 	shell.clear_sheet()
 	var title := "ui." + String(router.screen)
@@ -63,7 +66,19 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 				&"store": _text(tr("store.unavailable"))
 	shell.sheet_title.text = tr(title)
 	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm"])
+	structure_key = _structure()
 	refresh()
+
+func needs_rebuild() -> bool:
+	return session != null and structure_key != _structure()
+
+func _structure() -> String:
+	var key := "%d:%d:%s:%d:%s" % [session.actors.size() - session.guest_count(), session.hotel.rooms.size(), str(session.player_work.job.is_empty()), onboarding.stage if onboarding != null else -1, str(onboarding.skipped if onboarding != null else true)]
+	for order in session.player_work.orders:
+		key += ":o%d" % int(order.id)
+	for room in session.hotel.rooms:
+		key += ":%d:%s" % [room.id, str(room.dirty)]
+	return key
 
 func refresh() -> void:
 	for update in updates:
@@ -122,6 +137,12 @@ func _build() -> void:
 	_action("ui.floor", &"add_floor", {}, HotelArt.action_icon(&"add_floor")).text = tr("ui.floor") % MobileLocale.number(HotelModel.FLOOR_COST)
 
 func _overview() -> void:
+	if session.player_work.job.is_empty():
+		_guide()
+		_manual_overview()
+	else:
+		_manual_overview()
+		_guide()
 	_live(func() -> String:
 		var stats := HotelAnalytics.summary(session)
 		return tr("hotel.summary") % [roundi(stats.occupancy), stats.dirty, stats.room_queue + stats.lift_queue])
@@ -134,15 +155,24 @@ func _room(id: int) -> void:
 	if room == null:
 		_text(tr("error.command"))
 		return
+	_work_status()
 	_live(func() -> String:
 		return tr("ui.room_details") % [MobileLabels.room_name(room), room.level, room.capacity(), MobileLocale.number(room.income)])
 	if room.definition().category == &"reception":
 		_live(func() -> String: return MobileLabels.checkin(session, room))
+		_work_button("checkin", id, HotelArt.staff_icon(&"receptionist"))
 		_link(&"staff", HotelArt.staff_icon(&"receptionist"))
 	elif room.definition().category == &"transport":
 		_live(func() -> String: return MobileLabels.elevator(HotelAnalytics.elevator(session, session.transport.lift_by_id(room.id))))
 	else:
 		_live(func() -> String: return tr("room.operation") % [room.queue.members.size(), tr("room.dirty" if room.dirty else "room.clean"), tr("room.busy" if room.busy() else "room.free")])
+	if room.definition().category == &"lodging":
+		_work_button("cleaning", id, HotelArt.staff_icon(&"cleaner"))
+		_orders(id)
+	if room.definition().category != &"transport":
+		_live(func() -> String: return tr("work.condition") % [room.condition, roundi((100 - room.condition) * session.player_work.rules.maximum_slowdown)])
+		_work_button("repair", id, HotelArt.action_icon(&"repair"))
+		_text(tr("work.repair_cost") % MobileLocale.number(session.player_work.rules.repair_cost))
 	var next := room.next_upgrade()
 	if next != null:
 		var upgrade := _action("ui.upgrade", &"upgrade", {"id": id}, HotelArt.action_icon(&"upgrade"))
@@ -180,7 +210,10 @@ func _actor(id: int) -> void:
 	_text(MobileLabels.actor_name(actor))
 	_live(func() -> String:
 		return MobileLabels.actor_details(actor, session.hotel) if session.actors.has(id) else tr("actor.departed"))
-	if actor.role != &"guest":
+	if actor.role == &"player":
+		_work_status()
+		_action("work.return", &"player_return", {}, HotelArt.build_icon(&"reception"))
+	elif actor.role != &"guest":
 		_inspect(&"employee", id, tr("staff.assign"), HotelArt.staff_icon(actor.role))
 
 func _staff() -> void:
@@ -190,7 +223,7 @@ func _staff() -> void:
 		_text(tr("staff.costs") % [MobileLocale.number(definition.hire_cost), MobileLocale.number(definition.salary)])
 	var count := 0
 	for actor: ActorState in session.actors.values():
-		if actor.role == &"guest":
+		if actor.role not in [&"receptionist", &"cleaner"]:
 			continue
 		count += 1
 		_inspect(&"employee", actor.id, MobileLabels.actor_name(actor), HotelArt.staff_icon(actor.role))
@@ -199,7 +232,7 @@ func _staff() -> void:
 
 func _employee(id: int) -> void:
 	var actor: ActorState = session.actors.get(id)
-	if actor == null:
+	if actor == null or actor.role not in [&"receptionist", &"cleaner"]:
 		_text(tr("error.command"))
 		return
 	_portrait(actor)
@@ -270,6 +303,7 @@ func _reviews() -> void:
 		_text(MobileLabels.review(session.guests.reviews[index], session.rules.day_seconds))
 
 func _missions() -> void:
+	_guide()
 	for objective in HotelProgression.OBJECTIVES:
 		_text(tr("objective." + String(objective.id)))
 		if session.progression.completed.has(objective.id):
@@ -297,3 +331,66 @@ func _portrait(actor: ActorState) -> void:
 	picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	picture.texture = HotelArt.portrait(actor)
 	shell.sheet_content.add_child(picture)
+
+func _guide() -> void:
+	if onboarding == null:
+		return
+	if not onboarding.enabled or onboarding.skipped:
+		_action("guide.start", &"guide_resume", {}, HotelArt.management_icon(&"help"))
+		return
+	_text(tr("guide.title"))
+	_live(func() -> String: return tr("guide.progress") % [onboarding.stage, OnboardingService.STEPS.size()])
+	_text(tr("guide." + onboarding.step_id()))
+	if onboarding.active():
+		_action("guide.action", &"guide_next", {}, HotelArt.management_icon(&"objectives"))
+		_action("guide.skip", &"guide_skip", {}, HotelArt.management_icon(&"help"))
+
+func _manual_overview() -> void:
+	_text(tr("work.title"))
+	_work_status(true)
+	if session.player_work.job.is_empty():
+		for room in session.hotel.rooms:
+			if room.definition().category == &"reception":
+				_work_button("checkin", room.id, HotelArt.staff_icon(&"receptionist"))
+			elif room.dirty:
+				_work_button("cleaning", room.id, HotelArt.staff_icon(&"cleaner"))
+	_orders()
+	if session.player_work.orders.is_empty():
+		_text(tr("work.orders_empty"))
+
+func _work_status(always: bool = false) -> void:
+	if not always and session.player_work.job.is_empty():
+		return
+	if not session.player_work.job.is_empty():
+		_action("work.cancel", &"player_cancel")
+	_live(func() -> String: return MobileLabels.player_work(session))
+	if not session.player_work.job.is_empty():
+		var progress := ProgressBar.new()
+		progress.custom_minimum_size.y = 16
+		progress.show_percentage = false
+		shell.sheet_content.add_child(progress)
+		updates.append(func() -> void:
+			var job := session.player_work.job
+			progress.value = 100 * (1.0 - float(job.get("remaining", 0.0)) / maxf(0.1, float(job.get("duration", 1.0)))) if job.get("phase") in ["action", "prepare", "deliver"] else 0)
+
+func _work_button(kind: String, id: int, icon: Texture2D) -> void:
+	var room := session.hotel.by_id(id)
+	var button := _action("work." + kind, &"player_work", {"kind": kind, "id": id}, icon)
+	button.text = tr("work." + kind) + " · " + MobileLabels.room_name(room)
+	var reason := _text("")
+	updates.append(func() -> void:
+		var error := session.player_work.task_error(session, kind, id)
+		button.disabled = not error.is_empty()
+		reason.text = tr("work.error." + error) if not error.is_empty() else tr("work.ready"))
+
+func _orders(bedroom_id: int = -1) -> void:
+	for order in session.player_work.orders:
+		var guest: ActorState = session.actors.get(int(order.guest_id))
+		if guest == null or (bedroom_id >= 0 and guest.bedroom != bedroom_id):
+			continue
+		var button := _action("work.room_service", &"room_service", {"order_id": int(order.id)}, HotelArt.action_icon(&"room_service"))
+		button.text = tr("work.order") % [MobileLabels.actor_name(guest), MobileLabels.room_name(session.hotel.by_id(guest.bedroom))]
+		updates.append(func() -> void: button.disabled = not session.player_work.order_error(session, int(order.id)).is_empty())
+		var source := session.player_work.food_source(session, guest, guest.floor_index)
+		if source != null:
+			_text(tr("work.delivery_price") % MobileLocale.number(source.price()))

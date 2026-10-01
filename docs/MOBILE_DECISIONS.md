@@ -61,3 +61,21 @@ Android declara VIBRATE para a API de feedback:
 Capturas e eventos locais comprovam layout e roteamento no renderer do host.
 Efeito háptico físico, ergonomia, rotação/notch reportados pelo OS e performance
 em Android/iOS continuam sendo gates próprios do Sprint 15.
+
+## Operação inicial
+
+Novo perfil mobile começa com 2.400 Cash, sem equipe e sem salas gratuitas;
+recepção + quarto deixam 1.000 Cash para restaurante/expansão. O domínio de estudos
+mantém 12.000 por compatibilidade das políticas de benchmark. Migração não reduz
+Cash existente. Guia acompanha nove fatos, sem congelar simulação ou bloquear
+compras; pode ser ocultado/retomado. Não cobra Gems/IAP para avançar o early game.
+
+Uma tarefa manual física por vez: 1,5–3 segundos no alvo, mais caminhada/elevador.
+Receita deriva de hóspede/orçamento real; reparo usa despesa de materiais somente
+na conclusão. Wear máximo custa 20% de tempo adicional, sem fechar instalações;
+incidentes e operação especializada ficam para Sprint 9. A tarefa e o cancelamento
+têm prioridade acima do guia no sheet ativo, inclusive em landscape curto.
+
+Política guiada de cinco seeds chegou à primeira hospedagem em 3,5–3,7 segundos
+e à contratação em 96–135,5 segundos. Este resultado delimita a hipótese de pacing;
+não demonstra compreensão espontânea ou retenção de jogadores reais.

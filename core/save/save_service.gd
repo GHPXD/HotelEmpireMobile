@@ -89,8 +89,14 @@ static func restore(data: Variant) -> Dictionary:
 	var timestamp: Variant = data.get("saved_at_utc")
 	if not _integer(timestamp, 0, 253402300799) or not data.get("app_state") is Dictionary or not _primitive(data.app_state):
 		return {"session": null, "error": "save.error.invalid"}
+	if data.app_state.get("onboarding") is Dictionary and _integer(data.app_state.onboarding.get("version"), 2, 2147483647):
+		return {"session": null, "error": "save.error.version"}
+	if data.app_state.has("onboarding") and not OnboardingService.valid(data.app_state.onboarding):
+		return {"session": null, "error": "save.error.invalid"}
 	var hotel := SessionSnapshot.restore(data.get("hotel"))
 	if not hotel.error.is_empty():
+		return {"session": null, "error": "save.error.invalid"}
+	if data.app_state.has("onboarding") and not data.app_state.onboarding.completed_at.is_empty() and float(data.app_state.onboarding.completed_at.back()) > hotel.session.time + SimulationRules.TIME_EPSILON:
 		return {"session": null, "error": "save.error.invalid"}
 	return {"session": hotel.session, "error": "", "saved_at_utc": int(timestamp), "app_state": data.app_state.duplicate(true)}
 

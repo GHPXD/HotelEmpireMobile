@@ -3,8 +3,8 @@ extends RefCounted
 ## Bounded, non-blocking lifecycle telemetry. No PII or receipts accepted.
 
 const MAX_PENDING: int = 128
-const EVENTS: Array[StringName] = [&"app_open", &"session_start", &"session_end", &"background", &"resume"]
-const PROPERTIES: Array[String] = ["load_status", "hotel_index", "device_tier", "duration_seconds"]
+const EVENTS: Array[StringName] = [&"app_open", &"session_start", &"session_end", &"background", &"resume", &"manual_work", &"tutorial_progress"]
+const PROPERTIES: Array[String] = ["load_status", "hotel_index", "device_tier", "duration_seconds", "kind", "phase", "result", "stage"]
 var provider: AnalyticsProvider = AnalyticsProvider.new()
 var pending: Array[Dictionary] = []
 var next_id: int = 1

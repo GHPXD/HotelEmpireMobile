@@ -24,7 +24,7 @@ const LEGACY_ERRORS: Dictionary = {
 }
 
 static func key(error: String) -> String:
-	if error.begins_with("save.error.") or error.begins_with("error."):
+	if error.begins_with("save.error.") or error.begins_with("error.") or error.begins_with("work.error."):
 		return error
 	if error.begins_with("Conclua o objetivo:") or error == "Conteúdo indisponível.":
 		return "error.locked"

@@ -14,6 +14,8 @@ func _initialize() -> void:
 		if FileAccess.file_exists(filename):
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(filename))
 	var game := GameController.new(saves)
+	# Isolate the persistence foundation; onboarding has its own end-to-end suite.
+	game.enable_onboarding = false
 	check(game.boot().is_empty() and game.boot_status == "new", "fresh boot")
 	check(game.session.hotel.build(HotelCatalog.room(&"reception"), 0, 0) != null, "domain command")
 	saves.app_state = {"test_module": {"owned": ["original_theme"], "count": 2}}

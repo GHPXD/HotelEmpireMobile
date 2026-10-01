@@ -98,6 +98,7 @@ Hotel Pass, temporadas complexas e sistemas avançados de LiveOps só entram ap�
 - [Produto Mobile](docs/PRODUCT_MOBILE.md)
 - [Economia e Monetização](docs/ECONOMY_MONETIZATION.md)
 - [UX Mobile](docs/UX_MOBILE.md)
+- [Trabalho e onboarding](docs/PLAYER_WORK.md)
 - [Analytics e LiveOps](docs/ANALYTICS_LIVEOPS.md)
 - [Testes e Release Mobile](docs/TEST_RELEASE_MOBILE.md)
 - [Migração](docs/MIGRATION.md)
@@ -108,14 +109,19 @@ O repositório está no início da migração mobile. A simulação existente é
 
 Não considerar este estado atual como build mobile final.
 
-Sprints 0–2 implementados e validados no host: domínio preservado, entry point
+Sprints 0–3 implementados e validados no host: domínio preservado, entry point
 mobile, save/lifecycle e gestão completa por toque. Construção, tarifas, upgrades,
 equipe, assignments, operações, finanças, reviews e settings usam painéis Control;
 UI, atalhos e janelas desktop foram removidos. A matriz inclui seis dimensões,
 PT-BR/EN/ES, texto ampliado, cutouts e densidades 1x/2x/3x.
 Evidências: [Sprint 2](docs/SPRINT2_VALIDATION.json).
 O APK de debug fica em `builds/android/HotelEmpireMobile.apk`.
-Próxima etapa: Sprint 3, operação manual do jogador e onboarding.
+Sprint 3 adiciona trabalho físico de check-in, limpeza, reparo e room service,
+cancelamento seguro, desgaste, snapshot v8 e guia retomável de nove etapas.
+Perfil mobile novo começa com 2.400 Cash; perfis existentes preservam patrimônio.
+Evidências: [Sprint 3](docs/SPRINT3_VALIDATION.json), com 31 suítes aprovadas,
+4.274 verificações renderizadas, 98 capturas e APK Android debug 0.5.0.
+Próxima etapa: Sprint 4, XP/níveis/traits e supervisão da equipe.
 
 Executar regressões: `python tools/run_tests.py --group all --godot <executável>`.
 Renderização no host Windows: `tools/test_mobile_render.ps1 -GodotPath <executável>`.

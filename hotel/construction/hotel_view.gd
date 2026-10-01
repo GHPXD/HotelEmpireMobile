@@ -258,6 +258,10 @@ func _draw_actor(actor: ActorState, sleeping_room: RoomState, queue_positions: D
 		draw_texture_rect_region(bed_texture, Rect2(bed.position + bed.size * front.position, bed.size * front.size), Rect2(bed_texture.get_size() * front.position, bed_texture.get_size() * front.size))
 	if show_wait_badge:
 		_status_badge(wait_badge.position, tr("ui.wait"))
+	if actor.role == &"player":
+		var label := tr("work.you")
+		var badge_size := _status_badge_size(label)
+		_status_badge(Vector2(point.x - badge_size.x / 2, destination.position.y - 4 * zoom_factor - badge_size.y), label)
 
 func _status_badge_size(label: String) -> Vector2:
 	var font_size := maxi(9, int(12 * zoom_factor))

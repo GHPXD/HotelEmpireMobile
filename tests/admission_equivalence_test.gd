@@ -1,24 +1,13 @@
 extends SceneTree
 ## Reference keeps the pre-M8 scan of every room for every arriving guest.
 
-class LegacyAdmission extends GuestSystem:
-	func _arrival_rooms(hotel: HotelModel) -> Array[RoomState]:
-		return hotel.rooms
-
-	func _release_room(actor: ActorState, hotel: HotelModel) -> void:
-		var room := hotel.by_id(actor.bedroom)
-		if room != null and room.occupant == actor.id:
-			room.occupant = -1
-			room.dirty = true
-		actor.bedroom = -1
-
 var failures: int = 0
 
 func _initialize() -> void:
 	for seed_value in [17, 123, 9001]:
 		var optimized := SimulationRunner.make_hotel(seed_value, "tower", 1000000)
 		var reference := SimulationRunner.make_hotel(seed_value, "tower", 1000000)
-		reference.guests = LegacyAdmission.new(reference.rules)
+		reference.guests = preload("res://tests/legacy_admission_reference.gd").new(reference.rules)
 		# Rebuild reception after other categories; admission must preserve insertion order.
 		for session: HotelSession in [optimized, reference]:
 			var reception: RoomState = session.hotel.rooms[0]

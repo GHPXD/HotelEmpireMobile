@@ -68,9 +68,24 @@ Esse baseline antecede a fundação e a UX implementadas abaixo.
   três suítes renderizadas independentes do harness desktop.
 - Evidências locais e hashes: `SPRINT2_VALIDATION.json`.
 
-Próximo gate: Sprint 3, onboarding e jogador operando recepção, limpeza,
-room service e reparos. As limitações reais de device/iOS/lojas continuam no
-Sprint 15; não são resolvidas por captures do host ou mocks.
+### Operação manual e onboarding implementados (Sprint 3)
+
+- PlayerWorkSystem usa um ator real, caminhos/elevadores e reservas exclusivas;
+  check-in, limpeza, preparação/entrega e reparo têm duração curta e efeito real.
+- Cancelamentos liberam salas/capacidade e mantêm passageiro embarcado seguro.
+  Hospedagem e entrega cobram uma vez; reparo cobra materiais na conclusão.
+- Condição degrada por uso, reduzindo eficiência em até 20%; reparo recupera 100%.
+- Snapshot v8 migra v1–v7 e valida referências/fases. Onboarding v1 em app_state
+  avança por fatos, preserva outros módulos e pode ser ocultado/retomado.
+- Perfil novo de 2.400 Cash completa operação solo → contratação sem fundos
+  artificiais nas políticas medidas. Saves existentes preservam patrimônio.
+- HUD traduzido com cancelamento prioritário, Você e ícones raster individuais.
+- Gate completo aprovado: 31 suítes, 4.274 verificações renderizadas e 98 capturas,
+  mais revisão dos ícones em UI de 32 px; APK Android debug 0.5.0 sem warnings.
+  Evidências e hashes preservados em `SPRINT3_VALIDATION.json`.
+
+Próxima etapa: Sprint 4, desenvolvimento/supervisão da equipe. As limitações reais
+de device/iOS/lojas continuam no Sprint 15; não são resolvidas por captures ou mocks.
 
 ## Objetivo
 

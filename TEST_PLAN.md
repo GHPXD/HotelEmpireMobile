@@ -56,6 +56,17 @@ confirmação, receita real, assignments, tarifas, upgrade, demolição, prefer�
 e cancelamento por back. Não emite sinais de botão para simular uma aprovação.
 Emulação de touchscreen do Input habilita o scroll nativo do Godot no host de QA.
 
+Sprint 3 acrescenta `player_work_test`: admissão FIFO, orçamento e tarifa alterados,
+donos de limpeza/reparo, capacidade e fila de cozinha, preço acordado, abandono,
+origem demolida, cancelamento em todas as fases e durante viagem de elevador,
+save/restore com continuação determinística e rejeição de referências contraditórias.
+Cinco sementes medem a política solo → contratação com 2.400 Cash reais.
+`onboarding_test` cobre etapas por fatos, módulos preservados, background/kill,
+perfil existente, guia opcional, recovery e bloqueio de versão futura.
+`onboarding_touch_test` percorre nove etapas por ScreenTouch/ScreenDrag em
+320x568/PT-BR, 568x320/ES com texto ampliado e 1280x800/EN com texto ampliado.
+O gate `tools/test.ps1 -Visual -Stress -Soak -Tariffs` inclui essa renderização.
+
 Cobrir em dispositivo:
 
 - tap em sala;

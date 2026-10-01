@@ -2,6 +2,27 @@
 
 Este changelog começa na separação da versão mobile. O histórico de desenvolvimento e validação do protótipo desktop permanece no repositório original de PC.
 
+## 0.5.0-mobile — Jogador e primeiro hotel
+
+- PlayerWorkSystem adiciona um jogador físico, com caminhada/elevadores, uma tarefa
+  por vez e trabalho sem salário. Check-in compartilha admissão/cobrança com staff;
+  limpeza reserva alvo e conta nos objetivos existentes.
+- Pedidos de room service usam hóspedes hospedados, fila/capacidade de alimentação,
+  preparação, percurso e entrega. Preço acordado, orçamento, receita, refeição e
+  alívio de fome são aplicados uma vez na entrega válida.
+- Instalações se desgastam pelo uso. Reparo simples restaura condição/eficiência,
+  com materiais cobrados como despesa operacional na conclusão.
+- Cancelamento libera reservas sem recompensa; passageiros terminam a viagem.
+  Save de domínio v8 preserva tarefas, timers, pedidos e condição; migra v1–v7.
+- Perfil novo começa com 2.400 Cash e guia de nove fatos, sem alterar saves existentes.
+  Guia pode ser ocultado/retomado. Checkpoints protegem tarefas e etapas, inclusive
+  background/kill. Dados contraditórios/futuros não substituem saves válidos.
+- HUD mostra Você, fase, tempo, condição, motivos e cancelamento prioritário.
+  PT-BR/EN/ES; dois ícones raster originais e individuais importados a 128 px.
+- Simulação guiada multiseed chega à primeira contratação sem dinheiro injetado;
+  suíte touch percorre guia e quatro ações em portrait, landscape e tablet.
+  Evidência final em `docs/SPRINT3_VALIDATION.json`.
+
 ## 0.4.0-mobile — Gestão por toque
 
 - Gestão herdada portada para sheets Control: categorias de construção,

@@ -72,6 +72,8 @@ const ACTION_ICONS: Dictionary = {
 	&"add_floor": preload("res://assets/art/icons/add-floor.png"),
 	&"upgrade": preload("res://assets/art/icons/upgrade.png"),
 	&"demolish": preload("res://assets/art/icons/demolish.png"),
+	&"repair": preload("res://assets/art/icons/repair.png"),
+	&"room_service": preload("res://assets/art/icons/room-service.png"),
 }
 
 static func action_icon(action: StringName) -> Texture2D:
@@ -157,6 +159,8 @@ const CHARACTERS: Dictionary = {
 const REGIONS: Dictionary = {"balanced": [[50, 67, 425, 746], [531, 66, 226, 747], [919, 72, 440, 741], [1414, 66, 247, 751]], "business": [[49, 42, 444, 780], [574, 41, 207, 783], [907, 42, 468, 783], [1403, 43, 333, 781]], "cleaner": [[33, 49, 409, 770], [520, 49, 293, 774], [912, 49, 429, 772], [1411, 49, 319, 773]], "leisure": [[33, 45, 430, 772], [505, 45, 355, 769], [904, 45, 447, 771], [1396, 45, 320, 771]], "receptionist": [[52, 43, 438, 771], [556, 45, 217, 767], [922, 47, 431, 767], [1408, 45, 278, 771]]}
 
 static func character_id(actor: ActorState) -> StringName:
+	if actor.role == &"player":
+		return &"cleaner" if actor.state == &"manual_cleaning" or actor.destination_state == &"manual_cleaning" else &"receptionist"
 	return actor.archetype_id if actor.role == &"guest" else actor.role
 
 static func character(actor: ActorState, service_id: StringName = &"") -> Texture2D:
@@ -220,13 +224,21 @@ const SLEEP_BED_ANCHOR: Vector2 = Vector2(0.5, 0.62)
 const SLEEP_FOOTBOARD: Rect2 = Rect2(0.28, 0.572, 0.435, 0.09)
 
 static func animation_id(actor: ActorState, service_id: StringName = &"") -> StringName:
+	if actor.role == &"player":
+		if actor.state == &"manual_cleaning":
+			return &"cleaner-cleaning"
+		if actor.state in [&"manual_checkin", &"manual_repair", &"manual_prepare", &"manual_deliver"]:
+			return &"receptionist-working"
+		if actor.state in STAFF_IDLE_STATES:
+			return StringName("%s-idle" % character_id(actor))
+		return character_id(actor)
 	if travelling_with_luggage(actor):
 		return StringName("%s-travel" % actor.archetype_id)
 	if actor.role in STAFF_IDLE_ROLES and actor.state in STAFF_IDLE_STATES:
 		return StringName("%s-idle" % actor.role)
 	if actor.role == &"guest" and actor.state == &"using" and SERVICE_ACTIONS.has(service_id):
 		return StringName("%s-%s" % [actor.archetype_id, SERVICE_ACTIONS[service_id]])
-	if actor.role == &"guest" and actor.state in [&"lift_queue", &"checkin", &"service_queue"]:
+	if actor.role == &"guest" and actor.state in [&"lift_queue", &"checkin", &"service_queue", &"room_service_wait"]:
 		return StringName("%s-waiting" % actor.archetype_id)
 	if actor.role == &"cleaner" and actor.state == &"cleaning":
 		return &"cleaner-cleaning"

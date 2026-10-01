@@ -29,16 +29,25 @@ telas no runtime. Os 17 testes de domínio/stress/estudos permanecem.
 | Ícones e preferências | ui_action_icons, ui_management_icons, ui_session_icons, ui_preferences_icons | arte original em MobileHotelPanels; presentation_test, audio_lifecycle_test, touch_management_test e captures com texto ampliado |
 | Renderização útil | ui_art, ui_culling, ui_actor_presentation | art_render, culling_render, actor_presentation_render: pixels, âncoras, bagagens, poses, hit targets e equivalência de culling portados para HotelView independente |
 
-Há oito suítes executáveis `*_test.gd` no grupo mobile. `display_scale_test`
+Há onze suítes executáveis `*_test.gd` no grupo mobile. `display_scale_test`
 verifica resolução física/densidade, stretch, cutouts, targets e rotação lógica.
 `platform_adapters_test` mantém cobertura dos contratos de analytics/config.
 Os três `*_render.gd` precisam de renderer nativo e são executados com
 `tools/test.ps1 -Visual` ou `tools/test_mobile_render.ps1 -Suite <nome>`.
 Helpers em `tests/mobile/` não são entry points do executor headless.
 
+Sprint 3 acrescenta `player_work_test` (tarefas, reservas, cobrança, cancelamentos,
+elevadores, snapshots/continuação e pacing multiseed), `onboarding_test` (fatos,
+módulos, perfil novo/existente e lifecycle) e `onboarding_touch_test` (guia e quatro
+ações por GUI/viewport em três formatos/idiomas, com texto ampliado).
+`legacy_admission_reference` é helper: a referência de equivalência foi movida de
+classe interna para script próprio após reproduzir falha de shutdown do Godot.
+Mantém o algoritmo de referência e incorpora o mesmo desgaste do quarto por uso;
+comparações completas de snapshots, sementes e continuação permanecem.
+
 ## Próximas coberturas
 
-Adicionar às suítes mobile existentes: operação manual/onboarding,
+Adicionar às suítes mobile existentes: XP/traits/supervisão de equipe,
 timers/offline, economia global, rewarded, IAP/restore/idempotência, progressão,
 prestige, localização e budgets. O grupo `mobile` é descoberto pelo executor.
 

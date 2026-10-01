@@ -9,7 +9,7 @@ func _init(config: SimulationRules) -> void:
 
 func step(actors: Dictionary, hotel: HotelModel, transport: TransportSystem, delta: float) -> void:
 	for actor: ActorState in actors.values():
-		if actor.role == &"guest":
+		if actor.role not in [&"receptionist", &"cleaner"]:
 			continue
 		if actor.state == &"idle":
 			_assign(actor, actors, hotel, transport)
@@ -47,7 +47,7 @@ func _assign(actor: ActorState, actors: Dictionary, hotel: HotelModel, transport
 				actor.assignment = room.id
 				actor.travel_to(room.center(), room.floor_index, &"working")
 				return
-		elif actor.role == &"cleaner" and room.dirty and room.cleaning_by < 0:
+		elif actor.role == &"cleaner" and room.dirty and room.cleaning_by < 0 and room.repairing_by < 0:
 			room.cleaning_by = actor.id
 			actor.assignment = room.id
 			actor.timer = rules.cleaning_seconds

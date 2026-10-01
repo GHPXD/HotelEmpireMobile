@@ -10,6 +10,7 @@ var hotel := HotelModel.new(economy, progression)
 var transport := TransportSystem.new(rules)
 var guests := GuestSystem.new(rules)
 var employees := EmployeeSystem.new(rules)
+var player_work := PlayerWorkSystem.new()
 var actors: Dictionary = {}
 var rng := RandomNumberGenerator.new()
 var next_actor_id: int = 1
@@ -34,7 +35,10 @@ func tick(delta: float) -> void:
 	transport.sync(hotel)
 	employees.step(actors, hotel, transport, delta)
 	transport.step(actors, delta)
-	guests.step(actors, hotel, transport, delta, time)
+	player_work.step(self, delta)
+	guests.step(actors, hotel, transport, delta, time, player_work.reserved_guest())
+	player_work.reconcile(self)
+	player_work.update_orders(self)
 	if opened:
 		arrival_timer -= delta * float(HotelEvents.state(tick_count, rules).multiplier)
 		if arrival_timer <= SimulationRules.TIME_EPSILON:
@@ -181,7 +185,7 @@ func set_room_tariff(id: int, percent: int) -> String:
 
 func configure_employee(id: int, destination: int) -> String:
 	var actor: ActorState = actors.get(id)
-	if actor == null or actor.role == &"guest":
+	if actor == null or actor.role not in [&"receptionist", &"cleaner"]:
 		return "Selecione um funcionário."
 	if destination < -1:
 		return "Destino inválido."

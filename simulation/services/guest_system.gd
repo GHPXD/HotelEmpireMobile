@@ -8,13 +8,14 @@ var bookings: int = 0
 var score_total: float = 0.0
 var reputation: float = 65.0
 var rules: SimulationRules
+var work_rules: PlayerWorkRules = preload("res://data/player_work.tres")
 const REVIEW_LIMIT: int = 20
 var reviews: Array[Dictionary] = []
 
 func _init(config: SimulationRules) -> void:
 	rules = config
 
-func step(actors: Dictionary, hotel: HotelModel, transport: TransportSystem, delta: float, time: float) -> void:
+func step(actors: Dictionary, hotel: HotelModel, transport: TransportSystem, delta: float, time: float, manual_head: int = -1) -> void:
 	var departures: Array[int] = []
 	# Geometry cannot change inside this step. Filter once, preserving build order.
 	var arrival_rooms := _arrival_rooms(hotel)
@@ -32,7 +33,14 @@ func step(actors: Dictionary, hotel: HotelModel, transport: TransportSystem, del
 			&"arriving":
 				_arrive(actor, arrival_rooms)
 			&"checkin":
-				_check_in(actor, actors, hotel, transport, delta, time)
+				_check_in(actor, actors, hotel, transport, delta, time, manual_head)
+			&"room_service_wait":
+				actor.waiting += delta
+				if actor.service_queue_seconds >= 0:
+					actor.service_queue_seconds += delta
+				actor.happiness = maxf(0, actor.happiness - delta * rules.waiting_penalty)
+				if actor.waiting > rules.patience_seconds * actor.archetype().patience_multiplier + SimulationRules.TIME_EPSILON:
+					actor.state = &"deciding"
 			&"deciding":
 				_choose(actor, hotel, transport)
 			&"service_queue":
@@ -70,7 +78,7 @@ func _arrive(actor: ActorState, arrival_rooms: Array[RoomState]) -> void:
 	actor.happiness = minf(actor.happiness, 25)
 	actor.travel_to(-0.8, 0, &"exit")
 
-func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transport: TransportSystem, delta: float, time: float) -> void:
+func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transport: TransportSystem, delta: float, time: float, manual_head: int = -1) -> void:
 	var reception := hotel.by_id(actor.target_room)
 	if reception == null:
 		actor.travel_to(-0.8, 0, &"exit")
@@ -86,6 +94,8 @@ func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transpo
 		return
 	if reception.queue.members.is_empty() or reception.queue.members[0] != actor.id:
 		return
+	if actor.id == manual_head or reception.repairing_by >= 0:
+		return
 	var staffed: bool = false
 	for employee: ActorState in actors.values():
 		if employee.role == &"receptionist" and employee.assignment == reception.id and employee.state == &"working":
@@ -96,25 +106,39 @@ func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transpo
 	actor.timer += delta
 	if actor.timer + SimulationRules.TIME_EPSILON < reception.duration():
 		return
+	admit(actor, hotel, transport, time)
+
+func available_bed(actor: ActorState, hotel: HotelModel, transport: TransportSystem) -> RoomState:
 	for room in hotel.rooms:
 		var definition := room.definition()
-		if definition.category != &"lodging" or room.dirty or room.occupant >= 0:
+		if definition.category != &"lodging" or room.dirty or room.occupant >= 0 or room.cleaning_by >= 0 or room.repairing_by >= 0:
 			continue
 		if actor.money < room.price() or not transport.accessible(actor.floor_index, room.floor_index):
 			continue
-		room.occupant = actor.id
-		actor.bedroom = room.id
-		actor.checked_in = true
-		actor.happiness = clampf(actor.happiness + room.lodging_value_delta(actor.archetype()), 0, 100)
-		actor.money -= room.price()
-		room.income += room.price()
-		hotel.economy.transact(room.price(), "Hospedagem", time)
-		bookings += 1
-		reception.queue.leave(actor.id)
-		actor.target_room = room.id
-		actor.timer = 0
-		actor.travel_to(room.center(), room.floor_index, &"service_queue")
-		return
+		return room
+	return null
+
+func admit(actor: ActorState, hotel: HotelModel, transport: TransportSystem, time: float) -> bool:
+	var reception := hotel.by_id(actor.target_room)
+	if actor.role != &"guest" or actor.checked_in or actor.state != &"checkin" or reception == null or reception.queue.members.is_empty() or reception.queue.members[0] != actor.id or reception.repairing_by >= 0:
+		return false
+	var room := available_bed(actor, hotel, transport)
+	if room == null:
+		return false
+	room.occupant = actor.id
+	actor.bedroom = room.id
+	actor.checked_in = true
+	actor.happiness = clampf(actor.happiness + room.lodging_value_delta(actor.archetype()), 0, 100)
+	actor.money -= room.price()
+	room.income += room.price()
+	hotel.economy.transact(room.price(), "Hospedagem", time)
+	bookings += 1
+	reception.wear(work_rules.reception_wear)
+	reception.queue.leave(actor.id)
+	actor.target_room = room.id
+	actor.timer = 0
+	actor.travel_to(room.center(), room.floor_index, &"service_queue")
+	return true
 
 func _choose(actor: ActorState, hotel: HotelModel, transport: TransportSystem) -> void:
 	if actor.age + SimulationRules.TIME_EPSILON >= rules.stay_seconds * actor.archetype().stay_multiplier or actor.happiness <= 10:
@@ -126,7 +150,7 @@ func _choose(actor: ActorState, hotel: HotelModel, transport: TransportSystem) -
 	actor.utility_scores.clear()
 	for room in hotel.rooms:
 		var definition := room.definition()
-		if definition.need.is_empty() or (definition.category == &"lodging" and room.id != actor.bedroom):
+		if definition.need.is_empty() or room.repairing_by >= 0 or (definition.category == &"lodging" and room.id != actor.bedroom):
 			continue
 		if definition.category == &"service" and actor.money < room.price():
 			continue
@@ -169,7 +193,7 @@ func _queue_service(actor: ActorState, hotel: HotelModel, delta: float) -> void:
 	actor.waiting += delta
 	if actor.service_queue_seconds >= 0:
 		actor.service_queue_seconds += delta
-	if room.queue.members[0] == actor.id and room.users.size() < room.capacity():
+	if room.queue.members[0] == actor.id and room.users.size() < room.capacity() and room.repairing_by < 0:
 		room.queue.take()
 		room.users.append(actor.id)
 		actor.timer = room.duration()
@@ -192,6 +216,7 @@ func _use(actor: ActorState, hotel: HotelModel, delta: float, time: float) -> vo
 		actor.needs[String(definition.need)] = maxf(0, float(actor.needs.get(String(definition.need), 0)) - definition.relief)
 		actor.happiness = minf(100, actor.happiness + 3 + room.satisfaction_bonus())
 		if definition.category == &"service":
+			room.wear(work_rules.service_wear)
 			actor.money -= actor.agreed_price
 			room.income += actor.agreed_price
 			hotel.economy.transact(actor.agreed_price, definition.display_name, time)
@@ -212,4 +237,5 @@ func _release_room(actor: ActorState, hotel: HotelModel) -> void:
 	if room != null and room.occupant == actor.id:
 		room.occupant = -1
 		room.dirty = true
+		room.wear(work_rules.room_wear_per_stay)
 	actor.bedroom = -1
