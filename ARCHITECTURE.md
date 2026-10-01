@@ -1,105 +1,244 @@
-# Arquitetura
+# Arquitetura — Hotel Empire Mobile
 
-- Definitions: Resources `.tres` imutáveis; catálogo com IDs estáveis.
-- Estado de partida: modelos RefCounted pertencentes à sessão, sem autoloads.
-- Economy: único escritor de caixa e ledger; separa investimento de resultado operacional.
-- Hotel: proprietário de andares, salas e validação de construção.
-- Simulation: tick fixo de 0,1 s, RNG central com seed; coordena sistemas especializados.
-- Entidades: dados e estados; apresentação renderiza o modelo sem comandar regras.
-- UI: comandos semânticos para sessão; signals/notificações e leitura inicial do modelo.
-- Save: snapshots primitivos versionados, validação completa antes de trocar a sessão.
+## Objetivo
 
-Dependências: apresentação → sessão → sistemas/modelos → definições. Nenhum sistema de
-simulação depende de Control, sprites ou SceneTree. Transporte hierárquico por andar e
-elevador; sem navmesh ou AStar global. Autoload só quando a vida útil exigir.
+Preservar o domínio de simulação validado e substituir o acoplamento de desktop por uma aplicação mobile modular, testável e preparada para Android/iOS.
 
-Implementar somente interfaces necessárias ao marco atual. Pooling e frameworks
-de eventos/conquistas aguardam necessidade demonstrada.
+## Regra principal
 
-## Implementado no slice
+A simulação não conhece SDKs de anúncios, lojas, analytics ou APIs de plataforma.
 
-`HotelSession` possui Economy, HotelModel, TransportSystem, GuestSystem e EmployeeSystem.
-IDs estáveis ligam ActorState, RoomState e ElevatorState. IA/transporte rodam a 10 Hz;
-render usa texturas raster compartilhadas e recortes de animação a cada frame. Relógio vem de ticks inteiros para evitar
-deriva acumulada. O RNG é exclusivo da sessão, nunca o gerador global.
+```
+UI / Input
+    ↓
+GameController
+    ↓
+HotelSession
+    ↓
+Simulation Domain
+```
 
-`SessionSnapshot` v4 define campos explicitamente e valida tipos, limites, geometria,
-catálogo e referências antes de retornar uma sessão nova. Seed/state do RNG são strings
-decimais para preservar 64 bits no JSON. `SaveStore` escreve temporário e mantém `.bak`
-do save anterior. Saves v1 migram para nível 1 e preferências automáticas, reconstruindo
-o preço de serviços já iniciados. V1 e v2 recebem o acesso legado às quatro melhorias
-N3 existentes no M3. Outras versões desconhecidas são rejeitadas.
-V3 migra perfis existentes para equilibrado e inicia uso de serviços pela contagem
-anterior de refeições. RNG e relógio continuam persistidos; novas chegadas usam perfis M5.
-`Main` troca a sessão apenas após sucesso; nova partida descarta os modelos anteriores.
+Serviços de plataforma ficam ao lado do domínio:
 
-Elevadores atendem o passageiro embarcado mais antigo, depois a chamada mais antiga.
-Fila FIFO é determinística; o despacho ainda não é uma otimização coletiva de direção.
-Cada poço atende todos os andares e impede construção na mesma coluna.
+```
+AppRoot
+├── GameController
+│   └── HotelSession
+├── SaveService
+├── MobileInputController
+├── ScreenRouter
+├── AudioService
+├── AnalyticsService
+├── RemoteConfigService
+└── MonetizationService
+    ├── AdsService
+    ├── PurchaseService
+    └── EntitlementService
+```
 
-## Gestão M3
+## Camadas
 
-`RoomState` guarda o nível e deriva atributos de `UpgradeDefinition` imutável.
-Modificadores são absolutos em relação à definição base; o custo compra um nível.
-Transporte sincroniza capacidade e velocidade sem recriar filas ou passageiros.
-O preço é contratado na admissão do serviço (`agreed_price`) e preservado no save.
+### Domain
 
-Preferências de equipe (`preferred_room`/`preferred_floor`) são separadas da tarefa
-atual (`assignment`). Mudanças aguardam sua conclusão; postos fixos são reservados
-contra atribuições automáticas. Snapshots validam capacidades efetivas, níveis,
-referências e exclusividade de postos. Demolição limpa preferências obsoletas.
+Responsável pelas regras autoritativas:
 
-## Progressão M4
+- hotel;
+- salas;
+- hóspedes;
+- funcionários;
+- filas;
+- transporte;
+- economia operacional;
+- reputação;
+- reviews;
+- eventos;
+- progressão de hotel.
 
-`HotelProgression` pertence à sessão e avalia contadores dos sistemas ao final do tick.
-`ObjectiveDefinition` contém requisitos, pré-requisito e IDs de upgrades liberados;
-Resources não guardam progresso. Conclusões são permanentes e ordenadas. Reputação
-pode cair após uma conquista; isso não revoga o título nem os desbloqueios.
+Classes existentes como `HotelSession`, `HotelModel`, `GuestSystem`, `EmployeeSystem`, `TransportSystem`, `ServiceQueue` e `HotelEconomy` devem ser preservadas e evoluídas.
 
-Snapshot v3 guarda IDs concluídos e acesso legado; progresso parcial vem dos contadores
-já persistidos. Restore valida IDs, duplicação, ordem e autorização de salas N3 antes
-de retornar a sessão. Migração avalia métricas existentes sem cobrar/pagar recompensas.
-Nova sessão começa vazia. UI lê o modelo, a compra é protegida em `HotelSession`,
-e o painel de objetivos não retém referência à sessão após fechá-lo ou trocar a partida.
+### Application
 
-## Conteúdo M5
+Orquestra comandos, lifecycle e estado de sessão.
 
-`HotelCatalog` inclui seis `RoomDefinition` e três `GuestArchetype`. O perfil é escolhido
-pelo RNG da sessão ao nascer; `ActorState` guarda seu ID, dinheiro corrente e contadores.
-Recursos definem orçamento inicial, pesos de utilidade, ritmo de entretenimento,
-duração de estadia e paciência de atendimento. Transporte mantém sua penalidade de
-espera comum. `GuestSystem` aplica uma regra genérica por necessidade; serviço de lazer
-nunca incrementa refeições. `service_uses` inclui todos os serviços pagos, sem hospedagem.
+Componentes planejados:
 
-`HotelModel` compartilha a mesma instância de `HotelProgression` da sessão e verifica
-`required_objective` antes de construir, inclusive no preview e na validação de saves.
-O acesso legado a upgrades não desbloqueia café/lazer. Novas salas são N1 nesta etapa.
+- `GameController`;
+- `SaveService`;
+- `OfflineProgressService`;
+- `MissionService`;
+- `PlayerProgressionService`;
+- `ContentService`.
 
-`HotelEvents.state` deriva evento e tempo restante de ticks inteiros, do intervalo em
-`SimulationRules` e de `EventDefinition`. Não há segundo relógio nem RNG de eventos.
-O multiplicador modifica o consumo do temporizador de chegadas, sem contornar hotel
-fechado ou limite de hóspedes. Pausa funciona porque não avança ticks. Salvar o tick
-preserva a fase do calendário; a interface apenas apresenta esse estado.
+### Presentation
 
-## Interface operacional M6
+Responsável por:
 
-`HotelAnalytics` calcula projeções somente de leitura: resumo atual e salas filtradas.
-`OperationsPanel` mantém filtros/seleção por ID, sem reter a sessão. Main atualiza o
-painel visível a cada 0,2s; selecionar uma sala cancela o blueprint e centraliza a vista.
-As métricas não ganham um segundo contador autoritativo nem entram no save.
+- HUD;
+- screens;
+- bottom navigation;
+- bottom sheets;
+- feedback;
+- câmera;
+- seleção;
+- gestures;
+- safe areas;
+- tablets.
 
-Busca/categoria do catálogo e filtros de operação são estado da interface; troca de
-partida os reseta. `UIPreferences` persiste somente texto ampliado em ConfigFile separado,
-com padrão seguro para arquivo ausente/inválido. A Theme compartilhada ajusta fontes;
-containers reorganizam a barra e o financeiro rola o extrato dentro de uma janela.
-`UILabels` centraliza rótulos portugueses e normalização de busca. Modais recebem foco
-inicial e devolvem foco ao abridor quando fecham. Schema v4 e regras de simulação não mudam.
+A camada atual baseada em `Window`, teclado e mouse será substituída.
 
+### Platform
 
-## Apresentação M7
-HotelArt mapeia IDs de salas/perfis/funções para PNGs e regiões verificadas. HotelView
-renderiza ambientes/cabine e anima caminhada pelo tick, sem escrever no modelo.
-Escala por personagem e âncora inferior evitam variação de altura entre frames.
-HotelAudio pertence à cena principal; reproduz cues de comandos bem-sucedidos e
-objetivos novos, sem observar snapshots nem tocar sons históricos no load.
-Preferência sonora é local em audio.cfg, separada da sessão. Sem mudança do save v4.
+Integrações que não podem contaminar o domínio:
+
+- Android/iOS lifecycle;
+- billing;
+- rewarded ads;
+- restore purchases;
+- analytics;
+- crash reporting;
+- cloud save futuro;
+- notificações futuras.
+
+## Input
+
+`HotelView` deixa de interpretar diretamente o dispositivo.
+
+```
+InputEvent
+→ MobileInputController
+→ Gesture/Command
+→ HotelView ou GameController
+```
+
+Gestos base:
+
+- tap: selecionar/confirmar;
+- drag: pan;
+- pinch: zoom;
+- long press: ação contextual opcional;
+- Android back: fechar overlay/voltar.
+
+## Economia
+
+Existem duas economias distintas.
+
+### HotelEconomy
+
+- cash;
+- revenue;
+- expenses;
+- salaries;
+- maintenance;
+- operational profit.
+
+### PlayerEconomy
+
+- Gems;
+- Empire Points;
+- speedups;
+- boosters;
+- cosméticos;
+- entitlements.
+
+Nunca usar Gems diretamente dentro de `HotelEconomy`.
+
+## Monetização
+
+```
+Gameplay
+→ MonetizationService
+   ├── Mock provider no editor
+   ├── Ads provider
+   └── Store provider
+```
+
+`HotelSession` não chama SDK de publicidade nem de compra.
+
+## Save
+
+Evoluir `SaveStore` e `SessionSnapshot` para um `SaveService` com:
+
+- autosave;
+- atomic write;
+- backup;
+- recovery;
+- schema version;
+- migration;
+- lifecycle checkpoint;
+- player economy;
+- entitlements;
+- timers de construção;
+- timestamps;
+- estado de offline progress.
+
+Compras consumíveis e entitlements exigem validação idempotente.
+
+## Offline progress
+
+Não simular horas de ausência tick a tick.
+
+Usar cálculo agregado e determinístico baseado em snapshot de:
+
+- capacidade;
+- ocupação;
+- receita;
+- custos;
+- eficiência;
+- tempo ausente;
+- limite de offline time.
+
+Timers de construção e upgrades usam tempo absoluto persistido.
+
+## Rendering
+
+Preservar o modelo de renderização enxuto sempre que possível.
+
+Evitar transformar cada hóspede em uma árvore pesada de Nodes se o desenho customizado atual for mais eficiente.
+
+Separar frequências:
+
+- simulação: fixed tick;
+- atualização de métricas/UI: frequência menor;
+- render: adaptativo.
+
+## Assets
+
+O catálogo atual faz preload de muitas texturas. A arquitetura mobile deve migrar para carregamento por grupo/tema quando necessário.
+
+Metas:
+
+- budgets de RAM/VRAM;
+- size limits por categoria;
+- compressão mobile;
+- atlas/spritesheets quando houver ganho real;
+- unload entre hotéis/mapas.
+
+## Localização
+
+Nenhuma string nova de produto deve ser hardcoded em GDScript.
+
+Usar chaves de tradução e arquivos de locale desde a reconstrução da UI.
+
+## Testabilidade
+
+Preservar testes de domínio independentes de UI.
+
+Criar adaptadores mock para:
+
+- Ads;
+- IAP;
+- analytics;
+- remote config;
+- clock/time;
+- lifecycle.
+
+## Regra de dependência
+
+```
+Platform → Application → Domain
+Presentation → Application → Domain
+
+Domain ✕ Platform
+Domain ✕ SDK
+Domain ✕ UI
+```

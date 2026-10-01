@@ -1,6 +1,0 @@
-Generator: built-in image_gen (2026-09-16)
-Destination: assets/art/environment/city.png
-Source: C:\Users\GHPXD\.codex\generated_images\01a0a915-2716-7f90-a3cc-87023fafadff\exec-68c823a1-c3ce-4ca2-892b-d2d1f28c7445.png
-Style reference: assets/art/rooms/reception.png
-Prompt:
-Production-ready original raster asset for Hotel Empire, polished hand-painted 2D hotel tycoon art. Match reference material palette, detail and soft warm light. Strict straight-on side-view cutaway, no isometric view. Actual reusable game texture filling rectangular canvas edge to edge, not a presentation sheet, no lettering, logos, watermarks or UI. Readable at small game scale. Interiors have furniture behind unobstructed walking floor at bottom 18 percent. Asset: BACKGROUND CITYSCAPE, wide landscape 2:1: atmospheric distant garden city with tasteful midrise urban buildings and leafy park, pale sage and blue haze, warm afternoon sky occupying upper two thirds, quiet low contrast for readable foreground hotel. No prominent foreground objects, no text.

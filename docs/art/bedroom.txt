@@ -1,5 +1,0 @@
-Generator: built-in image_gen (2026-09-16)
-Destination: assets/art/rooms/bedroom.png
-Source: C:\Users\GHPXD\.codex\generated_images\01a0a915-2716-7f90-a3cc-87023fafadff\exec-96dc2196-fb54-419e-90ed-ccc6a4d8c7d5.png
-Prompt:
-Production-ready original raster asset for Hotel Empire, polished hand-painted 2D hotel tycoon art. Match reference material palette, detail and soft warm light. Strict straight-on side-view cutaway, no isometric view. Actual reusable game texture filling rectangular canvas edge to edge, not a presentation sheet, no lettering, logos, watermarks or UI. Readable at small game scale. Interiors have furniture behind unobstructed walking floor at bottom 18 percent. Asset: BEDROOM, aspect 1.15:1 near square: inviting neatly made double bed with ivory linen and blue quilt, oak bedside tables, brass reading lamps, framed botanical print, sage curtains. No people.

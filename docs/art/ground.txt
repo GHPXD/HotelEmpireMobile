@@ -1,5 +1,0 @@
-Generator: built-in image_gen (2026-09-16)
-Destination: assets/art/environment/ground.png
-Source: C:\Users\GHPXD\.codex\generated_images\01a0a915-2716-7f90-a3cc-87023fafadff\exec-d6b06697-18c6-4d54-bcb1-4e7cc9716a8e.png
-Prompt:
-Dedicated original raster foreground ground texture for Hotel Empire, warm polished hand-painted 2D side-view hotel management game. Very wide horizontal landscape aspect4:1. Upper edge is a continuous straight level cream stone curb beneath a hotel foundation. Below it an elegant horizontal pale sandstone pedestrian promenade with subtle paving joints, lower edge soft muted sage lawn with very small restrained tufts. No buildings, characters, text, borders or UI. Orthographic side-view, restrained material detail, seamlessly repeating left and right edges, warm light matching oak jade and cream hotel interiors. Reusable game ground strip filling entire image, professional painted game asset.
