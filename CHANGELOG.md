@@ -2,6 +2,22 @@
 
 Este changelog começa na separação da versão mobile. O histórico de desenvolvimento e validação do protótipo desktop permanece no repositório original de PC.
 
+## 0.3.0-mobile — Fundação Mobile
+
+- AppRoot substitui o entry point desktop; GameController mantém a sessão e o fixed tick.
+- SaveService adiciona envelope de aplicação v1 sobre domínio v7, autosave 30s,
+  checkpoint de comandos/lifecycle e recovery automático. Migrations e arquivos
+  legados são preservados; dados corrompidos/futuros não são sobrescritos.
+- Writer atômico compartilhado protege o backup válido após corrupção do primary.
+- Adicionados tap, pan, pinch, cancel e supressão de eventos de mouse emulados.
+- ScreenRouter, shell responsivo, sheets Control e safe area substituem o fluxo principal de janelas.
+- Localização PT-BR/EN/ES e atualização de controles na troca de idioma.
+- Analytics/config desacoplados com providers indisponíveis e mocks, fila limitada e configuração com ranges.
+- Criados presets Android/iOS e APK Android de debug sem warnings, com ETC2/ASTC.
+- Validação local: 21 suítes aprovadas, 128 verificações renderizadas, 12 screenshots em quatro dimensões/três idiomas.
+- Ainda pendentes: paridade de gestão touch (Sprint 2), sistemas de produto seguintes,
+  instalação/kill pelo OS, iOS em macOS/Xcode, SDKs e signing de produção. Não é release candidate.
+
 ## 0.2.1-mobile — Sprint 0 técnico
 
 - Removidos preset Windows e ferramentas de distribuição, pacote e compatibilidade desktop sem leitores no runtime.

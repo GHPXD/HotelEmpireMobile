@@ -19,6 +19,7 @@ var pan: Vector2 = Vector2.ZERO
 var pointer: Vector2 = Vector2(-1000, -1000)
 var drag: bool = false
 var hovered_cell := Vector2i(-1, -1)
+var mobile_input: MobileInputController
 # Reference switch for visual equivalence tests and profiling.
 var cull_offscreen: bool = true
 
@@ -45,6 +46,10 @@ func _ready() -> void:
 	resized.connect(queue_redraw)
 
 func _gui_input(event: InputEvent) -> void:
+	if mobile_input != null:
+		if mobile_input.handle(event):
+			accept_event()
+		return
 	if event is InputEventMouseMotion:
 		pointer = event.position
 		if drag:
@@ -91,7 +96,7 @@ func _draw() -> void:
 			if blueprint != null:
 				draw_rect(room_rect(column, level), Color(1, 1, 1, 0.3), false, 1)
 		draw_line(floor_rect.end, Vector2(floor_rect.position.x, floor_rect.end.y), Color("576b68"), 5 * zoom_factor)
-		_text(floor_rect.position + Vector2(-35, 25), "T" if level == 0 else str(level), Color("455d5c"), 16)
+		_text(floor_rect.position + Vector2(-35, 25), (tr("ui.ground_floor") if mobile_input != null else "T") if level == 0 else str(level), Color("455d5c"), 16)
 	for room in hotel.rooms:
 		_draw_room(room)
 	if session != null:
@@ -104,9 +109,9 @@ func _draw() -> void:
 		draw_rect(preview, tint)
 		draw_rect(preview, tint.lightened(0.2), false, 3)
 		_text(preview.position + Vector2(8, 22), "+" if valid else "×", Color.WHITE, 20)
-	_text(Vector2(22, 30), "SEU HOTEL, UM ANDAR DE CADA VEZ", Color("55716e"), 14)
+	_text(Vector2(22, 30), tr("ui.world_title") if mobile_input != null else "SEU HOTEL, UM ANDAR DE CADA VEZ", Color("55716e"), 14)
 	draw_rect(Rect2(12, size.y - 46, minf(610, size.x - 24), 34), Color(0.06, 0.14, 0.14, 0.86))
-	_text(Vector2(22, size.y - 22), "Scroll: zoom   •   Botão do meio: mover   •   Clique direito / Esc: cancelar", Color("f1f5e9"), 14)
+	_text(Vector2(22, size.y - 22), tr("ui.gesture_hint") if mobile_input != null else "Scroll: zoom   •   Botão do meio: mover   •   Clique direito / Esc: cancelar", Color("f1f5e9"), 14)
 
 func _draw_room(room: RoomState) -> void:
 	var definition := room.definition()
@@ -124,7 +129,8 @@ func _draw_room(room: RoomState) -> void:
 		draw_texture_rect(HotelArt.room_state(room), rectangle, false)
 		if zoom_factor >= 0.65:
 			draw_rect(Rect2(rectangle.position, Vector2(rectangle.size.x, 22 * zoom_factor)), Color(0.06, 0.14, 0.14, 0.88))
-			_text(rectangle.position + Vector2(7, 17) * zoom_factor, definition.display_name + (" N%d" % room.level if room.level > 1 else ""), Color("fff1cc"), int(13 * zoom_factor))
+			var room_name := tr("room." + String(definition.id) + ".name") if mobile_input != null else definition.display_name
+			_text(rectangle.position + Vector2(7, 17) * zoom_factor, room_name + (" N%d" % room.level if room.level > 1 else ""), Color("fff1cc"), int(13 * zoom_factor))
 	if room.id == selected:
 		draw_rect(rectangle, Color("f9cd69"), false, 4)
 
@@ -227,7 +233,7 @@ func _draw_simulation() -> void:
 	for room in hotel.rooms:
 		if room.dirty:
 			var box := room_rect(room.column, room.floor_index, room.definition().width)
-			_status_badge(box.position + Vector2(7, 29) * zoom_factor, "LIMPAR")
+			_status_badge(box.position + Vector2(7, 29) * zoom_factor, tr("ui.clean") if mobile_input != null else "LIMPAR")
 	for group: Dictionary in queues.groups:
 		var label := "Fila: %d" % group.count
 		var end := world_to_screen(group.header_world)

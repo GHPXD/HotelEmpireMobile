@@ -76,6 +76,8 @@ Hotel Pass, temporadas complexas e sistemas avançados de LiveOps só entram ap�
 ## Estrutura
 
 - `core/`: sessão, eventos, save e serviços de aplicação.
+- `core/application/`: AppRoot, GameController e adaptadores de analytics/config.
+- `ui/mobile/`: shell responsivo, navegação e safe area.
 - `simulation/`: regras e sistemas de simulação.
 - `hotel/`: modelo, construção, salas e transporte.
 - `entities/`: hóspedes e funcionários.
@@ -106,3 +108,13 @@ Hotel Pass, temporadas complexas e sistemas avançados de LiveOps só entram ap�
 O repositório está no início da migração mobile. A simulação existente é a fundação a ser preservada; interface, input, progressão de longo prazo, monetização, lifecycle e distribuição mobile serão reconstruídos em sprints.
 
 Não considerar este estado atual como build mobile final.
+
+Sprint 0 técnico concluído com 17 suítes preservadas aprovadas antes/depois do
+reset. Sprint 1 implementa o entry point mobile, save/lifecycle, gestos, safe area,
+localização PT-BR/EN/ES e exports. Protótipos são testados automaticamente em quatro
+dimensões; o APK de debug fica em `builds/android/HotelEmpireMobile.apk`.
+Paridade completa de gestão por touch ainda está no Sprint 2.
+
+Executar regressões: `python tools/run_tests.py --group all --godot <executável>`.
+Renderização no host Windows: `tools/test_mobile_render.ps1 -GodotPath <executável>`.
+Relatórios e screenshots ficam isolados em `.runtime/`; não são evidência de aparelho real.

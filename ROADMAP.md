@@ -35,18 +35,28 @@ Saída: pipeline desktop removido, ferramentas de domínio preservadas e baselin
 
 ## Sprint 1 — Fundação Mobile
 
-- AppRoot;
-- GameController;
-- SaveService;
-- ScreenRouter;
-- MobileInputController;
-- lifecycle;
-- autosave;
-- exports Android/iOS;
-- safe areas;
-- protótipo landscape x portrait.
+- [x] AppRoot como cena principal, separado da apresentação desktop;
+- [x] GameController como dono da sessão e do fixed tick;
+- [x] SaveService com envelope da aplicação v1 sobre domínio v7 e migrations preservadas;
+- [x] ScreenRouter com uma screen e um sheet contextual;
+- [x] MobileInputController: tap, pan, pinch, cancel e supressão de mouse emulado;
+- [x] lifecycle com checkpoint e suspensão da simulação; focus-in não resume app pausado pelo OS;
+- [x] autosave a cada 30 segundos, inclusive com simulação pausada;
+- [x] presets Android/iOS; APK Android de debug exportado sem warnings;
+- [x] safe area com conversão de pixels para unidades da UI;
+- [x] protótipos landscape/portrait/tablet, quatro dimensões e três idiomas;
+- [x] providers indisponíveis e mocks de analytics/remote config, sem SDK no domínio;
+- [x] gate final: 21 suítes aprovadas (17 preservadas + 4 mobile), 128 verificações renderizadas e 12 capturas; `docs/SPRINT1_VALIDATION.json`.
 
-Saída: build real em dispositivo com save/resume.
+Saída: APK executável e configuração iOS preparada quando toolchain externa impedir
+build local; save/resume validado por testes. Instalação/kill real pelo Android OS e
+iOS precisam de evidência própria. Não há AVD/imagem Android ou device conectado
+neste host; iOS requer macOS/Xcode, template iOS e Team ID. Esses gates continuam
+pendentes no Sprint 15, sem solicitar teste do usuário nas sprints intermediárias.
+
+Contratos de recompensa/compra e seus mocks entram no Sprint 7, após PlayerEconomy
+e timers: a fundação não inventa entrega de moedas nem simula compra na loja.
+O shell inicial é um protótipo integrado; paridade total da UI herdada é Sprint 2.
 
 ## Sprint 2 — UX Touch-First
 

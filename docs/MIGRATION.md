@@ -34,6 +34,32 @@ sem failures/diagnostics (`.runtime/tests/20261001T043637Z-sprint0-regression/`)
 Próximo gate: Sprint 1 com AppRoot/GameController,
 SaveService/lifecycle, navegação, gestos, safe area e exports Android/iOS.
 
+### Fundação implementada (Sprint 1)
+
+- Entry point mobile: `AppRoot`, `GameController` e `MobileShell` responsivo.
+- Save envelope v1 com domínio v7; migrations v1–v7 preservadas. Autosave 30s,
+  checkpoint após comandos/background, backup/recovery automático e bloqueio de
+  downgrade/sobrescrita de dados irrecuperáveis. Nenhum botão Salvar necessário.
+- Touch/pan/pinch e roteamento de um sheet; world input ignora mouse emulado.
+- Safe area testada com notch e gesture bar em pixels convertidos para UI.
+- Traduções PT-BR/EN/ES e mudança de locale atualizam controles existentes.
+- Analytics/config com defaults locais, filas/bounds e providers mock; sem SDK.
+- APK de debug Android gerado com toolchain instalada. ETC2/ASTC habilitado por
+  exigência verificada no exporter. Signing de produção/AAB ficam no release.
+- Preset iOS sem Team ID inventado. Host Windows, sem Xcode/template iOS.
+- Não há device/AVD/imagem Android neste ambiente. Screenshots de renderer local
+  e notificações injetadas não contam como instalação/kill real pelo OS.
+- Gate local aprovado: 21 suítes, 128 verificações renderizadas e 12 capturas;
+  detalhes/hashes em `docs/SPRINT1_VALIDATION.json`. APK reconstruído sem warnings.
+
+O shell ainda não substitui todas as telas/diagnósticos/assignments da gestão
+herdada. A remoção definitiva da apresentação desktop ocorre no Sprint 2 após
+portar essas capacidades e as verificações úteis de arte/culling.
+
+Sprint 1 concluído para seu escopo local de fundação/configuração. Próxima etapa:
+Sprint 2, incluindo touch pela rota real de eventos de viewport, assignments,
+tarifas, diagnósticos, reviews e revisão do espaço do hotel com sheets abertas.
+
 ## Objetivo
 
 Reaproveitar o domínio validado e substituir o que é específico de desktop.

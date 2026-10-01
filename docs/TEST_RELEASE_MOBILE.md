@@ -9,6 +9,16 @@ Targets:
 
 Web e desktop não são plataformas de release deste repositório.
 
+## Evidência atual da fundação
+
+Sprint 1: APK Android de debug exportado pela toolchain local e testes/renderização
+registrados em `SPRINT1_VALIDATION.json`. Não constitui QA de aparelho ou de loja.
+Não há device/AVD/imagem Android instalada neste host. iOS depende de macOS/Xcode,
+template iOS e Team ID; conferir a [documentação oficial](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_ios.html).
+AAB/signing de produção e providers serão validados no release, seguindo a
+[configuração oficial Android](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_android.html).
+Essas limitações não transferem testes intermediários para o usuário.
+
 ## 2. Android
 
 Validar:

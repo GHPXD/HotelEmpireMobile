@@ -1,0 +1,405 @@
+{
+  "scope": "Sprint 1 local foundation validation; not device/store release QA",
+  "regressions": {
+    "revision": "225a768465d0a4085917174b39487360451550e4",
+    "dirty": true,
+    "group": "all",
+    "started_utc": "20261001T050829Z",
+    "status": "passed",
+    "steps": [
+      {
+        "suite": "foundation_test",
+        "passed": true,
+        "duration_seconds": 1.282,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "foundation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\foundation_test.json",
+        "sha256": "99adae4c8932b98f5ea3799dcdc51abdca3777656008413b8a443400d5bcf9c6"
+      },
+      {
+        "suite": "construction_test",
+        "passed": true,
+        "duration_seconds": 1.282,
+        "summaries": [
+          {
+            "checks": 16,
+            "failures": 0,
+            "suite": "construction"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\construction_test.json",
+        "sha256": "beb52f42691677fa1f87486ea5a197a0c4b43a9484ed1d5746deac790a6f4f2f"
+      },
+      {
+        "suite": "simulation_test",
+        "passed": true,
+        "duration_seconds": 1.36,
+        "summaries": [
+          {
+            "cleaned": 1,
+            "failures": 0,
+            "lift_delivered": 5,
+            "meals": 2,
+            "revenue": 196,
+            "suite": "simulation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\simulation_test.json",
+        "sha256": "aa6981dda905a54c7f4c99f1c309fd2a0a069ada0eeb1760372001f10031d1ed"
+      },
+      {
+        "suite": "save_test",
+        "passed": true,
+        "duration_seconds": 1.938,
+        "summaries": [
+          {
+            "completed": 25,
+            "failures": 0,
+            "suite": "save"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\save_test.json",
+        "sha256": "2a1c55c34ca32973d2abb969b5886a37e5085659f31bd67084348b4e98a8c680"
+      },
+      {
+        "suite": "management_test",
+        "passed": true,
+        "duration_seconds": 1.719,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "management",
+            "transport_base_ticks": 279,
+            "transport_upgraded_ticks": 125
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\management_test.json",
+        "sha256": "058476b0248eb746ed8f3f567a38e876f374040df2f96b0b428e86b789674d37"
+      },
+      {
+        "suite": "lodging_value_test",
+        "passed": true,
+        "duration_seconds": 1.594,
+        "summaries": [
+          {
+            "cases": 11,
+            "failures": 0,
+            "suite": "lodging_value"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\lodging_value_test.json",
+        "sha256": "6687aa65af11638ae7a469faa14a3b7f4aae91bab802228bf86afa970aa82a20"
+      },
+      {
+        "suite": "reviews_test",
+        "passed": true,
+        "duration_seconds": 1.484,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "reviews"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\reviews_test.json",
+        "sha256": "b8281e1ff5243117fa4c37a37e484deeacce81fbafd690c35dc5dd75c841f163"
+      },
+      {
+        "suite": "progression_test",
+        "passed": true,
+        "duration_seconds": 2.578,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "progression"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\progression_test.json",
+        "sha256": "dd559248bb5c10b330dcc3b49bc0b89ee0b539db2cd1ad41652b6fd7fc13f14b"
+      },
+      {
+        "suite": "content_test",
+        "passed": true,
+        "duration_seconds": 4.734,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "content"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\content_test.json",
+        "sha256": "92390e391bd38e74ba932f7ee30bad37884ddf3bc7428224f8955b509ecb8d12"
+      },
+      {
+        "suite": "analytics_test",
+        "passed": true,
+        "duration_seconds": 1.407,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "analytics"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\analytics_test.json",
+        "sha256": "83221de9ec9cb596953f462fc822e544aee810fcda1d74cdeb6655f2979634c9"
+      },
+      {
+        "suite": "checkin_diagnostics_test",
+        "passed": true,
+        "duration_seconds": 1.422,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "checkin_diagnostics"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\checkin_diagnostics_test.json",
+        "sha256": "12d64a82217a6525db06fbab0e167a1d3756ead131de01942c5804d955340bdc"
+      },
+      {
+        "suite": "save_multiseed_test",
+        "passed": true,
+        "duration_seconds": 7.5,
+        "summaries": [
+          {
+            "checkpoints": 20,
+            "failures": 0,
+            "states": [
+              "working",
+              "idle",
+              "walking",
+              "checkin",
+              "lift_queue",
+              "using",
+              "riding",
+              "cleaning"
+            ],
+            "suite": "save_multiseed"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\save_multiseed_test.json",
+        "sha256": "3f3cd8520173b0da3b7db0d6910b1dca049e5194b28ef9d508ffd8fcab75d673"
+      },
+      {
+        "suite": "stress_test",
+        "passed": true,
+        "duration_seconds": 9.75,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "stress"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\stress_test.json",
+        "sha256": "67238449adb8eeeb925dd6c54fcb6071c0ae493482bfd9ab44dd1fe74d27dc8e"
+      },
+      {
+        "suite": "admission_equivalence_test",
+        "passed": true,
+        "duration_seconds": 13.297,
+        "summaries": [
+          {
+            "failures": 0,
+            "seeds": 3,
+            "suite": "admission_equivalence"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\admission_equivalence_test.json",
+        "sha256": "b8234937db28b9dc542238133e638e553cea85678809e3a9e2d34894bab60d8b"
+      },
+      {
+        "suite": "long_run_test",
+        "passed": true,
+        "duration_seconds": 26.61,
+        "summaries": [
+          {
+            "failures": 0,
+            "scenarios": 6,
+            "suite": "long_run"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\long_run_test.json",
+        "sha256": "3ab2bdfcd915d9ab82e48d5c1281e4bee96b7cf735edee72dfe589e47efe53e8"
+      },
+      {
+        "suite": "departure_observer_test",
+        "passed": true,
+        "duration_seconds": 1.406,
+        "summaries": [
+          {
+            "failures": 0,
+            "suite": "departure_observer"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\departure_observer_test.json",
+        "sha256": "1112f3c8686463fac568eedaa1b17d07d4717f753209e0b079ea1ee23667692c"
+      },
+      {
+        "suite": "tariff_scenarios",
+        "passed": true,
+        "duration_seconds": 75.265,
+        "summaries": [
+          {
+            "failures": 0,
+            "scenarios": 18,
+            "suite": "tariff_scenarios"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\tariff_scenarios.json",
+        "sha256": "c36942e47d63e8f9f0b4cbfbd2b7248142e2335b5c02e6b947021721d245fefd"
+      },
+      {
+        "suite": "input_navigation_test",
+        "passed": true,
+        "duration_seconds": 1.375,
+        "summaries": [
+          {
+            "checks": 19,
+            "failures": 0,
+            "suite": "mobile_input_navigation"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\input_navigation_test.json",
+        "sha256": "d3a1e66126cbdc8700b83d8ab37a053773e25bcb3c41bc8b9929f0f84a7b727f"
+      },
+      {
+        "suite": "platform_adapters_test",
+        "passed": true,
+        "duration_seconds": 1.359,
+        "summaries": [
+          {
+            "checks": 17,
+            "failures": 0,
+            "suite": "mobile_platform_adapters"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\platform_adapters_test.json",
+        "sha256": "7272dde2cbf6ce64405f96d156467a36c50164e71920b54d02f358f0673f5542"
+      },
+      {
+        "suite": "save_lifecycle_test",
+        "passed": true,
+        "duration_seconds": 1.578,
+        "summaries": [
+          {
+            "checks": 33,
+            "failures": 0,
+            "suite": "mobile_save_lifecycle"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\save_lifecycle_test.json",
+        "sha256": "f8db413efd10b60575a84e32c8b9aa97edcfb8e5c70d900299842e564582f7ad"
+      },
+      {
+        "suite": "shell_layout_test",
+        "passed": true,
+        "duration_seconds": 4.313,
+        "summaries": [
+          {
+            "checks": 116,
+            "failures": 0,
+            "rendered": false,
+            "screenshots": [],
+            "suite": "mobile_shell_layout"
+          }
+        ],
+        "evidence": ".runtime\\tests\\20261001T050829Z-sprint1-final\\shell_layout_test.json",
+        "sha256": "f2c828a9ff5f558caeeab1ab6bcac6dad8affeebfe5bb138b191815dbab31bbf"
+      }
+    ],
+    "completed_utc": "2026-10-01T02:11:13.673348-03:00"
+  },
+  "rendering": {
+    "passed": true,
+    "engine": "C:\\Program Files (x86)\\Godot\\Godot_v4.7.2-stable_win64.exe",
+    "engineSha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+    "revision": "225a768465d0a4085917174b39487360451550e4",
+    "dirty": true,
+    "summary": {
+      "checks": 128,
+      "failures": 0,
+      "rendered": true,
+      "screenshots": [
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-360x780-pt_BR.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-360x780-en.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-360x780-es.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-844x390-pt_BR.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-844x390-en.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-844x390-es.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-960x540-pt_BR.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-960x540-en.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-960x540-es.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-1280x800-pt_BR.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-1280x800-en.png",
+        "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-1280x800-es.png"
+      ],
+      "suite": "mobile_shell_layout"
+    },
+    "captures": [
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-360x780-pt_BR.png",
+        "sha256": "4ee6138bb3e04400631de22e2e4ae41833880c034b727e65db8be2d63e3278f9"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-360x780-en.png",
+        "sha256": "511362b686aafc9ed82df6a213c2060c76350cae6cf77a1190307c86a5352535"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-360x780-es.png",
+        "sha256": "3e25201b782beb05b3f92ae013fdbd9fe8196df83b190b8d5c086820c805ba74"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-844x390-pt_BR.png",
+        "sha256": "28138cb5cc82eaf2075abf5a90ae21f5df6d0a282d822bea13289351e219df26"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-844x390-en.png",
+        "sha256": "f603b6888d9e9a7a62565ddef72734650df34c585c61dfc8b030ed33591ed973"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-844x390-es.png",
+        "sha256": "417178b0d42dc01a761c934b2c1e030c34c4bcc48308cd41229940b35705885e"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-960x540-pt_BR.png",
+        "sha256": "9c69d6b9a36bffaebc1d1e0de19fca67c1cccab76fe1fd149e41810e7180acf0"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-960x540-en.png",
+        "sha256": "b883c4450a476e8263cbe08f54dd55f83fd0ff90729f5af55b7c190583d05480"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-960x540-es.png",
+        "sha256": "b2474db7d4b140068a13a5fe26b63b284d125650c6347a54e39b7a43ba36f444"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-1280x800-pt_BR.png",
+        "sha256": "dc63bb290bbed888556c866fd5a29b4553e4dd775e8a31042dd153fc4195ddeb"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-1280x800-en.png",
+        "sha256": "8724816fd4614e7fa8588fdc77a7ec854e89c87acb81e629e70cfe8ba19bf381"
+      },
+      {
+        "path": "C:/Projects/HotelEmpireMobile/.runtime/mobile-render/20261001T051003Z/Godot/app_userdata/Hotel Empire/mobile-1280x800-es.png",
+        "sha256": "9da1a7a0f2af597387b3ab56453da586fff087108dae74d898d0e6b4ca11d506"
+      }
+    ],
+    "log": "C:\\Projects\\HotelEmpireMobile\\.runtime\\mobile-render\\20261001T051003Z\\godot.log"
+  },
+  "androidDebug": {
+    "path": "builds/android/HotelEmpireMobile.apk",
+    "bytes": 116306131,
+    "sha256": "eeb04b1c819bc59b7a75dc85d30f831c30f52c5b83e82ec8c63772ba09ec4a60",
+    "exportWarnings": []
+  },
+  "limitations": [
+    "No connected Android device or installed AVD/system image",
+    "No macOS/Xcode/iOS template or signing Team ID",
+    "Store providers and production credentials not integrated",
+    "Full mobile UI parity remains Sprint 2"
+  ]
+}

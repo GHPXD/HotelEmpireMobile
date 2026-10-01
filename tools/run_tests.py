@@ -55,6 +55,8 @@ def main():
         command = [gda, '--user-data-root', str(run_root / suite / 'user-data'),
                    'script', 'run', 'res://' + path.relative_to(ROOT).as_posix(),
                    '--project', str(ROOT), '--timeout', str(args.timeout), '--strict', '--json']
+        if path.parent.name == 'mobile':
+            command += ['--completion-marker', 'MOBILE_TEST_COMPLETE']
         started = time.monotonic()
         result = subprocess.run(command, cwd=ROOT, env=env, capture_output=True, text=True, encoding='utf-8')
         evidence = run_root / f'{suite}.json'

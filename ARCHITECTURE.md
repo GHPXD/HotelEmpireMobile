@@ -86,6 +86,12 @@ Responsável por:
 
 A camada atual baseada em `Window`, teclado e mouse será substituída.
 
+Implementação da fundação: `core/application/app_root.tscn` é a cena principal.
+`AppRoot` conecta `GameController`, `SaveService`, `ScreenRouter`, gestos,
+`MobileSafeArea`, `MobileShell`, áudio e providers de analytics/config.
+O `main.gd` desktop permanece apenas para portar verificações antigas no Sprint 2;
+não é mais entry point nem é incluído no export mobile.
+
 ### Platform
 
 Integrações que não podem contaminar o domínio:
@@ -172,6 +178,17 @@ Evoluir `SaveStore` e `SessionSnapshot` para um `SaveService` com:
 - estado de offline progress.
 
 Compras consumíveis e entitlements exigem validação idempotente.
+
+Implementado no Sprint 1: `AtomicJSONStore` é compartilhado por `SaveStore` e
+`SaveService`. O envelope mobile v1 contém `saved_at_utc`, snapshot do hotel v7 e
+`app_state` primitivo para módulos da aplicação. Boot tenta primary/backup e migra
+save legado sem apagar o original. Ambos corrompidos bloqueiam escrita; versão
+futura válida bloqueia downgrade. Save após recovery preserva backup válido.
+`GameController` executa autosave mesmo com speed zero e para em background.
+O nome interno `Hotel Empire` permanece estável para preservar o diretório de saves.
+
+Ainda pendente: módulos premium, entitlements, timers e settlement offline. Não
+considerar `app_state` vazio como implementação desses sistemas.
 
 ## Offline progress
 

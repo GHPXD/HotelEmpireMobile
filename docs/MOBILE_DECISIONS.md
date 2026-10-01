@@ -38,3 +38,10 @@ A escolha será feita pelo agente após protótipos automatizados de landscape e
 portrait, incluindo telefones estreitos e tablets. Medidas de layout e screenshots
 são evidência de legibilidade/área disponível, não um playtest em aparelho real.
 Arquitetura responsiva deve permitir adaptação posterior sem reescrever o domínio.
+
+Protótipos do Sprint 1 foram renderizados em 360x780, 844x390, 960x540 e 1280x800,
+com cutouts e PT-BR/EN/ES. Landscape oferece largura para hotel horizontal; portrait
+mantém a navegação operável, mas usa duas linhas e reduz leitura dos andares.
+Tablet usa contexto lateral. O Sprint 2 deve reposicionar a câmera ao abrir sheets
+para preservar contexto visível. Orientação final continua pendente dessa revisão;
+sensor nas duas orientações permanece habilitado durante os protótipos.
