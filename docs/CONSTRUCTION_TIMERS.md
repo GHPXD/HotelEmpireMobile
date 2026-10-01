@@ -1,8 +1,10 @@
 # Construção e progresso temporal — Sprint 5
 
-Sprint em implementação. O primeiro componente é `ProgressClock`, ainda sem
-integração ao GameController/save. Fila, slots, obras, upgrades, speedups e settlement
-offline do hotel continuam pendentes; esta documentação não conclui a sprint.
+Sprint em implementação. `ProgressClock` e `ConstructionService` estão implementados
+e testados isoladamente, ainda sem integração ao GameController/save/interface.
+Speedups, N4/N5, especializações e settlement offline do hotel continuam pendentes.
+O fluxo do produto ainda usa a construção validada na Sprint 4; esta documentação
+não conclui a sprint.
 
 ## Relógio implementado
 
@@ -33,6 +35,37 @@ Usa providers injetáveis e deadlines concretos, sem
 espera real: precisão em milissegundos, mudança de relógio durante obra, restart,
 background, callbacks/checkpoints, rollback, ausência extrema e dados inválidos.
 Essa proteção local não comprova hora confiável de servidor ou autenticidade de compra.
+
+## Núcleo da fila implementado
+
+`ConstructionService` pertence à aplicação e referencia o `HotelModel`. A simulação
+continua sendo dona das salas concluídas. `finish_build` coloca uma sala já paga;
+`build` permanece útil para autoria de estado e regressões de domínio. A integração
+do produto vai encaminhar construção/upgrades/andares ao serviço de obras.
+
+Dois slots gratuitos processam até 12 investimentos no total, incluindo ativos.
+Os demais aguardam FIFO. Terreno é reservado ao aceitar; um elevador reserva seu
+poço em todos os andares. Andares sucessores aguardam a conclusão do anterior.
+Upgrades conservam os atributos anteriores durante a obra e não duplicam investimento.
+
+Cash é debitado como capital uma vez. Cancelamento antes da conclusão estorna o
+investimento inteiro, libera espaço/slot e não fabrica receita operacional. Não é
+possível cancelar um andar que sustenta outros investimentos pendentes. Uma obra
+invalidada devolve o capital uma vez e não conta como conclusão.
+
+O processamento visita deadlines em ordem de tempo/ID. Ao liberar um slot, a próxima
+obra começa naquele deadline, mesmo se o retorno ocorrer muito depois. A mesma fila
+produz o mesmo hotel ao observar cada segundo, retornar após ausência ou restaurar
+um save intermediário. Nenhum desses caminhos executa ticks de simulação adicionais.
+
+Estado v1 guarda jobs, timestamps, slots, custo pago, alvo e contadores/ID. Restore
+valida campos, referências, sobreposição, slots únicos, fila de andares e capital
+reservado; falha não altera o estado vivo. Tempos ficam em `construction_rules.tres`.
+
+`construction_timer_test` passou em 162 verificações pelo gda estrito. As 11 suítes
+do grupo domain também passaram após a separação de colocação/cobrança e estorno.
+Provas dos componentes ficam em `SPRINT5_COMPONENT_VALIDATION.json`; não substituem
+o gate de integração por toque, lifecycle e export da sprint completa.
 
 ## Decisões para a integração pendente
 

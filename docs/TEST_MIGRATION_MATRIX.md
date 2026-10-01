@@ -57,6 +57,11 @@ O gate continua exigindo saída zero e ausência de erros/recursos retidos. O á
 aguarda a liberação exata de referências com limite, sem referência temporária
 retida pelo próprio polling assíncrono.
 
+A Sprint 5 em implementação acrescenta `progress_clock_test` e
+`construction_timer_test`, totalizando quinze entry points `*_test.gd` descobertos
+pelo grupo mobile. `construction_timer_cases` é helper de casos carregado em runtime.
+Esses componentes ainda aguardam integração e não concluem a cobertura da sprint.
+
 ## Próximas coberturas
 
 Adicionar às suítes mobile existentes: timers/offline, economia global,

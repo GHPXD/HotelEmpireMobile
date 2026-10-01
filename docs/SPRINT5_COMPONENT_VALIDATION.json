@@ -1,0 +1,87 @@
+{
+  "scope": "Sprint 5 isolated clock/construction components; this is not the completed sprint gate",
+  "generated_utc": "2026-10-01T12:04:45.741854+00:00",
+  "component_status": "passed",
+  "sprint_status": "in_progress",
+  "base_revision": "722042ada7405fe6047d8f181614e304f947fbc2",
+  "sources": [
+    {
+      "path": "core/application/progress_clock.gd",
+      "sha256": "959b78d380b92950368e09d5736ffbeb76bc006f2dc84fab569973d098074361"
+    },
+    {
+      "path": "tests/mobile/progress_clock_test.gd",
+      "sha256": "9e15ff70df34bd1237ae8e4012eba9b7e71e672f58163505142c6305632b0b55"
+    },
+    {
+      "path": "core/application/construction_rules.gd",
+      "sha256": "c2b810d5648c4556eb950e781c9a3bfeb8be675ec26ea252661798dc7e3e8cfd"
+    },
+    {
+      "path": "core/application/construction_service.gd",
+      "sha256": "6542d81ac19c8bf6aee959c2f60ec1a467f6a9cba537d5659d8decb0ae4987a8"
+    },
+    {
+      "path": "data/construction_rules.tres",
+      "sha256": "73e0971011a54837929edbe6aae92486e810d9febb8fcce3182e5c287c307b59"
+    },
+    {
+      "path": "hotel/hotel/hotel_model.gd",
+      "sha256": "d4581fa3efeaa1d451ce238ff76d657b7664e8e25123592572cd920d2b6517a8"
+    },
+    {
+      "path": "simulation/economy/economy.gd",
+      "sha256": "f7d796b92a8b176ce32ee96f0f3b08a2f640e1e604b62b54c4f28b04cf43db32"
+    },
+    {
+      "path": "tests/mobile/construction_timer_cases.gd",
+      "sha256": "7e78b426cf7839bd4b0fe7973df100a5392bd98297dcb476690a8055d633196c"
+    },
+    {
+      "path": "tests/mobile/construction_timer_test.gd",
+      "sha256": "62503c3e7d7cff4a32d358bb6ea9e92b8565dc82109ea806b093b37327e85833"
+    }
+  ],
+  "tests": {
+    "clock_checks": 35,
+    "construction_checks": 162,
+    "preserved_domain_suites": 11,
+    "runs": [
+      {
+        "path": ".runtime/tests/20261001T112800Z-sprint5-clock-final/report.json",
+        "sha256": "dfeb7cc683089aaef5fbab8336ae94f60dc5e09d7a19cbec933259527e743364"
+      },
+      {
+        "path": ".runtime/tests/20261001T115619Z-sprint5-construction-core-final/report.json",
+        "sha256": "ad07cf891156e059b503530ce60efdfb7025a14729f0f59e07e2e698b7e48fe4"
+      },
+      {
+        "path": ".runtime/tests/20261001T115347Z-sprint5-construction-domain/report.json",
+        "sha256": "0150fb8c7a61f3bc0f6214ff6f15f8d158b0f4b479fb312abf200b48f85918ea"
+      }
+    ]
+  },
+  "static": {
+    "effective_validated_scripts": 6,
+    "initial_run": {
+      "path": ".runtime/sprint5-construction-static.json",
+      "sha256": "69ac81d4f3d6873004a8e48e4bbd85c5083662526a7f395b67e3e7fc23fdf847",
+      "status": "one operation ended without a structured result"
+    },
+    "focused_recheck": {
+      "path": ".runtime/sprint5-construction-cases-static-recheck.json",
+      "sha256": "7ea9b1aa320108d1815861bf3ff9f0d10fe909dab9a56da0c0eea41caccac09b",
+      "valid": true,
+      "diagnostics": []
+    },
+    "limitation": "Intermittent script-validate process failure retained as evidence; engine-internal cause not established. Functional strict run exited zero with all assertions; integration/native release gates remain pending."
+  },
+  "pending": [
+    "GameController/save integration and atomic profile modules",
+    "Touch UI, reserved plot presentation and real-time countdown feedback",
+    "Speedup inventory and item consumption",
+    "N4/N5 and initial specializations",
+    "Aggregate operational hotel earnings and return summary",
+    "Complete lifecycle/native GUI/domain-stress/studies/export sprint gate"
+  ]
+}

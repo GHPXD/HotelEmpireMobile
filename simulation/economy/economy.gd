@@ -32,3 +32,14 @@ func purchase(cost: int, reason: String, time: float) -> bool:
 
 func profit() -> int:
 	return revenue - expenses
+
+func refund_capital(amount: int, reason: String, time: float) -> bool:
+	if amount < 0 or amount > capital_spent:
+		return false
+	cash += amount
+	capital_spent -= amount
+	ledger.append({"amount": amount, "reason": reason, "time": time})
+	if ledger.size() > LEDGER_LIMIT:
+		ledger.pop_front()
+	changed.emit()
+	return true

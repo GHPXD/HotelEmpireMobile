@@ -33,6 +33,12 @@ func by_id(room_id: int) -> RoomState:
 	return null
 
 func build_error(definition: RoomDefinition, column: int, floor_index: int) -> String:
+	var error := placement_error(definition, column, floor_index)
+	if not error.is_empty():
+		return error
+	return "Caixa insuficiente." if economy.cash < definition.build_cost else ""
+
+func placement_error(definition: RoomDefinition, column: int, floor_index: int) -> String:
 	if definition == null:
 		return "Selecione uma construção."
 	var locked := progression.build_error(definition)
@@ -52,14 +58,19 @@ func build_error(definition: RoomDefinition, column: int, floor_index: int) -> S
 		for cell in range(column, column + definition.width):
 			if room_at(cell, floor_index) != null:
 				return "Espaço ocupado."
-	if economy.cash < definition.build_cost:
-		return "Caixa insuficiente."
 	return ""
 
 func build(definition: RoomDefinition, column: int, floor_index: int, time: float = 0.0) -> RoomState:
 	if not build_error(definition, column, floor_index).is_empty():
 		return null
 	if not economy.purchase(definition.build_cost, "Construção: " + definition.display_name, time):
+		return null
+	return finish_build(definition, column, floor_index)
+
+func finish_build(definition: RoomDefinition, column: int, floor_index: int) -> RoomState:
+	# Application jobs already reserved the investment. This domain operation
+	# places the completed room without a second charge.
+	if not placement_error(definition, column, floor_index).is_empty():
 		return null
 	var room := RoomState.new()
 	room.id = next_room_id

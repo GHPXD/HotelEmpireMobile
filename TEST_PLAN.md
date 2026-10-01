@@ -82,6 +82,12 @@ com 2.862 verificações e 11 fases. Nonzero exit, erros e recursos retidos no s
 continuam reprovando o gate. O teste de áudio aguarda até dois segundos pela contagem
 exata anterior de referências, sem manter o Resource na expressão que atravessa await.
 
+Componentes da Sprint 5 em implementação: `progress_clock_test` cobre tempo ativo,
+restart, ausência, rollback e checkpoints em background. `construction_timer_test`
+compara conclusão online/offline/restaurada, dois slots, FIFO, reservas verticais,
+upgrades/andares, capital/estorno e dados contraditórios. Ainda não constituem o gate
+de integração por toque/save/lifecycle da construção temporizada.
+
 Cobrir em dispositivo:
 
 - tap em sala;

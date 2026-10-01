@@ -8,7 +8,12 @@ Este changelog começa na separação da versão mobile. O histórico de desenvo
   com proteção de rollback, watermark e resume idempotente. Checkpoint durante
   background preserva o intervalo a ser liquidado no retorno.
 - Componente isolado passou em 35 verificações determinísticas pelo gda estrito.
-  Ainda pendem integração, fila/slots, obras/upgrades, speedups e settlement offline;
+  ConstructionService adiciona dois slots gratuitos, fila, reservas de terreno,
+  capital pago uma vez, cancelamento com estorno e deadlines agregados. Upgrades e
+  andares aguardam conclusão. Restore valida a fila sem alterar estado em caso de erro.
+- Núcleo de construção passou em 162 verificações; as 11 suítes de domínio
+  preservadas passaram. Ainda pendem integração, speedups, N4/N5, especializações
+  e settlement offline do hotel;
   o fluxo de construção do produto continua no estado validado da Sprint 4.
 
 ## 0.6.0-mobile — Equipe e delegação
