@@ -1,6 +1,0 @@
-Generator: built-in image_gen (2026-09-16)
-Destination: assets/art/rooms/cafe.png
-Source: C:\Users\GHPXD\.codex\generated_images\01a0a915-2716-7f90-a3cc-87023fafadff\exec-40d8c2fa-2782-4bee-9d5a-8e9fa10586dd.png
-Style reference: assets/art/rooms/reception.png
-Prompt:
-Production-ready original raster game asset for Hotel Empire. Dedicated COFFEE SHOP interior, near square 1.15:1. Match the reference's polished hand-painted finish, jade wainscoting, warm oak and brass, cream plaster, soft warm lighting. Straight-on orthographic side-view cutaway. Refined espresso machine behind walnut counter, pastry case, two small coffee tables, caramel upholstery, sage tiles and potted plants. Furniture behind unobstructed walking lane at bottom 18%. Full room edge-to-edge. No people, lettering, logos, UI, watermark, presentation border or isometric view. Readable at 124x108 game pixels.

@@ -1,5 +1,0 @@
-Generator: built-in image_gen (2026-09-16)
-Destination: assets/art/rooms/restaurant.png
-Source: C:\Users\GHPXD\.codex\generated_images\01a0a915-2716-7f90-a3cc-87023fafadff\exec-c5147287-568a-4577-94a6-21a9bcd79bcf.png
-Prompt:
-Production-ready original raster asset for Hotel Empire, polished hand-painted 2D hotel tycoon art. Match reference material palette, detail and soft warm light. Strict straight-on side-view cutaway, no isometric view. Actual reusable game texture filling rectangular canvas edge to edge, not a presentation sheet, no lettering, logos, watermarks or UI. Readable at small game scale. Interiors have furniture behind unobstructed walking floor at bottom 18 percent. Asset: BISTRO RESTAURANT, landscape aspect 1.72:1: terracotta banquettes, three small round oak dining tables set with white crockery, brass pendant lights, service sideboard, plants, cream plaster. No people.

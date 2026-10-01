@@ -1,6 +1,0 @@
-Generator: built-in image_gen (2026-09-16)
-Destination: assets/art/environment/corridor.png
-Source: C:\Users\GHPXD\.codex\generated_images\01a0a915-2716-7f90-a3cc-87023fafadff\exec-85cbb903-0d2d-4d50-98fd-f958d1ac4571.png
-Style reference: assets/art/rooms/reception.png
-Prompt:
-Production-ready original raster asset for Hotel Empire, polished hand-painted 2D hotel tycoon art. Match reference material palette, detail and soft warm light. Strict straight-on side-view cutaway, no isometric view. Actual reusable game texture filling rectangular canvas edge to edge, not a presentation sheet, no lettering, logos, watermarks or UI. Readable at small game scale. Interiors have furniture behind unobstructed walking floor at bottom 18 percent. Asset: EMPTY CORRIDOR MODULE, portrait aspect 0.57:1: cream plaster wall, dark jade wainscoting, subtle warm brass wall sconce, oak floor, no furniture or door. Seamless adjoining side edges. No people.

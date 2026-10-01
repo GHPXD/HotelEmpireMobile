@@ -1,6 +1,0 @@
-Generator: built-in image_gen (2026-09-16)
-Destination: assets/art/environment/cabin.png
-Source: C:\Users\GHPXD\.codex\generated_images\01a0a915-2716-7f90-a3cc-87023fafadff\exec-7a09fa8e-45cf-4c96-88bb-ddaf807c1cc0.png
-Style reference: assets/art/rooms/reception.png
-Prompt:
-Production-ready original raster asset for Hotel Empire, polished hand-painted 2D hotel tycoon art. Match reference material palette, detail and soft warm light. Strict straight-on side-view cutaway, no isometric view. Actual reusable game texture filling rectangular canvas edge to edge, not a presentation sheet, no lettering, logos, watermarks or UI. Readable at small game scale. Interiors have furniture behind unobstructed walking floor at bottom 18 percent. Asset: ELEVATOR CABIN, portrait aspect 0.66:1: front-on open elevator cabin with brass frame, warm illuminated cream back wall, oak handrail and dark teal trim. Entire cabin in image, no people, no text. Genuine transparent background outside cabin.
