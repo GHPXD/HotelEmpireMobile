@@ -8,6 +8,7 @@ func _initialize() -> void:
 		var optimized := SimulationRunner.make_hotel(seed_value, "tower", 1000000)
 		var reference := SimulationRunner.make_hotel(seed_value, "tower", 1000000)
 		reference.guests = preload("res://tests/legacy_admission_reference.gd").new(reference.rules)
+		reference.guests.employee_completed.connect(reference.employees.complete)
 		# Rebuild reception after other categories; admission must preserve insertion order.
 		for session: HotelSession in [optimized, reference]:
 			var reception: RoomState = session.hotel.rooms[0]

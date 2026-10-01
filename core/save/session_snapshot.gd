@@ -1,16 +1,16 @@
 class_name SessionSnapshot
 extends RefCounted
-## Schema v8 adds physical player work and room condition; old rooms start intact.
+## Schema v9 adds bounded staff progression, delegation and cleaning quality.
 
-const VERSION: int = 8
+const VERSION: int = 9
 const WAIT_FIELDS: Array[String] = ActorState.WAIT_FIELDS
-const ROOM_FIELDS: Array[String] = ["id", "definition_id", "column", "floor_index", "occupant", "dirty", "cleaning_by", "repairing_by", "condition", "income", "level", "price_percent"]
+const ROOM_FIELDS: Array[String] = ["id", "definition_id", "column", "floor_index", "occupant", "dirty", "dirty_since", "cleaning_quality_bonus", "cleaning_by", "repairing_by", "condition", "income", "level", "price_percent"]
 const ACTOR_FIELDS: Array[String] = ["id", "role", "display_name", "state", "x", "floor_index", "target_x", "target_floor", "target_room", "destination_state", "elevator_id", "timer", "age", "waiting", "happiness", "money", "bedroom", "checked_in", "meals", "sleeps", "speed", "skill", "assignment", "workload", "agreed_price", "preferred_room", "preferred_floor", "archetype_id", "service_uses", "reception_seconds", "lift_queue_seconds", "service_queue_seconds"]
 const LIFT_FIELDS: Array[String] = ["room_id", "column", "capacity", "floor_position", "target_floor", "door_timer", "boarded", "delivered", "wait_total", "wait_max", "busy_seconds"]
 const SESSION_FIELDS: Array[String] = ["next_actor_id", "time", "tick_count", "arrival_timer", "day", "opened", "speed"]
 const ECONOMY_FIELDS: Array[String] = ["cash", "revenue", "expenses", "capital_spent"]
 const GUEST_FIELDS: Array[String] = ["completed", "meals_served", "bookings", "score_total", "reputation", "service_uses"]
-const STATES: Array[StringName] = [&"arriving", &"walking", &"lift_queue", &"riding", &"checkin", &"deciding", &"service_queue", &"using", &"exit", &"idle", &"working", &"cleaning", &"room_service_wait", &"manual_checkin", &"manual_cleaning", &"manual_repair", &"manual_prepare", &"manual_deliver"]
+const STATES: Array[StringName] = [&"arriving", &"walking", &"lift_queue", &"riding", &"checkin", &"deciding", &"service_queue", &"using", &"exit", &"idle", &"working", &"cleaning", &"employee_exit", &"room_service_wait", &"manual_checkin", &"manual_cleaning", &"manual_repair", &"manual_prepare", &"manual_deliver"]
 
 static func capture(session: HotelSession) -> Dictionary:
 	var rooms: Array[Dictionary] = []
@@ -24,6 +24,7 @@ static func capture(session: HotelSession) -> Dictionary:
 		var item := _read(actor, ACTOR_FIELDS)
 		item["needs"] = actor.needs.duplicate(true)
 		item["utility_scores"] = actor.utility_scores.duplicate(true)
+		item["employee"] = actor.ensure_employee().snapshot() if actor.is_employee() else null
 		actors.append(item)
 	var lifts: Array[Dictionary] = []
 	for lift in session.transport.lifts:
@@ -31,7 +32,7 @@ static func capture(session: HotelSession) -> Dictionary:
 		item["queue"] = lift.queue.members.duplicate()
 		item["passengers"] = lift.passengers.duplicate()
 		lifts.append(item)
-	return {"version": VERSION, "player_work": PlayerWorkSnapshot.capture(session.player_work), "reviews": session.guests.reviews.duplicate(true), "progression": session.progression.snapshot(), "session": _read(session, SESSION_FIELDS), "economy": _read(session.economy, ECONOMY_FIELDS), "ledger": session.economy.ledger.duplicate(true), "floors": session.hotel.floors, "next_room_id": session.hotel.next_room_id, "rooms": rooms, "actors": actors, "lifts": lifts, "guests": _read(session.guests, GUEST_FIELDS), "cleaned": session.employees.cleaned, "path_requests": session.transport.path_requests, "rng_seed": str(session.rng.seed), "rng_state": str(session.rng.state)}
+	return {"version": VERSION, "dismissed": session.employees.dismissed, "player_work": PlayerWorkSnapshot.capture(session.player_work), "reviews": session.guests.reviews.duplicate(true), "progression": session.progression.snapshot(), "session": _read(session, SESSION_FIELDS), "economy": _read(session.economy, ECONOMY_FIELDS), "ledger": session.economy.ledger.duplicate(true), "floors": session.hotel.floors, "next_room_id": session.hotel.next_room_id, "rooms": rooms, "actors": actors, "lifts": lifts, "guests": _read(session.guests, GUEST_FIELDS), "cleaned": session.employees.cleaned, "path_requests": session.transport.path_requests, "rng_seed": str(session.rng.seed), "rng_state": str(session.rng.state)}
 
 static func restore(data: Variant) -> Dictionary:
 	if data is Dictionary and data.get("version") == 1:
@@ -81,6 +82,21 @@ static func restore(data: Variant) -> Dictionary:
 			room_data["condition"] = 100
 			room_data["repairing_by"] = -1
 		data["player_work"] = PlayerWorkSnapshot.capture(PlayerWorkSystem.new())
+		data.version = 8
+	if data is Dictionary and data.get("version") == 8:
+		data = data.duplicate(true)
+		if not data.get("rooms") is Array or not data.get("actors") is Array:
+			return _error("Equipe ou salas inválidas.")
+		for room_data: Variant in data.rooms:
+			if not room_data is Dictionary:
+				return _error("Sala inválida.")
+			room_data["dirty_since"] = -1.0
+			room_data["cleaning_quality_bonus"] = 0
+		for actor_data: Variant in data.actors:
+			if not actor_data is Dictionary:
+				return _error("Agente inválido.")
+			actor_data["employee"] = EmployeeProgress.new().snapshot() if actor_data.get("role") in ["receptionist", "cleaner"] else null
+		data["dismissed"] = 0
 		data.version = VERSION
 	if not data is Dictionary or data.get("version") != VERSION:
 		return _error("Versão de save desconhecida ou formato inválido.")
@@ -104,6 +120,9 @@ static func restore(data: Variant) -> Dictionary:
 	if data.rooms.size() > HotelModel.MAX_FLOORS * HotelModel.COLUMNS or data.actors.size() > 5000 or data.lifts.size() > HotelModel.COLUMNS or data.ledger.size() > HotelEconomy.LEDGER_LIMIT:
 		return _error("Save excede limites suportados.")
 	session.hotel.floors = int(data.floors)
+	if not _integer(data.get("dismissed"), 0, session.next_actor_id - 1):
+		return _error("Desligamentos inválidos.")
+	session.employees.dismissed = int(data.dismissed)
 	session.hotel.next_room_id = int(data.next_room_id)
 	session.employees.cleaned = int(data.cleaned)
 	session.transport.path_requests = int(data.path_requests)
@@ -115,6 +134,10 @@ static func restore(data: Variant) -> Dictionary:
 			return _error("Nível de sala inválido.")
 		if room.condition < 0 or room.condition > 100 or room.repairing_by < -1 or room.repairing_by == 0 or room.cleaning_by < -1 or room.cleaning_by == 0:
 			return _error("Condição ou reserva de sala inválida.")
+		if room.dirty_since < -1 or room.dirty_since > session.time or (not room.dirty and room.dirty_since != -1) or room.cleaning_quality_bonus < 0 or room.cleaning_quality_bonus > EmployeeProgress.RULES.thresholds.size() - 1 + EmployeeProgress.RULES.quality_bonus:
+			return _error("Histórico ou qualidade de limpeza inválidos.")
+		if (room.dirty or room.occupant >= 0 or room.definition().category != &"lodging") and room.cleaning_quality_bonus != 0:
+			return _error("Qualidade de limpeza fora de um quarto disponível.")
 		if room.price_percent not in [75, 100, 125] or (room.definition().category not in [&"lodging", &"service"] and room.price_percent != 100):
 			return _error("Tarifa de sala inválida.")
 		var previous_cash: int = session.economy.cash
@@ -134,6 +157,18 @@ static func restore(data: Variant) -> Dictionary:
 			return _error("Agente inválido ou duplicado.")
 		if actor.role not in [&"guest", &"receptionist", &"cleaner", &"player"] or actor.state not in STATES or actor.destination_state not in STATES:
 			return _error("Papel ou estado de agente desconhecido.")
+		if not item.has("employee"):
+			return _error("Evolução da equipe ausente.")
+		if actor.is_employee():
+			actor.employee = EmployeeProgress.restore(item.employee, actor.role)
+			if actor.employee == null:
+				return _error("Evolução da equipe inválida.")
+			if actor.employee.dismiss_requested and (actor.assignment != -1 or actor.preferred_room != -1 or actor.preferred_floor != -1 or actor.target_room != -1):
+				return _error("Funcionário saindo ainda possui atribuição.")
+		elif item.employee != null:
+			return _error("Evolução atribuída a quem não é funcionário.")
+		if (actor.state == &"employee_exit" or actor.destination_state == &"employee_exit") and (not actor.is_employee() or not actor.employee.dismiss_requested):
+			return _error("Saída de funcionário inválida.")
 		if actor.archetype() == null or actor.service_uses < actor.meals or actor.service_uses < 0:
 			return _error("Perfil ou contagem de serviços inválida.")
 		for field: String in WAIT_FIELDS:

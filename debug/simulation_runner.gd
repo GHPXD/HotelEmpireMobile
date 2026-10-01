@@ -117,7 +117,7 @@ static func invariant_error(session: HotelSession, starting_money: int) -> Strin
 			return "Invalid actor attributes."
 		if actor.floor_index < 0 or actor.floor_index >= session.hotel.floors:
 			return "Actor outside hotel."
-	if session.guest_count() + session.guests.completed + staff != session.next_actor_id - 1:
+	if session.guest_count() + session.guests.completed + staff + session.employees.dismissed != session.next_actor_id - 1:
 		return "An actor was lost or counted twice."
 	for room in session.hotel.rooms:
 		if room.users.size() > room.capacity() or room.queue.members.size() > room.queue.capacity:

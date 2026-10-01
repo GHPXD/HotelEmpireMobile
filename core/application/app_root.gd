@@ -82,6 +82,9 @@ func _ready() -> void:
 		shell.set_message(key if TranslationServer.translate(key) != key else "work.error." + result)
 		analytics.record(&"manual_work", {"kind": kind, "phase": phase, "result": result}))
 	controller.guide_advanced.connect(func(stage: int) -> void: analytics.record(&"tutorial_progress", {"stage": stage}))
+	controller.staff_changed.connect(func(event: Dictionary) -> void:
+		if event.result == "promoted":
+			shell.message.text = tr("staff.promoted") % [tr("staff." + event.role + ".name"), event.level])
 	get_tree().auto_accept_quit = false
 	get_tree().quit_on_go_back = false
 	if controller.boot_status == "recovered":
@@ -276,7 +279,20 @@ func _command(action: StringName, arguments: Dictionary) -> void:
 		&"choose_build": _choose_build(arguments.definition)
 		&"confirm_build": _confirm_build()
 		&"add_floor": _add_floor()
-		&"hire": _hire(arguments.definition)
+		&"hire":
+			var traits: Array[StringName] = []
+			traits.assign(arguments.get("traits", []))
+			_hire(arguments.definition, traits)
+		&"staff_duty":
+			_feedback(controller.set_employee_duty(arguments.id, arguments.enabled), "staff.assigned")
+			_route()
+		&"staff_priority":
+			_feedback(controller.set_employee_priority(arguments.id, arguments.priority), "staff.assigned")
+			_route()
+		&"request_dismiss": router.open_sheet(&"dismiss_confirm", arguments.id)
+		&"dismiss_employee":
+			_feedback(controller.dismiss_employee(arguments.id), "staff.departing")
+			router.open_sheet(&"employee", arguments.id)
 		&"upgrade": _upgrade(arguments.id)
 		&"tariff":
 			_feedback(controller.set_tariff(arguments.id, arguments.percent), "tariff.saved")
@@ -334,8 +350,11 @@ func _add_floor() -> void:
 	view.queue_redraw()
 	_refresh()
 
-func _hire(definition: EmployeeDefinition) -> void:
-	_feedback(controller.hire(definition), "ui.hired")
+func _hire(definition: EmployeeDefinition, traits: Array[StringName] = []) -> void:
+	var error := controller.hire(definition, traits)
+	_feedback(error, "ui.hired")
+	if error.is_empty() and router.sheet == &"hire_options":
+		router.navigate(&"staff")
 	_route()
 	_refresh()
 

@@ -189,6 +189,8 @@ func step(session: HotelSession, delta: float) -> void:
 			totals.checkins += 1
 		"cleaning":
 			target.dirty = false
+			target.dirty_since = -1.0
+			target.cleaning_quality_bonus = 0
 			totals.cleaned += 1
 			session.employees.cleaned += 1
 		"repair":

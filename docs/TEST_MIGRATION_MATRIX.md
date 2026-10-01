@@ -29,7 +29,7 @@ telas no runtime. Os 17 testes de domínio/stress/estudos permanecem.
 | Ícones e preferências | ui_action_icons, ui_management_icons, ui_session_icons, ui_preferences_icons | arte original em MobileHotelPanels; presentation_test, audio_lifecycle_test, touch_management_test e captures com texto ampliado |
 | Renderização útil | ui_art, ui_culling, ui_actor_presentation | art_render, culling_render, actor_presentation_render: pixels, âncoras, bagagens, poses, hit targets e equivalência de culling portados para HotelView independente |
 
-Há onze suítes executáveis `*_test.gd` no grupo mobile. `display_scale_test`
+Há treze suítes executáveis `*_test.gd` no grupo mobile após a Sprint 4. `display_scale_test`
 verifica resolução física/densidade, stretch, cutouts, targets e rotação lógica.
 `platform_adapters_test` mantém cobertura dos contratos de analytics/config.
 Os três `*_render.gd` precisam de renderer nativo e são executados com
@@ -45,10 +45,22 @@ classe interna para script próprio após reproduzir falha de shutdown do Godot.
 Mantém o algoritmo de referência e incorpora o mesmo desgaste do quarto por uso;
 comparações completas de snapshots, sementes e continuação permanecem.
 
+Sprint 4 acrescenta `staff_automation_test` e `staff_touch_test`: evolução por tarefas
+reais, perfis/traços, trade-offs, pausa/prioridade, salários, desligamento físico,
+persistência e comparação multiseed manual/delegada. A referência de admissão conecta
+o sinal de XP ao seu EmployeeSystem após substituir GuestSystem; seu algoritmo de
+varredura continua independente. Nenhuma suíte herdada foi removida nesta sprint.
+
+`player_work_cases` é helper carregado em runtime pelo entry point existente;
+preserva exatamente os corpos dos casos da Sprint 3, com 2.862 checks e 11 fases.
+O gate continua exigindo saída zero e ausência de erros/recursos retidos. O áudio
+aguarda a liberação exata de referências com limite, sem referência temporária
+retida pelo próprio polling assíncrono.
+
 ## Próximas coberturas
 
-Adicionar às suítes mobile existentes: XP/traits/supervisão de equipe,
-timers/offline, economia global, rewarded, IAP/restore/idempotência, progressão,
+Adicionar às suítes mobile existentes: timers/offline, economia global,
+rewarded, IAP/restore/idempotência, progressão,
 prestige, localização e budgets. O grupo `mobile` é descoberto pelo executor.
 
 Validações intermediárias são responsabilidade do agente. A avaliação do usuário

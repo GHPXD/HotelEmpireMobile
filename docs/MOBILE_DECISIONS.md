@@ -79,3 +79,17 @@ têm prioridade acima do guia no sheet ativo, inclusive em landscape curto.
 Política guiada de cinco seeds chegou à primeira hospedagem em 3,5–3,7 segundos
 e à contratação em 96–135,5 segundos. Este resultado delimita a hipótese de pacing;
 não demonstra compreensão espontânea ou retenção de jogadores reais.
+
+## Equipe inicial
+
+Sprint 4 aprofunda recepção/limpeza com XP por conclusão, níveis 1–5, até dois traços
+e quatro perfis fixos. Não introduz todos os cargos planejados de uma vez.
+Operações especializadas de manutenção/serviço de quarto permanecem na Sprint 9,
+preservando o escopo integral. Nível melhora eficiência/qualidade e aumenta salário.
+Pausa conclui a tarefa atual; desligamento confirmado preserva transporte e encerra
+salário somente após saída física. Painel de supervisão mostra fatos dos departamentos.
+
+Política com reserva de uma diária após contratar manteve caixa não negativo em
+cinco seeds, eliminou intervenções de recepção/limpeza após 600 segundos e manteve
+91–100% das hospedagens da operação manual. Detalhes e hipóteses em
+[STAFF_AUTOMATION](STAFF_AUTOMATION.md). Não exige Gems/IAP para essa automação.

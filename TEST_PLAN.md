@@ -67,6 +67,21 @@ perfil existente, guia opcional, recovery e bloqueio de versão futura.
 320x568/PT-BR, 568x320/ES com texto ampliado e 1280x800/EN com texto ampliado.
 O gate `tools/test.ps1 -Visual -Stress -Soak -Tariffs` inclui essa renderização.
 
+Sprint 4 acrescenta `staff_automation_test`: perfis fixos, custos, salário, XP por
+conclusão, teto de nível, velocidade/qualidade reais, pausa, prioridades, saída durante
+viagem, snapshots determinísticos, corrupção e migração v8. Cinco seeds com orçamento
+mobile comparam operação manual e delegada durante dez dias do hotel.
+`staff_touch_test` percorre comparação, contratação, pausa, prioridade, promoção,
+confirmação/cancelamento de saída e lifecycle em três formatos/idiomas. Usa eventos
+reais do viewport e integra o gate visual. A referência de admissão mantém o mesmo
+sinal de conclusão após substituir o sistema, preservando a comparação de snapshots.
+
+O entry point de `player_work_test` carrega `player_work_cases` em runtime e libera
+os casos antes de encerrar a SceneTree. O corpo original dos casos permanece igual,
+com 2.862 verificações e 11 fases. Nonzero exit, erros e recursos retidos no shutdown
+continuam reprovando o gate. O teste de áudio aguarda até dois segundos pela contagem
+exata anterior de referências, sem manter o Resource na expressão que atravessa await.
+
 Cobrir em dispositivo:
 
 - tap em sala;

@@ -7,6 +7,9 @@ var column: int
 var floor_index: int
 var occupant: int = -1
 var dirty: bool = false
+## -1 denotes unknown legacy dirty history; oldest scheduling handles it first.
+var dirty_since: float = -1.0
+var cleaning_quality_bonus: int = 0
 var cleaning_by: int = -1
 var repairing_by: int = -1
 var condition: int = 100

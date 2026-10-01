@@ -48,6 +48,17 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 		&"employee":
 			title = "ui.staff"
 			_employee(router.context_id)
+		&"hire_options":
+			title = "staff.profiles"
+			_hire_options(router.context_id)
+		&"dismiss_confirm":
+			title = "staff.dismiss"
+			var actor: ActorState = session.actors.get(router.context_id)
+			if actor != null and actor.is_employee() and not actor.ensure_employee().dismiss_requested:
+				_text(tr("staff.dismiss_confirm") % MobileLabels.actor_name(actor))
+				_action("ui.confirm", &"dismiss_employee", {"id": actor.id}, HotelArt.staff_icon(actor.role))
+			else:
+				_text(tr("actor.departed"))
 		&"overview":
 			title = "ui.hotel"
 			_overview()
@@ -65,7 +76,7 @@ func show(value: HotelSession, router: ScreenRouter, blueprint: RoomDefinition) 
 				&"settings": _settings()
 				&"store": _text(tr("store.unavailable"))
 	shell.sheet_title.text = tr(title)
-	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm"])
+	shell.show_sheet(router.sheet in [&"build_confirm", &"demolish_confirm", &"dismiss_confirm"])
 	structure_key = _structure()
 	refresh()
 
@@ -78,6 +89,9 @@ func _structure() -> String:
 		key += ":o%d" % int(order.id)
 	for room in session.hotel.rooms:
 		key += ":%d:%s" % [room.id, str(room.dirty)]
+	for actor: ActorState in session.actors.values():
+		if actor.employee != null:
+			key += ":e%d:%s:%s:%s" % [actor.id, str(actor.employee.duty_enabled), str(actor.employee.priority), str(actor.employee.dismiss_requested)]
 	return key
 
 func refresh() -> void:
@@ -217,27 +231,51 @@ func _actor(id: int) -> void:
 		_inspect(&"employee", id, tr("staff.assign"), HotelArt.staff_icon(actor.role))
 
 func _staff() -> void:
+	var count := 0
+	for actor: ActorState in session.actors.values():
+		if actor.is_employee():
+			count += 1
+	if count > 0:
+		_text(tr("staff.supervision"))
+		for role: StringName in [&"receptionist", &"cleaner"]:
+			if StaffProjection.department(session, role).staff == 0:
+				continue
+			_live(func() -> String:
+				var department := StaffProjection.department(session, role)
+				return tr("staff.department") % [tr("staff." + String(role) + ".name"), department.enabled, department.active, department.backlog, department.paused, MobileLocale.number(department.salary)])
 	for definition: EmployeeDefinition in HotelSession.EMPLOYEES:
 		var hire := _action("ui.hire", &"hire", {"definition": definition}, HotelArt.staff_icon(definition.id))
 		hire.text = tr("staff.hire_role") % tr("staff." + String(definition.id) + ".name")
 		_text(tr("staff.costs") % [MobileLocale.number(definition.hire_cost), MobileLocale.number(definition.salary)])
-	var count := 0
+		updates.append(func() -> void: hire.disabled = session.economy.cash < definition.hire_cost)
+		_inspect(&"hire_options", HotelSession.EMPLOYEES.find(definition), tr("staff.profiles_role") % tr("staff." + String(definition.id) + ".name"), HotelArt.staff_icon(definition.id))
 	for actor: ActorState in session.actors.values():
 		if actor.role not in [&"receptionist", &"cleaner"]:
 			continue
-		count += 1
 		_inspect(&"employee", actor.id, MobileLabels.actor_name(actor), HotelArt.staff_icon(actor.role))
 	if count == 0:
 		_text(tr("staff.empty"))
+	_text(tr("staff.salary_hint"))
 
 func _employee(id: int) -> void:
 	var actor: ActorState = session.actors.get(id)
 	if actor == null or actor.role not in [&"receptionist", &"cleaner"]:
 		_text(tr("error.command"))
 		return
-	_portrait(actor)
 	_text(MobileLabels.actor_name(actor))
-	_live(func() -> String: return MobileLabels.actor_details(actor, session.hotel))
+	_live(func() -> String:
+		var stats := StaffProjection.details(actor)
+		return tr("staff.progress") % [stats.level, stats.xp, stats.next_xp if stats.next_xp >= 0 else stats.xp, stats.jobs] + "\n" + tr("staff.performance") % [stats.efficiency, stats.quality, MobileLocale.number(stats.salary)])
+	_text(_trait_names(actor.ensure_employee().traits))
+	if actor.employee.dismiss_requested:
+		_text(tr("staff.departing"))
+		return
+	_action("staff.pause" if actor.employee.duty_enabled else "staff.resume", &"staff_duty", {"id": id, "enabled": not actor.employee.duty_enabled})
+	_text(tr("staff.pause_hint"))
+	if actor.role == &"cleaner":
+		for priority: StringName in [&"oldest", &"nearest"]:
+			var button := _action("staff.priority." + String(priority), &"staff_priority", {"id": id, "priority": priority})
+			button.disabled = actor.employee.priority == priority
 	_text(tr("staff.assignment_hint"))
 	var selected := actor.preferred_room if actor.role == &"receptionist" else actor.preferred_floor
 	var auto := _action("staff.auto", &"assign", {"id": id, "destination": -1})
@@ -253,6 +291,37 @@ func _employee(id: int) -> void:
 			var button := _action("", &"assign", {"id": id, "destination": floor_index})
 			button.text = tr("staff.floor") % floor_index
 			button.disabled = selected == floor_index
+	_action("staff.dismiss", &"request_dismiss", {"id": id}, HotelArt.staff_icon(actor.role))
+	_portrait(actor)
+	_live(func() -> String: return MobileLabels.actor_details(actor, session.hotel))
+
+func _trait_names(traits: Array[StringName]) -> String:
+	if traits.is_empty():
+		return tr("staff.traits.none")
+	var names: Array[String] = []
+	for trait_id in traits:
+		names.append(tr("staff.trait." + String(trait_id)))
+	return ", ".join(names)
+
+func _hire_options(index: int) -> void:
+	if index < 0 or index >= HotelSession.EMPLOYEES.size():
+		_text(tr("error.command"))
+		return
+	var definition := HotelSession.EMPLOYEES[index]
+	_text(tr("staff." + String(definition.id) + ".name"))
+	for profile: Array in EmployeeProgress.RULES.profiles(definition.id):
+		var traits: Array[StringName] = []
+		traits.assign(profile)
+		var progress := EmployeeProgress.new()
+		progress.traits = traits
+		var cost := EmployeeProgress.RULES.hire_cost(definition.hire_cost, traits)
+		var button := _action("", &"hire", {"definition": definition, "traits": traits}, HotelArt.staff_icon(definition.id))
+		button.text = tr("staff.hire_profile") % [_trait_names(traits), MobileLocale.number(cost)]
+		updates.append(func() -> void: button.disabled = session.economy.cash < cost)
+		_text(tr("staff.performance") % [roundi(progress.efficiency(definition.skill) * 100), progress.quality(), MobileLocale.number(progress.salary(definition.salary))])
+		for trait_id in traits:
+			_text(tr("staff.effect." + String(trait_id)))
+	_text(tr("staff.profile_hint"))
 
 func _operations() -> void:
 	var filters := _grid()

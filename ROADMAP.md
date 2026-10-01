@@ -100,14 +100,22 @@ Saída: early game ativo e pessoal, mantendo intervenção após contratar.
 
 ## Sprint 4 — Equipe e Automação
 
-- funcionários essenciais;
-- contratação;
-- salários;
-- XP/nível;
-- traits limitados;
-- assignments;
-- jogador pode cobrir gargalos;
-- base de supervisão/automação futura.
+- [x] recepcionista e camareiro como os dois papéis essenciais ao loop inicial;
+- [x] contratação com quatro perfis fixos, custos e efeitos comparáveis por toque;
+- [x] salários derivados de nível/traços, pagos por dia e preservados durante pausa;
+- [x] XP somente por tarefa válida e níveis 1–5 com eficiência/qualidade derivadas;
+- [x] até dois traços relevantes, sem RNG, reroll ou contratação por moeda premium;
+- [x] assignments por recepção/andar, prioridade de limpeza e pausa após tarefa atual;
+- [x] desligamento confirmado, sem reembolso, saída física e IDs não reutilizados;
+- [x] jogador continua cobrindo gargalos sem contar na equipe ou folha salarial;
+- [x] projeção de departamentos, pendências e delegação como base da supervisão;
+- [x] snapshot v9, migração v1–v8 e checkpoints de promoção/conclusão/desligamento;
+- [x] cinco sementes: redução de 100% das intervenções centrais após 600s, preservando 91–100% das hospedagens sob política com capital de giro;
+- [x] gate final: 33 suítes, 4.499 verificações renderizadas, 113 capturas, 27 scripts validados e APK Android debug 0.6.0 sem warnings (`docs/SPRINT4_VALIDATION.json`).
+
+Implementação: [STAFF_AUTOMATION](docs/STAFF_AUTOMATION.md). Manutenção, cozinha e
+room service especializados permanecem na Sprint 9; supervisores/gerentes continuam
+no crescimento do produto. A projeção desta sprint não simula esses cargos.
 
 Saída: transição clara de trabalhador para gestor.
 

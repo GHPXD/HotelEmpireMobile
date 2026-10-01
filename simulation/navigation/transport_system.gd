@@ -56,7 +56,7 @@ func _walk(actor: ActorState, delta: float) -> void:
 			actor.elevator_id = lift.room_id
 			path_requests += 1
 		goal_x = lift.column
-	actor.x = move_toward(actor.x, goal_x, actor.speed * delta)
+	actor.x = move_toward(actor.x, goal_x, actor.walking_speed() * delta)
 	if not is_equal_approx(actor.x, goal_x):
 		return
 	if actor.floor_index == actor.target_floor:

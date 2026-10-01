@@ -111,6 +111,17 @@ Seu módulo v1 fica em `SaveService.app_state`, preservando outros módulos. Per
 novos recebem o orçamento mobile e checkpoint inicial; existentes preservam Cash
 e têm guia opcional. Transições/conclusões de trabalho e etapas fazem checkpoint.
 Background suspende todos os timers ativos; construção/offline agregado é Sprint 5.
+
+Sprint 4: cada funcionário possui `EmployeeProgress`, com XP limitado, tarefas,
+até dois traços relevantes, pausa, prioridade e solicitação de saída. `EmployeeRules`
+deriva nível, eficiência, caminhada, qualidade, contratação e salário sem alterar
+definitions. `GuestSystem.employee_completed` liga admissão válida ao `EmployeeSystem`;
+limpeza premia apenas o dono válido da reserva. `RoomState` guarda idade/qualidade
+de limpeza; o bônus é consumido uma vez na hospedagem. `StaffProjection` lê os dois
+departamentos; `GameController` persiste comandos e conclusões. Desligamento libera
+reservas, preserva passageiros e remove o funcionário após saída física. Snapshot
+v9 migra v1–v8, sem inventar experiência, traços ou receitas.
+Contrato e parâmetros em [STAFF_AUTOMATION](docs/STAFF_AUTOMATION.md).
 Analytics local inclui `manual_work` e `tutorial_progress`, com fila limitada,
 propriedades permitidas e provider indisponível; schema completo é Sprint 13.
 
@@ -212,7 +223,8 @@ Evoluir `SaveStore` e `SessionSnapshot` para um `SaveService` com:
 Compras consumíveis e entitlements exigem validação idempotente.
 
 Implementado no Sprint 1: `AtomicJSONStore` é compartilhado por `SaveStore` e
-`SaveService`. O envelope mobile v1 contém `saved_at_utc`, snapshot do hotel v7 e
+`SaveService`. O envelope mobile v1 contém `saved_at_utc`, snapshot do hotel (v9 após
+Sprint 4; v7 na fundação) e
 `app_state` primitivo para módulos da aplicação. Boot tenta primary/backup e migra
 save legado sem apagar o original. Ambos corrompidos bloqueiam escrita; versão
 futura válida bloqueia downgrade. Save após recovery preserva backup válido.

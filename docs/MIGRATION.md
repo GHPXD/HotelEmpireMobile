@@ -84,7 +84,29 @@ Esse baseline antecede a fundação e a UX implementadas abaixo.
   mais revisão dos ícones em UI de 32 px; APK Android debug 0.5.0 sem warnings.
   Evidências e hashes preservados em `SPRINT3_VALIDATION.json`.
 
-Próxima etapa: Sprint 4, desenvolvimento/supervisão da equipe. As limitações reais
+### Equipe e automação implementadas (Sprint 4)
+
+- Recepcionista/camareiro possuem evolução individual, níveis 1–5, XP por tarefa
+  concluída e até dois traços relevantes. Definições/config compartilhadas imutáveis.
+- Quatro perfis de contratação têm custos/eficiência/qualidade/salário visíveis;
+  sem sorteio, reroll ou contratação por premium. Qualidade de limpeza é consumida
+  uma vez na próxima hospedagem; promoção altera a próxima folha diária.
+- Assignments, prioridades, pausa após tarefa atual e desligamento confirmado.
+  Quem está no elevador termina a viagem, sai fisicamente e deixa a folha após sair.
+  Jogador continua disponível para gargalos e não conta como funcionário.
+- Supervisão por departamento usa projeções de leitura, sem criar gerente fictício.
+  Manutenção/cozinha/room service especializados permanecem na Sprint 9.
+- Snapshot v9 migra v1–v8, preserva tarefas/transporte e rejeita evolução inválida.
+  Checkpoints de conclusão/promoção/saída impedem perda ou ressurreição de equipe.
+- Políticas em cinco sementes, 2.400 Cash e 1.200 segundos reduzem intervenções
+  centrais após 600 segundos em 100%, preservando 91–100% das hospedagens sem déficit.
+  Isso valida a política automatizada; não representa estudo de retenção humana.
+- Gate completo: 33 suítes, 4.499 verificações renderizadas, 113 capturas, 27 scripts
+  validados e APK debug 0.6.0 sem warnings. `SPRINT4_VALIDATION.json` registra hashes,
+  matriz e dez execuções adicionais da regressão manual com encerramento limpo.
+  Os 2.862 checks originais foram preservados no helper carregado em runtime.
+
+Próxima etapa: Sprint 5, construção/upgrades temporizados e offline. As limitações reais
 de device/iOS/lojas continuam no Sprint 15; não são resolvidas por captures ou mocks.
 
 ## Objetivo

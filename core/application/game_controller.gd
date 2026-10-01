@@ -7,6 +7,7 @@ signal simulation_advanced
 signal lifecycle_changed(background: bool)
 signal player_work_changed(kind: String, phase: String, result: String)
 signal guide_advanced(stage: int)
+signal staff_changed(event: Dictionary)
 
 var session: HotelSession
 var saves: SaveService
@@ -46,6 +47,7 @@ func advance(delta: float) -> void:
 	var advanced := false
 	var work_revision: int = session.player_work.revision
 	var work_kind: String = session.player_work.job.get("kind", "")
+	var staff_revision := session.employees.revision
 	while accumulator + SimulationRules.TIME_EPSILON >= session.rules.tick:
 		session.tick(session.rules.tick)
 		accumulator = maxf(0.0, accumulator - session.rules.tick)
@@ -53,7 +55,11 @@ func advance(delta: float) -> void:
 	if session.player_work.revision != work_revision:
 		checkpoint(&"player_work_transition")
 		player_work_changed.emit(work_kind, session.player_work.job.get("phase", ""), session.player_work.last_result)
-	elif onboarding.observe(session):
+	if session.employees.revision != staff_revision:
+		if session.player_work.revision == work_revision:
+			checkpoint(&"staff_transition")
+		staff_changed.emit(session.employees.last_event.duplicate())
+	elif session.player_work.revision == work_revision and onboarding.observe(session):
 		guide_advanced.emit(onboarding.stage)
 		checkpoint(&"onboarding")
 	saves.advance_autosave(delta, session)
@@ -130,8 +136,8 @@ func add_floor() -> String:
 	var error := session.hotel.add_floor(session.time)
 	return checkpoint(&"floor") if error.is_empty() else error
 
-func hire(definition: EmployeeDefinition) -> String:
-	var error := session.hire(definition)
+func hire(definition: EmployeeDefinition, traits: Array[StringName] = []) -> String:
+	var error := session.hire(definition, traits)
 	return checkpoint(&"staff") if error.is_empty() else error
 
 func upgrade(id: int) -> String:
@@ -149,6 +155,18 @@ func set_tariff(id: int, percent: int) -> String:
 func configure_employee(id: int, destination: int) -> String:
 	var error := session.configure_employee(id, destination)
 	return checkpoint(&"assignment") if error.is_empty() else error
+
+func set_employee_duty(id: int, enabled: bool) -> String:
+	var error := session.set_employee_duty(id, enabled)
+	return checkpoint(&"staff_duty") if error.is_empty() else error
+
+func set_employee_priority(id: int, priority: StringName) -> String:
+	var error := session.set_employee_priority(id, priority)
+	return checkpoint(&"staff_priority") if error.is_empty() else error
+
+func dismiss_employee(id: int) -> String:
+	var error := session.dismiss_employee(id)
+	return checkpoint(&"staff_dismissal") if error.is_empty() else error
 
 func toggle_open() -> void:
 	session.opened = not session.opened

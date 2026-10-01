@@ -38,6 +38,21 @@ var preferred_room: int = -1
 var preferred_floor: int = -1
 var archetype_id: StringName = &"balanced"
 var service_uses: int = 0
+var employee: EmployeeProgress
+
+func is_employee() -> bool:
+	return role in [&"receptionist", &"cleaner"]
+
+func ensure_employee() -> EmployeeProgress:
+	if is_employee() and employee == null:
+		employee = EmployeeProgress.new()
+	return employee
+
+func work_efficiency() -> float:
+	return employee.efficiency(skill) if employee != null else skill
+
+func walking_speed() -> float:
+	return employee.walking(speed) if employee != null else speed
 
 func archetype() -> GuestArchetype:
 	return HotelCatalog.guest(archetype_id)

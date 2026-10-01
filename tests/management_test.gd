@@ -33,11 +33,10 @@ func _test_upgrades() -> void:
 		check(definition.capacity == original_capacity and definition.price == original_price, "shared definitions immutable")
 		var cash: int = session.economy.cash
 		check(not session.upgrade_room(room.id).is_empty() and session.economy.cash == cash, "max level rejects purchase")
-	var costs := session.recurring_costs()
 	var expenses: int = session.economy.expenses
 	for tick in 1200:
 		session.tick(0.1)
-	check(session.economy.expenses - expenses == costs.total, "upgraded recurring cost equals charged daily expense")
+	check(session.economy.expenses - expenses == session.recurring_costs().total, "daily expense uses current upgraded room and employee salaries")
 	var snapshot := SessionSnapshot.capture(session)
 	var restored := SessionSnapshot.restore(JSON.parse_string(JSON.stringify(snapshot)))
 	check(restored.error.is_empty(), "upgraded hotel snapshot accepted")

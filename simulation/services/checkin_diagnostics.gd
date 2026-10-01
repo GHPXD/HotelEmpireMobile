@@ -10,14 +10,14 @@ static func reason(session: HotelSession, reception: RoomState) -> String:
 		return "missing_head"
 	if head.state != &"checkin":
 		return "head_travelling"
-	var staffed: bool = false
+	var staff: ActorState
 	for employee: ActorState in session.actors.values():
-		if employee.role == &"receptionist" and employee.assignment == reception.id and employee.state == &"working":
-			staffed = true
+		if employee.role == &"receptionist" and employee.assignment == reception.id and employee.state == &"working" and (employee.employee == null or (not employee.employee.dismiss_requested and (employee.employee.duty_enabled or head.timer > 0))):
+			staff = employee
 			break
-	if not staffed:
+	if staff == null:
 		return "unstaffed"
-	if head.timer + session.rules.tick + SimulationRules.TIME_EPSILON < reception.duration():
+	if head.timer + session.rules.tick * staff.work_efficiency() + SimulationRules.TIME_EPSILON < reception.duration():
 		return "processing"
 	var dirty_free: bool = false
 	var affordable_accessible: bool = false

@@ -18,7 +18,7 @@ static func summary(session: HotelSession) -> Dictionary:
 		if actor.role == &"guest":
 			result.guests += 1
 			result.happiness += actor.happiness
-		else:
+		elif actor.is_employee():
 			result.staff += 1
 		if actor.state in [&"checkin", &"service_queue", &"lift_queue"]:
 			result.longest_wait = maxf(result.longest_wait, actor.waiting)

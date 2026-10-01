@@ -24,6 +24,7 @@ var speed: int = 1
 func _init(seed_value: int = 123456) -> void:
 	rng.seed = seed_value
 	hotel.changed.connect(_sync_transport)
+	guests.employee_completed.connect(employees.complete)
 
 func _sync_transport() -> void:
 	transport.sync(hotel)
@@ -54,8 +55,10 @@ func tick(delta: float) -> void:
 func progression_metrics() -> Dictionary:
 	return {"bookings": guests.bookings, "meals": guests.meals_served, "cleaned": employees.cleaned, "completed": guests.completed, "reputation": guests.reputation}
 
-func hire(definition: EmployeeDefinition) -> String:
-	if not economy.purchase(definition.hire_cost, "Contratação: " + definition.display_name, time):
+func hire(definition: EmployeeDefinition, traits: Array[StringName] = []) -> String:
+	if definition not in EMPLOYEES or not EmployeeProgress.RULES.valid_traits(definition.id, traits):
+		return "staff.error.profile"
+	if not economy.purchase(EmployeeProgress.RULES.hire_cost(definition.hire_cost, traits), "Contratação: " + definition.display_name, time):
 		return "Caixa insuficiente para contratar."
 	var actor := ActorState.new()
 	actor.id = next_actor_id
@@ -65,6 +68,7 @@ func hire(definition: EmployeeDefinition) -> String:
 	actor.state = &"idle"
 	actor.speed = definition.speed
 	actor.skill = definition.skill
+	actor.ensure_employee().traits = traits.duplicate()
 	actors[actor.id] = actor
 	return ""
 
@@ -154,7 +158,7 @@ func recurring_costs() -> Dictionary:
 	for actor: ActorState in actors.values():
 		for definition in EMPLOYEES:
 			if actor.role == definition.id:
-				salaries += definition.salary
+				salaries += actor.employee.salary(definition.salary) if actor.employee != null else definition.salary
 	return {"maintenance": maintenance, "salaries": salaries, "total": maintenance + salaries}
 
 func upgrade_room(id: int) -> String:
@@ -187,6 +191,8 @@ func configure_employee(id: int, destination: int) -> String:
 	var actor: ActorState = actors.get(id)
 	if actor == null or actor.role not in [&"receptionist", &"cleaner"]:
 		return "Selecione um funcionário."
+	if actor.ensure_employee().dismiss_requested:
+		return "staff.error.departing"
 	if destination < -1:
 		return "Destino inválido."
 	if actor.role == &"receptionist":
@@ -202,4 +208,45 @@ func configure_employee(id: int, destination: int) -> String:
 		if destination >= hotel.floors or (destination >= 0 and not transport.accessible(actor.floor_index, destination)):
 			return "Andar inexistente ou sem acesso por elevador."
 		actor.preferred_floor = destination
+	return ""
+
+func set_employee_duty(id: int, enabled: bool) -> String:
+	var actor: ActorState = actors.get(id)
+	if actor == null or not actor.is_employee():
+		return "Selecione um funcionário."
+	if actor.ensure_employee().dismiss_requested:
+		return "staff.error.departing"
+	actor.employee.duty_enabled = enabled
+	return ""
+
+func set_employee_priority(id: int, priority: StringName) -> String:
+	var actor: ActorState = actors.get(id)
+	if actor == null or actor.role != &"cleaner" or priority not in [&"oldest", &"nearest"]:
+		return "staff.error.priority"
+	if actor.ensure_employee().dismiss_requested:
+		return "staff.error.departing"
+	actor.employee.priority = priority
+	return ""
+
+func dismiss_employee(id: int) -> String:
+	var actor: ActorState = actors.get(id)
+	if actor == null or not actor.is_employee():
+		return "Selecione um funcionário."
+	var progress := actor.ensure_employee()
+	if progress.dismiss_requested:
+		return "staff.error.departing"
+	progress.dismiss_requested = true
+	progress.duty_enabled = false
+	var room := hotel.by_id(actor.assignment)
+	if room != null and room.cleaning_by == id:
+		room.cleaning_by = -1
+	actor.assignment = -1
+	actor.preferred_room = -1
+	actor.preferred_floor = -1
+	actor.target_room = -1
+	actor.timer = 0.0
+	if actor.in_transit():
+		actor.destination_state = &"idle"
+	else:
+		actor.state = &"idle"
 	return ""

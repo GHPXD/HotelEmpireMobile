@@ -74,7 +74,7 @@ try {
     foreach ($suite in $suites) {
         $testLog = Join-Path $runtimeRoot ($suite.Replace('/', '-') + '.log')
         $arguments = @('--path', $projectRoot, '--script', ('res://tests/' + $suite + '.gd'), '--log-file', $testLog)
-        if ($suite -notlike '*_render' -and (-not $Visual -or $suite -notin @('mobile/shell_layout_test', 'mobile/touch_management_test', 'mobile/display_scale_test', 'mobile/onboarding_touch_test'))) { $arguments += '--headless' }
+        if ($suite -notlike '*_render' -and (-not $Visual -or $suite -notin @('mobile/shell_layout_test', 'mobile/touch_management_test', 'mobile/display_scale_test', 'mobile/onboarding_touch_test', 'mobile/staff_touch_test'))) { $arguments += '--headless' }
         Invoke-TestEngine $suite $arguments $testLog
     }
     $report.status = 'passed'

@@ -73,6 +73,13 @@ Funcionário possui:
 
 Traits devem gerar decisões, não planilhas de RPG.
 
+Sprint 4 implementa recepção e limpeza com cinco níveis, XP por conclusão e três
+traços relevantes, escolhidos em quatro perfis por papel. Melhor qualidade custa
+mais; limpeza cuidadosa demora mais. Pausa, prioridades e desligamento permitem
+ajustar capacidade e salário, enquanto o jogador cobre filas. A supervisão mostra
+os dois departamentos; cargos especializados e incidentes permanecem na Sprint 9.
+Parâmetros, regras e resultados em [STAFF_AUTOMATION](docs/STAFF_AUTOMATION.md).
+
 ## Construção
 
 Construções e upgrades passam a usar timers.

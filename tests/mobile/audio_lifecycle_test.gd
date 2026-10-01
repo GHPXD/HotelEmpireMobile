@@ -9,7 +9,7 @@ func _initialize() -> void:
 
 func run() -> void:
 	for cue: StringName in HotelAudio.SOUNDS:
-		var before: int = HotelAudio.SOUNDS[cue].get_reference_count()
+		var before := _references(cue)
 		var sound := HotelAudio.new()
 		root.add_child(sound)
 		sound.enabled = true
@@ -20,12 +20,19 @@ func run() -> void:
 		var player_ref: WeakRef = weakref(sound.player)
 		sound.queue_free()
 		await process_frame
-		await create_timer(0.15).timeout
+		var deadline := Time.get_ticks_msec() + 2000
+		while _references(cue) != before and Time.get_ticks_msec() < deadline:
+			await create_timer(0.02).timeout
 		check(player_ref.get_ref() == null, "player released")
-		check(HotelAudio.SOUNDS[cue].get_reference_count() == before, "mixer releases playback resource " + String(cue))
+		check(_references(cue) == before, "mixer releases playback resource " + String(cue))
 	print(JSON.stringify({"suite": "mobile_audio_lifecycle", "checks": checks, "failures": failures}))
 	print("MOBILE_TEST_COMPLETE")
 	quit(1 if failures else 0)
+
+func _references(cue: StringName) -> int:
+	# Finish the resource access on this synchronous stack before the polling
+	# coroutine yields, so its own expression cannot hold a playback reference.
+	return HotelAudio.SOUNDS[cue].get_reference_count()
 
 func check(condition: bool, message: String) -> void:
 	checks += 1

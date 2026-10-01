@@ -99,6 +99,7 @@ Hotel Pass, temporadas complexas e sistemas avançados de LiveOps só entram ap�
 - [Economia e Monetização](docs/ECONOMY_MONETIZATION.md)
 - [UX Mobile](docs/UX_MOBILE.md)
 - [Trabalho e onboarding](docs/PLAYER_WORK.md)
+- [Equipe e automação](docs/STAFF_AUTOMATION.md)
 - [Analytics e LiveOps](docs/ANALYTICS_LIVEOPS.md)
 - [Testes e Release Mobile](docs/TEST_RELEASE_MOBILE.md)
 - [Migração](docs/MIGRATION.md)
@@ -109,7 +110,7 @@ O repositório está no início da migração mobile. A simulação existente é
 
 Não considerar este estado atual como build mobile final.
 
-Sprints 0–3 implementados e validados no host: domínio preservado, entry point
+Sprints 0–4 implementados e validados no host: domínio preservado, entry point
 mobile, save/lifecycle e gestão completa por toque. Construção, tarifas, upgrades,
 equipe, assignments, operações, finanças, reviews e settings usam painéis Control;
 UI, atalhos e janelas desktop foram removidos. A matriz inclui seis dimensões,
@@ -121,7 +122,12 @@ cancelamento seguro, desgaste, snapshot v8 e guia retomável de nove etapas.
 Perfil mobile novo começa com 2.400 Cash; perfis existentes preservam patrimônio.
 Evidências: [Sprint 3](docs/SPRINT3_VALIDATION.json), com 31 suítes aprovadas,
 4.274 verificações renderizadas, 98 capturas e APK Android debug 0.5.0.
-Próxima etapa: Sprint 4, XP/níveis/traits e supervisão da equipe.
+Sprint 4 adiciona XP por tarefa válida, níveis 1–5, até dois traços relevantes,
+comparação de contratação, pausa/prioridade, supervisão por departamento e saída
+física confirmada. Snapshot atual v9 migra versões anteriores.
+Evidências: [Sprint 4](docs/SPRINT4_VALIDATION.json), com 33 suítes aprovadas,
+4.499 verificações renderizadas, 113 capturas e APK Android debug 0.6.0.
+Próxima etapa: Sprint 5, timers/fila de construção, upgrades e conclusão offline.
 
 Executar regressões: `python tools/run_tests.py --group all --godot <executável>`.
 Renderização no host Windows: `tools/test_mobile_render.ps1 -GodotPath <executável>`.

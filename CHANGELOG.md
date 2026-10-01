@@ -2,6 +2,28 @@
 
 Este changelog começa na separação da versão mobile. O histórico de desenvolvimento e validação do protótipo desktop permanece no repositório original de PC.
 
+## 0.6.0-mobile — Equipe e delegação
+
+- Recepcionista e camareiro ganham XP somente por tarefas concluídas, níveis 1–5,
+  eficiência/qualidade e salários derivados. Evolução individual preserva as
+  definições compartilhadas; pausa mantém salário.
+- Contratação oferece quatro perfis fixos com até dois traços relevantes e custos
+  comparáveis por toque. Qualidade da recepção afeta satisfação; limpeza concede
+  bônus consumido uma vez na próxima hospedagem. Sem RNG ou moeda premium.
+- Assignments, prioridade por idade/proximidade, pausa após tarefa e supervisão
+  de pendências/departamentos. O jogador continua cobrindo gargalos manualmente.
+- Desligamento confirmado libera reservas, respeita viagem de elevador, sai pelo
+  térreo e encerra salário após saída física, sem reembolso ou XP de cancelamento.
+- Snapshot v9 migra v1–v8 sem inventar XP/traços. Checkpoints persistem conclusões,
+  promoções e saídas. Dados contraditórios e futuros continuam bloqueados.
+- Comparação multiseed mantém caixa não negativo e 91–100% das hospedagens,
+  eliminando intervenções de recepção/limpeza após 600s sob a política medida.
+- Gate final: 33 suítes, 4.499 verificações renderizadas, 113 capturas e 27 scripts
+  validados. Casos originais de operação manual preservados em helper carregado em
+  runtime; saída não zero, erros e vazamentos continuam reprovando os executores.
+- APK Android debug 0.6.0/code 4 reconstruído sem warnings. Evidências/hashes em
+  `docs/SPRINT4_VALIDATION.json`. Aparelhos, lojas e iOS permanecem gates do release.
+
 ## 0.5.0-mobile — Jogador e primeiro hotel
 
 - PlayerWorkSystem adiciona um jogador físico, com caminhada/elevadores, uma tarefa

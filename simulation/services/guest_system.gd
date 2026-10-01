@@ -1,6 +1,8 @@
 class_name GuestSystem
 extends RefCounted
 
+signal employee_completed(actor: ActorState)
+
 var completed: int = 0
 var meals_served: int = 0
 var service_uses: int = 0
@@ -11,11 +13,13 @@ var rules: SimulationRules
 var work_rules: PlayerWorkRules = preload("res://data/player_work.tres")
 const REVIEW_LIMIT: int = 20
 var reviews: Array[Dictionary] = []
+var current_time: float = 0.0
 
 func _init(config: SimulationRules) -> void:
 	rules = config
 
 func step(actors: Dictionary, hotel: HotelModel, transport: TransportSystem, delta: float, time: float, manual_head: int = -1) -> void:
+	current_time = time
 	var departures: Array[int] = []
 	# Geometry cannot change inside this step. Filter once, preserving build order.
 	var arrival_rooms := _arrival_rooms(hotel)
@@ -96,17 +100,18 @@ func _check_in(actor: ActorState, actors: Dictionary, hotel: HotelModel, transpo
 		return
 	if actor.id == manual_head or reception.repairing_by >= 0:
 		return
-	var staffed: bool = false
+	var staff: ActorState
 	for employee: ActorState in actors.values():
-		if employee.role == &"receptionist" and employee.assignment == reception.id and employee.state == &"working":
-			staffed = true
+		if employee.role == &"receptionist" and employee.assignment == reception.id and employee.state == &"working" and (employee.ensure_employee().duty_enabled or actor.timer > 0) and not employee.employee.dismiss_requested:
+			staff = employee
 			break
-	if not staffed:
+	if staff == null:
 		return
-	actor.timer += delta
+	actor.timer += delta * staff.work_efficiency()
 	if actor.timer + SimulationRules.TIME_EPSILON < reception.duration():
 		return
-	admit(actor, hotel, transport, time)
+	if admit(actor, hotel, transport, time, staff.employee.quality()):
+		employee_completed.emit(staff)
 
 func available_bed(actor: ActorState, hotel: HotelModel, transport: TransportSystem) -> RoomState:
 	for room in hotel.rooms:
@@ -118,7 +123,7 @@ func available_bed(actor: ActorState, hotel: HotelModel, transport: TransportSys
 		return room
 	return null
 
-func admit(actor: ActorState, hotel: HotelModel, transport: TransportSystem, time: float) -> bool:
+func admit(actor: ActorState, hotel: HotelModel, transport: TransportSystem, time: float, quality_bonus: int = 0) -> bool:
 	var reception := hotel.by_id(actor.target_room)
 	if actor.role != &"guest" or actor.checked_in or actor.state != &"checkin" or reception == null or reception.queue.members.is_empty() or reception.queue.members[0] != actor.id or reception.repairing_by >= 0:
 		return false
@@ -128,7 +133,8 @@ func admit(actor: ActorState, hotel: HotelModel, transport: TransportSystem, tim
 	room.occupant = actor.id
 	actor.bedroom = room.id
 	actor.checked_in = true
-	actor.happiness = clampf(actor.happiness + room.lodging_value_delta(actor.archetype()), 0, 100)
+	actor.happiness = clampf(actor.happiness + room.lodging_value_delta(actor.archetype()) + quality_bonus + room.cleaning_quality_bonus, 0, 100)
+	room.cleaning_quality_bonus = 0
 	actor.money -= room.price()
 	room.income += room.price()
 	hotel.economy.transact(room.price(), "Hospedagem", time)
@@ -237,5 +243,7 @@ func _release_room(actor: ActorState, hotel: HotelModel) -> void:
 	if room != null and room.occupant == actor.id:
 		room.occupant = -1
 		room.dirty = true
+		room.dirty_since = current_time
+		room.cleaning_quality_bonus = 0
 		room.wear(work_rules.room_wear_per_stay)
 	actor.bedroom = -1

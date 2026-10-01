@@ -66,4 +66,5 @@ func finish(suite: String, extra: Dictionary = {}) -> void:
 	result.merge(extra)
 	print(JSON.stringify(result))
 	print("MOBILE_TEST_COMPLETE")
-	quit(1 if failures else 0)
+	# Async callers release their domain/UI locals before the engine tears down.
+	quit.call_deferred(1 if failures else 0)
